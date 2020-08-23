@@ -9,7 +9,7 @@
         _Gloss("Gloss", Float) = 1
         _Smoothness("Smoothness", Float) = 1
 
-        _WaveA("Wave A (dir, steepness, wavelength)", Vector) = (1,0,0.5,10)
+        _WaveA("Wave A (dir [x,y], steepness, wavelength)", Vector) = (1,0,0.5,10)
         _WaveB("Wave B", Vector) = (0,1,0.25,20)
         _WaveC("Wave C", Vector) = (1,1,0.15,10)
 
