@@ -30,12 +30,26 @@ public class Floater : MonoBehaviour
         _rb.AddForceAtPosition(Physics.gravity / floatCounter, transform.position, ForceMode.Acceleration);
 
         float waveHeight = WaveManager.Instance.GetWaveHeight(transform.position.x);
-      //  waveHeight = _waterMat.GetFloat("");
-      
-        
-        if (transform.position.y < waveHeight)
+        //  waveHeight = _waterMat.GetFloat("");
+
+
+        //if (transform.position.y < waveHeight)
+        //{
+        //    PushUp();
+        //}
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Water"))
         {
-            float displacementMult = Mathf.Clamp01(waveHeight -transform.position.y / depthBeforeSubmerged) * displacementAmount;
+            PushUp() ;
+        }
+    }
+
+    private void PushUp()
+    {
+            float displacementMult = Mathf.Clamp01(waveHeight - transform.position.y / depthBeforeSubmerged) * displacementAmount;
 
             _rb.AddForceAtPosition(new Vector3(0f, Mathf.Abs(Physics.gravity.y) * displacementMult, 0f), transform.position, ForceMode.Acceleration);
             _rb.AddForce(displacementMult * -_rb.velocity * waterDrag * Time.fixedDeltaTime);
