@@ -311,6 +311,8 @@
                    col.rgb = MixFog(col.rgb, inputData.fogCoord);
                    col.a = saturate(col.a);
                    return col;
+                 //  half4 col = _BaseColor;
+                   
 
                    half4 colorShadow = half4(1, 1, 1, 1);
                    #ifdef _MAIN_LIGHT_SHADOWS //  #START Direct specular Light --------------------------
@@ -320,6 +322,9 @@
                    vertexInput.positionWS = input.positionWS;
 
                    float4 shadowCoord = input.shadowCoord;
+
+                   return shadowCoord;
+
                    half shadowAttenutation = MainLightRealtimeShadow(shadowCoord);
                    colorShadow = lerp(half4(1, 1, 1, 1), _ShadowColor, (1.0 - shadowAttenutation) * _ShadowColor.a);
                  //  colorShadow.rgb = MixFogColor(colorShadow.rgb, half3(1, 1, 1), input.fogCoord);

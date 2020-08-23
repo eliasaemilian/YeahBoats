@@ -44,7 +44,6 @@ public class WaveManager : MonoBehaviour
 
     public Transform Boat;
 
- //   public float waveResult;
 
     private void Awake()
     {
@@ -65,35 +64,22 @@ public class WaveManager : MonoBehaviour
         WaveB = new Wave(WaterShader.GetVector("_WaveB"));
         WaveC = new Wave(WaterShader.GetVector("_WaveC"));
 
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        offset += Time.deltaTime * speed;
+        offset += Time.deltaTime * speed; //OLD
         Timer += Time.deltaTime;
 
-
-
-    //    Debug.Log(waveResult);
-
     }
 
-    private void FixedUpdate()
-    {
-       // waveResult = GerstnerWave(WaveA, Boat.position);
-        //waveResult += GerstnerWave(WaveB, Boat.position);
-        //waveResult += GerstnerWave(WaveC, Boat.position);
-    }
-
-    public float GetWaveHeight (float x) // Get this from Shader
+    public float GetWaveHeight (float x)//OLD
     {
         return amplitude * Mathf.Sin(x / length + offset);
     }
 
-    public float GetWaveHeight() // Get this from Shader
+    public float GetWaveHeight() // from Shader
     {
         Vector2 boatPos = new Vector2(Boat.position.x, Boat.position.z);
         float waveResult = GerstnerWave(WaveA, boatPos);

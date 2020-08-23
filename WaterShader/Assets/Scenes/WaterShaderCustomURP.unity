@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 0.49
+  m_AmbientIntensity: 1.5
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.12388752, g: 0.17426462, b: 0.3018868, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 85a548b316bb9b1498f45cf8d533d562,
+  m_LightingDataAsset: {fileID: 112000000, guid: 8dc9bd2520c3ad147a073c8bc83c955b,
     type: 2}
   m_UseShadowmask: 0
 --- !u!196 &4
@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 624882841}
   - component: {fileID: 624882840}
   - component: {fileID: 624882839}
+  - component: {fileID: 624882844}
   m_Layer: 0
   m_Name: Boat
   m_TagString: Untagged
@@ -236,6 +237,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &624882844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624882838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70c188176b365b347a8d190f4e807900, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ThisBoat:
+    floatCounter: 4
+    waterDrag: 100
+    waterAngularDrag: 100
 --- !u!1 &636065034
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,9 +296,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a491abfa9f15643a36d800d7bb9952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floatCounter: 4
-  waterDrag: 0.5
-  waterAngularDrag: 0.5
 --- !u!1 &717661730
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,9 +419,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a491abfa9f15643a36d800d7bb9952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floatCounter: 4
-  waterDrag: 0.5
-  waterAngularDrag: 0.5
 --- !u!1 &827715998
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,9 +462,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a491abfa9f15643a36d800d7bb9952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floatCounter: 4
-  waterDrag: 0.5
-  waterAngularDrag: 0.5
 --- !u!1 &901577743
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,9 +505,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a491abfa9f15643a36d800d7bb9952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floatCounter: 4
-  waterDrag: 0.5
-  waterAngularDrag: 0.5
 --- !u!1 &1000667123
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,9 +640,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a491abfa9f15643a36d800d7bb9952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floatCounter: 4
-  waterDrag: 0.5
-  waterAngularDrag: 0.5
 --- !u!1 &1283564211
 GameObject:
   m_ObjectHideFlags: 0

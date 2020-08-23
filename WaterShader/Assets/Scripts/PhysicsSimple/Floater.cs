@@ -11,14 +11,20 @@ public class Floater : MonoBehaviour
     private float depthBeforeSubmerged = 1f;
     private float displacementAmount = 3f; // change these for rigidbody properties
 
-    public int floatCounter = 4;
-    public float waterDrag = .99f;
-    public float waterAngularDrag = .5f;
+    private int floatCounter;
+    private float waterDrag ;
+    private float waterAngularDrag;
+
+    private Boat myBoat;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        myBoat = GetComponentInParent<BoatHandler>().ThisBoat;
+        floatCounter = myBoat.floatCounter;
+        waterDrag = myBoat.waterDrag;
+        waterAngularDrag = myBoat.waterAngularDrag;
         _rb = GetComponentInParent<Rigidbody>();
     }
 
