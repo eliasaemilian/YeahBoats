@@ -15,18 +15,22 @@ public class Floater : MonoBehaviour
     public float waterDrag = .99f;
     public float waterAngularDrag = .5f;
 
+    private Material _waterMat;
+
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponentInParent<Rigidbody>();
+        _waterMat = GetComponentInParent<MeshRenderer>().sharedMaterial;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        _rb.AddForceAtPosition(Physics.gravity, transform.position / floatCounter, ForceMode.Acceleration);
+        _rb.AddForceAtPosition(Physics.gravity / floatCounter, transform.position, ForceMode.Acceleration);
 
         float waveHeight = WaveManager.Instance.GetWaveHeight(transform.position.x);
+      //  waveHeight = _waterMat.GetFloat("");
       
         
         if (transform.position.y < waveHeight)

@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class Wave
+{
+    public float a;
+    public float c;
+    public float k;
+    public Vector3 Direction;
+}
 // -> https://www.youtube.com/watch?v=eL_zHQEju8s
 public class WaveManager : MonoBehaviour
 {
@@ -38,5 +45,16 @@ public class WaveManager : MonoBehaviour
     public float GetWaveHeight (float x) // Get this from Shader
     {
         return amplitude * Mathf.Sin(x / length + offset);
+    }
+
+    private float GerstnerWave(Wave _wave, Vector2 _p)
+    {
+        float _cOffset = _wave.c * offset;
+        float _f = _wave.k * (Vector2.Dot(_wave.Direction, _p) - _cOffset);
+        float _af = _wave.a * Mathf.Cos(_f);
+        _p.x -= _wave.Direction.x * _af;
+        _p.y -= _wave.Direction.y * _af;
+        _f = _wave.k * (Vector2.Dot(_wave.Direction, _p) - _cOffset);
+        return _wave.a * Mathf.Sin(_f);
     }
 }
