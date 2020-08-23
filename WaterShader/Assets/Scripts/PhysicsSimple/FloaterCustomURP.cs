@@ -5,7 +5,7 @@ using UnityEngine;
 // -> https://www.youtube.com/watch?v=eL_zHQEju8s
 
 
-public class Floater : MonoBehaviour
+public class FloaterCustomURP : MonoBehaviour
 {
     private Rigidbody _rb;
     private float depthBeforeSubmerged = 1f;

@@ -15,7 +15,7 @@ public class WaveManager : MonoBehaviour
     public static WaveManager Instance;
 
     public float amplitude = 1f;
-    public float length = 2f;
+    public float length = 20f;
     public float speed = 1f;
     public float offset = 0f;
 
