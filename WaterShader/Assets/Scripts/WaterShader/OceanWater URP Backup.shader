@@ -1,4 +1,4 @@
-﻿Shader "Unlit/OceanWaterURP"
+﻿Shader "Unlit/OceanWaterURPBackup"
 {
     Properties
     {
@@ -27,7 +27,7 @@
 
         SubShader
     {
-        Tags { "RenderType" = "Transparent" "Queue" = "Transparent" "RenderPipeline" = "UniversalRenderPipeline"}
+        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalRenderPipeline"}
         LOD 200
 
         Pass
@@ -125,7 +125,7 @@
 
             static float TAU = 6.28318530718f;
 
-            float3 GerstnerWaveOLD( float4 wave, float3 p, inout float3 tangent, inout float3 binormal )
+            float3 GerstnerWave( float4 wave, float3 p, inout float3 tangent, inout float3 binormal )
             {
                 float steepness = wave.z;
                 float wavelength = wave.w;
@@ -156,47 +156,6 @@
                     );
             }
 
-            float3 GerstnerWave(float4 wave, float3 p, inout float3 tangent, inout float3 bitangent, inout float3 normal)
-            {
-                float steepness = wave.z;
-                float wavelength = wave.w;
-                float k = TAU / wavelength;
-                float a = steepness / k; //amplitude
-
-                float c = sqrt(9.8 / k);
-                float2 d = normalize(wave.xy);
-                float f = k * (dot(d, p.xz) - c * _Time.y);
-
-                //p.x += d.x * (a * cos(f));
-                //p.y = a * sin(f);
-                //p.z += d.y * (a * cos(f));
-
-                float3 _bitangent = float3( //flipped????
-                    1 - ( d.x * d.x * steepness * cos(f)),
-                    d.x * steepness * sin(f),
-                    - ( d.x * d.y * steepness * cos(f) )
-                    );
-                float3 _tangent = float3(
-                    - ( d.x * d.y * steepness * cos(f) ),
-                    d.y * steepness * sin(f),
-                    1 - ( d.y * d.y * steepness * cos(f) )
-                    );
-
-                _bitangent = normalize(_bitangent);
-                _tangent = normalize(_tangent);
-
-                float3 _normal = cross(_tangent, _bitangent);
-                normal += _normal;
-
-                bitangent += _bitangent;
-                tangent += _tangent;
-                return float3(
-                    d.x * (a * sin(f)),
-                    a * cos(f),
-                    d.y * (a * sin(f))
-                    );
-            }
-
 
             #if SHADER_LIBRARY_VERSION_MAJOR < 9
             // This function was added in URP v9.x.x versions
@@ -218,26 +177,6 @@
             }
             #endif
 
-
-            float3 CalcGerstnerWaveNormal(float4 wave, float3 P)
-            {
-                float3 normal = float3(0, 1, 0);
-                float amplitude = wave.z / ( TAU / wave.w );
-                float speed = sqrt(9.8 / (TAU / wave.w));
-
-                float wi = 2 / wave.w;
-                float WA = wi * amplitude;
-                float phi = speed * wi;
-                float rad = wi * dot(wave.xy, P.xz) + phi * _Time.y;
-                float Qi = wave.z / (amplitude * wi * 3);
-                normal.xz -= wave.xy * WA * cos(rad);
-                normal.y -= Qi * WA * sin(rad);
-
-                return normalize(normal);
-            }
-
-
-
              Varyings vert(Attributes input)
              {
                  Varyings output = (Varyings)0; // [v2f o]
@@ -251,35 +190,29 @@
                  float3 gridPoint = input.positionOS.xyz;
                  float3 tangent = 0; 
                  float3 binormal = 0;
-                 float3 normal = 0;
                  float3 p = gridPoint;
 
-                 p += GerstnerWave(_WaveA, gridPoint, tangent, binormal, normal);
-                 p += GerstnerWave(_WaveB, gridPoint, tangent, binormal, normal);
-                 p += GerstnerWave(_WaveC, gridPoint, tangent, binormal, normal);
+                 p += GerstnerWave(_WaveA, gridPoint, tangent, binormal);
+                 p += GerstnerWave(_WaveB, gridPoint, tangent, binormal);
+                 p += GerstnerWave(_WaveC, gridPoint, tangent, binormal);
 
-                 //float3 normal = normalize(cross(binormal, tangent));
-                // normal = CalcGerstnerWaveNormal(_WaveA, p);
+                 float3 normal = normalize(cross(binormal, tangent));
 
                  input.positionOS.xyz = p;
                  input.normalOS.xyz = normal;
                  input.tangentOS.xyz = tangent;
-
- 
+                 #ifdef _NORMALMAP
+                 real sign = input.tangentOS.w * GetOddNegativeScale();
+                 output.tangentWS = half4(normalInputs.tangentWS.xyz, sign);
+                 #endif
 
                  // Object Space -> Clip Space
                  VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
                  VertexNormalInputs normalInput = GetVertexNormalInputs(input.normalOS, input.tangentOS);
 
-                 // Normals & Tangents
                  output.normalWS = normalInput.normalWS;
                  output.positionCS = vertexInput.positionCS;
                  output.positionWS = vertexInput.positionWS;
-
-                #ifdef _NORMALMAP
-                 real sign = input.tangentOS.w * GetOddNegativeScale();
-                 output.tangentWS = half4(normalInputs.tangentWS.xyz, sign);
-                #endif
 
                  // View Direction
                  output.viewDirWS = GetWorldSpaceViewDir(vertexInput.positionWS);
@@ -301,7 +234,6 @@
                  #ifdef REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR
                  output.shadowCoord = GetShadowCoord(vertexInput);
                  #endif
-
                  return output;
              }
 
@@ -345,6 +277,9 @@
              SurfaceData InitializeSurfaceData(Varyings IN)
              {
                  SurfaceData surfaceData = (SurfaceData)0;
+                 // Note, we can just use SurfaceData surfaceData; here and not set it.
+                 // However we then need to ensure all values in the struct are set before returning.
+                 // By casting 0 to SurfaceData, we automatically set all the contents to 0.
 
                  half4 albedoAlpha = SampleAlbedoAlpha(IN.uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
                  surfaceData.alpha = Alpha(albedoAlpha.a, _BaseColor, _Cutoff);
@@ -357,7 +292,6 @@
                  surfaceData.normalTS = SampleNormal(IN.uv, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap), _BumpScale);
                  surfaceData.emission = SampleEmission(IN.uv, _EmissionColor.rgb, TEXTURE2D_ARGS(_EmissionMap, sampler_EmissionMap));
                  surfaceData.occlusion = 1;
-
                  return surfaceData;
              }
 
@@ -376,10 +310,7 @@
                    // apply fog
                    col.rgb = MixFog(col.rgb, inputData.fogCoord);
                    col.a = saturate(col.a);
-
-                 //  return float4(inputData.normalWS, 0);
                    return col;
-
                  //  half4 col = _BaseColor;
                    
 
@@ -391,6 +322,8 @@
                    vertexInput.positionWS = input.positionWS;
 
                    float4 shadowCoord = input.shadowCoord;
+
+                   return shadowCoord;
 
                    half shadowAttenutation = MainLightRealtimeShadow(shadowCoord);
                    colorShadow = lerp(half4(1, 1, 1, 1), _ShadowColor, (1.0 - shadowAttenutation) * _ShadowColor.a);

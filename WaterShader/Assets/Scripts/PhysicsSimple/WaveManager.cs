@@ -95,10 +95,10 @@ public class WaveManager : MonoBehaviour
 
         float _cOffset = wave.c * Timer;
         float _f = wave.k * (Vector2.Dot(wave.Direction, p) - _cOffset);
-        float _af = wave.a * Mathf.Cos(_f);
+        float _af = wave.a * Mathf.Sin(_f);
         p.x -= wave.Direction.x * _af; //adjust for approximation of vertex shift along x, z
         p.y -= wave.Direction.y * _af;
         _f = wave.k * (Vector2.Dot(wave.Direction, p) - _cOffset);
-        return wave.a * Mathf.Sin(_f); //amplitude
+        return wave.a * Mathf.Cos(_f); //amplitude
     }
 }
