@@ -14,7 +14,7 @@
         _WaveC("Wave C", Vector) = (1,1,0.15,10)
 
         [Toggle(_ALPHATEST_ON)] _EnableAlphaTest("Enable Alpha Cutoff", Float) = 0.0
-        _Cutoff("Alpha Cutoff", Float) = 0.5
+        _Cutoff("Alpha Cutoff", Range(0,1)) = 0.5
 
         [Toggle(_NORMALMAP)] _EnableBumpMap("Enable Normal/Bump Map", Float) = 0.0
         _BumpMap("Normal/Bump Texture", 2D) = "bump" {}
@@ -23,6 +23,11 @@
         [Toggle(_EMISSION)] _EnableEmission("Enable Emission", Float) = 0.0
         _EmissionMap("Emission Texture", 2D) = "white" {}
         _EmissionColor("Emission Colour", Color) = (0, 0, 0, 0)
+
+        [Enum(UnityEngine.Rendering.CullMode)] _Cull("Cull", Float) = 2
+        [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("Src Blend", Float) = 1
+        [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("Dst Blend", Float) = 0
+        [Enum(Off, 0, On, 1)] _ZWrite("Z Write", Float) = 1
     }
 
         SubShader
@@ -34,9 +39,9 @@
         {
             Tags{"LightMode" = "UniversalForward"}
 
- /*           Blend[_SrcBlend][_DstBlend]
+            Blend[_SrcBlend][_DstBlend]
             ZWrite[_ZWrite]
-            Cull[_Cull]*/
+            Cull[_Cull]
 
             HLSLPROGRAM
 
@@ -71,6 +76,7 @@
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
 
             CBUFFER_START(UnityPerMaterial)
 
@@ -89,6 +95,12 @@
             float _Cutoff;
 
             CBUFFER_END
+
+           // sampler2D _CameraDepthTexture;
+           // sampler2D sampler_CameraDepthTexture;
+            TEXTURE2D(_CameraDepthTexture);
+            SAMPLER(sampler_CameraDepthTexture);
+
 
             struct Attributes // [appdata]
             {
@@ -197,6 +209,16 @@
                     );
             }
 
+            float3 ColorBelowWater(float4 screenPos)
+            {
+                float2 uv = screenPos.xy / screenPos.w;
+                
+                float backgroundDepth = LinearEyeDepth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, uv).r, _ZBufferParams);
+                float surfaceDepth = UNITY_Z_0_FAR_FROM_CLIPSPACE(screenPos.z);
+                float depthDifference = backgroundDepth - surfaceDepth;
+
+                return depthDifference / 20;
+            }
 
             #if SHADER_LIBRARY_VERSION_MAJOR < 9
             // This function was added in URP v9.x.x versions
@@ -218,26 +240,6 @@
             }
             #endif
 
-
-            float3 CalcGerstnerWaveNormal(float4 wave, float3 P)
-            {
-                float3 normal = float3(0, 1, 0);
-                float amplitude = wave.z / ( TAU / wave.w );
-                float speed = sqrt(9.8 / (TAU / wave.w));
-
-                float wi = 2 / wave.w;
-                float WA = wi * amplitude;
-                float phi = speed * wi;
-                float rad = wi * dot(wave.xy, P.xz) + phi * _Time.y;
-                float Qi = wave.z / (amplitude * wi * 3);
-                normal.xz -= wave.xy * WA * cos(rad);
-                normal.y -= Qi * WA * sin(rad);
-
-                return normalize(normal);
-            }
-
-
-
              Varyings vert(Attributes input)
              {
                  Varyings output = (Varyings)0; // [v2f o]
@@ -258,14 +260,14 @@
                  p += GerstnerWave(_WaveB, gridPoint, tangent, binormal, normal);
                  p += GerstnerWave(_WaveC, gridPoint, tangent, binormal, normal);
 
-                 //float3 normal = normalize(cross(binormal, tangent));
-                // normal = CalcGerstnerWaveNormal(_WaveA, p);
-
                  input.positionOS.xyz = p;
                  input.normalOS.xyz = normal;
                  input.tangentOS.xyz = tangent;
 
- 
+                #ifdef _NORMALMAP
+                 real sign = input.tangentOS.w * GetOddNegativeScale();
+                 output.tangentWS = half4(normalInputs.tangentWS.xyz, sign);
+                #endif
 
                  // Object Space -> Clip Space
                  VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
@@ -276,10 +278,6 @@
                  output.positionCS = vertexInput.positionCS;
                  output.positionWS = vertexInput.positionWS;
 
-                #ifdef _NORMALMAP
-                 real sign = input.tangentOS.w * GetOddNegativeScale();
-                 output.tangentWS = half4(normalInputs.tangentWS.xyz, sign);
-                #endif
 
                  // View Direction
                  output.viewDirWS = GetWorldSpaceViewDir(vertexInput.positionWS);
@@ -340,6 +338,14 @@
                  return inputData;
              }
 
+             // Z buffer to linear depth.
+            // Does NOT correctly handle oblique view frustums.
+            // Does NOT work with orthographic projection.
+            // zBufferParam = { (f-n)/n, 1, (f-n)/n*f, 1/f }
+         /*    float LinearEyeDepth(float depth, float4 zBufferParam)
+             {
+                 return 1.0 / (zBufferParam.z * depth + zBufferParam.w);
+             }*/
 
              // Surface Data Standin for organizing data
              SurfaceData InitializeSurfaceData(Varyings IN)
@@ -372,37 +378,69 @@
                    half4 col = UniversalFragmentPBR(inputData, surfaceData.albedo, surfaceData.metallic,
                        surfaceData.specular, surfaceData.smoothness, surfaceData.occlusion,
                        surfaceData.emission, surfaceData.alpha);
-                   
+
+                  col = float4(ColorBelowWater(ComputeScreenPos(input.positionCS)),0);
+
                    // apply fog
                    col.rgb = MixFog(col.rgb, inputData.fogCoord);
-                   col.a = saturate(col.a);
-
+                 //  col.a = saturate(col.a);
+                   col.a = .6; //TODO-> Make dependant on how far from shore
+                   
                  //  return float4(inputData.normalWS, 0);
-                   return col;
+     /*              return col;
+                   col = _BaseColor;*/
 
-                 //  half4 col = _BaseColor;
+                   float4 shadowCoord = TransformWorldToShadowCoord(input.positionWS.xyz);
+                   //Light light = GetMainLight(shadowCoord);
+
+                   //half3 diffuse = LightingLambert(light.color, light.direction, input.normalWS);
+
+                   //return half4(col.rgb * diffuse * diffuse * light.shadowAttenuation, col.a);
+
+                   // col = _BaseColor;
                    
 
-                   half4 colorShadow = half4(1, 1, 1, 1);
+                   half4 colorShadow = half4(.2, .2, .6, 1);
+                   Light mainLight = GetMainLight(shadowCoord);
+
+
+                   //Lighting Calculate(Lambert)              
+                   float NdotL = saturate(dot(normalize(_MainLightPosition.xyz), input.normalWS));
+                   float3 ambient = SampleSH(input.normalWS);
+                   
+                    half receiveshadow = MainLightRealtimeShadow(shadowCoord);
+                    //return receiveshadow;
+                   // col.rgb *= NdotL * _MainLightColor.rgb * receiveshadow + ambient;
+
+                   col.rgb *= NdotL * _MainLightColor.rgb * mainLight.shadowAttenuation + ambient;
+                   col.rgb *= NdotL * _MainLightColor.rgb + ambient;
+                   return col;
+
                    #ifdef _MAIN_LIGHT_SHADOWS //  #START Direct specular Light --------------------------
 
 
-                   VertexPositionInputs vertexInput = (VertexPositionInputs)0;
-                   vertexInput.positionWS = input.positionWS;
+                //   float4 shadowCoord = input.shadowCoord;
 
-                   float4 shadowCoord = input.shadowCoord;
+                   ShadowSamplingData shadowSamplingData = GetMainLightShadowSamplingData();
+                   half shadowStrength = GetMainLightShadowStrength();
+                   half shadowAttenuation = SampleShadowmap(shadowCoord, TEXTURE2D_ARGS(_MainLightShadowmapTexture,
+                       sampler_MainLightShadowmapTexture),
+                       shadowSamplingData, shadowStrength, false);
 
-                   half shadowAttenutation = MainLightRealtimeShadow(shadowCoord);
-                   colorShadow = lerp(half4(1, 1, 1, 1), _ShadowColor, (1.0 - shadowAttenutation) * _ShadowColor.a);
+                   //half shadowAttenuation = MainLightRealtimeShadow(shadowCoord);
+                  // colorShadow = lerp(half4(1, 1, 1, 1), _ShadowColor, (1.0 - shadowAttenuation) * _ShadowColor.a);
+                   float attenuatedLightColor = mainLight.color * mainLight.distanceAttenuation * shadowAttenuation;
                  //  colorShadow.rgb = MixFogColor(colorShadow.rgb, half3(1, 1, 1), input.fogCoord);
+                   return attenuatedLightColor;
+
                    #endif
-                   float3 normal = normalize(input.normalWS);
-                   Light mainLight = GetMainLight();
+                   float3 normal = input.normalWS;
                    float3 lightDir = mainLight.direction;
 
                    float3 camPos = _WorldSpaceCameraPos;
                    float3 fragToCam = camPos - input.positionWS;
-                   float3 viewDir = normalize(fragToCam);
+                   //float3 viewDir = normalize(fragToCam);
+                   float3 viewDir = input.viewDirWS;
 
                    float3 viewReflect = reflect(-viewDir, normal);
 
@@ -412,7 +450,8 @@
                    // -------------------- #END -------------------------------------------
 
                   float atten = mainLight.distanceAttenuation; //Shadows
-
+                 
+                  return col;
                   return col + lightRes * atten;
               }
               ENDHLSL

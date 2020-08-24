@@ -33,7 +33,7 @@ public class Floater : MonoBehaviour
     {
         _rb.AddForceAtPosition(Physics.gravity / floatCounter, transform.position, ForceMode.Acceleration);
         // Debug.Log("Gravity");
-        float waveHeight = WaveManager.Instance.GetWaveHeight();
+        float waveHeight = WaveManager.Instance.GetWaveHeight(transform.position);
      //   waveHeight = _waterMat.GetFloat("");
 
 
@@ -52,6 +52,6 @@ public class Floater : MonoBehaviour
             _rb.AddForce(displacementMult * -_rb.velocity * waterDrag * Time.fixedDeltaTime);
             _rb.AddTorque(displacementMult * -_rb.angularVelocity * waterAngularDrag * Time.fixedDeltaTime);
 
-        Debug.Log("Pushed up");
+    //    Debug.Log("Pushed up");
     }
 }

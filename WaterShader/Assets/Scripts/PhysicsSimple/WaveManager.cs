@@ -79,12 +79,12 @@ public class WaveManager : MonoBehaviour
         return amplitude * Mathf.Sin(x / length + offset);
     }
 
-    public float GetWaveHeight() // from Shader
+    public float GetWaveHeight(Vector3 pos) // from Shader
     {
-        Vector2 boatPos = new Vector2(Boat.position.x, Boat.position.z);
-        float waveResult = GerstnerWave(WaveA, boatPos);
-        waveResult += GerstnerWave(WaveB, boatPos);
-        waveResult += GerstnerWave(WaveC, boatPos);
+        Vector2 p = new Vector2(pos.x, pos.z);
+        float waveResult = GerstnerWave(WaveA, p);
+        waveResult += GerstnerWave(WaveB, p);
+        waveResult += GerstnerWave(WaveC, p);
 
         return waveResult;
     }
