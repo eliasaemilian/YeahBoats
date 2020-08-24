@@ -8,6 +8,8 @@
       
         _Gloss("Gloss", Float) = 1
         _Smoothness("Smoothness", Float) = 1
+        _OutlineThickness("Outline Thickness", Float) = 1
+        _DepthSensitivity("Depth Sensitivity", Float) = 1
 
         _WaveA("Wave A (dir [x,y], steepness, wavelength)", Vector) = (1,0,0.5,10)
         _WaveB("Wave B", Vector) = (0,1,0.25,20)
@@ -96,9 +98,13 @@
             half _Smoothness;
             float _Cutoff;
 
+            float _OutlineThickness;
+            float _DepthSensitivity;
+
+
             CBUFFER_END
 
-
+            float4 _CameraDepthTexture_TexelSize;
 
 
             struct Attributes // [appdata]
@@ -210,14 +216,42 @@
 
             float3 ColorBelowWater(float4 screenPos)
             {
-                
-                float2 uv = screenPos.xy / screenPos.w;              
+                float2 uv = screenPos.xy / screenPos.w;
+
+
+                //
+                //float halfScaleFloor = floor(_OutlineThickness * 0.5);
+                //float halfScaleCeil = ceil(_OutlineThickness * 0.5);
+
+                //float2 uvSamples[4];
+                //float depthSamples[4];
+
+                //uvSamples[0] = uv - float2(_CameraDepthTexture_TexelSize.x, _CameraDepthTexture_TexelSize.y) * halfScaleFloor;
+                //uvSamples[1] = uv + float2(_CameraDepthTexture_TexelSize.x, _CameraDepthTexture_TexelSize.y) * halfScaleCeil;
+                //uvSamples[2] = uv + float2(_CameraDepthTexture_TexelSize.x * halfScaleCeil, -_CameraDepthTexture_TexelSize.y * halfScaleFloor);
+                //uvSamples[3] = uv + float2(-_CameraDepthTexture_TexelSize.x * halfScaleFloor, _CameraDepthTexture_TexelSize.y * halfScaleCeil);
+
+                //for (int i = 0; i < 4; i++)
+                //{
+                //    depthSamples[i] = SAMPLE_TEXTURE2D(_CameraDepthTexture, sampler_CameraDepthTexture, uvSamples[i]).r;
+                //}
+
+                //// Depth
+                //float depthFiniteDifference0 = depthSamples[1] - depthSamples[0];
+                //float depthFiniteDifference1 = depthSamples[3] - depthSamples[2];
+                //float edgeDepth = sqrt(pow(depthFiniteDifference0, 2) + pow(depthFiniteDifference1, 2)) * 100;
+                //float depthThreshold = (1 / _DepthSensitivity) * depthSamples[0];
+                //edgeDepth = edgeDepth > depthThreshold ? 1 : 0;
+                //return edgeDepth;
+
+                //
         
                 float depth = SampleSceneDepth( uv );
+
                 
                 float backgroundDepth = LinearEyeDepth(depth, _ZBufferParams);
                 
-                float surfaceDepth = UNITY_Z_0_FAR_FROM_CLIPSPACE(screenPos.z);
+                float surfaceDepth = UNITY_Z_0_FAR_FROM_CLIPSPACE(screenPos.w);
    
                 float depthDifference = backgroundDepth - surfaceDepth;
 
@@ -271,20 +305,22 @@
                  input.normalOS.xyz = normal;
                  input.tangentOS.xyz = tangent;
 
-                #ifdef _NORMALMAP
-                 real sign = input.tangentOS.w * GetOddNegativeScale();
-                 output.tangentWS = half4(normalInputs.tangentWS.xyz, sign);
-                #endif
+
 
                  // Object Space -> Clip Space
                  VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
                  VertexNormalInputs normalInput = GetVertexNormalInputs(input.normalOS, input.tangentOS);
+
 
                  // Normals & Tangents
                  output.normalWS = normalInput.normalWS;
                  output.positionCS = vertexInput.positionCS;
                  output.positionWS = vertexInput.positionWS;
 
+                 #ifdef _NORMALMAP
+                 real sign = input.tangentOS.w * GetOddNegativeScale();
+                 output.tangentWS = half4(normalInputs.tangentWS.xyz, sign);
+                 #endif
 
                  // View Direction
                  output.viewDirWS = GetWorldSpaceViewDir(vertexInput.positionWS);
@@ -354,7 +390,7 @@
                  half4 albedoAlpha = SampleAlbedoAlpha(IN.uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
                  surfaceData.alpha = Alpha(albedoAlpha.a, _BaseColor, _Cutoff);
                  surfaceData.albedo = albedoAlpha.rgb * _BaseColor.rgb ;
-                 //surfaceData.albedo = ColorBelowWater(ComputeScreenPos(IN.positionCS));
+                 surfaceData.albedo = ColorBelowWater(ComputeScreenPos(IN.positionCS));
 
                  // Not supporting the metallic/specular map or occlusion map
                  // for an example of that see : https://github.com/Unity-Technologies/Graphics/blob/master/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl
@@ -382,6 +418,15 @@
                        surfaceData.emission, surfaceData.alpha);
 
                    col = float4(ColorBelowWater(ComputeScreenPos(input.positionCS)), 1);
+                   float4 screenPos = ComputeScreenPos(input.positionCS);
+                   
+                   float2 uv = screenPos.xy / screenPos.w;
+                   float depth = SampleSceneDepth(uv);
+                   float backgroundDepth = LinearEyeDepth(depth, _ZBufferParams);
+
+                   float depth0 = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, uv).r;
+                   return float4(depth0, 0, 0, 1);
+                   return backgroundDepth;
                    return col;
                   // return input.positionCS;
                    return float4(surfaceData.albedo, 1);

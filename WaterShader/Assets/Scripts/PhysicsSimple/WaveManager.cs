@@ -44,6 +44,7 @@ public class WaveManager : MonoBehaviour
 
     public Transform Boat;
 
+    public Camera camera;
 
     private void Awake()
     {
@@ -56,6 +57,19 @@ public class WaveManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    [ExecuteAlways]
+    private void OnEnable()
+    {
+        if (camera != null)
+        {
+            camera.depth = 1;
+            camera.depthTextureMode = DepthTextureMode.Depth;
+            Debug.Log("Set Camera");
+        }
+       
+    }
+
     // Start is called before the first frame update
     void Start()
     {
