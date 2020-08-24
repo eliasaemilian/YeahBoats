@@ -77,6 +77,8 @@
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareOpaqueTexture.hlsl" // This is now Grabpass output texture
 
             CBUFFER_START(UnityPerMaterial)
 
@@ -96,10 +98,7 @@
 
             CBUFFER_END
 
-           // sampler2D _CameraDepthTexture;
-           // sampler2D sampler_CameraDepthTexture;
-            TEXTURE2D(_CameraDepthTexture);
-            SAMPLER(sampler_CameraDepthTexture);
+
 
 
             struct Attributes // [appdata]
@@ -211,11 +210,19 @@
 
             float3 ColorBelowWater(float4 screenPos)
             {
-                float2 uv = screenPos.xy / screenPos.w;
                 
-                float backgroundDepth = LinearEyeDepth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, uv).r, _ZBufferParams);
+                float2 uv = screenPos.xy / screenPos.w;              
+        
+                float depth = SampleSceneDepth( uv );
+                
+                float backgroundDepth = LinearEyeDepth(depth, _ZBufferParams);
+                
                 float surfaceDepth = UNITY_Z_0_FAR_FROM_CLIPSPACE(screenPos.z);
+   
                 float depthDifference = backgroundDepth - surfaceDepth;
+
+                float3 backgroundColor = SampleSceneColor( uv );
+                return backgroundColor;
 
                 return depthDifference / 20;
             }
@@ -338,15 +345,7 @@
                  return inputData;
              }
 
-             // Z buffer to linear depth.
-            // Does NOT correctly handle oblique view frustums.
-            // Does NOT work with orthographic projection.
-            // zBufferParam = { (f-n)/n, 1, (f-n)/n*f, 1/f }
-         /*    float LinearEyeDepth(float depth, float4 zBufferParam)
-             {
-                 return 1.0 / (zBufferParam.z * depth + zBufferParam.w);
-             }*/
-
+ 
              // Surface Data Standin for organizing data
              SurfaceData InitializeSurfaceData(Varyings IN)
              {
@@ -355,6 +354,7 @@
                  half4 albedoAlpha = SampleAlbedoAlpha(IN.uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
                  surfaceData.alpha = Alpha(albedoAlpha.a, _BaseColor, _Cutoff);
                  surfaceData.albedo = albedoAlpha.rgb * _BaseColor.rgb ;
+                 //surfaceData.albedo = ColorBelowWater(ComputeScreenPos(IN.positionCS));
 
                  // Not supporting the metallic/specular map or occlusion map
                  // for an example of that see : https://github.com/Unity-Technologies/Graphics/blob/master/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl
@@ -363,6 +363,8 @@
                  surfaceData.normalTS = SampleNormal(IN.uv, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap), _BumpScale);
                  surfaceData.emission = SampleEmission(IN.uv, _EmissionColor.rgb, TEXTURE2D_ARGS(_EmissionMap, sampler_EmissionMap));
                  surfaceData.occlusion = 1;
+
+                 surfaceData.alpha = 1; //
 
                  return surfaceData;
              }
@@ -379,7 +381,11 @@
                        surfaceData.specular, surfaceData.smoothness, surfaceData.occlusion,
                        surfaceData.emission, surfaceData.alpha);
 
-                  col = float4(ColorBelowWater(ComputeScreenPos(input.positionCS)),0);
+                   col = float4(ColorBelowWater(ComputeScreenPos(input.positionCS)), 1);
+                   return col;
+                  // return input.positionCS;
+                   return float4(surfaceData.albedo, 1);
+                //  col = float4(ColorBelowWater(ComputeScreenPos(input.positionCS)),0);
 
                    // apply fog
                    col.rgb = MixFog(col.rgb, inputData.fogCoord);
