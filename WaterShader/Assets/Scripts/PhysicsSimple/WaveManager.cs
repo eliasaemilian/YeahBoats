@@ -47,6 +47,10 @@ public class WaveManager : MonoBehaviour
 
     public float WaveHeightResult;
 
+    public Transform WaterPlane;
+    private Vector3 _waterPlaneScale;
+    private float _waterPlaneYPos;
+
    // public Camera camera;
 
     private void Awake()
@@ -82,6 +86,8 @@ public class WaveManager : MonoBehaviour
         WaveC = new Wave(WaterShader.GetVector("_WaveC"));
         WaveSpeed = WaterShader.GetFloat("_WaveSpeed");
 
+        _waterPlaneScale = WaterPlane.localScale;
+        _waterPlaneYPos = WaterPlane.position.y;
     }
 
     // Update is called once per frame
@@ -97,6 +103,7 @@ public class WaveManager : MonoBehaviour
         return amplitude * Mathf.Sin(x / length + offset);
     }
 
+    // TODO: Adjust this for flexible Water Plane position/scale, currently only correct for Water at ( 0,0,0 ) and Scale of ( 1,1,1 )
     public float GetWaveHeight(Vector3 pos) // from Shader
     {
         Vector2 p = new Vector2(pos.x, pos.z);
@@ -105,9 +112,9 @@ public class WaveManager : MonoBehaviour
         waveResult += GerstnerWave(WaveC, p);
 
 
-        WaveHeightResult = waveResult;
+        WaveHeightResult = _waterPlaneYPos + waveResult;
 
-        return waveResult;
+        return _waterPlaneYPos + waveResult;
     }
 
     private float GerstnerWave(Wave wave, Vector2 p)
@@ -118,8 +125,12 @@ public class WaveManager : MonoBehaviour
         float _cOffset = wave.c * Timer ;
         float _f = wave.k * (Vector2.Dot(wave.Direction, p) - _cOffset);
         float _af = wave.a * Mathf.Sin(_f);
-        p.x -= wave.Direction.x * _af; //adjust for approximation of vertex shift along x, z
-        p.y -= wave.Direction.y * _af;
+        p.x -=  wave.Direction.x * _af; //adjust for approximation of vertex shift along x, z
+        p.y -=  wave.Direction.y  * _af;
+
+        //p.x -= (wave.Direction.x * _waterPlaneScale.x) * _af; //adjust for approximation of vertex shift along x, z
+        //p.y -= (wave.Direction.y * _waterPlaneScale.z) * _af;
+
         _f = wave.k * (Vector2.Dot(wave.Direction, p) - _cOffset);
         return wave.a * Mathf.Cos(_f); //amplitude
     }
