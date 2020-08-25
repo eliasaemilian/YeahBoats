@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Shader Graphs_DepthTest
+  m_Shader: {fileID: -6465566751694194690, guid: 2b457043605563d4cbb9fa661bf8e8a3,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Floats:
+    - _Depth: 4.28
+    - _FoamAmount: 10
+    - _FoamCutoff: 1
+    - _FoamScale: 100
+    - _FoamSpeed: 0.5
+    - _Strength: 0
+    - _WaterFogDensity: 0.05
+    m_Colors:
+    - _DeepWaterColor: {r: 0.11473007, g: 0.107022054, b: 0.34905657, a: 0.8509804}
+    - _FoamColor: {r: 0.8820755, g: 0.9469728, b: 1, a: 1}
+    - _FogWaterColor: {r: 0.11764706, g: 0.18431373, b: 0.34117648, a: 1}
+    - _ShallowWaterColor: {r: 0.26886788, g: 1, b: 0.9489154, a: 0.3607843}
+    - _WaterColor: {r: 0.07058824, g: 0.3529412, b: 0.972549, a: 1}

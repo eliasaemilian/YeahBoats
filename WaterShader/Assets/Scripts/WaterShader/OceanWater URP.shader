@@ -5,11 +5,13 @@
         _BaseMap("Base Texture", 2D) = "white" {}
         _ShadowColor("Shadow Color", Color) = (0.35,0.4,0.45,1.0)
         _BaseColor("Water Color", Color) = (.2,.2,.8,1)
+
+        _WaterFogColor("Water Fog Color", Color) = (0, 0, 0, 0)
+        _WaterFogDensity("Water Fog Density", Range(0, 2)) = 0.1
       
         _Gloss("Gloss", Float) = 1
         _Smoothness("Smoothness", Float) = 1
-        _OutlineThickness("Outline Thickness", Float) = 1
-        _DepthSensitivity("Depth Sensitivity", Float) = 1
+
 
         _WaveA("Wave A (dir [x,y], steepness, wavelength)", Vector) = (1,0,0.5,10)
         _WaveB("Wave B", Vector) = (0,1,0.25,20)
@@ -34,8 +36,8 @@
 
         SubShader
     {
-        Tags { "RenderType" = "Transparent" "Queue" = "Transparent" "RenderPipeline" = "UniversalRenderPipeline"}
-        LOD 200
+        Tags { "RenderType" = "Transparent" "Queue" = "Transparent+0" "RenderPipeline" = "UniversalRenderPipeline" "IgnoreProjector" = "True"}
+        LOD 300
 
         Pass
         {
@@ -74,13 +76,32 @@
             #pragma multi_compile _ LIGHTMAP_ON
             #pragma multi_compile_fog
 
+            // Defines
+            #define _SURFACE_TYPE_TRANSPARENT 1
+            #define _NORMAL_DROPOFF_TS 1
+            #define ATTRIBUTES_NEED_NORMAL
+            #define ATTRIBUTES_NEED_TANGENT
+            #define ATTRIBUTES_NEED_TEXCOORD1
+            #define VARYINGS_NEED_POSITION_WS 
+            #define VARYINGS_NEED_NORMAL_WS
+            #define VARYINGS_NEED_TANGENT_WS
+            #define VARYINGS_NEED_VIEWDIRECTION_WS
+            #define VARYINGS_NEED_FOG_AND_VERTEX_LIGHT
+            #define SHADERPASS_FORWARD
+
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareOpaqueTexture.hlsl" // This is now Grabpass output texture
+
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
+            #include "Packages/com.unity.shadergraph/ShaderGraphLibrary/ShaderVariablesFunctions.hlsl"
+
 
             CBUFFER_START(UnityPerMaterial)
 
@@ -101,6 +122,8 @@
             float _OutlineThickness;
             float _DepthSensitivity;
 
+            float4 _WaterFogColor;
+            float _WaterFogDensity;
 
             CBUFFER_END
 
@@ -129,11 +152,13 @@
                 DECLARE_LIGHTMAP_OR_SH(lightmapUV, vertexSH, 1);
                 float3 positionWS   : TEXCOORD2; 
                 float4 shadowCoord  : TEXCOORD3;
-                #ifdef _NORMALMAP
+                //#ifdef _NORMALMAP
                 float4 tangentWS                : TEXCOORD4;
-                #endif
-                float3 viewDirWS                : TEXCOORD5;
+                //#endif
+                float3 viewDirectionWS                : TEXCOORD5;
                 half4 fogFactorAndVertexLight   : TEXCOORD6; // x: fogFactor, yzw: vertex light
+                float3 normalOS : TEXCOORD7;
+               
 
                 UNITY_VERTEX_INPUT_INSTANCE_ID
                 UNITY_VERTEX_OUTPUT_STEREO
@@ -214,57 +239,30 @@
                     );
             }
 
-            float3 ColorBelowWater(float4 screenPos)
+            float3 ColorBelowWater(float4 screenPos, float3 tangentSpaceNormal)
             {
-                float2 uv = screenPos.xy / screenPos.w;
+
+                // Refraction
+                float2 uvOffset = tangentSpaceNormal.xy * 0.4;
+                float2 uv = (screenPos.xy + uvOffset) / screenPos.w;
+                uvOffset.y *= _CameraDepthTexture_TexelSize.z * abs(_CameraDepthTexture_TexelSize.y);
 
 
-                //
-                //float halfScaleFloor = floor(_OutlineThickness * 0.5);
-                //float halfScaleCeil = ceil(_OutlineThickness * 0.5);
-
-                //float2 uvSamples[4];
-                //float depthSamples[4];
-
-                //uvSamples[0] = uv - float2(_CameraDepthTexture_TexelSize.x, _CameraDepthTexture_TexelSize.y) * halfScaleFloor;
-                //uvSamples[1] = uv + float2(_CameraDepthTexture_TexelSize.x, _CameraDepthTexture_TexelSize.y) * halfScaleCeil;
-                //uvSamples[2] = uv + float2(_CameraDepthTexture_TexelSize.x * halfScaleCeil, -_CameraDepthTexture_TexelSize.y * halfScaleFloor);
-                //uvSamples[3] = uv + float2(-_CameraDepthTexture_TexelSize.x * halfScaleFloor, _CameraDepthTexture_TexelSize.y * halfScaleCeil);
-
-                //for (int i = 0; i < 4; i++)
-                //{
-                //    depthSamples[i] = SAMPLE_TEXTURE2D(_CameraDepthTexture, sampler_CameraDepthTexture, uvSamples[i]).r;
-                //}
-
-                //// Depth
-                //float depthFiniteDifference0 = depthSamples[1] - depthSamples[0];
-                //float depthFiniteDifference1 = depthSamples[3] - depthSamples[2];
-                //float edgeDepth = sqrt(pow(depthFiniteDifference0, 2) + pow(depthFiniteDifference1, 2)) * 100;
-                //float depthThreshold = (1 / _DepthSensitivity) * depthSamples[0];
-                //edgeDepth = edgeDepth > depthThreshold ? 1 : 0;
-                //return edgeDepth;
-
-                //
-        
-                float depth = SampleSceneDepth( uv );
-
+              //  float2 uv = screenPos.xy / screenPos.w;                   
+                float depth = SampleSceneDepth( uv ); // sample depth buffer
                 
-                float backgroundDepth = LinearEyeDepth(depth, _ZBufferParams);
-                
-                float surfaceDepth = UNITY_Z_0_FAR_FROM_CLIPSPACE(screenPos.w);
+                float backgroundDepth = LinearEyeDepth(depth, _ZBufferParams); // Get Dist from Camera in Eye Units
+                //float surfaceDepth = UNITY_Z_0_FAR_FROM_CLIPSPACE(screenPos.w); //Get Camera Far Plance
    
-                float depthDifference = backgroundDepth - surfaceDepth;
+                float depthDifference = backgroundDepth - _ProjectionParams.w;
+                float fogFactor = exp2(-_WaterFogDensity * depthDifference);
 
-                float3 backgroundColor = SampleSceneColor( uv );
-                return backgroundColor;
-
-                return depthDifference / 20;
+                float3 backgroundColor = SampleSceneColor( uv ); // sample scene prerender pass
+                
+                return lerp(_WaterFogColor, backgroundColor, fogFactor);              
             }
 
             #if SHADER_LIBRARY_VERSION_MAJOR < 9
-            // This function was added in URP v9.x.x versions
-            // If we want to support URP versions before, we need to handle it instead.
-            // Computes the world space view direction (pointing towards the viewer).
             float3 GetWorldSpaceViewDir(float3 positionWS)
             {
                 if (unity_OrthoParams.w == 0)
@@ -291,39 +289,42 @@
 
 
                  // GERSTNER WAVES
-                 float3 gridPoint = input.positionOS.xyz;
-                 float3 tangent = 0; 
-                 float3 binormal = 0;
-                 float3 normal = 0;
-                 float3 p = gridPoint;
+                 //float3 gridPoint = input.positionOS.xyz;
+                 //float3 tangent = 0; 
+                 //float3 binormal = 0;
+                 //float3 normal = 0;
+                 //float3 p = gridPoint;
 
-                 p += GerstnerWave(_WaveA, gridPoint, tangent, binormal, normal);
-                 p += GerstnerWave(_WaveB, gridPoint, tangent, binormal, normal);
-                 p += GerstnerWave(_WaveC, gridPoint, tangent, binormal, normal);
+                 //p += GerstnerWave(_WaveA, gridPoint, tangent, binormal, normal);
+                 //p += GerstnerWave(_WaveB, gridPoint, tangent, binormal, normal);
+                 //p += GerstnerWave(_WaveC, gridPoint, tangent, binormal, normal);
 
-                 input.positionOS.xyz = p;
-                 input.normalOS.xyz = normal;
-                 input.tangentOS.xyz = tangent;
-
-
+                 //input.positionOS.xyz = p;
+                 //input.normalOS.xyz = normal;
+                 //input.tangentOS.xyz = tangent;
 
                  // Object Space -> Clip Space
                  VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
                  VertexNormalInputs normalInput = GetVertexNormalInputs(input.normalOS, input.tangentOS);
-
 
                  // Normals & Tangents
                  output.normalWS = normalInput.normalWS;
                  output.positionCS = vertexInput.positionCS;
                  output.positionWS = vertexInput.positionWS;
 
-                 #ifdef _NORMALMAP
-                 real sign = input.tangentOS.w * GetOddNegativeScale();
-                 output.tangentWS = half4(normalInputs.tangentWS.xyz, sign);
-                 #endif
+                 output.normalOS = input.normalOS;
 
                  // View Direction
-                 output.viewDirWS = GetWorldSpaceViewDir(vertexInput.positionWS);
+                 output.viewDirectionWS = GetWorldSpaceViewDir(vertexInput.positionWS);
+
+               //  output.tangentWS = half4(normalInput.tangentWS, output.viewDirectionWS.y);
+
+                 #ifdef _NORMALMAP
+                 real sign = input.tangentOS.w * GetOddNegativeScale();
+                 output.tangentWS = half4(normalInput.tangentWS.xyz, sign);
+                 #endif
+
+
                  
                  // UVs & Vertex Colour
                  output.uv = TRANSFORM_TEX(input.uv, _BaseMap);
@@ -354,7 +355,7 @@
                  inputData.positionWS = IN.positionWS;
                  #endif
 
-                 half3 viewDirWS = SafeNormalize(IN.viewDirWS);
+                 half3 viewDirWS = SafeNormalize(IN.viewDirectionWS);
 
                  #ifdef _NORMALMAP
                  float sgn = IN.tangentWS.w; // should be either +1 or -1
@@ -387,10 +388,12 @@
              {
                  SurfaceData surfaceData = (SurfaceData)0;
 
+                 float4 screenPos = ComputeScreenPos(TransformWorldToHClip(IN.positionWS), _ProjectionParams.x);
+
                  half4 albedoAlpha = SampleAlbedoAlpha(IN.uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
                  surfaceData.alpha = Alpha(albedoAlpha.a, _BaseColor, _Cutoff);
-                 surfaceData.albedo = albedoAlpha.rgb * _BaseColor.rgb ;
-                 surfaceData.albedo = ColorBelowWater(ComputeScreenPos(IN.positionCS));
+                 
+                 surfaceData.albedo = albedoAlpha.rgb * _BaseColor.rgb;
 
                  // Not supporting the metallic/specular map or occlusion map
                  // for an example of that see : https://github.com/Unity-Technologies/Graphics/blob/master/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl
@@ -398,10 +401,10 @@
                  surfaceData.smoothness = _Smoothness;
                  surfaceData.normalTS = SampleNormal(IN.uv, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap), _BumpScale);
                  surfaceData.emission = SampleEmission(IN.uv, _EmissionColor.rgb, TEXTURE2D_ARGS(_EmissionMap, sampler_EmissionMap));
+                 surfaceData.emission = ColorBelowWater(screenPos, IN.normalOS);
+
                  surfaceData.occlusion = 1;
-
-                 surfaceData.alpha = 1; //
-
+              
                  return surfaceData;
              }
 
@@ -417,36 +420,22 @@
                        surfaceData.specular, surfaceData.smoothness, surfaceData.occlusion,
                        surfaceData.emission, surfaceData.alpha);
 
-                   col = float4(ColorBelowWater(ComputeScreenPos(input.positionCS)), 1);
-                   float4 screenPos = ComputeScreenPos(input.positionCS);
-                   
-                   float2 uv = screenPos.xy / screenPos.w;
-                   float depth = SampleSceneDepth(uv);
-                   float backgroundDepth = LinearEyeDepth(depth, _ZBufferParams);
 
-                   float depth0 = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, uv).r;
-                   return float4(depth0, 0, 0, 1);
-                   return backgroundDepth;
-                   return col;
-                  // return input.positionCS;
-                   return float4(surfaceData.albedo, 1);
-                //  col = float4(ColorBelowWater(ComputeScreenPos(input.positionCS)),0);
 
                    // apply fog
                    col.rgb = MixFog(col.rgb, inputData.fogCoord);
                  //  col.a = saturate(col.a);
-                   col.a = .6; //TODO-> Make dependant on how far from shore
-                   
+                   return col;
                  //  return float4(inputData.normalWS, 0);
      /*              return col;
                    col = _BaseColor;*/
 
                    float4 shadowCoord = TransformWorldToShadowCoord(input.positionWS.xyz);
-                   //Light light = GetMainLight(shadowCoord);
+                   Light light = GetMainLight(shadowCoord);
 
-                   //half3 diffuse = LightingLambert(light.color, light.direction, input.normalWS);
+                   half3 diffuse = LightingLambert(light.color, light.direction, input.normalWS);
 
-                   //return half4(col.rgb * diffuse * diffuse * light.shadowAttenuation, col.a);
+                   return half4(col.rgb * diffuse * diffuse * light.shadowAttenuation, col.a);
 
                    // col = _BaseColor;
                    
@@ -491,7 +480,7 @@
                    float3 camPos = _WorldSpaceCameraPos;
                    float3 fragToCam = camPos - input.positionWS;
                    //float3 viewDir = normalize(fragToCam);
-                   float3 viewDir = input.viewDirWS;
+                   float3 viewDir = input.viewDirectionWS;
 
                    float3 viewReflect = reflect(-viewDir, normal);
 
@@ -505,7 +494,13 @@
                   return col;
                   return col + lightRes * atten;
               }
+
               ENDHLSL
+
+
           }
+
+          UsePass "Universal Render Pipeline/Lit/DepthOnly"
+
     }
 }
