@@ -203,17 +203,13 @@
                 float steepness = wave.z;
                 float wavelength = wave.w;
                 float k = TAU / wavelength;
-                float a = steepness / k; //amplitude
+                float a = steepness / k; 
 
                 float c = sqrt(9.8 / k);
                 float2 d = normalize(wave.xy);
                 float f = k * (dot(d, p.xz) - c * _Time.y);
 
-                //p.x += d.x * (a * cos(f));
-                //p.y = a * sin(f);
-                //p.z += d.y * (a * cos(f));
-
-                float3 _bitangent = float3( //flipped????
+                float3 _bitangent = float3( 
                     1 - ( d.x * d.x * steepness * cos(f)),
                     d.x * steepness * sin(f),
                     - ( d.x * d.y * steepness * cos(f) )
@@ -289,19 +285,19 @@
 
 
                  // GERSTNER WAVES
-                 //float3 gridPoint = input.positionOS.xyz;
-                 //float3 tangent = 0; 
-                 //float3 binormal = 0;
-                 //float3 normal = 0;
-                 //float3 p = gridPoint;
+                 float3 gridPoint = input.positionOS.xyz;
+                 float3 tangent = 0; 
+                 float3 binormal = 0;
+                 float3 normal = 0;
+                 float3 p = gridPoint;
 
-                 //p += GerstnerWave(_WaveA, gridPoint, tangent, binormal, normal);
-                 //p += GerstnerWave(_WaveB, gridPoint, tangent, binormal, normal);
-                 //p += GerstnerWave(_WaveC, gridPoint, tangent, binormal, normal);
+                 p += GerstnerWave(_WaveA, gridPoint, tangent, binormal, normal);
+                 p += GerstnerWave(_WaveB, gridPoint, tangent, binormal, normal);
+                 p += GerstnerWave(_WaveC, gridPoint, tangent, binormal, normal);
 
-                 //input.positionOS.xyz = p;
-                 //input.normalOS.xyz = normal;
-                 //input.tangentOS.xyz = tangent;
+                 input.positionOS.xyz = p;
+                 input.normalOS.xyz = normal;
+                 input.tangentOS.xyz = tangent;
 
                  // Object Space -> Clip Space
                  VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);

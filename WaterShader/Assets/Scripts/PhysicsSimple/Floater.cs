@@ -17,15 +17,19 @@ public class Floater : MonoBehaviour
 
     private Boat myBoat;
 
+    public Transform WaterPlane;
+    private float _waterHeigth;
 
     // Start is called before the first frame update
     void Start()
     {
         myBoat = GetComponentInParent<BoatHandler>().ThisBoat;
+       
         floatCounter = myBoat.floatCounter;
         waterDrag = myBoat.waterDrag;
         waterAngularDrag = myBoat.waterAngularDrag;
         _rb = GetComponentInParent<Rigidbody>();
+        _waterHeigth = WaterPlane.position.y;
     }
 
     // Update is called once per frame
@@ -37,9 +41,10 @@ public class Floater : MonoBehaviour
      //   waveHeight = _waterMat.GetFloat("");
 
 
-        if (transform.position.y < waveHeight)
+        if (transform.position.y < ( waveHeight + _waterHeigth) )
         {
-            PushUp(waveHeight);
+            PushUp(waveHeight + _waterHeigth);
+            Debug.Log("PUSH");
         }
     }
 

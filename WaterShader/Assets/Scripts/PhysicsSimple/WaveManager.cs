@@ -41,10 +41,13 @@ public class WaveManager : MonoBehaviour
     public float Timer = 0f;
 
     public Wave WaveA, WaveB, WaveC;
+    public float WaveSpeed;
 
     public Transform Boat;
 
-    public Camera camera;
+    public float WaveHeightResult;
+
+   // public Camera camera;
 
     private void Awake()
     {
@@ -58,17 +61,17 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-    [ExecuteAlways]
-    private void OnEnable()
-    {
-        if (camera != null)
-        {
-            camera.depth = 1;
-            camera.depthTextureMode = DepthTextureMode.Depth;
-            Debug.Log("Set Camera");
-        }
+    //[ExecuteAlways]
+    //private void OnEnable()
+    //{
+    //    if (camera != null)
+    //    {
+    //        camera.depth = 1;
+    //        camera.depthTextureMode = DepthTextureMode.Depth;
+    //        Debug.Log("Set Camera");
+    //    }
        
-    }
+    //}
 
     // Start is called before the first frame update
     void Start()
@@ -77,6 +80,7 @@ public class WaveManager : MonoBehaviour
         WaveA = new Wave(WaterShader.GetVector("_WaveA"));
         WaveB = new Wave(WaterShader.GetVector("_WaveB"));
         WaveC = new Wave(WaterShader.GetVector("_WaveC"));
+        WaveSpeed = WaterShader.GetFloat("_WaveSpeed");
 
     }
 
@@ -100,6 +104,9 @@ public class WaveManager : MonoBehaviour
         waveResult += GerstnerWave(WaveB, p);
         waveResult += GerstnerWave(WaveC, p);
 
+
+        WaveHeightResult = waveResult;
+
         return waveResult;
     }
 
@@ -107,7 +114,8 @@ public class WaveManager : MonoBehaviour
     {
     //    float f = wave.k * (Vector2.Dot(wave.Direction, new Vector2 (transform.position.x, transform.position.y)) - wave.c * Timer);
 
-        float _cOffset = wave.c * Timer;
+     //   float _cOffset = wave.c * ( Timer * WaveSpeed );
+        float _cOffset = wave.c * Timer ;
         float _f = wave.k * (Vector2.Dot(wave.Direction, p) - _cOffset);
         float _af = wave.a * Mathf.Sin(_f);
         p.x -= wave.Direction.x * _af; //adjust for approximation of vertex shift along x, z

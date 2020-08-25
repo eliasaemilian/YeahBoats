@@ -339,3 +339,4 @@ Shader "Universal Render Pipeline/Custom/Physically Based Example"
             // same properties.
                 CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.LitShader"
 }
+

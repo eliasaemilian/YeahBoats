@@ -329,7 +329,6 @@ GameObject:
   m_Component:
   - component: {fileID: 193346102}
   - component: {fileID: 193346103}
-  - component: {fileID: 193346104}
   m_Layer: 0
   m_Name: Floater (2)
   m_TagString: Untagged
@@ -363,22 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a491abfa9f15643a36d800d7bb9952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floatCounter: 4
-  waterDrag: 0.99
-  waterAngularDrag: 0.5
---- !u!135 &193346104
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 193346101}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.05
-  m_Center: {x: 0, y: 0, z: 0}
+  WaterPlane: {fileID: 1177415183}
 --- !u!1 &256517832
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,7 +428,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 93e78d0ac8d91c1409b60ef7844bc416, type: 2}
+  - {fileID: 2100000, guid: 88270bd63d7b4d6468a26b506d920253, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -538,7 +522,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 93e78d0ac8d91c1409b60ef7844bc416, type: 2}
+  - {fileID: 2100000, guid: 88270bd63d7b4d6468a26b506d920253, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -577,7 +561,6 @@ GameObject:
   m_Component:
   - component: {fileID: 328445979}
   - component: {fileID: 328445980}
-  - component: {fileID: 328445981}
   m_Layer: 0
   m_Name: Floater (3)
   m_TagString: Untagged
@@ -611,22 +594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a491abfa9f15643a36d800d7bb9952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floatCounter: 4
-  waterDrag: 0.99
-  waterAngularDrag: 0.5
---- !u!135 &328445981
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 328445978}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.05
-  m_Center: {x: 0, y: 0, z: 0}
+  WaterPlane: {fileID: 1177415183}
 --- !u!1 &341367095
 GameObject:
   m_ObjectHideFlags: 0
@@ -705,6 +673,7 @@ GameObject:
   - component: {fileID: 346039238}
   - component: {fileID: 346039243}
   - component: {fileID: 346039242}
+  - component: {fileID: 346039244}
   m_Layer: 0
   m_Name: Boat
   m_TagString: Untagged
@@ -785,7 +754,7 @@ Transform:
   m_Children:
   - {fileID: 344106565}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &346039242
 MonoBehaviour:
@@ -794,7 +763,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 346039237}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c3ae53124b067b48a3972c38363ee28, type: 3}
   m_Name: 
@@ -817,6 +786,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &346039244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346039237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70c188176b365b347a8d190f4e807900, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ThisBoat:
+    floatCounter: 4
+    waterDrag: 50
+    waterAngularDrag: 50
 --- !u!1 &354516213
 GameObject:
   m_ObjectHideFlags: 0
@@ -882,7 +867,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 93e78d0ac8d91c1409b60ef7844bc416, type: 2}
+  - {fileID: 2100000, guid: 88270bd63d7b4d6468a26b506d920253, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -940,10 +925,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e4e2332590264a4a8c1095cca10af81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WaterShader: {fileID: 2100000, guid: 88270bd63d7b4d6468a26b506d920253, type: 2}
   amplitude: 1
   length: 20
   speed: 1
   offset: 0
+  Timer: 0
+  WaveSpeed: 0
+  Boat: {fileID: 346039241}
+  WaveHeightResult: 0
 --- !u!4 &598061134
 Transform:
   m_ObjectHideFlags: 0
@@ -956,7 +946,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &633898879
 GameObject:
@@ -1023,7 +1013,7 @@ Transform:
   m_Children:
   - {fileID: 1722372922}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 19.602001, y: 0, z: 0}
 --- !u!1 &648744385
 GameObject:
@@ -1090,7 +1080,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 93e78d0ac8d91c1409b60ef7844bc416, type: 2}
+  - {fileID: 2100000, guid: 88270bd63d7b4d6468a26b506d920253, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1244,7 +1234,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 93e78d0ac8d91c1409b60ef7844bc416, type: 2}
+  - {fileID: 2100000, guid: 88270bd63d7b4d6468a26b506d920253, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1354,7 +1344,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 93e78d0ac8d91c1409b60ef7844bc416, type: 2}
+  - {fileID: 2100000, guid: 88270bd63d7b4d6468a26b506d920253, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1504,6 +1494,100 @@ Terrain:
   m_GroupingID: 0
   m_RenderingLayerMask: 1
   m_AllowAutoConnect: 1
+--- !u!1 &1177415179
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1177415183}
+  - component: {fileID: 1177415182}
+  - component: {fileID: 1177415181}
+  - component: {fileID: 1177415180}
+  m_Layer: 0
+  m_Name: Water (PBR)
+  m_TagString: Water
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!64 &1177415180
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177415179}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 3be9c8d549c7e4907a8eeb6a5476a60f, type: 2}
+--- !u!23 &1177415181
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177415179}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 88270bd63d7b4d6468a26b506d920253, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &1177415182
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177415179}
+  m_Mesh: {fileID: 4300000, guid: 3be9c8d549c7e4907a8eeb6a5476a60f, type: 2}
+--- !u!4 &1177415183
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177415179}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 30, z: 0}
+  m_LocalScale: {x: 30, y: 1, z: 30}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1195183563
 GameObject:
   m_ObjectHideFlags: 0
@@ -2023,7 +2107,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 93e78d0ac8d91c1409b60ef7844bc416, type: 2}
+  - {fileID: 2100000, guid: 88270bd63d7b4d6468a26b506d920253, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2092,7 +2176,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1640298245}
   - component: {fileID: 1640298246}
-  - component: {fileID: 1640298247}
   m_Layer: 0
   m_Name: Floater (1)
   m_TagString: Untagged
@@ -2126,22 +2209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a491abfa9f15643a36d800d7bb9952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floatCounter: 4
-  waterDrag: 0.99
-  waterAngularDrag: 0.5
---- !u!135 &1640298247
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1640298244}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.05
-  m_Center: {x: 0, y: 0, z: 0}
+  WaterPlane: {fileID: 1177415183}
 --- !u!1 &1722372921
 GameObject:
   m_ObjectHideFlags: 3
@@ -2328,7 +2396,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1770546085
 Transform:
   m_ObjectHideFlags: 0
@@ -2350,7 +2418,7 @@ Transform:
   - {fileID: 1626784720}
   - {fileID: 2108238071}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1905143253
 GameObject:
@@ -2362,7 +2430,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1905143254}
   - component: {fileID: 1905143255}
-  - component: {fileID: 1905143256}
   m_Layer: 0
   m_Name: Floater
   m_TagString: Untagged
@@ -2396,22 +2463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a491abfa9f15643a36d800d7bb9952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floatCounter: 4
-  waterDrag: 0.99
-  waterAngularDrag: 0.5
---- !u!135 &1905143256
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1905143253}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.05
-  m_Center: {x: 0, y: 0, z: 0}
+  WaterPlane: {fileID: 1177415183}
 --- !u!1 &1913038343
 GameObject:
   m_ObjectHideFlags: 0
@@ -2626,7 +2678,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 93e78d0ac8d91c1409b60ef7844bc416, type: 2}
+  - {fileID: 2100000, guid: 88270bd63d7b4d6468a26b506d920253, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2797,7 +2849,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 93e78d0ac8d91c1409b60ef7844bc416, type: 2}
+  - {fileID: 2100000, guid: 88270bd63d7b4d6468a26b506d920253, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
