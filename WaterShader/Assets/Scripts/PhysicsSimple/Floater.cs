@@ -30,6 +30,7 @@ public class Floater : MonoBehaviour
         waterAngularDrag = myBoat.waterAngularDrag;
         _rb = GetComponentInParent<Rigidbody>();
         _waterHeigth = WaterPlane.position.y;
+
     }
 
     // Update is called once per frame
