@@ -41,9 +41,13 @@ public class WaveManager : MonoBehaviour
     public float Timer = 0f;
 
     public Wave WaveA, WaveB, WaveC;
+    public float WaveSpeed;
 
     public Transform Boat;
 
+    public float WaveHeightResult;
+
+   // public Camera camera;
 
     private void Awake()
     {
@@ -56,6 +60,19 @@ public class WaveManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    //[ExecuteAlways]
+    //private void OnEnable()
+    //{
+    //    if (camera != null)
+    //    {
+    //        camera.depth = 1;
+    //        camera.depthTextureMode = DepthTextureMode.Depth;
+    //        Debug.Log("Set Camera");
+    //    }
+       
+    //}
+
     // Start is called before the first frame update
     void Start()
     {
@@ -63,6 +80,7 @@ public class WaveManager : MonoBehaviour
         WaveA = new Wave(WaterShader.GetVector("_WaveA"));
         WaveB = new Wave(WaterShader.GetVector("_WaveB"));
         WaveC = new Wave(WaterShader.GetVector("_WaveC"));
+        WaveSpeed = WaterShader.GetFloat("_WaveSpeed");
 
     }
 
@@ -79,12 +97,15 @@ public class WaveManager : MonoBehaviour
         return amplitude * Mathf.Sin(x / length + offset);
     }
 
-    public float GetWaveHeight() // from Shader
+    public float GetWaveHeight(Vector3 pos) // from Shader
     {
-        Vector2 boatPos = new Vector2(Boat.position.x, Boat.position.z);
-        float waveResult = GerstnerWave(WaveA, boatPos);
-        waveResult += GerstnerWave(WaveB, boatPos);
-        waveResult += GerstnerWave(WaveC, boatPos);
+        Vector2 p = new Vector2(pos.x, pos.z);
+        float waveResult = GerstnerWave(WaveA, p);
+        waveResult += GerstnerWave(WaveB, p);
+        waveResult += GerstnerWave(WaveC, p);
+
+
+        WaveHeightResult = waveResult;
 
         return waveResult;
     }
@@ -93,12 +114,13 @@ public class WaveManager : MonoBehaviour
     {
     //    float f = wave.k * (Vector2.Dot(wave.Direction, new Vector2 (transform.position.x, transform.position.y)) - wave.c * Timer);
 
-        float _cOffset = wave.c * Timer;
+     //   float _cOffset = wave.c * ( Timer * WaveSpeed );
+        float _cOffset = wave.c * Timer ;
         float _f = wave.k * (Vector2.Dot(wave.Direction, p) - _cOffset);
-        float _af = wave.a * Mathf.Cos(_f);
+        float _af = wave.a * Mathf.Sin(_f);
         p.x -= wave.Direction.x * _af; //adjust for approximation of vertex shift along x, z
         p.y -= wave.Direction.y * _af;
         _f = wave.k * (Vector2.Dot(wave.Direction, p) - _cOffset);
-        return wave.a * Mathf.Sin(_f); //amplitude
+        return wave.a * Mathf.Cos(_f); //amplitude
     }
 }

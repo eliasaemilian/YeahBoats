@@ -7,14 +7,15 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: OceanWaterURP
-  m_Shader: {fileID: 4800000, guid: 2905c3f25ba2665459664091880a09e6, type: 3}
+  m_Name: TestMatRed
+  m_Shader: {fileID: 4800000, guid: 0ca6dca7396eb48e5849247ffd444914, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 2050
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -49,43 +50,41 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaClip: 0
-    - _Amplitude: 1.38
     - _Blend: 0
     - _BumpScale: 1
     - _Cull: 2
-    - _Cutoff: 0.21
-    - _DepthSensitivity: 1
-    - _DstBlend: 10
-    - _EnableAlphaTest: 0
-    - _EnableBumpMap: 0
-    - _EnableEmission: 0
+    - _Cutoff: 0.5
+    - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _Gloss: 2.04
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
-    - _OutlineThickness: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 1.98
+    - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 5
+    - _SrcBlend: 1
     - _Surface: 0
-    - _WaterFogDensity: 0.07
-    - _WaveSize: 0.87
-    - _WaveSpeed: -0.1
     - _WorkflowMode: 1
-    - _ZWrite: 0
+    - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.07058806, g: 0.35301548, b: 0.972549, a: 1}
-    - _Color: {r: 0.17661978, g: 0.26424813, b: 0.5943396, a: 1}
-    - _EmissionColor: {r: 0.8490566, g: 0.748932, b: 0.748932, a: 0}
-    - _ShadowColor: {r: 0.09843356, g: 0.19989315, b: 0.2641509, a: 1}
+    - _BaseColor: {r: 0.735849, g: 0.2738738, b: 0.19090424, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _WaterFogColor: {r: 0.117647044, g: 0.18426988, b: 0.34117648, a: 1}
-    - _WaveA: {r: 1, g: 1, b: 0.25, a: 60}
-    - _WaveB: {r: 1, g: 0.6, b: 0.25, a: 31}
-    - _WaveC: {r: 1, g: 1.3, b: 0.25, a: 18}
+--- !u!114 &1047387219345594898
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
