@@ -21,11 +21,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Floats:
+    - Vector1_1FE98B88: 0.81
     - _Depth: 4.28
     - _FoamAmount: 10
     - _FoamCutoff: 1
     - _FoamScale: 100
     - _FoamSpeed: 0.5
+    - _RefractionScale: 80
+    - _RefractionSpeed: 0.7
+    - _RefractionStrength: 0.03
     - _Strength: 0
     - _WaterFogDensity: 0.05
     m_Colors:
@@ -33,4 +37,4 @@ Material:
     - _FoamColor: {r: 0.8820755, g: 0.9469728, b: 1, a: 1}
     - _FogWaterColor: {r: 0.11764706, g: 0.18431373, b: 0.34117648, a: 1}
     - _ShallowWaterColor: {r: 0.26886788, g: 1, b: 0.9489154, a: 0.3607843}
-    - _WaterColor: {r: 0.07058824, g: 0.3529412, b: 0.972549, a: 1}
+    - _WaterColor: {r: 0.07058821, g: 0.35294116, b: 0.972549, a: 0.92156863}
