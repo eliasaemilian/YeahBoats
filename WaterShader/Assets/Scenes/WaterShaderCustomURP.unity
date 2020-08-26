@@ -226,6 +226,11 @@ PrefabInstance:
       propertyPath: WaterPlane
       value: 
       objectReference: {fileID: 1283564215}
+    - target: {fileID: 2774651944945402293, guid: b577604358807224fad878ca5d645283,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.29
+      objectReference: {fileID: 0}
     - target: {fileID: 2774651945369488041, guid: b577604358807224fad878ca5d645283,
         type: 3}
       propertyPath: m_Name
@@ -234,12 +239,12 @@ PrefabInstance:
     - target: {fileID: 2774651945369488054, guid: b577604358807224fad878ca5d645283,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.022289
+      value: 138
       objectReference: {fileID: 0}
     - target: {fileID: 2774651945369488054, guid: b577604358807224fad878ca5d645283,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.44
+      value: -12.93
       objectReference: {fileID: 0}
     - target: {fileID: 2774651945369488054, guid: b577604358807224fad878ca5d645283,
         type: 3}
@@ -285,6 +290,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774651945369488054, guid: b577604358807224fad878ca5d645283,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774651945369488054, guid: b577604358807224fad878ca5d645283,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774651945369488054, guid: b577604358807224fad878ca5d645283,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b577604358807224fad878ca5d645283, type: 3}
@@ -462,7 +482,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a491abfa9f15643a36d800d7bb9952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaterPlane: {fileID: 1283564215}
 --- !u!1 &701286319
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,7 +711,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a491abfa9f15643a36d800d7bb9952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaterPlane: {fileID: 1283564215}
 --- !u!1 &901577743
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,7 +754,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a491abfa9f15643a36d800d7bb9952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaterPlane: {fileID: 1283564215}
 --- !u!1 &1000667123
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,7 +889,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a491abfa9f15643a36d800d7bb9952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaterPlane: {fileID: 1283564215}
 --- !u!1 &1193866345
 GameObject:
   m_ObjectHideFlags: 0
@@ -1038,7 +1054,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1283564211}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -15.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1232,7 +1248,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1710572350}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -107.2, y: 0, z: 0}
+  m_LocalPosition: {x: -68.7, y: -12.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1274,9 +1290,8 @@ MonoBehaviour:
   offset: 0
   Timer: 0
   WaveSpeed: 0
-  Boat: {fileID: 624882843}
-  WaveHeightResult: 0
   WaterPlane: {fileID: 1283564215}
+  WaveHeightResult: 0
 --- !u!4 &2082602615
 Transform:
   m_ObjectHideFlags: 0

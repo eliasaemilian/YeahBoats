@@ -17,8 +17,7 @@ public class Floater : MonoBehaviour
 
     private Boat myBoat;
 
-    public Transform WaterPlane;
-    private float _waterHeigth;
+    private float _waveHeight;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +28,6 @@ public class Floater : MonoBehaviour
         waterDrag = myBoat.waterDrag;
         waterAngularDrag = myBoat.waterAngularDrag;
         _rb = GetComponentInParent<Rigidbody>();
-        _waterHeigth = WaterPlane.position.y;
 
     }
 
@@ -38,13 +36,12 @@ public class Floater : MonoBehaviour
     {
         _rb.AddForceAtPosition(Physics.gravity / floatCounter, transform.position, ForceMode.Acceleration);
         // Debug.Log("Gravity");
-        float waveHeight = WaveManager.Instance.GetWaveHeight(transform.position);
-     //   waveHeight = _waterMat.GetFloat("");
+        _waveHeight = WaveManager.Instance.GetWaveHeight(transform.position);
+        //   waveHeight = _waterMat.GetFloat("");
 
-
-        if (transform.position.y < ( waveHeight + _waterHeigth) )
+        if (transform.position.y < _waveHeight )
         {
-            PushUp(waveHeight + _waterHeigth);
+            PushUp(_waveHeight);
             Debug.Log("PUSH");
         }
     }
@@ -59,5 +56,14 @@ public class Floater : MonoBehaviour
             _rb.AddTorque(displacementMult * -_rb.angularVelocity * waterAngularDrag * Time.fixedDeltaTime);
 
     //    Debug.Log("Pushed up");
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Vector3 pos = transform.position;
+        pos.y = _waveHeight;
+        Gizmos.DrawWireSphere(pos, .25f);
     }
 }

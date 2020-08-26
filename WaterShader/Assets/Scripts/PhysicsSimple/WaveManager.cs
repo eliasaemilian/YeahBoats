@@ -43,9 +43,12 @@ public class WaveManager : MonoBehaviour
     public Wave WaveA, WaveB, WaveC;
     public float WaveSpeed;
 
-    public Transform WaterPlane;
+    public Transform WaterPlane; //MUST BE X,Z = 0
 
     public float WaveHeightResult;
+
+    private Vector3 _waterPos;
+
 
    // public Camera camera;
 
@@ -61,17 +64,6 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-    //[ExecuteAlways]
-    //private void OnEnable()
-    //{
-    //    if (camera != null)
-    //    {
-    //        camera.depth = 1;
-    //        camera.depthTextureMode = DepthTextureMode.Depth;
-    //        Debug.Log("Set Camera");
-    //    }
-       
-    //}
 
     // Start is called before the first frame update
     void Start()
@@ -82,40 +74,38 @@ public class WaveManager : MonoBehaviour
         WaveC = new Wave(WaterShader.GetVector("_WaveC"));
         WaveSpeed = WaterShader.GetFloat("_WaveSpeed");
 
+        //_waterPos = new Vector3( WaterPlane.position.x * WaterPlane.localScale.x, 
+        //    WaterPlane.position.y * WaterPlane.localScale.y, 
+        //    WaterPlane.position.z * WaterPlane.localScale.z);
+
+        _waterPos = new Vector3(WaterPlane.position.x,
+    WaterPlane.position.y,
+    WaterPlane.position.z);
     }
 
     // Update is called once per frame
     void Update()
     {
-        offset += Time.deltaTime * speed; //OLD
         Timer += Time.deltaTime;
-
     }
 
-    public float GetWaveHeight (float x)//OLD
-    {
-        return amplitude * Mathf.Sin(x / length + offset);
-    }
 
     public float GetWaveHeight(Vector3 pos) // from Shader
     {
         Vector2 p = new Vector2(pos.x, pos.z);
-        p += new Vector2 (WaterPlane.position.x, WaterPlane.position.z);
+        p += new Vector2(_waterPos.x, _waterPos.z);
 
         float waveResult = GerstnerWave(WaveA, p);
         waveResult += GerstnerWave(WaveB, p);
         waveResult += GerstnerWave(WaveC, p);
 
-        WaveHeightResult = waveResult;
+        WaveHeightResult = _waterPos.y + waveResult;
 
-        return waveResult;
+        return WaveHeightResult;
     }
 
     private float GerstnerWave(Wave wave, Vector2 p)
     {
-    //    float f = wave.k * (Vector2.Dot(wave.Direction, new Vector2 (transform.position.x, transform.position.y)) - wave.c * Timer);
-
-     //   float _cOffset = wave.c * ( Timer * WaveSpeed );
         float _cOffset = wave.c * Timer ;
         float _f = wave.k * (Vector2.Dot(wave.Direction, p) - _cOffset);
         float _af = wave.a * Mathf.Sin(_f);
