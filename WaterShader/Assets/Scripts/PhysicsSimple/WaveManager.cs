@@ -78,9 +78,7 @@ public class WaveManager : MonoBehaviour
         //    WaterPlane.position.y * WaterPlane.localScale.y, 
         //    WaterPlane.position.z * WaterPlane.localScale.z);
 
-        _waterPos = new Vector3(WaterPlane.position.x,
-    WaterPlane.position.y,
-    WaterPlane.position.z);
+        _waterPos = new Vector3(WaterPlane.position.x, WaterPlane.position.y, WaterPlane.position.z);
     }
 
     // Update is called once per frame
@@ -114,4 +112,5 @@ public class WaveManager : MonoBehaviour
         _f = wave.k * (Vector2.Dot(wave.Direction, p) - _cOffset);
         return wave.a * Mathf.Cos(_f); //amplitude
     }
+
 }
