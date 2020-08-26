@@ -43,7 +43,7 @@ public class WaveManager : MonoBehaviour
     public Wave WaveA, WaveB, WaveC;
     public float WaveSpeed;
 
-    public Transform Boat;
+    public Transform WaterPlane;
 
     public float WaveHeightResult;
 
@@ -100,10 +100,11 @@ public class WaveManager : MonoBehaviour
     public float GetWaveHeight(Vector3 pos) // from Shader
     {
         Vector2 p = new Vector2(pos.x, pos.z);
+        p += new Vector2 (WaterPlane.position.x, WaterPlane.position.z);
+
         float waveResult = GerstnerWave(WaveA, p);
         waveResult += GerstnerWave(WaveB, p);
         waveResult += GerstnerWave(WaveC, p);
-
 
         WaveHeightResult = waveResult;
 
