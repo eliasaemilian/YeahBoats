@@ -21,7 +21,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: c34b2329dfb927c47b1c45b1fd21d9fd, type: 3}
+        m_Texture: {fileID: 2800000, guid: e695fd062b99f0d45954ae070eade28e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SecondaryNormalMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2DAsset_88C6B983_Out_0:
@@ -33,6 +37,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_147AF94A: 0.005
     - Vector1_1FE98B88: 0.81
     - _Depth: 4.28
     - _DepthShoreFade: 0
@@ -41,7 +46,7 @@ Material:
     - _FoamScale: 100
     - _FoamSpeed: 0.02
     - _Metallic: 0
-    - _NormalStrength: 0.63
+    - _NormalStrength: 0.005
     - _RefractionScale: 80
     - _RefractionSpeed: 0.7
     - _RefractionStrength: 1
@@ -52,6 +57,7 @@ Material:
     - _WaterFogDensity: 0.11
     - _WaveSpeed: 0.2
     m_Colors:
+    - Color_32664067: {r: 0, g: 0.99095273, b: 1, a: 1}
     - _DeepWaterColor: {r: 0.11473007, g: 0.107022054, b: 0.34905657, a: 0.8509804}
     - _FoamColor: {r: 0.8820755, g: 0.9469728, b: 1, a: 1}
     - _FogWaterColor: {r: 0.11764706, g: 0.18431373, b: 0.34117648, a: 1}
