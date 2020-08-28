@@ -362,7 +362,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a491abfa9f15643a36d800d7bb9952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaterPlane: {fileID: 1177415183}
 --- !u!1 &256517832
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,7 +593,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a491abfa9f15643a36d800d7bb9952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaterPlane: {fileID: 1177415183}
 --- !u!1 &341367095
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,9 +930,8 @@ MonoBehaviour:
   offset: 0
   Timer: 0
   WaveSpeed: 0
-  Boat: {fileID: 346039241}
-  WaveHeightResult: 0
   WaterPlane: {fileID: 1177415183}
+  WaveHeightResult: 0
 --- !u!4 &598061134
 Transform:
   m_ObjectHideFlags: 0
@@ -2210,7 +2207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a491abfa9f15643a36d800d7bb9952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaterPlane: {fileID: 1177415183}
 --- !u!1 &1722372921
 GameObject:
   m_ObjectHideFlags: 3
@@ -2464,7 +2460,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a491abfa9f15643a36d800d7bb9952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaterPlane: {fileID: 1177415183}
 --- !u!1 &1913038343
 GameObject:
   m_ObjectHideFlags: 0
