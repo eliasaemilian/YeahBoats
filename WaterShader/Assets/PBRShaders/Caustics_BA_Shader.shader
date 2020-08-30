@@ -96,7 +96,7 @@
 
                     // Reconstruct Position of objects in depth map
                     float4 WorldPos = ReconstructWorldPos(screenPos.xy, depth).xyzz;
-
+                    
                     // Get light direction and use it to rotate the world position
                     float3 LightUVs = mul(WorldPos, _MainLightDir).xyz;
 
