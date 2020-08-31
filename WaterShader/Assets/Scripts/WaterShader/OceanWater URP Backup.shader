@@ -328,20 +328,20 @@
                    half shadowAttenutation = MainLightRealtimeShadow(shadowCoord);
                    colorShadow = lerp(half4(1, 1, 1, 1), _ShadowColor, (1.0 - shadowAttenutation) * _ShadowColor.a);
                  //  colorShadow.rgb = MixFogColor(colorShadow.rgb, half3(1, 1, 1), input.fogCoord);
-                   #endif
-                   float3 normal = normalize(input.normalWS);
-                   Light mainLight = GetMainLight();
-                   float3 lightDir = mainLight.direction;
+                   //#endif
+                   //float3 normal = normalize(input.normalWS);
+                   //Light mainLight = GetMainLight();
+                   //float3 lightDir = mainLight.direction;
 
-                   float3 camPos = _WorldSpaceCameraPos;
-                   float3 fragToCam = camPos - input.positionWS;
-                   float3 viewDir = normalize(fragToCam);
+                   //float3 camPos = _WorldSpaceCameraPos;
+                   //float3 fragToCam = camPos - input.positionWS;
+                   //float3 viewDir = normalize(fragToCam);
 
-                   float3 viewReflect = reflect(-viewDir, normal);
+                   //float3 viewReflect = reflect(-viewDir, normal);
 
-                   float specularFalloff = max(0, dot(viewReflect, lightDir));
-                   specularFalloff = pow(specularFalloff, _Gloss); // Blinn-Phong     
-                   half4 lightRes = specularFalloff * colorShadow;
+                   //float specularFalloff = max(0, dot(viewReflect, lightDir));
+                   //specularFalloff = pow(specularFalloff, _Gloss); // Blinn-Phong     
+                   //half4 lightRes = specularFalloff * colorShadow;
                    // -------------------- #END -------------------------------------------
 
                   float atten = mainLight.distanceAttenuation; //Shadows
