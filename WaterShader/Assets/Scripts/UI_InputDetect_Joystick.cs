@@ -29,19 +29,19 @@ public class UI_InputDetect_Joystick : MonoBehaviour
     private Touch touch;
     void Update()
     {
-        // Check for Touches occuring
-        touch = Input.GetTouch(0);
-
         //We check if we have more than one touch happening.
         //We also check if the first touches phase is Ended (that the finger was lifted)
-        if (Input.touchCount > 0 && touch.phase == TouchPhase.Ended)
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
         {
+            // Check for Touches occuring
+            touch = Input.GetTouch(0);
+
             //We transform the touch position into word space from screen space and store it.
             touchPosWorld = _uiCamera.ScreenToWorldPoint(touch.position);
             touchPosWorld2D = new Vector2(touchPosWorld.x, touchPosWorld.y);
 
             // Check for Hit with 2D Colliders
-            RaycastHit2D hit = Physics2D.Raycast(touchPosWorld2D, Camera.main.transform.forward);
+            RaycastHit2D hit = Physics2D.Raycast(touchPosWorld2D, Camera.main.transform.forward); //not sure why it doesn't accept ui cam tbh :/
             if (hit.collider != null)
             {
                 GameObject touchedObject = hit.transform.gameObject;
