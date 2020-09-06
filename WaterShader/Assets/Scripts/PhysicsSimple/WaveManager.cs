@@ -50,9 +50,6 @@ public class WaveManager : MonoBehaviour
     private Vector3 _waterPos;
     private Vector3 _waterScale;
 
-    private Matrix4x4 water4x4;
-   // public Camera camera;
-
     private void Awake()
     {
         if (Instance == null)
@@ -75,20 +72,8 @@ public class WaveManager : MonoBehaviour
         WaveC = new Wave(WaterShader.GetVector("_WaveC"));
         WaveSpeed = WaterShader.GetFloat("_WaveSpeed");
 
-        //_waterPos = new Vector3( WaterPlane.position.x * WaterPlane.localScale.x, 
-        //    WaterPlane.position.y * WaterPlane.localScale.y, 
-        //    WaterPlane.position.z * WaterPlane.localScale.z);
+        _waterPos = WaterPlane.position; _waterScale = WaterPlane.localScale;
 
-        _waterPos = new Vector3(WaterPlane.position.x, WaterPlane.position.y, WaterPlane.position.z);
-        _waterScale = WaterPlane.localScale;
-        Debug.Log("Original Water Pos is " + _waterPos);
-
-        water4x4 = WaterPlane.localToWorldMatrix;
-        Vector3 pos = water4x4.GetColumn(3);
-        Debug.Log("1: Water Pos is " + pos);
-       // Vector3 pos2 = water4x4.
-      //  pos = WaterPlane.TransformPoint(pos);
-        Debug.Log("Water Pos is " + pos);
     }
 
     // Update is called once per frame
@@ -101,24 +86,19 @@ public class WaveManager : MonoBehaviour
     public float GetWaveHeight(Vector3 pos) // from Shader
     {
         Vector2 p = new Vector2(pos.x, pos.z);
-        Debug.Log("P1 " + p);
-     //   p /= water4x4.lossyScale;
         p /= _waterScale;
-       // p += new Vector2 (water4x4.
-        //   p += new Vector2(_waterPos.x, _waterPos.z);
-        Debug.Log("P2 " + p);
+
         float waveResult = GerstnerWave(WaveA, p);
         waveResult += GerstnerWave(WaveB, p);
         waveResult += GerstnerWave(WaveC, p);
-        Debug.Log("waveResult is " + waveResult);
-        WaveHeightResult = _waterPos.y + ( waveResult * water4x4.lossyScale.y);
-        Debug.Log("new waveResult is " + WaveHeightResult);
+
+        WaveHeightResult = _waterPos.y + ( waveResult * _waterScale.y);
         return WaveHeightResult;
     }
 
     private float GerstnerWave(Wave wave, Vector2 p)
     {
-        float _cOffset = wave.c * Timer ;
+        float _cOffset = wave.c * Timer ; //TODO: Add WaveSpeed
         float _f = wave.k * (Vector2.Dot(wave.Direction, p) - _cOffset);
         float _af = wave.a * Mathf.Sin(_f);
         p.x -= ( wave.Direction.x / _waterScale.x ) * _af; //adjust for approximation of vertex shift along x, z
