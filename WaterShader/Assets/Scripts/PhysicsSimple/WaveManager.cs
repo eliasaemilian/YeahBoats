@@ -34,9 +34,6 @@ public class WaveManager : MonoBehaviour
     public static WaveManager Instance;
     public Material WaterShader;
 
-    public float amplitude = 1f;
-    public float length = 20f;
-    public float speed = 1f;
     public float offset = 0f;
     public float Timer = 0f;
 
@@ -70,7 +67,7 @@ public class WaveManager : MonoBehaviour
         WaveA = new Wave(WaterShader.GetVector("_WaveA"));
         WaveB = new Wave(WaterShader.GetVector("_WaveB"));
         WaveC = new Wave(WaterShader.GetVector("_WaveC"));
-        WaveSpeed = WaterShader.GetFloat("_WaveSpeed");
+        WaveSpeed = WaterShader.GetFloat("_WaveSpeed"); //NOT ACCOUNTED FOR
 
         _waterPos = WaterPlane.position; _waterScale = WaterPlane.localScale;
 

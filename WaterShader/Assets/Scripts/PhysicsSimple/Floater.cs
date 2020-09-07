@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// -> https://www.youtube.com/watch?v=eL_zHQEju8s
 
 
 public class Floater : MonoBehaviour
