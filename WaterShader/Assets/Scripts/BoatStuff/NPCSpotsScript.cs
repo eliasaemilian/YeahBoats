@@ -7,5 +7,5 @@ using UnityEngine;
 /// </summary>
 public class NPCSpotsScript : MonoBehaviour
 {
-    public Transform[] _spots;
+    public GameObject[] _spots;
 }

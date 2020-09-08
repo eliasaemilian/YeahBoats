@@ -6,7 +6,9 @@ public class MoneyManager : MonoBehaviour
 {
     public static MoneyManager Instance;
 
-    public int Money;
+    public float Money;
+
+    public int Multiplyer;
 
     void Awake()
     {
@@ -19,7 +21,7 @@ public class MoneyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        TMPSetup();
     }
 
     // Update is called once per frame
@@ -28,9 +30,15 @@ public class MoneyManager : MonoBehaviour
         
     }
 
-    public void AddMoney(int ammount)
+    private void TMPSetup()
     {
-        Money += ammount;
+        Money = 0;
+        Multiplyer = 1;
+    }
+
+    public void AddMoney(float ammount)
+    {
+        Money += (ammount * Multiplyer);
     }
 
     public bool CheckMoney(int ammount)

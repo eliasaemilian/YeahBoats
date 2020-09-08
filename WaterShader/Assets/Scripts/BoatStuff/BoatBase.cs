@@ -9,21 +9,34 @@ public class BoatBase : MonoBehaviour
 {
     [SerializeField] private BoatScriptable _boatScriptable;
     [SerializeField] private NPCSpotsScript _nPCSpots;
+    [SerializeField] private GameObject _nPCFishermanPrefab;
 
-    public List<Transform> SpawnPoints = new List<Transform>();
+    public List<GameObject> SpawnPoints = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
-        //Adds the spawnpoints to te list
-        for (int i = 0; i < _boatScriptable.NPCSpawnPointAmmount; i++)
-        {
-            SpawnPoints.Add(_nPCSpots._spots[i]);
-        }
+        //AddFisherman();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            AddFisherman();
+        }
     }
+    private bool AddFisherman()
+    {
+        if (SpawnPoints.Count < _boatScriptable.NPCSpawnPointAmmount)
+        {
+            GameObject gO = _nPCSpots._spots[SpawnPoints.Count];
+            SpawnPoints.Add(gO);
+
+            GameObject fisherman = Instantiate(_nPCFishermanPrefab,gO.transform.position,gO.transform.rotation, gO.transform);
+            return true;
+        }
+        else return false;
+    }
+
 }

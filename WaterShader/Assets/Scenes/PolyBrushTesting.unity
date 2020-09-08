@@ -982,6 +982,8 @@ GameObject:
   m_Component:
   - component: {fileID: 133599412}
   - component: {fileID: 133599411}
+  - component: {fileID: 133599413}
+  - component: {fileID: 133599414}
   m_Layer: 0
   m_Name: KAREN IS CALLING
   m_TagString: Untagged
@@ -1002,6 +1004,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Money: 0
+  Multiplyer: 0
 --- !u!4 &133599412
 Transform:
   m_ObjectHideFlags: 0
@@ -1014,8 +1017,37 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &133599413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133599410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 324a7dee4217f124e9cbc0030e49be93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MapLevel: 0
+  BoatLevel: 0
+  NPCFishermanLevel: 0
+  FishingRodLevel: 0
+  Multiplyer: 0
+--- !u!114 &133599414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133599410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05968f4859d59384eb04b5c4f689c733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &190367076 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 39fbfcb99c40a3d47874b8995acabef7,
@@ -1036,6 +1068,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boatScriptable: {fileID: 11400000, guid: a45d37ce4d306da4785afeee7b3a4550, type: 2}
   _nPCSpots: {fileID: 1200647914}
+  _nPCFishermanPrefab: {fileID: 5550221785519434258, guid: e650014c855cff64884b701c316ae570,
+    type: 3}
   SpawnPoints: []
 --- !u!43 &210980886
 Mesh:
@@ -1367,6 +1401,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 513250338}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &718429484
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 718429485}
+  m_Layer: 0
+  m_Name: ------MANAGERS------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &718429485
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718429484}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.92719483, y: 2.8660133, z: -9.524455}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &766439916
 Mesh:
   m_ObjectHideFlags: 0
@@ -1576,8 +1640,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spots:
-  - {fileID: 1711775783}
-  - {fileID: 1327808468}
+  - {fileID: 1711775782}
+  - {fileID: 1327808467}
 --- !u!1 &1315531365
 GameObject:
   m_ObjectHideFlags: 0
