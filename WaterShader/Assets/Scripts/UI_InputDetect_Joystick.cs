@@ -6,6 +6,9 @@ using UnityEngine.Rendering.Universal;
 
 public class UI_InputDetect_Joystick : MonoBehaviour
 {
+    public static int JoystickInput { get; set; } // [ 0 ] no input, [ 1 ] forward, [ 2 ] right, [ 3 ] backwards, [ 4 ] left
+    public static float JoystickDirInDegrees { get; set; }
+
     [SerializeField] private Camera _uiCamera = null;
     [SerializeField] private Transform _outerJoystick = null;
     [SerializeField] private Transform _innerJoystick = null;
@@ -21,6 +24,7 @@ public class UI_InputDetect_Joystick : MonoBehaviour
 
     private Material _mat_OuterJoystick;
     private Material _mat_InnerJoystick;
+
 
 // Start is called before the first frame update
 void Start()
@@ -47,6 +51,7 @@ void Start()
         _innerFinalTransparency = _mat_InnerJoystick.GetFloat("_Transparency");
         _counterStart = Mathfs.Remap(_outerFinalRadius * .33f, 0, _outerFinalRadius, 0, _lerpTime); // for Fade
         _counterStartForClose = Mathfs.Remap(_outerFinalRadius, 0, _outerFinalRadius, 0, _lerpTime); // for Closing
+
     }
 
     private Touch _touch;
@@ -100,6 +105,9 @@ void Start()
                 _snapBack = false;
             }
         }
+
+
+        if (JoystickInput != 0) Debug.Log("Joystick input is " + JoystickInput);
     }
 
     // Checking for Double Tap secondary after single touch in Update
@@ -182,12 +190,20 @@ void Start()
         {
             _inputValid = true;
 
+            // if Joystick is activated, move accordingly, record Input for Boat
             if (!_joystickClosed)
             {
                 startPos = mRay.GetPoint(rayDistance);
-
+                startPos = new Vector3(startPos.x, startPos.y, _innerJoystick.position.z);
                 dir = startPos - center;
+
+                float angRad = Mathfs.GetAngleByUnitVector(dir.normalized);
+
+                JoystickDirInDegrees = (angRad > 0 ? angRad : (2 * Mathfs.PI + angRad)) * 360 / (2 * Mathfs.PI); //Remap from  [ 0 - 180, -180 - 0 ] to [ 0 - 360 ]
+
                 newPos = center + (dir.normalized * radius);
+
+
 
                 _innerJoystick.position = new Vector3(newPos.x, newPos.y, _innerJoystick.position.z);
             }

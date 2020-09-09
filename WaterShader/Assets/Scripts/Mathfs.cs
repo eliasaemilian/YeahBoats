@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class Mathfs 
 {
+    public const float PI = 3.14159265359f;
     public static float TAU = 6.28318530718f;
 
     public static float Remap(float value, float start, float end, float mapToStart, float mapToEnd)
@@ -19,6 +20,22 @@ public static class Mathfs
                 );
     }
 
+    public static float GetAngleByUnitVector(Vector2 vector)
+    {
+        return Mathf.Atan2(vector.y, vector.x);
+    }
+
+    public static int GetDirectionIndicationFromAngRad(float angRad)
+    {
+        int indication = 0;
+
+        if (angRad > PI * .5f)
+        {
+
+        }
+
+        return indication;
+    }
     public static Vector3 LerpLinear(Vector3 start, Vector3 end, float t)
     {
         float x = ((end.x - start.x) * t) + start.x;

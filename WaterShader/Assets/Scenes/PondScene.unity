@@ -365,6 +365,7 @@ MonoBehaviour:
   _innerJoystick: {fileID: 1117406130}
   _touchSensitivity: 30
   _doubleTapSensitivity: 0.3
+  _lerpTime: 0.8
 --- !u!4 &259419240
 Transform:
   m_ObjectHideFlags: 0
@@ -822,14 +823,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670728958}
-  m_LocalRotation: {x: 0.000000009009219, y: 0.9630742, z: -0.2692362, w: 0.000000024122054}
-  m_LocalPosition: {x: 5.3, y: 22.300001, z: 23.900003}
+  m_LocalRotation: {x: 0.046088595, y: 7.822581e-17, z: 1.1480446e-15, w: 0.9989374}
+  m_LocalPosition: {x: 5.3, y: 6.4000015, z: -34.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1831124807}
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 31.238, y: 0, z: 0}
 --- !u!1001 &788787713
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1004,13 +1005,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 892751132}
-  m_LocalRotation: {x: 0.000000009009219, y: 0.9630742, z: -0.2692362, w: 0.000000024122054}
-  m_LocalPosition: {x: 5.3, y: 22.300001, z: 23.900003}
+  m_LocalRotation: {x: 0.046088595, y: 7.822581e-17, z: 1.1480446e-15, w: 0.9989374}
+  m_LocalPosition: {x: 5.3, y: 6.4000015, z: -34.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 45.948, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 31.238, y: 0, z: 0}
 --- !u!114 &892751136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1450,6 +1451,7 @@ GameObject:
   - component: {fileID: 1405891341}
   - component: {fileID: 1405891340}
   - component: {fileID: 1405891339}
+  - component: {fileID: 1405891342}
   m_Layer: 0
   m_Name: Boat (OLD)
   m_TagString: Untagged
@@ -1505,6 +1507,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1405891342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1405891338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c3ae53124b067b48a3972c38363ee28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 300
+  _rSpeed: 1000
 --- !u!1 &1431736055
 GameObject:
   m_ObjectHideFlags: 0
@@ -1984,7 +2000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 22.6, z: 31.800003}
+  m_FollowOffset: {x: 0, y: 6.7000017, z: -26.6}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -2012,7 +2028,7 @@ MonoBehaviour:
   m_HorizontalDamping: 0.5
   m_VerticalDamping: 0.5
   m_ScreenX: 0.5
-  m_ScreenY: 0.6
+  m_ScreenY: 0.714
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_SoftZoneWidth: 0.8

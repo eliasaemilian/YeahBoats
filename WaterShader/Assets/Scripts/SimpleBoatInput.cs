@@ -19,27 +19,19 @@ public class SimpleBoatInput : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.W)) //Accelerate
+        if (UI_InputDetect_Joystick.JoystickDirInDegrees > 360) return;
+
+        if (UI_InputDetect_Joystick.JoystickDirInDegrees > 0 && UI_InputDetect_Joystick.JoystickDirInDegrees < 180) //Accelerate
         {
             _rb.AddForce(Vector3.forward * _speed * Time.deltaTime, ForceMode.Acceleration);
             Debug.Log("Forward");
         }
-        else if (Input.GetKey(KeyCode.S)) // Slowdown
+        else // Slowdown
         {
             _rb.AddForce(Vector3.back * _speed * Time.deltaTime, ForceMode.Acceleration);
-
+            Debug.Log("Reversing");
         }
 
-        transform.Rotate(0, Input.GetAxis("Horizontal") * _rSpeed * Time.deltaTime, 0);
-
-        //if (Input.GetKey(KeyCode.A)) // Turn Left
-        //{
-        //    transform.Rotate(Vector3.up, 90f);
-        //}
-        //else if (Input.GetKey(KeyCode.D)) // Turn Right
-        //{
-        //    transform.Rotate(Vector3.up, -90f);
-        //}
 
 
     }
