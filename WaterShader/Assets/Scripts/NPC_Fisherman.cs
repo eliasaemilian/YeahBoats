@@ -11,7 +11,7 @@ public class NPC_Fisherman : MonoBehaviour
     private MoneyManager _mM = MoneyManager.Instance;
     private FishManager _fM = FishManager.Instance;
 
-    public float CatchSpeed;
+    private float CatchSpeed { get; set; }
     public int Multiplier;
 
     [SerializeField] private float _catchSpeedBase = 10;
@@ -28,11 +28,8 @@ public class NPC_Fisherman : MonoBehaviour
         Multiplier = _lM.Multiplyer;
         CatchSpeed = _catchSpeedBase * (_lM.NPCFishermanLevel) * Multiplier;
         _timer = 0;
+        _lM.NPCUpdate.AddListener(UpdateValues);
 
-        Debug.Log("CatchspeedBase: " + _catchSpeedBase);
-        Debug.Log("FishermanLevel: " + _lM.NPCFishermanLevel);
-        Debug.Log("Multiplier: " + Multiplier);
-        Debug.Log("Multiplier: " + CatchSpeed);
     }
 
     // Update is called once per frame
@@ -53,4 +50,9 @@ public class NPC_Fisherman : MonoBehaviour
         _mM.AddMoney( _fM.GetFish());
     }
 
+    public void UpdateValues()
+    {
+        Multiplier = _lM.Multiplyer;
+        CatchSpeed = _catchSpeedBase * (_lM.NPCFishermanLevel) * Multiplier;
+    }
 }
