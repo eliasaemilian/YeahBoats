@@ -8,6 +8,7 @@ public class UI_InputDetect_Joystick : MonoBehaviour
 {
     public static int JoystickInput { get; set; } // [ 0 ] no input, [ 1 ] forward, [ 2 ] right, [ 3 ] backwards, [ 4 ] left
     public static float JoystickDirInDegrees { get; set; }
+    public static bool ValidJoystickInput { get; set; } = false;
 
     [SerializeField] private Camera _uiCamera = null;
     [SerializeField] private Transform _outerJoystick = null;
@@ -15,6 +16,7 @@ public class UI_InputDetect_Joystick : MonoBehaviour
     [SerializeField] private float _touchSensitivity = 1f;
     [SerializeField] private float _doubleTapSensitivity = .3f;
     [SerializeField] private float _lerpTime = .8f;
+    [SerializeField] private float _distBetweenInnertoOuterJoystick = .5f;
 
     private bool _inputValid, _touchWasOnJoystick, _snapBack, _doubleTap, _joystickClosed;
 
@@ -90,10 +92,10 @@ void Start()
             else StartCoroutine(Fade());
         }
 
-        if (_inputValid)
+        if (!_inputValid)
         {
-         //   MoveInnerJoystick(touch);
-
+            //   MoveInnerJoystick(touch);
+            ValidJoystickInput = false;
         }
 
         if (_snapBack)
@@ -172,6 +174,8 @@ void Start()
         _doubleTap = false;
         _joystickClosed = true;
 
+        ValidJoystickInput = false;
+
     }
 
     Vector3 startPos, center, dir, newPos;
@@ -181,8 +185,8 @@ void Start()
         //transform the touch position into word space from screen space
         Ray mRay = _uiCamera.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, _innerJoystick.position.z));
 
-        radius = _outerJoystick.GetComponent<MeshRenderer>().bounds.extents.x - _innerJoystick.GetComponent<MeshRenderer>().bounds.extents.x;
-
+        radius = _outerJoystick.GetComponent<MeshRenderer>().bounds.extents.x - _innerJoystick.GetComponent<MeshRenderer>().bounds.extents.x - _distBetweenInnertoOuterJoystick;
+            
         center = _outerJoystick.GetComponent<MeshRenderer>().bounds.center;
         center.z = _innerJoystick.position.z;
 
@@ -200,6 +204,7 @@ void Start()
                 float angRad = Mathfs.GetAngleByUnitVector(dir.normalized);
 
                 JoystickDirInDegrees = (angRad > 0 ? angRad : (2 * Mathfs.PI + angRad)) * 360 / (2 * Mathfs.PI); //Remap from  [ 0 - 180, -180 - 0 ] to [ 0 - 360 ]
+                ValidJoystickInput = true;
 
                 newPos = center + (dir.normalized * radius);
 

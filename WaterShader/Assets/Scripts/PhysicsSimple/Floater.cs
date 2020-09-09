@@ -41,7 +41,7 @@ public class Floater : MonoBehaviour
         if (transform.position.y < _waveHeight )
         {
             PushUp(_waveHeight);
-            Debug.Log("PUSH");
+          //  Debug.Log("PUSH");
         }
     }
 
