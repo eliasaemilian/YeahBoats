@@ -41,8 +41,13 @@ public class MoneyManager : MonoBehaviour
         Money += (ammount * Multiplyer);
     }
 
-    public bool CheckMoney(int ammount)
+    public bool CheckMoney(float ammount)
     {
-        return ammount < Money ? true : false;
+        return Money >= ammount? true : false;
+    }
+
+    public void DeduceMoney(float ammount)
+    {
+        Money -= ammount;
     }
 }
