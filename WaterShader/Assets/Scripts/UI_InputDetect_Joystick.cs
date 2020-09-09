@@ -10,11 +10,17 @@ public class UI_InputDetect_Joystick : MonoBehaviour
     [SerializeField] private Transform _outerJoystick = null;
     [SerializeField] private Transform _innerJoystick = null;
     [SerializeField] private float _touchSensitivity = 1f;
+    [SerializeField] private float _doubleTapSensitivity = .3f;
+    [SerializeField] private float _lerpTime = .8f;
 
-    private bool _inputValid;
-    private Vector3 _currentTouchPos;
+    private bool _inputValid, _touchWasOnJoystick, _snapBack, _doubleTap, _joystickClosed;
+
+    float tapCount, _counter, _lerpRadius, _outerFinalRadius, _lerpInnerTransparency, _counterStart, _counterStartForClose, _innerFinalTransparency;
 
     Plane objPlane;
+
+    private Material _mat_OuterJoystick;
+    private Material _mat_InnerJoystick;
 
 // Start is called before the first frame update
 void Start()
@@ -34,95 +40,35 @@ void Start()
         // Setup Plane for Touch Input Checks
         objPlane = new Plane(_uiCamera.transform.forward * -1, _outerJoystick.position);
 
+        // Setup Shader Properties
+        _mat_OuterJoystick = _outerJoystick.GetComponent<MeshRenderer>().material;
+        _mat_InnerJoystick = _innerJoystick.GetComponent<MeshRenderer>().material;
+        _outerFinalRadius = _mat_OuterJoystick.GetFloat("_Radius");
+        _innerFinalTransparency = _mat_InnerJoystick.GetFloat("_Transparency");
+        _counterStart = Mathfs.Remap(_outerFinalRadius * .33f, 0, _outerFinalRadius, 0, _lerpTime); // for Fade
+        _counterStartForClose = Mathfs.Remap(_outerFinalRadius, 0, _outerFinalRadius, 0, _lerpTime); // for Closing
     }
 
-    private Vector3 touchPosWorld;
-    private Vector2 touchPosWorld2D;
-    private Touch touch;
+    private Touch _touch;
     void Update()
     {
 
         if (Input.touchCount > 0 )
         {
-            touch = Input.GetTouch(0);
+            _touch = Input.GetTouch(0);
 
-            if (touch.phase == TouchPhase.Moved)
+            if (_touch.phase == TouchPhase.Began || _touch.phase == TouchPhase.Moved)
             {
-
-
-                _currentTouchPos = touchPosWorld;
-             
-                Debug.Log("Moove");
-
-
-                //transform the touch position into word space from screen space
-                touchPosWorld = _uiCamera.ScreenToWorldPoint(touch.position);
-                touchPosWorld2D = new Vector2(touchPosWorld.x, touchPosWorld.y);
-
-                // Check for Hit with 2D Colliders
-                RaycastHit2D hit = Physics2D.Raycast(touchPosWorld2D, Camera.main.transform.forward); //not sure why it doesn't accept ui cam tbh :/
-                if (hit.collider != null)
-                {
-                    _currentTouchPos = _uiCamera.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, _innerJoystick.position.z));
-                    GameObject touchedObject = hit.transform.gameObject;
-                //    Debug.Log(touch.position + " and " + touchPosWorld + " and " + Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, hit.transform.position.z)));
-                    //   Debug.Log("Touched " + touchedObject.transform.name);
-                    _inputValid = true;
-
-
-
-                    // NEW
-                    Vector3 center = _outerJoystick.GetComponent<MeshRenderer>().bounds.center;
-                    center.z = _innerJoystick.position.z;
-                    float radius = _outerJoystick.GetComponent<MeshRenderer>().bounds.extents.x - _innerJoystick.GetComponent<MeshRenderer>().bounds.extents.x;
-                    //Debug.Log("R is " + radius);
-                    // Get direction of touch pos in relation to center
-                    Vector3 dir = new Vector3 (_currentTouchPos.x, _currentTouchPos.y, _innerJoystick.position.z) - new Vector3 (center.x, center.y, _innerJoystick.position.z);
-                    dir = dir.normalized;
-                    Debug.DrawLine(center, center + ( dir * radius) , Color.blue, 30f);
-
-                 //   float angRad = t * Mathfs.TAU; // angle in radians   
-                  //  Vector2 dir = Mathfs.GetUnitVectorByAngle(angRad);
-
-                    // Move Joystick r * dir
-                    Vector3 newPos = center + ( dir * radius ) ;
-                    Debug.Log(newPos);
-                 //   _innerJoystick.position = new Vector3(newPos.x, newPos.y, _innerJoystick.position.z);
-
-                   _innerJoystick.position = new Vector3(newPos.x, newPos.y, _innerJoystick.position.z);
-                    //   _innerJoystick.position = new Vector3(center.x +  radius , _innerJoystick.position.y, _innerJoystick.position.z);
-
-   
-                }
-
-                Ray mRay = _uiCamera.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, _innerJoystick.position.z));
-
-                float rayDistance;
-                Vector3 startPos;
-                float radius2 = _outerJoystick.GetComponent<MeshRenderer>().bounds.extents.x - _innerJoystick.GetComponent<MeshRenderer>().bounds.extents.x;
-
-                Vector3 center2 = _outerJoystick.GetComponent<MeshRenderer>().bounds.center;
-                center2.z = _innerJoystick.position.z;
-
-                if (objPlane.Raycast(mRay, out rayDistance))
-                {
-                    startPos = mRay.GetPoint(rayDistance);
-                    Debug.Log("swoosh");
-                    Vector3 dir = startPos - center2;
-                    Vector3 newPos = center2 + (dir.normalized * radius2);
-                    //   _innerJoystick.position = new Vector3(newPos.x, newPos.y, _innerJoystick.position.z);
-                    Debug.DrawLine(center2, center2 + startPos.normalized, Color.red, 30f);
-
-                    _innerJoystick.position = new Vector3(newPos.x, newPos.y, _innerJoystick.position.z);
-                }
+                ProcessTouchOnJoystick(_touch);
 
             }
+                  
 
-
-            else if (touch.phase == TouchPhase.Ended)
+            else if (_touch.phase == TouchPhase.Ended)
             {
+                if (_inputValid) _touchWasOnJoystick = true;
                 _inputValid = false;
-           //     Debug.Log("Touch lifted");
+                _snapBack = true;
             }
         }
 
@@ -131,37 +77,123 @@ void Start()
 
     private void FixedUpdate()
     {
+        if (_doubleTap)
+        {
+            Debug.Log("Double Tapping");
+            // Start Fade In
+            if (!_joystickClosed) StartCoroutine(CloseJoystick());
+            else StartCoroutine(Fade());
+        }
+
         if (_inputValid)
         {
          //   MoveInnerJoystick(touch);
 
         }
-    }
-    Vector3 lastPos;
-    private void MoveInnerJoystick(Touch t)
-    {
-        Vector3 newPos = new Vector3(_currentTouchPos.x, _currentTouchPos.y, _innerJoystick.position.z);
 
-
-        if (lastPos != null && lastPos != newPos)
+        if (_snapBack)
         {
-            float delta = Vector3.Distance(newPos, lastPos);
-          //  Debug.Log("Delta is " + delta);
+            _innerJoystick.position = Mathfs.LerpLinear(_innerJoystick.position, new Vector3(_outerJoystick.position.x, _outerJoystick.position.y, _innerJoystick.position.z), Time.deltaTime * _touchSensitivity);
+            if ( Vector3.Distance( _innerJoystick.position, new Vector3(_outerJoystick.position.x, _outerJoystick.position.y, _innerJoystick.position.z) ) <= 0.01 )
+            {
+                _innerJoystick.position = new Vector3(_outerJoystick.position.x, _outerJoystick.position.y, _innerJoystick.position.z);
+                _snapBack = false;
+            }
+        }
+    }
+
+    // Checking for Double Tap secondary after single touch in Update
+    void LateUpdate()
+    {
+        // Register Valid Touches for Double Tap
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended && _touchWasOnJoystick)
+        {
+            tapCount += 1;
+            StartCoroutine(Countdown());
+            _touchWasOnJoystick = false;
         }
 
+        // If Valid Double Tap Fade In / Out
+        if (tapCount == 2)
+        {
+            _doubleTap = true;
+            if (_joystickClosed) _counter = _counterStart;
+            else _counter = _counterStartForClose;
 
-        lastPos = new Vector3(_currentTouchPos.x, _currentTouchPos.y, _innerJoystick.position.z);
+            tapCount = 0;
+            StopCoroutine(Countdown());
+        }
 
-
-        float outerRadius = _outerJoystick.GetComponent<MeshRenderer>().bounds.size.x * .5f;
-        // on input found, cache pos
-     //   Debug.Log("Current Touch is " + _currentTouchPos);
-       // Vector3 newPos = new Vector3(_currentTouchPos.x, _innerJoystick.position.y, _currentTouchPos.z);
-      //  Vector3 newPos = new Vector3(_currentTouchPos.x, _currentTouchPos.y, _innerJoystick.position.z);
-      //  _innerJoystick.transform.position = Vector3.Lerp(_innerJoystick.transform.position, newPos, _touchSensitivity * Time.deltaTime);
-        _innerJoystick.transform.position = _currentTouchPos;
-        // lerp towards touch pos while under radius
+    }
+    private IEnumerator Countdown()
+    {
+        yield return new WaitForSeconds(_doubleTapSensitivity);
+        tapCount = 0;
     }
 
+    private IEnumerator Fade()
+    {
+        _counter += Time.deltaTime;
+        // Lerp outer Radius
+        _lerpRadius = Mathf.Lerp(0, _outerFinalRadius, _counter / _lerpTime);
+        _mat_OuterJoystick.SetFloat("_Radius", _lerpRadius);
+
+        // Fade in inner Transparency
+        _lerpInnerTransparency = Mathf.Lerp( .8f, _innerFinalTransparency, _counter / _lerpTime);
+        _mat_InnerJoystick.SetFloat("_Transparency", _lerpInnerTransparency);
+
+        yield return new WaitUntil(() => _counter >= _lerpTime);
+
+        _doubleTap = false;
+        _joystickClosed = false;
+    }
+
+    private IEnumerator CloseJoystick()
+    {
+        _counter -= Time.deltaTime;
+        // Lerp outer Radius
+        _lerpRadius = Mathf.Lerp(0, _outerFinalRadius, _counter / _lerpTime);
+        _mat_OuterJoystick.SetFloat("_Radius", _lerpRadius);
+
+        // Fade in inner Transparency
+        _lerpInnerTransparency = Mathf.Lerp(.8f, _innerFinalTransparency, _counter / _lerpTime);
+        _mat_InnerJoystick.SetFloat("_Transparency", _lerpInnerTransparency);
+
+        yield return new WaitUntil(() => _counter <= _counterStart);
+
+        _doubleTap = false;
+        _joystickClosed = true;
+
+    }
+
+    Vector3 startPos, center, dir, newPos;
+    float radius;
+    private void ProcessTouchOnJoystick(Touch touch)
+    {
+        //transform the touch position into word space from screen space
+        Ray mRay = _uiCamera.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, _innerJoystick.position.z));
+
+        radius = _outerJoystick.GetComponent<MeshRenderer>().bounds.extents.x - _innerJoystick.GetComponent<MeshRenderer>().bounds.extents.x;
+
+        center = _outerJoystick.GetComponent<MeshRenderer>().bounds.center;
+        center.z = _innerJoystick.position.z;
+
+        if (objPlane.Raycast(mRay, out float rayDistance))
+        {
+            _inputValid = true;
+
+            if (!_joystickClosed)
+            {
+                startPos = mRay.GetPoint(rayDistance);
+
+                dir = startPos - center;
+                newPos = center + (dir.normalized * radius);
+
+                _innerJoystick.position = new Vector3(newPos.x, newPos.y, _innerJoystick.position.z);
+            }
+
+
+        }
+    }
 
 }
