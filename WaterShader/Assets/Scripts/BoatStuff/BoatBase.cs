@@ -11,11 +11,18 @@ public class BoatBase : MonoBehaviour
     [SerializeField] private NPCSpotsScript _nPCSpots;
     [SerializeField] private GameObject _nPCFishermanPrefab;
 
+    private LevelManager _lM = LevelManager.Instance;
+
     public List<GameObject> SpawnPoints = new List<GameObject>();
+
+    public int BoatStorage;
+    private int _currentBoatStorage;
     // Start is called before the first frame update
     void Start()
     {
         //AddFisherman();
+        BoatStorageUpdate();
+        _lM.BoatStorageUpdate.AddListener(BoatStorageUpdate);
     }
 
     // Update is called once per frame
@@ -25,6 +32,13 @@ public class BoatBase : MonoBehaviour
         {
             AddFisherman();
         }
+
+        //MVP
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            EmptyStorage();
+        }
+
     }
     private bool AddFisherman()
     {
@@ -39,4 +53,27 @@ public class BoatBase : MonoBehaviour
         else return false;
     }
 
+
+    public bool AddFishToStorage()
+    {
+        if(_currentBoatStorage < BoatStorage)
+        {
+            _currentBoatStorage++;
+            return true;
+        }
+        else
+        {
+           return false;
+        }
+    }
+
+    public void EmptyStorage()
+    {
+        _currentBoatStorage = 0;
+    }
+
+    private void BoatStorageUpdate()
+    {
+        BoatStorage = 10 * (2 * _lM.BoatStorageLevel);
+    }
 }

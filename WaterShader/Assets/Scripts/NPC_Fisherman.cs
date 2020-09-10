@@ -10,6 +10,10 @@ public class NPC_Fisherman : MonoBehaviour
     private LevelManager _lM = LevelManager.Instance;
     private MoneyManager _mM = MoneyManager.Instance;
     private FishManager _fM = FishManager.Instance;
+    private GameManager _gM = GameManager.Instance;
+
+    //MVP
+    private Renderer rend;
 
     private float CatchSpeed { get; set; }
     public int Multiplier;
@@ -30,6 +34,8 @@ public class NPC_Fisherman : MonoBehaviour
         _timer = 0;
         _lM.NPCUpdate.AddListener(UpdateValues);
 
+        rend = GetComponentInChildren<Renderer>();
+
     }
 
     // Update is called once per frame
@@ -47,12 +53,30 @@ public class NPC_Fisherman : MonoBehaviour
 
     private void CatchAFish()
     {
-        _mM.AddMoney( _fM.GetFish());
+        if (_gM.Boat.AddFishToStorage())
+        {
+            _mM.AddMoney( _fM.GetFish());
+            StartCoroutine(NPCAnim());
+        }
+        else
+        {
+            Debug.Log("Your storage is full, go back to the Port to sell your fish");
+        }
+        
     }
 
     public void UpdateValues()
     {
         Multiplier = _lM.Multiplyer;
         CatchSpeed = _catchSpeedBase * (_lM.NPCFishermanLevel) * Multiplier;
+    }
+
+    private IEnumerator NPCAnim()
+    {
+        rend.material.color = Color.red;
+        yield return new WaitForSeconds(0.5f);
+        rend.material.color = Color.green;
+
+
     }
 }
