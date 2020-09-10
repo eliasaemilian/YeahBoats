@@ -13,13 +13,16 @@ public class LevelManager : MonoBehaviour
     private MoneyManager _mM;
     public int MapLevel;
     public int BoatLevel;
+    public int BoatStorageLevel;
     public int NPCFishermanLevel;
     public int FishingRodLevel;
     public int Multiplyer;
 
     public LevelStorageScriptable NPCLevels;
+    public LevelStorageScriptable BoatStorageLevels;
 
     public UnityEvent NPCUpdate;
+    public UnityEvent BoatStorageUpdate;
     void Awake()
     {
         if (Instance == null) Instance = this;
@@ -39,9 +42,14 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //MVP
         if (Input.GetKeyDown(KeyCode.Q))
         {
             CheckForNPCLevelup(NPCFishermanLevel + 1);
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            CheckForBoatStorageLevelup(BoatStorageLevel + 1);
         }
     }
 
@@ -52,6 +60,7 @@ public class LevelManager : MonoBehaviour
         NPCFishermanLevel = 1;
         FishingRodLevel = 1;
         Multiplyer = 1;
+        BoatStorageLevel = 1;
     }
 
     public void CheckForNPCLevelup(int nextLevel)
@@ -65,6 +74,24 @@ public class LevelManager : MonoBehaviour
             _mM.DeduceMoney(NPCLevels.Levels[nextLevel - 1].Cost);
             NPCFishermanLevel++;
             NPCUpdate.Invoke();
+        }
+        else
+        {
+            Debug.Log("I don't have enough money");
+
+        }
+    }
+    public void CheckForBoatStorageLevelup(int nextLevel)
+    {
+        if (BoatStorageLevels.Levels.Length < nextLevel) return;
+
+        if (_mM.CheckMoney(BoatStorageLevels.Levels[nextLevel - 1].Cost))
+        {
+            Debug.Log("I have enough money");
+
+            _mM.DeduceMoney(BoatStorageLevels.Levels[nextLevel - 1].Cost);
+            BoatStorageLevel++;
+            BoatStorageUpdate.Invoke();
         }
         else
         {
