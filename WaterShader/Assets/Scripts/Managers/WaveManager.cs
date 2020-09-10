@@ -28,13 +28,12 @@ public class Wave
 
     }
 }
-// -> https://www.youtube.com/watch?v=eL_zHQEju8s
+
 public class WaveManager : MonoBehaviour
 {
     public static WaveManager Instance;
     public Material WaterShader;
 
-    public float offset = 0f;
     public float Timer = 0f;
 
     public Wave WaveA, WaveB, WaveC;

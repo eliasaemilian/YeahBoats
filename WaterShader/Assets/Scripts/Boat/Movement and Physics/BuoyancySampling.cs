@@ -5,13 +5,13 @@ using UnityEngine;
 public class BuoyancySampling : MonoBehaviour
 {
     private Rigidbody _rb;
-    [SerializeField] private float depthBeforeSubmerged = .1f;
+    [SerializeField] private float depthBeforeSubmerged = 1f;
     [SerializeField] private float displacementAmount = 3f; // change these for rigidbody properties
 
-    private Vector3[] _positionsSamplePoints;
+    private Transform[] _positionsSamplePoints;
      
     private float waterDrag; //TODO: move boat parameters to boat class
-    [SerializeField]private float waterAngularDrag;
+    private float waterAngularDrag;
 
     private Boat myBoat;
 
@@ -27,8 +27,8 @@ public class BuoyancySampling : MonoBehaviour
         }
 #endif
         // Save local positions for sampling points of this model
-        _positionsSamplePoints = new Vector3[transform.childCount];
-        for (int i = 0; i < transform.childCount; i++) _positionsSamplePoints[i] = transform.GetChild(i).position;
+        _positionsSamplePoints = new Transform[transform.childCount];
+        for (int i = 0; i < transform.childCount; i++) _positionsSamplePoints[i] = transform.GetChild(i);
 
         // Store Boat Info
         myBoat = GetComponentInParent<BoatHandler>().ThisBoat;
@@ -42,13 +42,14 @@ public class BuoyancySampling : MonoBehaviour
         for (int i = 0; i < _positionsSamplePoints.Length; i++)
         {
             // apply Gravity
-            _rb.AddForceAtPosition(Physics.gravity / _positionsSamplePoints.Length, _positionsSamplePoints[i], ForceMode.Acceleration);
-            _waveHeight = WaveManager.Instance.GetWaveHeight(_positionsSamplePoints[i]);
+            _rb.AddForceAtPosition(Physics.gravity / _positionsSamplePoints.Length, _positionsSamplePoints[i].position, ForceMode.Acceleration);
+
+            _waveHeight = WaveManager.Instance.GetWaveHeight(_positionsSamplePoints[i].position);
 
             // if position sampled is underwater apply calculated upwards force
-            if (_positionsSamplePoints[i].y < _waveHeight)
+            if (_positionsSamplePoints[i].position.y < _waveHeight)
             {
-                ApplyUpwardsForce(_waveHeight, _positionsSamplePoints[i]);
+                ApplyUpwardsForce(_waveHeight, _positionsSamplePoints[i].position);
                 Debug.Log("PUSHING POINT " + i);
             }
 
@@ -75,13 +76,13 @@ public class BuoyancySampling : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (_positionsSamplePoints.Length <= 0) return;
+        if (_positionsSamplePoints == null || _positionsSamplePoints.Length <= 0) return;
 
         for (int i = 0; i < _positionsSamplePoints.Length; i++)
         {
             Gizmos.color = Color.red;
-            Vector3 pos = _positionsSamplePoints[i];
-            pos.y = WaveManager.Instance.GetWaveHeight(_positionsSamplePoints[i]);
+            Vector3 pos = _positionsSamplePoints[i].position;
+            pos.y = WaveManager.Instance.GetWaveHeight(_positionsSamplePoints[i].position);
             Gizmos.DrawWireSphere(pos, .25f);
         }
     }
