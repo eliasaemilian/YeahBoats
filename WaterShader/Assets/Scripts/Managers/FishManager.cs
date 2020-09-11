@@ -8,7 +8,9 @@ public class FishManager : MonoBehaviour
 {
     public static FishManager Instance;
 
-    private float _fishValue;
+    private LevelManager _lM;
+    public float _fishValue;
+    private float _baseFishValue;
 
     void Awake()
     {
@@ -22,7 +24,10 @@ public class FishManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _fishValue = 5;
+        _lM = LevelManager.Instance;
+        _baseFishValue = 5;
+        UpdateFishValue();
+        _lM.FishingRodUpdate.AddListener(UpdateFishValue);
     }
 
     // Update is called once per frame
@@ -36,7 +41,26 @@ public class FishManager : MonoBehaviour
     {
         //TODO: animation for fish etc
         //TODO: rare fish catch
+        if (CheckForRareCatch())
+        {
+            return _fishValue * 5;
+        }
+        else return _fishValue;
+    }
 
-        return _fishValue;
+    private void UpdateFishValue()
+    {
+        _fishValue = (_baseFishValue + 2* Mathf.Sqrt(_lM.FishingRodLevel)) * Mathf.Sqrt(_lM.MapLevel) * _lM.Multiplier;
+    }
+
+    public bool CheckForRareCatch()
+    {
+        int rand = Random.Range(1, 101);
+
+        if (rand < 1 + Mathf.Sqrt(_lM.FishingHookLevel * 4))
+        {
+            return true;
+        }
+        else return false;
     }
 }

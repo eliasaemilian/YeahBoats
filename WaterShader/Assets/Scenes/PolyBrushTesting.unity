@@ -1037,13 +1037,22 @@ MonoBehaviour:
   BoatStorageLevel: 0
   NPCFishermanLevel: 0
   FishingRodLevel: 0
-  Multiplyer: 0
+  FishingHookLevel: 0
+  Multiplier: 0
   NPCLevels: {fileID: 11400000, guid: 55f71fa1cbb785d4fb123d95b1b5635a, type: 2}
   BoatStorageLevels: {fileID: 11400000, guid: b09651a855c20c9449d25e4c9aeeca90, type: 2}
+  FishingRodLevels: {fileID: 11400000, guid: e802e7a80a481064590b7396427c6ddb, type: 2}
+  FishingHookLevels: {fileID: 11400000, guid: 7ba6348fdc38b4941864a13768a367d5, type: 2}
   NPCUpdate:
     m_PersistentCalls:
       m_Calls: []
   BoatStorageUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  FishingRodUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  FishingHookUpdate:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &133599414

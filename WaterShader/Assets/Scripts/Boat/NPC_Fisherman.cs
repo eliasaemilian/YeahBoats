@@ -29,7 +29,7 @@ public class NPC_Fisherman : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Multiplier = _lM.Multiplyer;
+        Multiplier = _lM.Multiplier;
         CatchSpeed = _catchSpeedBase * (_lM.NPCFishermanLevel) * Multiplier;
         _timer = 0;
         _lM.NPCUpdate.AddListener(UpdateValues);
@@ -67,7 +67,7 @@ public class NPC_Fisherman : MonoBehaviour
 
     public void UpdateValues()
     {
-        Multiplier = _lM.Multiplyer;
+        Multiplier = _lM.Multiplier;
         CatchSpeed = _catchSpeedBase * (_lM.NPCFishermanLevel) * Multiplier;
     }
 

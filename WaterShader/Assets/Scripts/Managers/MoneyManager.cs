@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// MoneyManager is responsible for saving and editing data related to the game currency
+/// </summary>
 public class MoneyManager : MonoBehaviour
 {
     public static MoneyManager Instance;
