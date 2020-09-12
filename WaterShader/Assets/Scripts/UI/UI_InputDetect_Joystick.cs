@@ -37,6 +37,7 @@ public class UI_InputDetect_Joystick : MonoBehaviour
 void Awake()
     {
         JoystickStateChanged = new UnityEvent();
+        // Register to InputManager
 
         // Check for UI Camera avaliable
         if (_uiCamera == null)
@@ -67,7 +68,7 @@ void Awake()
     void Update()
     {
 
-        if (Input.touchCount > 0 )
+        if (Input.touchCount > 0)
         {
             _touch = Input.GetTouch(0);
 
@@ -76,7 +77,7 @@ void Awake()
                 ProcessTouchOnJoystick(_touch);
 
             }
-                  
+
 
             else if (_touch.phase == TouchPhase.Ended)
             {
@@ -88,6 +89,7 @@ void Awake()
 
 
     }
+
 
     private void FixedUpdate()
     {
