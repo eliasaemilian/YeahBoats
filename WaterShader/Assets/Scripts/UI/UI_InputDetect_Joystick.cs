@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 
 public class UI_InputDetect_Joystick : MonoBehaviour
 {
-    public static int JoystickInput { get; set; } // [ 0 ] no input, [ 1 ] forward, [ 2 ] right, [ 3 ] backwards, [ 4 ] left
+    public static bool JoystickStateClosed { get; set; } // [ false ] open, -> State: Moving, [ true ] closed -> State: Fishing
     public static float JoystickDirInDegrees { get; set; }
     public static bool ValidJoystickInput { get; set; } = false;
+
+    public UnityEvent JoystickStateChanged;
 
     [SerializeField] private Camera _uiCamera = null;
     [SerializeField] private Transform _outerJoystick = null;
@@ -18,7 +21,7 @@ public class UI_InputDetect_Joystick : MonoBehaviour
     [SerializeField] private float _lerpTime = .8f;
     [SerializeField] private float _distBetweenInnertoOuterJoystick = .5f;
 
-    private bool _inputValid, _touchWasOnJoystick, _snapBack, _doubleTap, _joystickClosed;
+    private bool _inputValid, _touchWasOnJoystick, _snapBack, _doubleTap;
 
     float tapCount, _counter, _lerpRadius, _outerFinalRadius, _lerpInnerTransparency, _counterStart, _counterStartForClose, _innerFinalTransparency;
 
@@ -29,8 +32,10 @@ public class UI_InputDetect_Joystick : MonoBehaviour
 
 
 // Start is called before the first frame update
-void Start()
+void Awake()
     {
+        JoystickStateChanged = new UnityEvent();
+
         // Check for UI Camera avaliable
         if (_uiCamera == null)
         {
@@ -88,7 +93,7 @@ void Start()
         {
             Debug.Log("Double Tapping");
             // Start Fade In
-            if (!_joystickClosed) StartCoroutine(CloseJoystick());
+            if (!JoystickStateClosed) StartCoroutine(CloseJoystick());
             else StartCoroutine(Fade());
         }
 
@@ -108,8 +113,6 @@ void Start()
             }
         }
 
-
-        if (JoystickInput != 0) Debug.Log("Joystick input is " + JoystickInput);
     }
 
     // Checking for Double Tap secondary after single touch in Update
@@ -127,7 +130,7 @@ void Start()
         if (tapCount == 2)
         {
             _doubleTap = true;
-            if (_joystickClosed) _counter = _counterStart;
+            if (JoystickStateClosed) _counter = _counterStart;
             else _counter = _counterStartForClose;
 
             tapCount = 0;
@@ -155,7 +158,8 @@ void Start()
         yield return new WaitUntil(() => _counter >= _lerpTime);
 
         _doubleTap = false;
-        _joystickClosed = false;
+        ChangeJoystickState(false);
+
     }
 
     private IEnumerator CloseJoystick()
@@ -172,10 +176,16 @@ void Start()
         yield return new WaitUntil(() => _counter <= _counterStart);
 
         _doubleTap = false;
-        _joystickClosed = true;
+        ChangeJoystickState(true);
 
         ValidJoystickInput = false;
 
+    }
+
+    private void ChangeJoystickState(bool newState)
+    {
+        JoystickStateClosed = newState;
+        JoystickStateChanged.Invoke();
     }
 
     Vector3 startPos, center, dir, newPos;
@@ -195,7 +205,7 @@ void Start()
             _inputValid = true;
 
             // if Joystick is activated, move accordingly, record Input for Boat
-            if (!_joystickClosed)
+            if (!JoystickStateClosed)
             {
                 startPos = mRay.GetPoint(rayDistance);
                 startPos = new Vector3(startPos.x, startPos.y, _innerJoystick.position.z);

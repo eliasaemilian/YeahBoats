@@ -50,7 +50,7 @@ public class BuoyancySampling : MonoBehaviour
             if (_positionsSamplePoints[i].position.y < _waveHeight)
             {
                 ApplyUpwardsForce(_waveHeight, _positionsSamplePoints[i].position);
-                Debug.Log("PUSHING POINT " + i);
+
             }
 
         }
