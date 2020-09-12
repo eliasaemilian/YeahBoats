@@ -18,9 +18,11 @@ public class NPC_Fisherman : MonoBehaviour
     private float CatchSpeed { get; set; }
     public int Multiplier;
 
+
     [SerializeField] private float _catchSpeedBase = 10;
 
-    private float _timer;
+    [SerializeField]private float _timer;
+    private float _timerTapMultiplier;
 
     void Awake()
     {
@@ -31,8 +33,11 @@ public class NPC_Fisherman : MonoBehaviour
     {
         Multiplier = _lM.Multiplier;
         CatchSpeed = _catchSpeedBase * (_lM.NPCFishermanLevel) * Multiplier;
-        _timer = 0;
+
+        _timer = 60/CatchSpeed;
+        _timerTapMultiplier = 1.5f;
         _lM.NPCUpdate.AddListener(UpdateValues);
+        _gM.FishingSpeedup.AddListener(ReduceTimer);
 
         rend = GetComponentInChildren<Renderer>();
 
@@ -41,13 +46,13 @@ public class NPC_Fisherman : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _timer += Time.deltaTime;
+        _timer -= Time.deltaTime;
 
-        if(_timer >= (60 / CatchSpeed))
+        if(_timer <= 0)
         {
             Debug.Log("Got a fish!");
             CatchAFish();
-            _timer = 0;
+            _timer =  60/CatchSpeed;
         }
     }
 
@@ -78,5 +83,10 @@ public class NPC_Fisherman : MonoBehaviour
         rend.material.color = Color.green;
 
 
+    }
+     // gets called to speed up fishing
+    public void ReduceTimer()
+    {
+        _timer /= _timerTapMultiplier;
     }
 }
