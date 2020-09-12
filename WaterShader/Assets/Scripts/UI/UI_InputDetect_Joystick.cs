@@ -30,6 +30,8 @@ public class UI_InputDetect_Joystick : MonoBehaviour
     private Material _mat_OuterJoystick;
     private Material _mat_InnerJoystick;
 
+    [SerializeField] private GameObject WaterPlane; //FOR TAP DEBUG
+
 
 // Start is called before the first frame update
 void Awake()
