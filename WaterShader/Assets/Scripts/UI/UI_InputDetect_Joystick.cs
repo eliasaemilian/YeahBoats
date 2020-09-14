@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Schema;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,7 +20,6 @@ public class UI_InputDetect_Joystick : MonoBehaviour
     public static bool ValidJoystickInput { get; set; } = false;
 
     public static UnityEvent JoystickStateChanged;
-    public static UnityEvent JoystickTriggerSnapback;
     public static UnityEvent DoubleTapProcessed;
 
     [SerializeField] private Camera _uiCamera = null;
@@ -30,28 +30,25 @@ public class UI_InputDetect_Joystick : MonoBehaviour
     [SerializeField] private float _lerpTime = .8f;
     [SerializeField] private float _distBetweenInnertoOuterJoystick = .5f;
 
-    private bool _inputValid, _touchWasOnJoystick, _snapBack, _doubleTap;
+    private bool _touchWasOnJoystick;
 
-    float tapCount, _counter, _lerpRadius, _outerFinalRadius, _lerpInnerTransparency, _counterStart, _counterStartForClose, _innerFinalTransparency;
+    float tapCount;
 
-    Plane objPlane;
+    private Plane _uiPlane;
 
-    private Material _mat_OuterJoystick;
-    private Material _mat_InnerJoystick;
 
     [SerializeField] private GameObject WaterPlane; //FOR TAP DEBUG
 
 
-// Start is called before the first frame update
-void Awake()
+    // Start is called before the first frame update
+    void Awake()
     {
+        // SETUP INPUT EVENTS
         if (ValidJoyStickTouchEvent == null) ValidJoyStickTouchEvent = new ValidPlaneTouchEvent();
         if (ValidDoubleTapEvent == null) ValidDoubleTapEvent = new ValidTouchEvent();
 
         JoystickStateChanged = new UnityEvent();
-        JoystickTriggerSnapback = new UnityEvent();
         DoubleTapProcessed = new UnityEvent();
-        // Register to InputManager
 
         // Check for UI Camera avaliable
         if (_uiCamera == null)
@@ -66,80 +63,38 @@ void Awake()
         }
 
         // Setup Plane for Touch Input Checks
-        objPlane = new Plane(_uiCamera.transform.forward * -1, _outerJoystick.position);
-
-        // Setup Shader Properties
-        _mat_OuterJoystick = _outerJoystick.GetComponent<MeshRenderer>().material;
-        _mat_InnerJoystick = _innerJoystick.GetComponent<MeshRenderer>().material;
-        _outerFinalRadius = _mat_OuterJoystick.GetFloat("_Radius");
-        _innerFinalTransparency = _mat_InnerJoystick.GetFloat("_Transparency");
-        _counterStart = Mathfs.Remap(_outerFinalRadius * .33f, 0, _outerFinalRadius, 0, _lerpTime); // for Fade
-        _counterStartForClose = Mathfs.Remap(_outerFinalRadius, 0, _outerFinalRadius, 0, _lerpTime); // for Closing
+        _uiPlane = new Plane(_uiCamera.transform.forward * -1, _outerJoystick.position);
 
     }
 
     private Touch _touch;
     void Update()
     {
+        Debug.Log("Valid State is " + ValidJoystickInput);
 
         if (Input.touchCount > 0)
         {
             _touch = Input.GetTouch(0);
 
-            //if (_touch.phase == TouchPhase.Began || _touch.phase == TouchPhase.Moved)
-            //{
-            // //   ProcessTouchOnJoystick(_touch);
-            //    CheckForIntersectionWithPlane(_touch, objPlane, _innerJoystick, out Vector3 rayPos);
-            //    ValidJoyStickTouchEvent.Invoke(_touch, rayPos);
-            //}
-
-            if (CheckForIntersectionWithPlane(_touch, objPlane, _innerJoystick, out Vector3 rayPos))
+            // Check for Touches on Joystick
+            if (CheckForIntersectionWithPlane(_touch, _uiPlane, _innerJoystick, out Vector3 rayPos))
             {
                 _touchWasOnJoystick = true;
-                ValidJoyStickTouchEvent.Invoke(_touch, rayPos);
-                Debug.Log("Valid Touch on Joystick");
+                ValidJoystickInput = true;
             }
-            else Debug.Log("NO");
 
-            //else if (_touch.phase == TouchPhase.Ended)
-            //{
-            //    if (_inputValid) _touchWasOnJoystick = true;
-            //    _inputValid = false;
-            //    _snapBack = true;
-            //}
+            ValidJoyStickTouchEvent.Invoke(_touch, rayPos); //currently fires for all touches for ease of navigating, might change later idk
+
         }
-
+        else ValidJoystickInput = false;
 
     }
 
 
     private void FixedUpdate()
     {
-        if (_doubleTap)
-        {
-            ValidDoubleTapEvent.Invoke(_touch);
-            _doubleTap = false;
-            Debug.Log("Double Tapping");
-            // Start Fade In
-            //if (!JoystickStateClosed) StartCoroutine(CloseJoystick());
-            //else StartCoroutine(Fade());
-        }
 
-        if (!_inputValid)
-        {
-            //   MoveInnerJoystick(touch);
-            ValidJoystickInput = false;
-        }
 
-        if (_snapBack)
-        {
-            _innerJoystick.position = Mathfs.LerpLinear(_innerJoystick.position, new Vector3(_outerJoystick.position.x, _outerJoystick.position.y, _innerJoystick.position.z), Time.deltaTime * _touchSensitivity);
-            if (Vector3.Distance(_innerJoystick.position, new Vector3(_outerJoystick.position.x, _outerJoystick.position.y, _innerJoystick.position.z)) <= 0.01)
-            {
-                _innerJoystick.position = new Vector3(_outerJoystick.position.x, _outerJoystick.position.y, _innerJoystick.position.z);
-                _snapBack = false;
-            }
-        }
 
     }
 
@@ -147,7 +102,7 @@ void Awake()
     void LateUpdate()
     {
         // Register Valid Touches for Double Tap
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended  && _touchWasOnJoystick) //<- needs to count what has been tapped
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended && _touchWasOnJoystick) //<- needs to count what has been tapped
         {
             tapCount += 1;
             StartCoroutine(Countdown());
@@ -157,12 +112,7 @@ void Awake()
         // If Valid Double Tap Fade In / Out
         if (tapCount == 2)
         {
-           // _doubleTap = true;#
             ValidDoubleTapEvent.Invoke(_touch);
-
-
-            if (JoystickStateClosed) _counter = _counterStart;
-            else _counter = _counterStartForClose;
 
             tapCount = 0;
             StopCoroutine(Countdown());
@@ -179,6 +129,8 @@ void Awake()
 
     public static void ChangeJoystickState(bool newState)
     {
+        if (newState == JoystickStateClosed) return;
+
         JoystickStateClosed = newState;
         JoystickStateChanged.Invoke();
     }
@@ -186,30 +138,30 @@ void Awake()
 
     private bool CheckForIntersectionWithPlane(Touch touch, Plane plane, Transform zValue, out Vector3 rayPos)
     {
-
         //transform the touch position into word space from screen space
         Ray mRay = _uiCamera.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, zValue.position.z));
+        rayPos = Vector3.zero;
 
+        Vector3 touchPosWorld = _uiCamera.ScreenToWorldPoint(touch.position);
+        Vector2 touchPosWorld2D = new Vector2(touchPosWorld.x, touchPosWorld.y);
+
+        RaycastHit2D hit = Physics2D.Raycast(touchPosWorld2D, Camera.main.transform.forward);
+
+        // this will always get the touch pos in relation to the relevant plane
         if (plane.Raycast(mRay, out float rayDistance))
         {
-            Debug.Log("Ray Dist: " + rayDistance);
-
-            _inputValid = true;
-
             // if Joystick is activated, move accordingly, record Input for Boat
             if (!JoystickStateClosed)
             {
                 rayPos = mRay.GetPoint(rayDistance);
                 rayPos = new Vector3(rayPos.x, rayPos.y, zValue.position.z);
-
-                return true;
             }
 
         }
-        else Debug.Log("ELSE NO");
-        Debug.Log("HECK");
-        rayPos = Vector3.zero;
-        return false;
+
+        if (hit.collider != null) return true;
+        else return false;
+
     }
 
 

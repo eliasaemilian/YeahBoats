@@ -26,7 +26,7 @@ public class SimpleBoatInput : MonoBehaviour
     float speed;
     private void CalculateBoatMovementFromJoystickInput()
     {
-        if (!UI_InputDetect_Joystick.ValidJoystickInput) return;
+        if (!UI_InputDetect_Joystick.ValidJoystickInput || UI_InputDetect_Joystick.JoystickStateClosed) return;
 
         // Calculate Move Towards Direction and Apply Force & Rotation
         Vector2 dir2D = Mathfs.GetUnitVectorByAngle(UI_InputDetect_Joystick.JoystickDirInDegrees * Mathf.Deg2Rad);
