@@ -93,8 +93,13 @@ void Awake()
             //    ValidJoyStickTouchEvent.Invoke(_touch, rayPos);
             //}
 
-            CheckForIntersectionWithPlane(_touch, objPlane, _innerJoystick, out Vector3 rayPos);
-            ValidJoyStickTouchEvent.Invoke(_touch, rayPos);
+            if (CheckForIntersectionWithPlane(_touch, objPlane, _innerJoystick, out Vector3 rayPos))
+            {
+                _touchWasOnJoystick = true;
+                ValidJoyStickTouchEvent.Invoke(_touch, rayPos);
+                Debug.Log("Valid Touch on Joystick");
+            }
+            else Debug.Log("NO");
 
             //else if (_touch.phase == TouchPhase.Ended)
             //{
@@ -142,7 +147,7 @@ void Awake()
     void LateUpdate()
     {
         // Register Valid Touches for Double Tap
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended /* && _touchWasOnJoystick*/)
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended  && _touchWasOnJoystick) //<- needs to count what has been tapped
         {
             tapCount += 1;
             StartCoroutine(Countdown());
@@ -152,7 +157,10 @@ void Awake()
         // If Valid Double Tap Fade In / Out
         if (tapCount == 2)
         {
-            _doubleTap = true;
+           // _doubleTap = true;#
+            ValidDoubleTapEvent.Invoke(_touch);
+
+
             if (JoystickStateClosed) _counter = _counterStart;
             else _counter = _counterStartForClose;
 
@@ -167,115 +175,42 @@ void Awake()
         tapCount = 0;
     }
 
-    private IEnumerator Fade()
-    {
-        _counter += Time.deltaTime;
-        // Lerp outer Radius
-        _lerpRadius = Mathf.Lerp(0, _outerFinalRadius, _counter / _lerpTime);
-        _mat_OuterJoystick.SetFloat("_Radius", _lerpRadius);
 
-        // Fade in inner Transparency
-        _lerpInnerTransparency = Mathf.Lerp( .8f, _innerFinalTransparency, _counter / _lerpTime);
-        _mat_InnerJoystick.SetFloat("_Transparency", _lerpInnerTransparency);
 
-        yield return new WaitUntil(() => _counter >= _lerpTime);
-
-        _doubleTap = false;
-        ChangeJoystickState(false);
-
-    }
-
-    private IEnumerator CloseJoystick()
-    {
-        _counter -= Time.deltaTime;
-        // Lerp outer Radius
-        _lerpRadius = Mathf.Lerp(0, _outerFinalRadius, _counter / _lerpTime);
-        _mat_OuterJoystick.SetFloat("_Radius", _lerpRadius);
-
-        // Fade in inner Transparency
-        _lerpInnerTransparency = Mathf.Lerp(.8f, _innerFinalTransparency, _counter / _lerpTime);
-        _mat_InnerJoystick.SetFloat("_Transparency", _lerpInnerTransparency);
-
-        yield return new WaitUntil(() => _counter <= _counterStart);
-
-        _doubleTap = false;
-        ChangeJoystickState(true);
-
-        ValidJoystickInput = false;
-
-    }
-
-    private void ChangeJoystickState(bool newState)
+    public static void ChangeJoystickState(bool newState)
     {
         JoystickStateClosed = newState;
         JoystickStateChanged.Invoke();
     }
 
 
-
     private bool CheckForIntersectionWithPlane(Touch touch, Plane plane, Transform zValue, out Vector3 rayPos)
     {
+
         //transform the touch position into word space from screen space
         Ray mRay = _uiCamera.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, zValue.position.z));
 
         if (plane.Raycast(mRay, out float rayDistance))
         {
+            Debug.Log("Ray Dist: " + rayDistance);
+
             _inputValid = true;
 
             // if Joystick is activated, move accordingly, record Input for Boat
             if (!JoystickStateClosed)
             {
-                startPos = mRay.GetPoint(rayDistance);
-                startPos = new Vector3(startPos.x, startPos.y, zValue.position.z);
+                rayPos = mRay.GetPoint(rayDistance);
+                rayPos = new Vector3(rayPos.x, rayPos.y, zValue.position.z);
 
-                rayPos = startPos;
                 return true;
             }
 
-
         }
-
+        else Debug.Log("ELSE NO");
+        Debug.Log("HECK");
         rayPos = Vector3.zero;
         return false;
     }
 
-    Vector3 startPos, center, dir, newPos;
-    float radius;
-    private void ProcessTouchOnJoystick(Touch touch)
-    {
-        //transform the touch position into word space from screen space
-        Ray mRay = _uiCamera.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, _innerJoystick.position.z));
-
-        radius = _outerJoystick.GetComponent<MeshRenderer>().bounds.extents.x - _innerJoystick.GetComponent<MeshRenderer>().bounds.extents.x - _distBetweenInnertoOuterJoystick;
-            
-        center = _outerJoystick.GetComponent<MeshRenderer>().bounds.center;
-        center.z = _innerJoystick.position.z;
-
-        if (objPlane.Raycast(mRay, out float rayDistance))
-        {
-            _inputValid = true;
-
-            // if Joystick is activated, move accordingly, record Input for Boat
-            if (!JoystickStateClosed)
-            {
-                startPos = mRay.GetPoint(rayDistance);
-                startPos = new Vector3(startPos.x, startPos.y, _innerJoystick.position.z);
-                dir = startPos - center;
-
-                float angRad = Mathfs.GetAngleByUnitVector(dir.normalized);
-
-                JoystickDirInDegrees = (angRad > 0 ? angRad : (2 * Mathfs.PI + angRad)) * 360 / (2 * Mathfs.PI); //Remap from  [ 0 - 180, -180 - 0 ] to [ 0 - 360 ]
-                ValidJoystickInput = true;
-
-                newPos = center + (dir.normalized * radius);
-
-
-
-                _innerJoystick.position = new Vector3(newPos.x, newPos.y, _innerJoystick.position.z);
-            }
-
-
-        }
-    }
 
 }

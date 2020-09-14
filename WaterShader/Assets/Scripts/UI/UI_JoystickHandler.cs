@@ -68,8 +68,6 @@ public class UI_JoystickHandler : MonoBehaviour
 
             newPos = center + (dir.normalized * radius);
 
-
-
             _innerJoystick.position = new Vector3(newPos.x, newPos.y, _innerJoystick.position.z);
         }
       
@@ -86,13 +84,18 @@ public class UI_JoystickHandler : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //if (_doubleTap)
-        //{
-        //    Debug.Log("Double Tapping");
-        //    // Start Fade In
-        //    if (!UI_InputDetect_Joystick.JoystickStateClosed) StartCoroutine(CloseJoystick());
-        //    else StartCoroutine(Fade());
-        //}
+        if (_doubleTap)
+        {
+            Debug.Log("Double Tapping");
+            // Start Fade In
+            //if (!UI_InputDetect_Joystick.JoystickStateClosed) StartCoroutine(CloseJoystick());
+            //else StartCoroutine(Fade());
+
+
+
+            if (!UI_InputDetect_Joystick.JoystickStateClosed) StartCoroutine(CloseJoystick());
+            else StartCoroutine(Fade());
+        }
 
         if (!_inputValid)
         {
@@ -114,13 +117,10 @@ public class UI_JoystickHandler : MonoBehaviour
 
     private void ProcessDoubleTap(Touch touch)
     {
-        if (!UI_InputDetect_Joystick.JoystickStateClosed) StartCoroutine(CloseJoystick());
-        else StartCoroutine(Fade());
+        _doubleTap = true;
 
-        //if (touch == )
-        //{
-
-        //}
+        if (UI_InputDetect_Joystick.JoystickStateClosed) _counter = _counterStart;
+        else _counter = _counterStartForClose;
 
     }
 
@@ -165,6 +165,8 @@ public class UI_JoystickHandler : MonoBehaviour
 
     private IEnumerator Fade()
     {
+        Debug.Log("Fade");
+
         _counter += Time.deltaTime;
         // Lerp outer Radius
         _lerpRadius = Mathf.Lerp(0, _outerFinalRadius, _counter / _lerpTime);
@@ -177,12 +179,14 @@ public class UI_JoystickHandler : MonoBehaviour
         yield return new WaitUntil(() => _counter >= _lerpTime);
 
         _doubleTap = false;
-        ChangeJoystickState(false);
+        UI_InputDetect_Joystick.ChangeJoystickState(false);
 
     }
 
     private IEnumerator CloseJoystick()
     {
+        Debug.Log("Close Joystick");
+
         _counter -= Time.deltaTime;
         // Lerp outer Radius
         _lerpRadius = Mathf.Lerp(0, _outerFinalRadius, _counter / _lerpTime);
@@ -195,15 +199,11 @@ public class UI_JoystickHandler : MonoBehaviour
         yield return new WaitUntil(() => _counter <= _counterStart);
 
         _doubleTap = false;
-        ChangeJoystickState(true);
+        UI_InputDetect_Joystick.ChangeJoystickState(true);
 
         UI_InputDetect_Joystick.ValidJoystickInput = false;
 
     }
 
-    private void ChangeJoystickState(bool newState)
-    {
-        UI_InputDetect_Joystick.JoystickStateClosed = newState;
-        UI_InputDetect_Joystick.JoystickStateChanged.Invoke();
-    }
+
 }
