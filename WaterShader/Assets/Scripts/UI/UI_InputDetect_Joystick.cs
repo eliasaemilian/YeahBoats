@@ -1,17 +1,26 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 
+[Serializable]
+public class ValidPlaneTouchEvent : UnityEvent<Touch, Vector3> { }
+public class ValidTouchEvent : UnityEvent<Touch> { }
+
 public class UI_InputDetect_Joystick : MonoBehaviour
 {
+    public static ValidPlaneTouchEvent ValidJoyStickTouchEvent;
+    public static ValidTouchEvent ValidDoubleTapEvent;
     public static bool JoystickStateClosed { get; set; } // [ false ] open, -> State: Moving, [ true ] closed -> State: Fishing
     public static float JoystickDirInDegrees { get; set; }
     public static bool ValidJoystickInput { get; set; } = false;
 
-    public UnityEvent JoystickStateChanged;
+    public static UnityEvent JoystickStateChanged;
+    public static UnityEvent JoystickTriggerSnapback;
+    public static UnityEvent DoubleTapProcessed;
 
     [SerializeField] private Camera _uiCamera = null;
     [SerializeField] private Transform _outerJoystick = null;
@@ -36,7 +45,12 @@ public class UI_InputDetect_Joystick : MonoBehaviour
 // Start is called before the first frame update
 void Awake()
     {
+        if (ValidJoyStickTouchEvent == null) ValidJoyStickTouchEvent = new ValidPlaneTouchEvent();
+        if (ValidDoubleTapEvent == null) ValidDoubleTapEvent = new ValidTouchEvent();
+
         JoystickStateChanged = new UnityEvent();
+        JoystickTriggerSnapback = new UnityEvent();
+        DoubleTapProcessed = new UnityEvent();
         // Register to InputManager
 
         // Check for UI Camera avaliable
@@ -72,19 +86,22 @@ void Awake()
         {
             _touch = Input.GetTouch(0);
 
-            if (_touch.phase == TouchPhase.Began || _touch.phase == TouchPhase.Moved)
-            {
-                ProcessTouchOnJoystick(_touch);
+            //if (_touch.phase == TouchPhase.Began || _touch.phase == TouchPhase.Moved)
+            //{
+            // //   ProcessTouchOnJoystick(_touch);
+            //    CheckForIntersectionWithPlane(_touch, objPlane, _innerJoystick, out Vector3 rayPos);
+            //    ValidJoyStickTouchEvent.Invoke(_touch, rayPos);
+            //}
 
-            }
+            CheckForIntersectionWithPlane(_touch, objPlane, _innerJoystick, out Vector3 rayPos);
+            ValidJoyStickTouchEvent.Invoke(_touch, rayPos);
 
-
-            else if (_touch.phase == TouchPhase.Ended)
-            {
-                if (_inputValid) _touchWasOnJoystick = true;
-                _inputValid = false;
-                _snapBack = true;
-            }
+            //else if (_touch.phase == TouchPhase.Ended)
+            //{
+            //    if (_inputValid) _touchWasOnJoystick = true;
+            //    _inputValid = false;
+            //    _snapBack = true;
+            //}
         }
 
 
@@ -95,10 +112,12 @@ void Awake()
     {
         if (_doubleTap)
         {
+            ValidDoubleTapEvent.Invoke(_touch);
+            _doubleTap = false;
             Debug.Log("Double Tapping");
             // Start Fade In
-            if (!JoystickStateClosed) StartCoroutine(CloseJoystick());
-            else StartCoroutine(Fade());
+            //if (!JoystickStateClosed) StartCoroutine(CloseJoystick());
+            //else StartCoroutine(Fade());
         }
 
         if (!_inputValid)
@@ -110,7 +129,7 @@ void Awake()
         if (_snapBack)
         {
             _innerJoystick.position = Mathfs.LerpLinear(_innerJoystick.position, new Vector3(_outerJoystick.position.x, _outerJoystick.position.y, _innerJoystick.position.z), Time.deltaTime * _touchSensitivity);
-            if ( Vector3.Distance( _innerJoystick.position, new Vector3(_outerJoystick.position.x, _outerJoystick.position.y, _innerJoystick.position.z) ) <= 0.01 )
+            if (Vector3.Distance(_innerJoystick.position, new Vector3(_outerJoystick.position.x, _outerJoystick.position.y, _innerJoystick.position.z)) <= 0.01)
             {
                 _innerJoystick.position = new Vector3(_outerJoystick.position.x, _outerJoystick.position.y, _innerJoystick.position.z);
                 _snapBack = false;
@@ -123,7 +142,7 @@ void Awake()
     void LateUpdate()
     {
         // Register Valid Touches for Double Tap
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended && _touchWasOnJoystick)
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended /* && _touchWasOnJoystick*/)
         {
             tapCount += 1;
             StartCoroutine(Countdown());
@@ -190,6 +209,34 @@ void Awake()
     {
         JoystickStateClosed = newState;
         JoystickStateChanged.Invoke();
+    }
+
+
+
+    private bool CheckForIntersectionWithPlane(Touch touch, Plane plane, Transform zValue, out Vector3 rayPos)
+    {
+        //transform the touch position into word space from screen space
+        Ray mRay = _uiCamera.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, zValue.position.z));
+
+        if (plane.Raycast(mRay, out float rayDistance))
+        {
+            _inputValid = true;
+
+            // if Joystick is activated, move accordingly, record Input for Boat
+            if (!JoystickStateClosed)
+            {
+                startPos = mRay.GetPoint(rayDistance);
+                startPos = new Vector3(startPos.x, startPos.y, zValue.position.z);
+
+                rayPos = startPos;
+                return true;
+            }
+
+
+        }
+
+        rayPos = Vector3.zero;
+        return false;
     }
 
     Vector3 startPos, center, dir, newPos;

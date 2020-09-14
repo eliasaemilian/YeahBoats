@@ -10,7 +10,7 @@ public class Boat_CameraHandler : MonoBehaviour
     void Start()
     {
         _anim = GetComponent<Animator>();
-        FindObjectOfType<UI_InputDetect_Joystick>().JoystickStateChanged.AddListener(On_UI_InputDetect_Joystick_JoystickEventChanged);
+        UI_InputDetect_Joystick.JoystickStateChanged.AddListener(On_UI_InputDetect_Joystick_JoystickEventChanged);
     }
 
     // Update is called once per frame
