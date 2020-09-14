@@ -9,6 +9,6 @@ public class LevelScriptable : ScriptableObject
 {
     public int Level;
     public int Cost;
-    [Header("Testing for special stuff maybe later")]
-    public bool SomethingSomething;
+    [Header("Use this if Boat")]
+    public GameObject BoatPrefab;
 }

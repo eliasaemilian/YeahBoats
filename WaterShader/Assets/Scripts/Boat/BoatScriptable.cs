@@ -10,7 +10,8 @@ public class BoatScriptable : ScriptableObject
 {
     public string Name;
     public int Level;
-    public int Storage;
+    public int MaxLevel;
     public int NPCSpawnPointAmmount;
+    public GameObject BoatPrefab;
 
 }

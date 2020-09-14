@@ -1067,6 +1067,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05968f4859d59384eb04b5c4f689c733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _fishValue: 0
 --- !u!114 &133599415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1082,6 +1083,10 @@ MonoBehaviour:
   Boat: {fileID: 0}
   _boatPrefab: {fileID: 5622893729835847697, guid: 172398fac9cb03a4f89281f62a84ff08,
     type: 3}
+  _boatLevels: {fileID: 11400000, guid: 705af923a2600044ca6635327be86112, type: 2}
+  FishingSpeedup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!43 &210980886
 Mesh:
   m_ObjectHideFlags: 0

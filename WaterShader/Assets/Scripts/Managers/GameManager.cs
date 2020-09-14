@@ -8,9 +8,11 @@ using UnityEngine.Events;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    private LevelManager _lM;
 
     public BoatBase Boat;
     [SerializeField] private GameObject _boatPrefab;
+    [SerializeField] private LevelStorageScriptable _boatLevels;
 
     public UnityEvent FishingSpeedup;
     void Awake()
@@ -24,8 +26,11 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject boat = Instantiate(_boatPrefab,transform.position, Quaternion.identity);
-        Boat = boat.GetComponent<BoatBase>();
+        _lM = LevelManager.Instance;
+
+        InstantiateBoat();
+        //GameObject boat = Instantiate(_boatPrefab,transform.position, Quaternion.identity);
+        //Boat = boat.GetComponent<BoatBase>();
     }
 
     // Update is called once per frame
@@ -42,5 +47,13 @@ public class GameManager : MonoBehaviour
     public void TapToSpeeUpCatch()
     {
         FishingSpeedup.Invoke();
+    }
+
+    private void InstantiateBoat()
+    {
+        GameObject b = _boatLevels.Levels[_lM.BoatLevel - 1].BoatPrefab;
+        GameObject boat = Instantiate(b, transform.position, Quaternion.identity);
+        Boat = boat.GetComponent<BoatBase>();
+        Debug.Log("Loading boat of level : " + _boatLevels.Levels[_lM.BoatLevel - 1].Level);
     }
 }
