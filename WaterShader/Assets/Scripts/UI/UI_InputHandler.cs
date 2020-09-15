@@ -7,12 +7,13 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 
-[Serializable] public class ValidPlaneTouchEvent : UnityEvent<Touch, Vector3> { }
+[Serializable] public class ValidPlaneTouchEvent2D : UnityEvent<Touch, Vector3> { }
+[Serializable] public class ValidPlaneTouchEvent : UnityEvent<Touch, Vector3, float> { }
 [Serializable] public class ValidTouchEvent : UnityEvent<Touch> { }
 
 public class UI_InputHandler : MonoBehaviour
 {
-    public static ValidPlaneTouchEvent ValidJoyStickTouchEvent;
+    public static ValidPlaneTouchEvent2D ValidJoyStickTouchEvent;
     public static ValidPlaneTouchEvent ValidWaterTouchEvent;
     public static ValidTouchEvent ValidDoubleTapEvent;
     public static bool JoystickStateClosed { get; set; } // [ false ] open, -> State: Moving, [ true ] closed -> State: Fishing
@@ -46,7 +47,7 @@ public class UI_InputHandler : MonoBehaviour
     void Awake()
     {
         // SETUP INPUT EVENTS
-        if (ValidJoyStickTouchEvent == null) ValidJoyStickTouchEvent = new ValidPlaneTouchEvent();
+        if (ValidJoyStickTouchEvent == null) ValidJoyStickTouchEvent = new ValidPlaneTouchEvent2D();
         if (ValidWaterTouchEvent == null) ValidWaterTouchEvent = new ValidPlaneTouchEvent();
         if (ValidDoubleTapEvent == null) ValidDoubleTapEvent = new ValidTouchEvent();
 
@@ -78,18 +79,18 @@ public class UI_InputHandler : MonoBehaviour
         {
             
             _touch = Input.GetTouch(0);
-            Vector3 rayPos, rayPos2D;
+            Vector3 hitPos, rayPos2D;
             // Check for Touches on Joystick
             if (CheckForHitOnPlane2D(_touch, _uiPlane, _innerJoystick, out rayPos2D))
             {
                 SetPOI(_innerJoystick);
                 ValidJoystickInput = true;
             }
-            else if (CheckForHitOnPlane(_touch, _uiPlane, _tapEffectPlane, _waterPlane, out rayPos))
+            else if (CheckForHitOnPlane(_touch, _uiPlane, _tapEffectPlane, _waterPlane, out hitPos, out float dist))
             {
                 SetPOI(_waterPlane);
              //   if(JoystickStateClosed) ValidWaterTouchEvent.Invoke(_touch, rayPos);
-                 ValidWaterTouchEvent.Invoke(_touch, rayPos);
+                 ValidWaterTouchEvent.Invoke(_touch, hitPos, dist);
             }
             else
             {
@@ -179,30 +180,20 @@ public class UI_InputHandler : MonoBehaviour
 
     }
 
-    private bool CheckForHitOnPlane(Touch touch, Plane plane, Transform zValue, Transform TransformToHit, out Vector3 rayPos)
+    private bool CheckForHitOnPlane(Touch touch, Plane plane, Transform zValue, Transform TransformToHit, out Vector3 worldPosHit, out float distToCam)
     {
         //transform the touch position into word space from screen space
         Ray mRay = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, zValue.position.z));
-        rayPos = Vector3.zero;
-        
-        // this will always get the touch pos in relation to the relevant plane
-        //if (plane.Raycast(mRay, out float rayDistance))
-        //{
-        //    // if Joystick is activated, move accordingly, record Input for Boat
-        //    if (!JoystickStateClosed)
-        //    {
-        //        mRay =  _uiCamera.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, zValue.position.z)); //REDO screenpoint fetch to get touch position for ui element
-        //        rayPos = mRay.GetPoint(rayDistance);
-        //        rayPos = new Vector3(rayPos.x, rayPos.y, zValue.position.z);
-        //    }
-
-        //}
+        worldPosHit = Vector3.zero;
+        distToCam = 0f;
 
         if (Physics.Raycast(mRay, out RaycastHit h, 1000f))
         {
             if (h.collider.gameObject.transform == TransformToHit)
             {
-                rayPos = Camera.main.WorldToScreenPoint( h.point );
+                distToCam = h.distance;
+                
+                worldPosHit = Camera.main.WorldToScreenPoint( h.point );
                 return true;
             }
             else return false;

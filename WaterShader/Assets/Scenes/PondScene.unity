@@ -367,7 +367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a60f854beda3da48b87ebb106bb29e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _uiCamera: {fileID: 434525901}
+  UICamera: {fileID: 434525901}
   _outerJoystick: {fileID: 1578447384}
   _innerJoystick: {fileID: 1117406130}
   _touchSensitivity: 30
@@ -579,7 +579,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670728958}
-  m_LocalRotation: {x: 0.011362745, y: -0.0000000026883236, z: 3.0541424e-11, w: 0.99993545}
+  m_LocalRotation: {x: 0.011362737, y: 0.0000000026883233, z: -3.0557286e-11, w: 0.99993545}
   m_LocalPosition: {x: 5.3, y: 6.960002, z: -34.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -652,10 +652,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5848345769d2f374bbdaf1349632b528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _finalRadius: 3
+  _finalRadius: 1.7
   _finalFadeRadius: 3
-  _finalTransparency: 1
-  _lerpTime: 0.8
+  _finalTransparency: 0.3
+  _lerpTime: 0.6
+  _minMaxDistWaterPlaneToCamera: 0a00000050000000
 --- !u!1 &802486277
 GameObject:
   m_ObjectHideFlags: 3
@@ -828,7 +829,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 892751132}
-  m_LocalRotation: {x: 0.011362745, y: -0.0000000026883236, z: 3.0541424e-11, w: 0.99993545}
+  m_LocalRotation: {x: 0.011362737, y: 0.0000000026883233, z: -3.0557286e-11, w: 0.99993545}
   m_LocalPosition: {x: 5.3, y: 6.960002, z: -34.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
