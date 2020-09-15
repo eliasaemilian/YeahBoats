@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public BoatBase Boat;
     [SerializeField] private GameObject _boatPrefab;
     [SerializeField] private LevelStorageScriptable _boatLevels;
+    public Data DataContainer;
 
     public UnityEvent FishingSpeedup;
     void Awake()
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
+        DataContainer = GetComponent<Data>();
     }
     // Start is called before the first frame update
     void Start()
@@ -29,8 +31,6 @@ public class GameManager : MonoBehaviour
         _lM = LevelManager.Instance;
 
         InstantiateBoat();
-        //GameObject boat = Instantiate(_boatPrefab,transform.position, Quaternion.identity);
-        //Boat = boat.GetComponent<BoatBase>();
     }
 
     // Update is called once per frame
@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
         FishingSpeedup.Invoke();
     }
 
+    //Setting up boat
     private void InstantiateBoat()
     {
         GameObject b = _boatLevels.Levels[_lM.BoatLevel - 1].BoatPrefab;
@@ -56,4 +57,6 @@ public class GameManager : MonoBehaviour
         Boat = boat.GetComponent<BoatBase>();
         Debug.Log("Loading boat of level : " + _boatLevels.Levels[_lM.BoatLevel - 1].Level);
     }
+
+    
 }

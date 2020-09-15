@@ -19,12 +19,13 @@ public class FishManager : MonoBehaviour
         {
             Destroy(this);
         }
+        _lM = LevelManager.Instance;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        _lM = LevelManager.Instance;
+
         _baseFishValue = 5;
         UpdateFishValue();
         _lM.FishingRodUpdate.AddListener(UpdateFishValue);

@@ -9,6 +9,7 @@ using UnityEngine.Events;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
+    private GameManager _gM;
 
     private MoneyManager _mM;
     public int MapLevel;
@@ -41,7 +42,12 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _gM = GameManager.Instance;
         _mM = MoneyManager.Instance;
+
+        //For temporary saving
+        GetData();
+        InvokeRepeating("SaveData", 5, 5);
     }
 
     // Update is called once per frame
@@ -101,79 +107,100 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void GetData()
+    {
+        MapLevel = _gM.DataContainer.MapLevel;
+        BoatLevel = _gM.DataContainer.BoatLevel;
+        NPCFishermanLevel = _gM.DataContainer.NPCFishermanLevel;
+        FishingRodLevel = _gM.DataContainer.FishingRodLevel;
+        FishingHookLevel = _gM.DataContainer.FishingHookLevel;
+        Multiplier = _gM.DataContainer.Multiplier;
+        BoatStorageLevel = _gM.DataContainer.BoatStorageLevel;
+    }
+
+    private void SaveData()
+    {
+        _gM.DataContainer.MapLevel = MapLevel;
+        _gM.DataContainer.BoatLevel = BoatLevel;
+        _gM.DataContainer.NPCFishermanLevel = NPCFishermanLevel;
+        _gM.DataContainer.FishingRodLevel = FishingRodLevel;
+        _gM.DataContainer.FishingHookLevel = FishingHookLevel;
+        _gM.DataContainer.Multiplier = Multiplier;
+        _gM.DataContainer.BoatStorageLevel = BoatStorageLevel;
+    }
 
     // ------ Deprecated ------
     //Call the next function to level up various stuff, not final, WIP
-    public void CheckForNPCLevelup(int nextLevel)
-    {
-        if (NPCLevels.Levels.Length < nextLevel) return;
+    //public void CheckForNPCLevelup(int nextLevel)
+    //{
+    //    if (NPCLevels.Levels.Length < nextLevel) return;
 
-        if(_mM.CheckMoney(NPCLevels.Levels[nextLevel-1].Cost))
-        {
-            Debug.Log("I have enough money");
+    //    if(_mM.CheckMoney(NPCLevels.Levels[nextLevel-1].Cost))
+    //    {
+    //        Debug.Log("I have enough money");
 
-            _mM.DeduceMoney(NPCLevels.Levels[nextLevel - 1].Cost);
-            NPCFishermanLevel++;
-            NPCUpdate.Invoke();
-        }
-        else
-        {
-            Debug.Log("I don't have enough money");
+    //        _mM.DeduceMoney(NPCLevels.Levels[nextLevel - 1].Cost);
+    //        NPCFishermanLevel++;
+    //        NPCUpdate.Invoke();
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("I don't have enough money");
 
-        }
-    }
-    public void CheckForBoatStorageLevelup(int nextLevel)
-    {
-        if (BoatStorageLevels.Levels.Length < nextLevel) return;
+    //    }
+    //}
+    //public void CheckForBoatStorageLevelup(int nextLevel)
+    //{
+    //    if (BoatStorageLevels.Levels.Length < nextLevel) return;
 
-        if (_mM.CheckMoney(BoatStorageLevels.Levels[nextLevel - 1].Cost))
-        {
-            Debug.Log("I have enough money");
+    //    if (_mM.CheckMoney(BoatStorageLevels.Levels[nextLevel - 1].Cost))
+    //    {
+    //        Debug.Log("I have enough money");
 
-            _mM.DeduceMoney(BoatStorageLevels.Levels[nextLevel - 1].Cost);
-            BoatStorageLevel++;
-            BoatStorageUpdate.Invoke();
-        }
-        else
-        {
-            Debug.Log("I don't have enough money");
+    //        _mM.DeduceMoney(BoatStorageLevels.Levels[nextLevel - 1].Cost);
+    //        BoatStorageLevel++;
+    //        BoatStorageUpdate.Invoke();
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("I don't have enough money");
 
-        }
-    }
-    public void CheckForFishingRodLevelup(int nextLevel)
-    {
-        if (FishingRodLevels.Levels.Length < nextLevel) return;
+    //    }
+    //}
+    //public void CheckForFishingRodLevelup(int nextLevel)
+    //{
+    //    if (FishingRodLevels.Levels.Length < nextLevel) return;
 
-        if (_mM.CheckMoney(FishingRodLevels.Levels[nextLevel - 1].Cost))
-        {
-            Debug.Log("I have enough money");
+    //    if (_mM.CheckMoney(FishingRodLevels.Levels[nextLevel - 1].Cost))
+    //    {
+    //        Debug.Log("I have enough money");
 
-            _mM.DeduceMoney(FishingRodLevels.Levels[nextLevel - 1].Cost);
-            FishingRodLevel++;
-            FishingRodUpdate.Invoke();
-        }
-        else
-        {
-            Debug.Log("I don't have enough money");
+    //        _mM.DeduceMoney(FishingRodLevels.Levels[nextLevel - 1].Cost);
+    //        FishingRodLevel++;
+    //        FishingRodUpdate.Invoke();
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("I don't have enough money");
 
-        }
-    }
-    public void CheckForFishingHookLevelup(int nextLevel)
-    {
-        if (FishingHookLevels.Levels.Length < nextLevel) return;
+    //    }
+    //}
+    //public void CheckForFishingHookLevelup(int nextLevel)
+    //{
+    //    if (FishingHookLevels.Levels.Length < nextLevel) return;
 
-        if (_mM.CheckMoney(FishingHookLevels.Levels[nextLevel - 1].Cost))
-        {
-            Debug.Log("I have enough money");
+    //    if (_mM.CheckMoney(FishingHookLevels.Levels[nextLevel - 1].Cost))
+    //    {
+    //        Debug.Log("I have enough money");
 
-            _mM.DeduceMoney(FishingHookLevels.Levels[nextLevel - 1].Cost);
-            FishingHookLevel++;
-            FishingHookUpdate.Invoke();
-        }
-        else
-        {
-            Debug.Log("I don't have enough money");
+    //        _mM.DeduceMoney(FishingHookLevels.Levels[nextLevel - 1].Cost);
+    //        FishingHookLevel++;
+    //        FishingHookUpdate.Invoke();
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("I don't have enough money");
 
-        }
-    }
+    //    }
+    //}
 }

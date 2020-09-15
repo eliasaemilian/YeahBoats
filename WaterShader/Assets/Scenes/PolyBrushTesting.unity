@@ -985,6 +985,7 @@ GameObject:
   - component: {fileID: 133599413}
   - component: {fileID: 133599414}
   - component: {fileID: 133599415}
+  - component: {fileID: 133599416}
   m_Layer: 0
   m_Name: KAREN IS CALLING
   m_TagString: Untagged
@@ -1084,9 +1085,31 @@ MonoBehaviour:
   _boatPrefab: {fileID: 5622893729835847697, guid: 172398fac9cb03a4f89281f62a84ff08,
     type: 3}
   _boatLevels: {fileID: 11400000, guid: 705af923a2600044ca6635327be86112, type: 2}
+  DataContainer: {fileID: 0}
   FishingSpeedup:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &133599416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133599410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c3698cbedebdc64eaf4ec536ffe3a78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MapLevel: 1
+  BoatLevel: 1
+  BoatStorageLevel: 1
+  NPCFishermanLevel: 1
+  FishingRodLevel: 1
+  FishingHookLevel: 1
+  Multiplier: 1
+  Money: 0
+  Multiplyer: 1
 --- !u!43 &210980886
 Mesh:
   m_ObjectHideFlags: 0
