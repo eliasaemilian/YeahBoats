@@ -13,6 +13,7 @@ using UnityEngine.Rendering.Universal;
 public class UI_InputHandler : MonoBehaviour
 {
     public static ValidPlaneTouchEvent ValidJoyStickTouchEvent;
+    public static ValidPlaneTouchEvent ValidWaterTouchEvent;
     public static ValidTouchEvent ValidDoubleTapEvent;
     public static bool JoystickStateClosed { get; set; } // [ false ] open, -> State: Moving, [ true ] closed -> State: Fishing
     public static float JoystickDirInDegrees { get; set; }
@@ -33,10 +34,11 @@ public class UI_InputHandler : MonoBehaviour
     float tapCount;
 
     private Plane _uiPlane;
+    private Plane _environmentPlane;
 
     private Transform _pointOfInterest; // Currently tapped with first registered touch
 
-    [SerializeField] private GameObject WaterPlane; //FOR TAP DEBUG
+    [SerializeField] private Transform _waterPlane; //FOR TAP DEBUG
 
 
     // Start is called before the first frame update
@@ -44,6 +46,7 @@ public class UI_InputHandler : MonoBehaviour
     {
         // SETUP INPUT EVENTS
         if (ValidJoyStickTouchEvent == null) ValidJoyStickTouchEvent = new ValidPlaneTouchEvent();
+        if (ValidWaterTouchEvent == null) ValidWaterTouchEvent = new ValidPlaneTouchEvent();
         if (ValidDoubleTapEvent == null) ValidDoubleTapEvent = new ValidTouchEvent();
 
         JoystickStateChanged = new UnityEvent();
@@ -63,33 +66,33 @@ public class UI_InputHandler : MonoBehaviour
 
         // Setup Plane for Touch Input Checks
         _uiPlane = new Plane(_uiCamera.transform.forward * -1, _outerJoystick.position);
+        _environmentPlane = new Plane(_waterPlane.up, _waterPlane.position);
 
     }
 
     private Touch _touch;
     void Update()
     {
-        Debug.Log("Valid State is " + ValidJoystickInput);
-
-
         if (Input.touchCount > 0)
         {
             _touch = Input.GetTouch(0);
-
+            Vector3 rayPos, rayPos2D;
             // Check for Touches on Joystick
-            if (CheckForIntersectionWithPlane(_touch, _uiPlane, _innerJoystick, out Vector3 rayPos))
+            if (CheckForHitOnPlane2D(_touch, _uiPlane, _innerJoystick, out rayPos2D))
             {
-                Debug.Log("Joystick");
                 SetPOI(_innerJoystick);
                 ValidJoystickInput = true;
             }
+            else if (CheckForHitOnPlane(_touch, _environmentPlane, _waterPlane, out rayPos))
+            {
+                if(JoystickStateClosed) ValidWaterTouchEvent.Invoke(_touch, rayPos);
+            }
             else
             {
-                Debug.Log("Not Joystick");
                 SetPOI(null);
             }
 
-            ValidJoyStickTouchEvent.Invoke(_touch, rayPos); //currently fires for all touches for ease of navigating, might change later idk
+            ValidJoyStickTouchEvent.Invoke(_touch, rayPos2D); //currently fires for all touches for ease of navigating, might change later idk
 
         }
         else ValidJoystickInput = false;
@@ -144,7 +147,7 @@ public class UI_InputHandler : MonoBehaviour
     }
 
 
-    private bool CheckForIntersectionWithPlane(Touch touch, Plane plane, Transform zValue, out Vector3 rayPos)
+    private bool CheckForHitOnPlane2D(Touch touch, Plane plane, Transform zValue, out Vector3 rayPos)
     {
         //transform the touch position into word space from screen space
         Ray mRay = _uiCamera.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, zValue.position.z));
@@ -172,5 +175,57 @@ public class UI_InputHandler : MonoBehaviour
 
     }
 
+    private bool CheckForHitOnPlane(Touch touch, Plane plane, Transform zValue, out Vector3 rayPos)
+    {
+        //transform the touch position into word space from screen space
+        Ray mRay = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, zValue.position.z));
+        rayPos = Vector3.zero;
+        
+        // this will always get the touch pos in relation to the relevant plane
+        if (plane.Raycast(mRay, out float rayDistance))
+        {
+            // if Joystick is activated, move accordingly, record Input for Boat
+            if (!JoystickStateClosed)
+            {
+                rayPos = mRay.GetPoint(rayDistance);
+                rayPos = new Vector3(rayPos.x, rayPos.y, zValue.position.z);
+            }
+
+        }
+
+        if (Physics.Raycast(mRay, out RaycastHit h, 1000f))
+        {
+            if (h.collider.gameObject.transform == zValue) return true;
+            else return false;
+        }
+        else return false;
+    }
+
+    public static bool LinePlaneIntersection(out Vector3 intersection, Vector3 linePoint, Vector3 lineVec, Vector3 planeNormal, Vector3 planePoint)
+    {
+        float length;
+        float dotNumerator;
+        float dotDenominator;
+        Vector3 vector;
+        intersection = Vector3.zero;
+
+        //calculate the distance between the linePoint and the line-plane intersection point
+        dotNumerator = Vector3.Dot((planePoint - linePoint), planeNormal);
+        dotDenominator = Vector3.Dot(lineVec, planeNormal);
+
+        if (dotDenominator != 0.0f)
+        {
+            length = dotNumerator / dotDenominator;
+
+            vector = lineVec.normalized  * length;
+
+            intersection = linePoint + vector;
+
+            return true;
+        }
+
+        else
+            return false;
+    }
 
 }

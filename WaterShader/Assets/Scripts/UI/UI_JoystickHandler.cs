@@ -110,16 +110,6 @@ public class UI_JoystickHandler : MonoBehaviour
         else _counter = _counterStartForClose;
 
     }
-
-    private void ProcessSnapBack()
-    {
-        _innerJoystick.position = Mathfs.LerpLinear(_innerJoystick.position, new Vector3(_outerJoystick.position.x, _outerJoystick.position.y, _innerJoystick.position.z), Time.deltaTime * _touchSensitivity);
-        if (Vector3.Distance(_innerJoystick.position, new Vector3(_outerJoystick.position.x, _outerJoystick.position.y, _innerJoystick.position.z)) <= 0.01)
-        {
-            _innerJoystick.position = new Vector3(_outerJoystick.position.x, _outerJoystick.position.y, _innerJoystick.position.z);
-            _snapBack = false;
-        }
-    }
   
 
     private IEnumerator Fade()
