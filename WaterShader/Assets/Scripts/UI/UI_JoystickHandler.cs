@@ -28,8 +28,8 @@ public class UI_JoystickHandler : MonoBehaviour
         _outerJoystick = transform;
         _innerJoystick = GetComponentInChildren<Collider2D>().transform;
 
-        UI_InputDetect_Joystick.ValidJoyStickTouchEvent.AddListener(ProcessJoystickInput);
-        UI_InputDetect_Joystick.ValidDoubleTapEvent.AddListener(ProcessDoubleTap);
+        UI_InputHandler.ValidJoyStickTouchEvent.AddListener(ProcessJoystickInput);
+        UI_InputHandler.ValidDoubleTapEvent.AddListener(ProcessDoubleTap);
 
         // Setup Shader Properties
         _mat_OuterJoystick = _outerJoystick.GetComponent<MeshRenderer>().material;
@@ -52,7 +52,7 @@ public class UI_JoystickHandler : MonoBehaviour
     {
         if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Moved)
         {
-            if (UI_InputDetect_Joystick.JoystickStateClosed) return;
+            if (UI_InputHandler.JoystickStateClosed) return;
 
             radius = _outerJoystick.GetComponent<MeshRenderer>().bounds.extents.x - _innerJoystick.GetComponent<MeshRenderer>().bounds.extents.x - _distBetweenInnertoOuterJoystick;
 
@@ -64,7 +64,7 @@ public class UI_JoystickHandler : MonoBehaviour
 
             float angRad = Mathfs.GetAngleByUnitVector(dir.normalized);
 
-            UI_InputDetect_Joystick.JoystickDirInDegrees = (angRad > 0 ? angRad : (2 * Mathfs.PI + angRad)) * 360 / (2 * Mathfs.PI); //Remap from  [ 0 - 180, -180 - 0 ] to [ 0 - 360 ]
+            UI_InputHandler.JoystickDirInDegrees = (angRad > 0 ? angRad : (2 * Mathfs.PI + angRad)) * 360 / (2 * Mathfs.PI); //Remap from  [ 0 - 180, -180 - 0 ] to [ 0 - 360 ]
 
             newPos = center + (dir.normalized * radius);
 
@@ -85,7 +85,7 @@ public class UI_JoystickHandler : MonoBehaviour
             Debug.Log("Double Tapping");
 
             // Start Fade In / Out
-            if (!UI_InputDetect_Joystick.JoystickStateClosed) StartCoroutine(CloseJoystick());
+            if (!UI_InputHandler.JoystickStateClosed) StartCoroutine(CloseJoystick());
             else StartCoroutine(Fade());
         }
 
@@ -106,7 +106,7 @@ public class UI_JoystickHandler : MonoBehaviour
     {
         _doubleTap = true;
 
-        if (UI_InputDetect_Joystick.JoystickStateClosed) _counter = _counterStart;
+        if (UI_InputHandler.JoystickStateClosed) _counter = _counterStart;
         else _counter = _counterStartForClose;
 
     }
@@ -136,7 +136,7 @@ public class UI_JoystickHandler : MonoBehaviour
         yield return new WaitUntil(() => _counter >= _lerpTime);
 
         _doubleTap = false;
-        UI_InputDetect_Joystick.ChangeJoystickState(false);
+        UI_InputHandler.ChangeJoystickState(false);
 
     }
 
@@ -154,9 +154,9 @@ public class UI_JoystickHandler : MonoBehaviour
         yield return new WaitUntil(() => _counter <= _counterStart);
 
         _doubleTap = false;
-        UI_InputDetect_Joystick.ChangeJoystickState(true);
+        UI_InputHandler.ChangeJoystickState(true);
 
-        UI_InputDetect_Joystick.ValidJoystickInput = false;
+        UI_InputHandler.ValidJoystickInput = false;
 
     }
 

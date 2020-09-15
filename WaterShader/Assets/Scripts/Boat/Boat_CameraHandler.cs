@@ -10,7 +10,7 @@ public class Boat_CameraHandler : MonoBehaviour
     void Start()
     {
         _anim = GetComponent<Animator>();
-        UI_InputDetect_Joystick.JoystickStateChanged.AddListener(On_UI_InputDetect_Joystick_JoystickEventChanged);
+        UI_InputHandler.JoystickStateChanged.AddListener(On_UI_InputDetect_Joystick_JoystickEventChanged);
     }
 
     // Update is called once per frame
@@ -21,7 +21,7 @@ public class Boat_CameraHandler : MonoBehaviour
 
     private void On_UI_InputDetect_Joystick_JoystickEventChanged()
     {
-        if (UI_InputDetect_Joystick.JoystickStateClosed) _anim.SetBool("State_Fishing", true);
+        if (UI_InputHandler.JoystickStateClosed) _anim.SetBool("State_Fishing", true);
         else _anim.SetBool("State_Fishing", false);
     }
 }

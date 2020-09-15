@@ -7,11 +7,10 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 
-[Serializable]
-public class ValidPlaneTouchEvent : UnityEvent<Touch, Vector3> { }
-public class ValidTouchEvent : UnityEvent<Touch> { }
+[Serializable] public class ValidPlaneTouchEvent : UnityEvent<Touch, Vector3> { }
+[Serializable] public class ValidTouchEvent : UnityEvent<Touch> { }
 
-public class UI_InputDetect_Joystick : MonoBehaviour
+public class UI_InputHandler : MonoBehaviour
 {
     public static ValidPlaneTouchEvent ValidJoyStickTouchEvent;
     public static ValidTouchEvent ValidDoubleTapEvent;
@@ -30,12 +29,12 @@ public class UI_InputDetect_Joystick : MonoBehaviour
     [SerializeField] private float _lerpTime = .8f;
     [SerializeField] private float _distBetweenInnertoOuterJoystick = .5f;
 
-    private bool _touchWasOnJoystick;
 
     float tapCount;
 
     private Plane _uiPlane;
 
+    private Transform _pointOfInterest; // Currently tapped with first registered touch
 
     [SerializeField] private GameObject WaterPlane; //FOR TAP DEBUG
 
@@ -72,6 +71,7 @@ public class UI_InputDetect_Joystick : MonoBehaviour
     {
         Debug.Log("Valid State is " + ValidJoystickInput);
 
+
         if (Input.touchCount > 0)
         {
             _touch = Input.GetTouch(0);
@@ -79,8 +79,14 @@ public class UI_InputDetect_Joystick : MonoBehaviour
             // Check for Touches on Joystick
             if (CheckForIntersectionWithPlane(_touch, _uiPlane, _innerJoystick, out Vector3 rayPos))
             {
-                _touchWasOnJoystick = true;
+                Debug.Log("Joystick");
+                SetPOI(_innerJoystick);
                 ValidJoystickInput = true;
+            }
+            else
+            {
+                Debug.Log("Not Joystick");
+                SetPOI(null);
             }
 
             ValidJoyStickTouchEvent.Invoke(_touch, rayPos); //currently fires for all touches for ease of navigating, might change later idk
@@ -91,22 +97,15 @@ public class UI_InputDetect_Joystick : MonoBehaviour
     }
 
 
-    private void FixedUpdate()
-    {
-
-
-
-    }
-
     // Checking for Double Tap secondary after single touch in Update
     void LateUpdate()
     {
+       
         // Register Valid Touches for Double Tap
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended && _touchWasOnJoystick) //<- needs to count what has been tapped
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended && _pointOfInterest != null) //<- needs to count what has been tapped
         {
             tapCount += 1;
             StartCoroutine(Countdown());
-            _touchWasOnJoystick = false;
         }
 
         // If Valid Double Tap Fade In / Out
@@ -123,6 +122,15 @@ public class UI_InputDetect_Joystick : MonoBehaviour
     {
         yield return new WaitForSeconds(_doubleTapSensitivity);
         tapCount = 0;
+    }
+
+    private void SetPOI(Transform newPOI)
+    {
+        if (_pointOfInterest != newPOI)
+        {
+            tapCount = 0;
+            _pointOfInterest = newPOI;
+        }
     }
 
 
