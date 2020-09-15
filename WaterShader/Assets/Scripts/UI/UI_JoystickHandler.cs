@@ -54,10 +54,10 @@ public class UI_JoystickHandler : MonoBehaviour
         {
             if (UI_InputHandler.JoystickStateClosed) return;
 
-            radius = _outerJoystick.GetComponent<MeshRenderer>().bounds.extents.x - _innerJoystick.GetComponent<MeshRenderer>().bounds.extents.x - _distBetweenInnertoOuterJoystick;
+            radius = _outerJoystick.GetComponent<MeshRenderer>().bounds.extents.x - _innerJoystick.GetComponent<MeshRenderer>().bounds.extents.x - _distBetweenInnertoOuterJoystick;  //REFACTOR: SAVE ON START
 
-            center = _outerJoystick.GetComponent<MeshRenderer>().bounds.center;
-            center.z = _innerJoystick.position.z;
+            center = _outerJoystick.GetComponent<MeshRenderer>().bounds.center; //REFACTOR: SAVE ON START
+            center.z = _innerJoystick.position.z; //REFACTOR: SAVE ON START
 
             pos = new Vector3(pos.x, pos.y, _innerJoystick.position.z);
             dir = pos - center;
@@ -137,7 +137,7 @@ public class UI_JoystickHandler : MonoBehaviour
         _lerpRadius = Mathf.Lerp(0, _outerFinalRadius, _counter / _lerpTime);
         _mat_OuterJoystick.SetFloat("_Radius", _lerpRadius);
 
-        // Fade in inner Transparency
+        // Fade out inner Transparency
         _lerpInnerTransparency = Mathf.Lerp(.8f, _innerFinalTransparency, _counter / _lerpTime);
         _mat_InnerJoystick.SetFloat("_Transparency", _lerpInnerTransparency);
 

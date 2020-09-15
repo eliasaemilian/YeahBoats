@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class UI_TapEffect : MonoBehaviour
 {
-    public GameObject TapEffectPlane;
+    private GameObject _tapEffectPlane;
 
     private Material _mat_TapPlane;
     private bool _runTapEffect;
 
     [SerializeField] private float _finalRadius = 3f;
+    [SerializeField] private float _finalFadeRadius = 1.5f;
     [SerializeField , Range(0, 1)] private float _finalTransparency = 0f;
     [SerializeField] private float _lerpTime = .8f;
 
+    private Camera _uiCamera;
 
     private void Awake()
     {
         // Create Object Pool of Tap Planes
-        _mat_TapPlane = GetComponent<MeshRenderer>().material;
-        TapEffectPlane.SetActive(false);
+        _tapEffectPlane = GetComponentInChildren<MeshRenderer>().gameObject;
+        _mat_TapPlane = _tapEffectPlane.GetComponent<MeshRenderer>().material;
+        _tapEffectPlane.SetActive(false);
+
+        _uiCamera = FindObjectOfType<UI_InputHandler>().UICamera;
+
 
 
     }
@@ -34,35 +40,55 @@ public class UI_TapEffect : MonoBehaviour
         if (_runTapEffect)
         {
             StartCoroutine(Fade());
-            Debug.Log("Tap Effect");
         }
     }
 
+    int _touchLastProcessed;
     private void OnTapFish_Effect(Touch _touch, Vector3 pos)
     {
+        if (_runTapEffect) return;
+
+        Debug.Log("SETUP for " + _touch.fingerId);
         // Set position of Plane to Pos
-        TapEffectPlane.SetActive(true);
-        TapEffectPlane.transform.position = new Vector3 (pos.x, pos.y, TapEffectPlane.transform.position.z);
+        _tapEffectPlane.SetActive(true);
+        Vector3 transPos = _uiCamera.ScreenToWorldPoint(pos);
+      //  _tapEffectPlane.transform.position = new Vector3 (pos.x, pos.y, _tapEffectPlane.transform.position.z);
+        _tapEffectPlane.transform.position = new Vector3 (transPos.x, transPos.y, _tapEffectPlane.transform.position.z);
         _runTapEffect = true;
         _counter = 0;
-        _mat_TapPlane.SetFloat("_Radius", 0f);
+        _mat_TapPlane.SetFloat("_Radius", 1.4f);
+        _mat_TapPlane.SetFloat("_FadeRadius", 1.4f);
+        _mat_TapPlane.SetFloat("_Transparency", .9f);
+
+        _touchLastProcessed = _touch.fingerId;
     }
 
-    private float _counter, _lerpRadius, _lerpTransparency;
+    private float _counter, _lerpRadius, _lerpFadeRadius, _lerpTransparency;
     private IEnumerator Fade()
     {
+        Debug.Log("Tap Effect");
+
         _counter += Time.deltaTime;
-        // Lerp outer Radius
-        _lerpRadius = Mathf.Lerp(0, _finalRadius, _counter / _lerpTime);
+        // Lerp Radius
+        _lerpRadius = Mathf.Lerp(1.4f, _finalRadius, _counter / _lerpTime);
         _mat_TapPlane.SetFloat("_Radius", _lerpRadius);
 
+        // Lerp Fade Radius
+        float t = _counter - .3f;
+        if (t < 0) t = 0;
+        _lerpFadeRadius = Mathf.Lerp(1.4f, _finalRadius, t / _lerpTime);
+        _mat_TapPlane.SetFloat("_FadeRadius", _lerpFadeRadius);
+
         // Fade in inner Transparency
-        _lerpTransparency = Mathf.Lerp(.8f, _finalTransparency, _counter / _lerpTime);
+        t = _counter - .1f;
+        if (t < 0) t = 0;
+        if (_counter > (_lerpTime * .5f)) _finalTransparency = 0f;
+        _lerpTransparency = Mathf.Lerp(.9f, _finalTransparency, t / _lerpTime);
         _mat_TapPlane.SetFloat("_Transparency", _lerpTransparency);
 
-        yield return new WaitUntil(() => _counter >= _lerpTime);
+        yield return new WaitUntil(() => _counter >= _lerpTime + .5f);
 
         _runTapEffect = false;
-        TapEffectPlane.SetActive(false);
+        _tapEffectPlane.SetActive(false);
     }
 }

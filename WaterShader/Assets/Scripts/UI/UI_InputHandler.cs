@@ -22,7 +22,7 @@ public class UI_InputHandler : MonoBehaviour
     public static UnityEvent JoystickStateChanged;
     public static UnityEvent DoubleTapProcessed;
 
-    [SerializeField] private Camera _uiCamera = null;
+    public Camera UICamera = null;
     [SerializeField] private Transform _outerJoystick = null;
     [SerializeField] private Transform _innerJoystick = null;
     [SerializeField] private float _touchSensitivity = 1f;
@@ -39,6 +39,7 @@ public class UI_InputHandler : MonoBehaviour
     private Transform _pointOfInterest; // Currently tapped with first registered touch
 
     [SerializeField] private Transform _waterPlane; //FOR TAP DEBUG
+    [SerializeField] private Transform _tapEffectPlane; //FOR TAP DEBUG
 
 
     // Start is called before the first frame update
@@ -53,19 +54,19 @@ public class UI_InputHandler : MonoBehaviour
         DoubleTapProcessed = new UnityEvent();
 
         // Check for UI Camera avaliable
-        if (_uiCamera == null)
+        if (UICamera == null)
         {
             Camera[] cameras = FindObjectsOfType<Camera>();
             for (int i = 0; i < cameras.Length; i++)
             {
                 var cameraData = cameras[i].GetUniversalAdditionalCameraData();
-                if (cameraData.renderType == CameraRenderType.Overlay) _uiCamera = cameras[i];
+                if (cameraData.renderType == CameraRenderType.Overlay) UICamera = cameras[i];
             }
             Debug.LogWarning("No UI Camera selected for Input System"); // [!] This will break in a scene with more than 1 overlay camera
         }
 
         // Setup Plane for Touch Input Checks
-        _uiPlane = new Plane(_uiCamera.transform.forward * -1, _outerJoystick.position);
+        _uiPlane = new Plane(UICamera.transform.forward * -1, _outerJoystick.position);
         _environmentPlane = new Plane(_waterPlane.up, _waterPlane.position);
 
     }
@@ -75,6 +76,7 @@ public class UI_InputHandler : MonoBehaviour
     {
         if (Input.touchCount > 0)
         {
+            
             _touch = Input.GetTouch(0);
             Vector3 rayPos, rayPos2D;
             // Check for Touches on Joystick
@@ -83,9 +85,11 @@ public class UI_InputHandler : MonoBehaviour
                 SetPOI(_innerJoystick);
                 ValidJoystickInput = true;
             }
-            else if (CheckForHitOnPlane(_touch, _environmentPlane, _waterPlane, out rayPos))
+            else if (CheckForHitOnPlane(_touch, _uiPlane, _tapEffectPlane, _waterPlane, out rayPos))
             {
-                if(JoystickStateClosed) ValidWaterTouchEvent.Invoke(_touch, rayPos);
+                SetPOI(_waterPlane);
+             //   if(JoystickStateClosed) ValidWaterTouchEvent.Invoke(_touch, rayPos);
+                 ValidWaterTouchEvent.Invoke(_touch, rayPos);
             }
             else
             {
@@ -107,14 +111,14 @@ public class UI_InputHandler : MonoBehaviour
         // Register Valid Touches for Double Tap
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended && _pointOfInterest != null) //<- needs to count what has been tapped
         {
-            tapCount += 1;
+            tapCount += 1; 
             StartCoroutine(Countdown());
         }
 
         // If Valid Double Tap Fade In / Out
         if (tapCount == 2)
         {
-            ValidDoubleTapEvent.Invoke(_touch);
+            ValidDoubleTapEvent.Invoke(_touch); //TODO: Change this to joystick event, make new events for other doubletaps or smth
 
             tapCount = 0;
             StopCoroutine(Countdown());
@@ -150,10 +154,10 @@ public class UI_InputHandler : MonoBehaviour
     private bool CheckForHitOnPlane2D(Touch touch, Plane plane, Transform zValue, out Vector3 rayPos)
     {
         //transform the touch position into word space from screen space
-        Ray mRay = _uiCamera.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, zValue.position.z));
+        Ray mRay = UICamera.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, zValue.position.z));
         rayPos = Vector3.zero;
 
-        Vector3 touchPosWorld = _uiCamera.ScreenToWorldPoint(touch.position);
+        Vector3 touchPosWorld = UICamera.ScreenToWorldPoint(touch.position);
         Vector2 touchPosWorld2D = new Vector2(touchPosWorld.x, touchPosWorld.y);
 
         RaycastHit2D hit = Physics2D.Raycast(touchPosWorld2D, Camera.main.transform.forward);
@@ -161,7 +165,7 @@ public class UI_InputHandler : MonoBehaviour
         // this will always get the touch pos in relation to the relevant plane
         if (plane.Raycast(mRay, out float rayDistance))
         {
-            // if Joystick is activated, move accordingly, record Input for Boat
+            // if Joystick is activated record Input for Boat //TODO: move this out of function
             if (!JoystickStateClosed)
             {
                 rayPos = mRay.GetPoint(rayDistance);
@@ -175,57 +179,37 @@ public class UI_InputHandler : MonoBehaviour
 
     }
 
-    private bool CheckForHitOnPlane(Touch touch, Plane plane, Transform zValue, out Vector3 rayPos)
+    private bool CheckForHitOnPlane(Touch touch, Plane plane, Transform zValue, Transform TransformToHit, out Vector3 rayPos)
     {
         //transform the touch position into word space from screen space
         Ray mRay = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, zValue.position.z));
         rayPos = Vector3.zero;
         
         // this will always get the touch pos in relation to the relevant plane
-        if (plane.Raycast(mRay, out float rayDistance))
-        {
-            // if Joystick is activated, move accordingly, record Input for Boat
-            if (!JoystickStateClosed)
-            {
-                rayPos = mRay.GetPoint(rayDistance);
-                rayPos = new Vector3(rayPos.x, rayPos.y, zValue.position.z);
-            }
+        //if (plane.Raycast(mRay, out float rayDistance))
+        //{
+        //    // if Joystick is activated, move accordingly, record Input for Boat
+        //    if (!JoystickStateClosed)
+        //    {
+        //        mRay =  _uiCamera.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, zValue.position.z)); //REDO screenpoint fetch to get touch position for ui element
+        //        rayPos = mRay.GetPoint(rayDistance);
+        //        rayPos = new Vector3(rayPos.x, rayPos.y, zValue.position.z);
+        //    }
 
-        }
+        //}
 
         if (Physics.Raycast(mRay, out RaycastHit h, 1000f))
         {
-            if (h.collider.gameObject.transform == zValue) return true;
+            if (h.collider.gameObject.transform == TransformToHit)
+            {
+                rayPos = Camera.main.WorldToScreenPoint( h.point );
+                return true;
+            }
             else return false;
         }
         else return false;
     }
 
-    public static bool LinePlaneIntersection(out Vector3 intersection, Vector3 linePoint, Vector3 lineVec, Vector3 planeNormal, Vector3 planePoint)
-    {
-        float length;
-        float dotNumerator;
-        float dotDenominator;
-        Vector3 vector;
-        intersection = Vector3.zero;
 
-        //calculate the distance between the linePoint and the line-plane intersection point
-        dotNumerator = Vector3.Dot((planePoint - linePoint), planeNormal);
-        dotDenominator = Vector3.Dot(lineVec, planeNormal);
-
-        if (dotDenominator != 0.0f)
-        {
-            length = dotNumerator / dotDenominator;
-
-            vector = lineVec.normalized  * length;
-
-            intersection = linePoint + vector;
-
-            return true;
-        }
-
-        else
-            return false;
-    }
 
 }
