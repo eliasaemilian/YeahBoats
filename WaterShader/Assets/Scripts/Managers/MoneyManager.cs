@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// MoneyManager is responsible for saving and editing data related to the game currency
+/// </summary>
 public class MoneyManager : MonoBehaviour
 {
     public static MoneyManager Instance;
+    private GameManager _gM;
 
     public float Money;
 
@@ -21,13 +25,15 @@ public class MoneyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TMPSetup();
-    }
+        _gM = GameManager.Instance;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+
+        TMPSetup();
+
+        //For temporary saving
+        GetData();
+        InvokeRepeating("SaveData", 5, 5);
+
     }
 
     private void TMPSetup()
@@ -49,5 +55,16 @@ public class MoneyManager : MonoBehaviour
     public void DeduceMoney(float ammount)
     {
         Money -= ammount;
+    }
+
+    private void GetData()
+    {
+        Money = _gM.DataContainer.Money;
+        Multiplyer = _gM.DataContainer.Multiplyer;
+    }
+    private void SaveData()
+    {
+        _gM.DataContainer.Money = Money;
+        _gM.DataContainer.Multiplyer = Multiplyer;
     }
 }
