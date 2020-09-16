@@ -122,7 +122,6 @@ public class ObjectPooler : MonoBehaviour
       //  obj.SetActive(true);
 
         poolDictionary[tag].Enqueue(obj);
-        Debug.Log("ObjectPooler spawned " + obj);
         return obj;
     }
 

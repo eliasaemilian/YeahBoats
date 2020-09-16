@@ -36,8 +36,6 @@ public class UI_TapEffect : MonoBehaviour, IPooledObject
 
         _defaultScale = _tapEffectPlane.transform.localScale;
 
-        Debug.Log("Setup");
-
     }
     // Start is called before the first frame update
     void Start()
@@ -81,8 +79,6 @@ public class UI_TapEffect : MonoBehaviour, IPooledObject
     private float _counter, _lerpRadius, _lerpFadeRadius, _lerpTransparency, t;
     private IEnumerator Fade()
     {
-        Debug.Log("Tap Effect");
-
         _counter += Time.deltaTime;
         // Lerp Radius
         _lerpRadius = Mathf.Lerp(_radius, _finalRadius, _counter / _lerpTime);
@@ -117,7 +113,6 @@ public class UI_TapEffect : MonoBehaviour, IPooledObject
         // do the fade
      //   if (SpawnPos == null || SpawnDistToCam == 0) Debug.LogError("Heck");
 
-        Debug.Log("I SPAWNED");
         //OnTapFish_Effect(SpawnPos, SpawnDistToCam);
     }
 

@@ -36,7 +36,6 @@ public class UI_TapEffectHandler : MonoBehaviour
             GameObject spawn = ObjectPooler.Instance.SpawnFromPool(_tapEffectPrefab.tag, transPos, _tapEffectPrefab.transform.rotation);
             spawn.GetComponent<UI_TapEffect>().SpawnDistToCam = dist;
             spawn.GetComponent<UI_TapEffect>().SpawnPos = pos;
-            Debug.Log("SPAWNED A TAPEFFECT " + spawn.name);
             spawn.SetActive(true);
         }
 

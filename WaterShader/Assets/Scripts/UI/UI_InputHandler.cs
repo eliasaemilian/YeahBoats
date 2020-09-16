@@ -35,9 +35,9 @@ public class UI_InputHandler : MonoBehaviour
     float tapCount;
 
     private Plane _uiPlane;
-    private Plane _environmentPlane;
 
     private Transform _pointOfInterest; // Currently tapped with first registered touch
+    private Transform _lastPOI; // last registered touch
 
     [SerializeField] private Transform _waterPlane; //FOR TAP DEBUG
     [SerializeField] private Transform _tapEffectPlane; //FOR TAP DEBUG
@@ -68,7 +68,6 @@ public class UI_InputHandler : MonoBehaviour
 
         // Setup Plane for Touch Input Checks
         _uiPlane = new Plane(UICamera.transform.forward * -1, _outerJoystick.position);
-        _environmentPlane = new Plane(_waterPlane.up, _waterPlane.position);
 
     }
 
@@ -89,8 +88,8 @@ public class UI_InputHandler : MonoBehaviour
             else if (CheckForHitOnPlane(_touch, _uiPlane, _tapEffectPlane, _waterPlane, out hitPos, out float dist))
             {
                 SetPOI(_waterPlane);
-             //   if(JoystickStateClosed) ValidWaterTouchEvent.Invoke(_touch, rayPos);
-                 ValidWaterTouchEvent.Invoke(_touch, hitPos, dist);
+                if(JoystickStateClosed) ValidWaterTouchEvent.Invoke(_touch, hitPos, dist);
+                //    ValidWaterTouchEvent.Invoke(_touch, hitPos, dist);
             }
             else
             {
@@ -119,7 +118,7 @@ public class UI_InputHandler : MonoBehaviour
         // If Valid Double Tap Fade In / Out
         if (tapCount == 2)
         {
-            ValidDoubleTapEvent.Invoke(_touch); //TODO: Change this to joystick event, make new events for other doubletaps or smth
+            if (_lastPOI == _innerJoystick) ValidDoubleTapEvent.Invoke(_touch); //TODO: Change this to joystick event, make new events for other doubletaps or smth
 
             tapCount = 0;
             StopCoroutine(Countdown());
@@ -139,6 +138,9 @@ public class UI_InputHandler : MonoBehaviour
             tapCount = 0;
             _pointOfInterest = newPOI;
         }
+
+        if (_pointOfInterest != null ) _lastPOI = _pointOfInterest;
+
     }
 
 
