@@ -34,6 +34,8 @@ public class SimpleBoatInput : MonoBehaviour
 
         if (_reversedInput) dir = -dir;
 
+        dir = transform.TransformDirection(dir);
+
         if (UI_InputHandler.JoystickDirInDegrees > 0 && UI_InputHandler.JoystickDirInDegrees < 180) speed = _speed; //Accelerate
         else speed = -_reversingSpeed; //Reverse 
 
