@@ -5,7 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 public static class SaveSystem 
 {
     private static string SavePath = Application.dataPath + "/Scripts/TMP Saving/Data.txt";
-    public static void SaveData(Data data)
+    public static void SaveData(Savedata data)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream stream = new FileStream(SavePath, FileMode.Create);

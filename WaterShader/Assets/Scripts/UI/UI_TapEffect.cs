@@ -13,7 +13,7 @@ public class UI_TapEffect : MonoBehaviour, IPooledObject
     private Material _mat_TapPlane;
     private bool _runTapEffect;
 
-    [SerializeField] private float _finalRadius = 3f;
+    [SerializeField] private float _finalRadius = 1.7f;
     [SerializeField , Range(0, 1)] private float _finalTransparency = 0f;
     [SerializeField] private float _lerpTime = .8f;
 
@@ -21,7 +21,7 @@ public class UI_TapEffect : MonoBehaviour, IPooledObject
 
     private Camera _uiCamera;
 
-    [SerializeField] private float _radius; // start Radius
+    [SerializeField] private float _radius = 1.4f; // start Radius
 
     private Vector3 _defaultScale;
 

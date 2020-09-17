@@ -16,7 +16,7 @@ public class GameData
 
     public float Money;
     public int Multiplyer;
-    public GameData( Data data)
+    public GameData( Savedata data)
     {
         MapLevel = data.MapLevel;
         BoatLevel = data.BoatLevel;

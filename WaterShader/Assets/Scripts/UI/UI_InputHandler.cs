@@ -26,10 +26,7 @@ public class UI_InputHandler : MonoBehaviour
     public Camera UICamera = null;
     [SerializeField] private Transform _outerJoystick = null;
     [SerializeField] private Transform _innerJoystick = null;
-    [SerializeField] private float _touchSensitivity = 1f;
     [SerializeField] private float _doubleTapSensitivity = .3f;
-    [SerializeField] private float _lerpTime = .8f;
-    [SerializeField] private float _distBetweenInnertoOuterJoystick = .5f;
 
 
     float tapCount;
@@ -39,8 +36,8 @@ public class UI_InputHandler : MonoBehaviour
     private Transform _pointOfInterest; // Currently tapped with first registered touch
     private Transform _lastPOI; // last registered touch
 
-    [SerializeField] private Transform _waterPlane; //FOR TAP DEBUG
-    [SerializeField] private Transform _tapEffectPlane; //FOR TAP DEBUG
+    [SerializeField] private Transform _waterPlane = null; //FOR TAP DEBUG
+    [SerializeField] private Transform _tapEffectPlane = null; //FOR TAP DEBUG
 
 
     // Start is called before the first frame update

@@ -70,8 +70,8 @@ public class WaterCaustics : ScriptableRendererFeature
 
     public WaterSystemSettings settings = new WaterSystemSettings();
 
-    [HideInInspector] [SerializeField] private Shader _causticShader;
-    [HideInInspector] [SerializeField] private Texture2D _causticTexture;
+    [HideInInspector] [SerializeField] private Shader _causticShader = null;
+    [HideInInspector] [SerializeField] private Texture2D _causticTexture = null;
 
     private Material _causticMaterial;
 

@@ -6,10 +6,10 @@ using UnityEngine;
 public class UI_TapEffectHandler : MonoBehaviour
 {
     private ObjectPooler _objPool;
-    [SerializeField] private GameObject _tapEffectPrefab;
+    [SerializeField] private GameObject _tapEffectPrefab = null;
     private Camera _uiCamera;
 
-    [SerializeField] private Transform _tapEffectZValueReference;
+    [SerializeField] private Transform _tapEffectZValueReference = null;
 
     // Start is called before the first frame update
     void Start()

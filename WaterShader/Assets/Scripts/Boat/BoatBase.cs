@@ -7,9 +7,9 @@ using UnityEngine;
 /// </summary>
 public class BoatBase : MonoBehaviour
 {
-    [SerializeField] private BoatScriptable _boatScriptable;
-    [SerializeField] private NPCSpotsScript _nPCSpots;
-    [SerializeField] private GameObject _nPCFishermanPrefab;
+    [SerializeField] private BoatScriptable _boatScriptable = null;
+    [SerializeField] private NPCSpotsScript _nPCSpots = null;
+    [SerializeField] private GameObject _nPCFishermanPrefab = null;
 
     private LevelManager _lM = LevelManager.Instance;
 
