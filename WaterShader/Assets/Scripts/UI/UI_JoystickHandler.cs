@@ -1,25 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class UI_JoystickHandler : MonoBehaviour
+public class UI_JoystickHandler : TappableGameobject
 {
-    private Transform _outerJoystick;
-    private Transform _innerJoystick;
+    public static bool JoystickStateClosed { get; set; } // [ false ] open, -> State: Moving, [ true ] closed -> State: Fishing
+    public static float JoystickDirInDegrees { get; set; }
+    public static bool ValidJoystickInput { get; set; } = false;
+
+    public static UnityEvent JoystickStateChanged;
+
 
     [SerializeField] private float _lerpTime = .8f;
     [SerializeField] private float _touchSensitivity = 1f;
+    [SerializeField] private float _distBetweenInnertoOuterJoystick = .5f;
 
-
-    float _counter, _lerpRadius, _outerFinalRadius, _lerpInnerTransparency, _counterStart, _counterStartForClose, _innerFinalTransparency;
+    private Vector3 _center;
+    private float _counter, _lerpRadius, _outerFinalRadius, _lerpInnerTransparency, _counterStart, _counterStartForClose, _innerFinalTransparency;
     private bool _snapBack, _doubleTap;
 
-
+    private Transform _outerJoystick;
+    private Transform _innerJoystick;
     private Material _mat_OuterJoystick;
     private Material _mat_InnerJoystick;
-
-
-    [SerializeField] private float _distBetweenInnertoOuterJoystick = .5f;
 
 
     // Start is called before the first frame update
@@ -28,8 +32,13 @@ public class UI_JoystickHandler : MonoBehaviour
         _outerJoystick = transform;
         _innerJoystick = GetComponentInChildren<Collider2D>().transform;
 
-        UI_InputHandler.ValidJoyStickTouchEvent.AddListener(ProcessJoystickInput);
+        UI_InputHandler.ValidTouchEvent2D.AddListener(OnTap);
         UI_InputHandler.ValidDoubleTapEvent.AddListener(ProcessDoubleTap);
+
+        JoystickStateChanged = new UnityEvent();
+
+        _center = _outerJoystick.GetComponent<MeshRenderer>().bounds.center;
+        _center.z = _innerJoystick.position.z;
 
         // Setup Shader Properties
         _mat_OuterJoystick = _outerJoystick.GetComponent<MeshRenderer>().material;
@@ -40,42 +49,46 @@ public class UI_JoystickHandler : MonoBehaviour
         _counterStartForClose = Mathfs.Remap(_outerFinalRadius, 0, _outerFinalRadius, 0, _lerpTime); // for Closing
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     float radius;
-    Vector3 center, dir, newPos;
-    private void ProcessJoystickInput (Touch touch, Vector3 pos)
+    Vector3 dir, newPos;
+    public override void OnTap (Touch touch, Vector3 pos)
     {
+        base.OnTap(touch, pos);
+
         if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Moved)
         {
-            if (UI_InputHandler.JoystickStateClosed) return;
+            if (JoystickStateClosed) return;
 
             radius = _outerJoystick.GetComponent<MeshRenderer>().bounds.extents.x - _innerJoystick.GetComponent<MeshRenderer>().bounds.extents.x - _distBetweenInnertoOuterJoystick;  //REFACTOR: SAVE ON START
 
-            center = _outerJoystick.GetComponent<MeshRenderer>().bounds.center; //REFACTOR: SAVE ON START
-            center.z = _innerJoystick.position.z; //REFACTOR: SAVE ON START
-
             pos = new Vector3(pos.x, pos.y, _innerJoystick.position.z);
-            dir = pos - center;
+            dir = pos - _center;
 
             float angRad = Mathfs.GetAngleByUnitVector(dir.normalized);
 
-            UI_InputHandler.JoystickDirInDegrees = (angRad > 0 ? angRad : (2 * Mathfs.PI + angRad)) * 360 / (2 * Mathfs.PI); //Remap from  [ 0 - 180, -180 - 0 ] to [ 0 - 360 ]
+            JoystickDirInDegrees = (angRad > 0 ? angRad : (2 * Mathfs.PI + angRad)) * 360 / (2 * Mathfs.PI); //Remap from  [ 0 - 180, -180 - 0 ] to [ 0 - 360 ]
 
-            newPos = center + (dir.normalized * radius);
+            newPos = _center + (dir.normalized * radius);
 
             _innerJoystick.position = new Vector3(newPos.x, newPos.y, _innerJoystick.position.z);
         }
       
 
-        else if (touch.phase == TouchPhase.Ended)
-        {
-            _snapBack = true;
-        }
+        //else if (touch.phase == TouchPhase.Ended)
+        //{
+        //    _snapBack = true;
+        //    Debug.Log("Snapping back");
+        //}
+    }
+
+    public override void OnTapWasLetGo()
+    {
+        base.OnTapWasLetGo();
+        _snapBack = true;
+        Debug.Log("Resetting Joystick");
+        ValidJoystickInput = false;
+
     }
 
     private void FixedUpdate()
@@ -85,13 +98,15 @@ public class UI_JoystickHandler : MonoBehaviour
             Debug.Log("Double Tapping");
 
             // Start Fade In / Out
-            if (!UI_InputHandler.JoystickStateClosed) StartCoroutine(CloseJoystick());
+            if (!JoystickStateClosed) StartCoroutine(CloseJoystick());
             else StartCoroutine(Fade());
         }
 
 
         if (_snapBack)
         {
+            Debug.Log("Snapping Back");
+
             _innerJoystick.position = Mathfs.LerpLinear(_innerJoystick.position, new Vector3(_outerJoystick.position.x, _outerJoystick.position.y, _innerJoystick.position.z), Time.deltaTime * _touchSensitivity);
             if (Vector3.Distance(_innerJoystick.position, new Vector3(_outerJoystick.position.x, _outerJoystick.position.y, _innerJoystick.position.z)) <= 0.01)
             {
@@ -106,11 +121,20 @@ public class UI_JoystickHandler : MonoBehaviour
     {
         _doubleTap = true;
 
-        if (UI_InputHandler.JoystickStateClosed) _counter = _counterStart;
+        if (JoystickStateClosed) _counter = _counterStart;
         else _counter = _counterStartForClose;
 
     }
-  
+
+    public static void ChangeJoystickState(bool newState)
+    {
+        if (newState == UI_JoystickHandler.JoystickStateClosed) return;
+
+        UI_JoystickHandler.JoystickStateClosed = newState;
+        JoystickStateChanged.Invoke();
+    }
+
+
 
     private IEnumerator Fade()
     {
@@ -126,7 +150,7 @@ public class UI_JoystickHandler : MonoBehaviour
         yield return new WaitUntil(() => _counter >= _lerpTime);
 
         _doubleTap = false;
-        UI_InputHandler.ChangeJoystickState(false);
+        ChangeJoystickState(false);
 
     }
 
@@ -144,9 +168,9 @@ public class UI_JoystickHandler : MonoBehaviour
         yield return new WaitUntil(() => _counter <= _counterStart);
 
         _doubleTap = false;
-        UI_InputHandler.ChangeJoystickState(true);
+        ChangeJoystickState(true);
 
-        UI_InputHandler.ValidJoystickInput = false;
+        ValidJoystickInput = false;
 
     }
 

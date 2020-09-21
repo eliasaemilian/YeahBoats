@@ -26,15 +26,15 @@ public class SimpleBoatInput : MonoBehaviour
     float speed;
     private void CalculateBoatMovementFromJoystickInput()
     {
-        if (!UI_InputHandler.ValidJoystickInput || UI_InputHandler.JoystickStateClosed) return;
+        if (!UI_JoystickHandler.ValidJoystickInput || UI_JoystickHandler.JoystickStateClosed) return;
 
         // Calculate Move Towards Direction and Apply Force & Rotation
-        Vector2 dir2D = Mathfs.GetUnitVectorByAngle(UI_InputHandler.JoystickDirInDegrees * Mathf.Deg2Rad);
+        Vector2 dir2D = Mathfs.GetUnitVectorByAngle(UI_JoystickHandler.JoystickDirInDegrees * Mathf.Deg2Rad);
         Vector3 dir = new Vector3(dir2D.x, 0, dir2D.y);
 
         if (_reversedInput) dir = -dir;
 
-        if (UI_InputHandler.JoystickDirInDegrees > 0 && UI_InputHandler.JoystickDirInDegrees < 180) speed = _speed; //Accelerate
+        if (UI_JoystickHandler.JoystickDirInDegrees > 0 && UI_JoystickHandler.JoystickDirInDegrees < 180) speed = _speed; //Accelerate
         else speed = -_reversingSpeed; //Reverse 
 
         Quaternion dirQ = Quaternion.LookRotation(dir);
