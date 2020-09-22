@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class WaterTappableHandler : TappableGameobject
 {
-    [SerializeField] private GameObject _tapEffectPrefab;
-    [SerializeField] private Transform _tapEffectZValueReference;
+    [SerializeField] private GameObject _tapEffectPrefab = null;
 
     private Camera _uiCamera;
 
@@ -28,7 +27,7 @@ public class WaterTappableHandler : TappableGameobject
         if (touch.phase == TouchPhase.Began)
         {
             transPos = _uiCamera.ScreenToWorldPoint(pos);
-            transPos = new Vector3(transPos.x, transPos.y, _tapEffectZValueReference.position.z);
+            transPos = new Vector3(transPos.x, transPos.y, ZValueRef.position.z);
 
             spawn = ObjectPooler.Instance.SpawnFromPool(_tapEffectPrefab.tag, transPos, _tapEffectPrefab.transform.rotation);
             spawn.GetComponent<UI_TapEffect>().SpawnDistToCam = dist; //TODO: david get this lesbian plant outta here

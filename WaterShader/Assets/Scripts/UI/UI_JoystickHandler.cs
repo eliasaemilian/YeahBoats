@@ -55,6 +55,7 @@ public class UI_JoystickHandler : TappableGameobject
     public override void OnTap (Touch touch, Vector3 pos)
     {
         base.OnTap(touch, pos);
+        ValidJoystickInput = true;
 
         if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Moved)
         {

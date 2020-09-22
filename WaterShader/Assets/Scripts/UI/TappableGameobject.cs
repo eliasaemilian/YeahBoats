@@ -8,7 +8,10 @@ public class TappableGameobject : MonoBehaviour, ITappable
     public bool Tappable2D { get; set; }
     public GameObject GOTapRef { get; set; }
 
-    public delegate void AddToEventListener();
+    [SerializeField] private Transform _zValueRef = null;
+    public Transform ZValueRef { get { return _zValueRef; } set { _zValueRef = value; } } // Set to UI Plane if this has a corresponding Effect, else set to whichever GO needs the tap position
+
+    public int TapCount { get; set; }
 
     public void OnInitialize()
     {
@@ -18,6 +21,12 @@ public class TappableGameobject : MonoBehaviour, ITappable
         else if (GetComponent<Collider2D>() != null) SetupTappable(gameObject, true);
         else if (GetComponentInChildren<Collider2D>() != null) SetupTappable(GetComponentInChildren<Collider2D>().gameObject, true);
         else Debug.LogError("Tappable Gameobjects need at least one 2D or 3D Collider attached to their Gameobject or Children");
+
+        if (_zValueRef == null)
+        {
+            _zValueRef = transform;
+            Debug.LogWarning($"No ZValue has been set in Inspector for {gameObject.name}. Therefore ZValue wil be set to {gameObject.name}.");
+        }
     }
 
     private void SetupTappable(GameObject refGO, bool is2D)
@@ -27,7 +36,8 @@ public class TappableGameobject : MonoBehaviour, ITappable
     }
     public void OnDoubleTap()
     {
-        throw new System.NotImplementedException();
+        Debug.Log(gameObject.name + " got double Tapped");
+
     }
 
 

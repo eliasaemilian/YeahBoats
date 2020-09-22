@@ -13,23 +13,23 @@ using UnityEngine.Rendering.Universal;
 
 public class UI_InputHandler : MonoBehaviour
 {
-    public static ValidPlaneTouchEvent2D ValidTouchEvent2D;
-   // public static ValidPlaneTouchEvent ValidWaterTouchEvent;
+    public static ValidPlaneTouchEvent2D ValidTouchEvent2D; //UI Box
+
     public static ValidTouchEvent ValidDoubleTapEvent;
 
 
     public static UnityEvent DoubleTapProcessed;
 
     public Camera UICamera = null;
-    [SerializeField] private Transform _outerJoystick = null;
+    [SerializeField] private Transform _outerJoystick = null; // Z- Value Reference for UI Checks
     [SerializeField] private Transform _innerJoystick = null;
-//    [SerializeField] private float _touchSensitivity = 1f;
+
     [SerializeField] private float _doubleTapSensitivity = .3f;
-    [SerializeField] private float _lerpTime = .8f;
-    [SerializeField] private float _distBetweenInnertoOuterJoystick = .5f;
+
 
 
     float tapCount;
+    private Touch _touch;
 
     private Plane _uiPlane;
 
@@ -47,7 +47,7 @@ public class UI_InputHandler : MonoBehaviour
     {
         // SETUP INPUT EVENTS
         if (ValidTouchEvent2D == null) ValidTouchEvent2D = new ValidPlaneTouchEvent2D();
-   //     if (ValidWaterTouchEvent == null) ValidWaterTouchEvent = new ValidPlaneTouchEvent();
+   
         if (ValidDoubleTapEvent == null) ValidDoubleTapEvent = new ValidTouchEvent();
 
         // New Fetch Events Implementation
@@ -72,55 +72,20 @@ public class UI_InputHandler : MonoBehaviour
                 var cameraData = cameras[i].GetUniversalAdditionalCameraData();
                 if (cameraData.renderType == CameraRenderType.Overlay) UICamera = cameras[i];
             }
-            Debug.LogWarning("No UI Camera selected for Input System"); // [!] This will break in a scene with more than 1 overlay camera
+            Debug.LogWarning("No UI Camera selected for Input System"); // [!] This will break in a scene with more than 1 overlay camera, camera NEEDS to be set in inspector if that is the case
         }
 
-        // Setup Plane for Touch Input Checks
-        _uiPlane = new Plane(UICamera.transform.forward * -1, _outerJoystick.position);
-
     }
 
-    private Touch _touch;
-    void Update()
-    {
-        CheckForTapsOnGameObjects();
-        return;
-        //if (Input.touchCount > 0)
-        //{
-            
-        //    _touch = Input.GetTouch(0);
-        //    Vector3 hitPos, rayPos2D;
-        //    // Check for Touches on Joystick
-        //    if (CheckForHitOnPlane2D(_touch, _uiPlane, _innerJoystick, out rayPos2D, out GameObject hitGO))
-        //    {
-        //        SetPOI(_innerJoystick);
-        //        ValidJoystickInput = true;
-        //    }
-        //    else if (CheckForHitOnPlane(_touch, _uiPlane, _tapEffectPlane, _waterPlane, out hitPos, out GameObject hitGO3D,  out float dist))
-        //    {
-        //        SetPOI(_waterPlane);
-        //      //  if(JoystickStateClosed) ValidWaterTouchEvent.Invoke(_touch, hitPos, dist);
-        //        //    ValidWaterTouchEvent.Invoke(_touch, hitPos, dist);
-        //    }
-        //    else
-        //    {
-        //        SetPOI(null);
-        //    }
+    void FixedUpdate() => CheckForTapsOnGameObjects();
 
-        //    ValidTouchEvent2D.Invoke(_touch, rayPos2D); //currently fires for all touches for ease of navigating, might change later idk
-
-        //}
-        //else ValidJoystickInput = false;
-
-    }
 
     Vector3 hitPos, rayPos2D;
     GameObject hitGO;
-    private void CheckForTapsOnGameObjects()
+    private void CheckForTapsOnGameObjectsOLD()
     {
         if (Input.touchCount > 0)
         {
-
             _touch = Input.GetTouch(0);
 
             // 2D
@@ -139,13 +104,11 @@ public class UI_InputHandler : MonoBehaviour
                     }
                 }
 
-                //   SetPOI(hitGO.transform);
-                if (hitGO.transform == _innerJoystick) UI_JoystickHandler.ValidJoystickInput = true; //TODO: Joystick Logic should be moved to Joysticks OnTap
             }
 
             // 3D 
 
-            else if (CheckForHitOnPlane(_touch, _uiPlane, _tapEffectPlane, _waterPlane, out hitPos, out hitGO, out float dist))
+            else if (CheckForHitOnPlaneOLD(_touch, _uiPlane, _tapEffectPlane, _waterPlane, out hitPos, out hitGO, out float dist))
             {
                 for (int i = 0; i < _tappableGameobjectsInScene.Count; i++)
                 {
@@ -159,8 +122,6 @@ public class UI_InputHandler : MonoBehaviour
                     }
                 }
 
-            //    if (hitGO.transform == _waterPlane && JoystickStateClosed) ValidWaterTouchEvent.Invoke(_touch, hitPos, dist);
-                //    ValidWaterTouchEvent.Invoke(_touch, hitPos, dist);
             }
             else
             {
@@ -171,8 +132,7 @@ public class UI_InputHandler : MonoBehaviour
 
             if (_touch.phase == TouchPhase.Ended)
             {
-                //
-                //   _pointOfInterest.GetComponentInParent<TappableGameobject>().OnTapWasLetGo(_touch, rayPos2D);
+                // Send Touch Ended Event to all GOs
                 for (int i = 0; i < _tappableGameobjectsInScene.Count; i++)
                 {
                     _tappableGameobjectsInScene[i].OnTapWasLetGo();
@@ -194,6 +154,88 @@ public class UI_InputHandler : MonoBehaviour
         }
     }
 
+    private void CheckForTapsOnGameObjects()
+    {
+        if (Input.touchCount > 0)
+        {
+            _touch = Input.GetTouch(0);
+
+            for (int i = 0; i < _tappableGameobjectsInScene.Count; i++)
+            {
+
+                if (CheckForHitOnPlane2D(_touch, _uiPlane, _tappableGameobjectsInScene[i].GOTapRef.transform, out rayPos2D, out hitGO))
+                {
+                    // 2D
+
+                    // Setup Plane for Touch Input Checks
+                    _uiPlane = new Plane(UICamera.transform.forward * -1, _tappableGameobjectsInScene[i].ZValueRef.position);
+
+                    // Check for Taps on GOs with 2D Colliders
+                    if (_tappableGameobjectsInScene[i].GOTapRef == hitGO)
+                    {
+                        _tappableGameobjectsInScene[i].OnTap(_touch, rayPos2D); // pass all here that was passed in event
+
+                        SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
+                        _tappableFocus = _tappableGameobjectsInScene[i];
+                    }
+
+
+                }
+
+
+                // 3D 
+
+                else if (CheckForHitOnPlane(_touch, _tappableGameobjectsInScene[i].ZValueRef, out hitPos, out hitGO, out float dist))
+                {
+                    // Check for Taps on GOs with 3D Colliders
+                    if (_tappableGameobjectsInScene[i].GOTapRef == hitGO)
+                    {
+                        _tappableGameobjectsInScene[i].OnTap(_touch, hitPos, dist); // pass all here that was passed in event
+
+                        SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
+                        _tappableFocus = _tappableGameobjectsInScene[i];
+                    }
+
+                }
+
+                // No Hits occured
+
+
+                else
+                {
+                    SetPOI(null);
+                    _tappableFocus = null;
+                }
+
+
+
+
+            }
+
+
+            if (_touch.phase == TouchPhase.Ended)
+            {
+                // Send Touch Ended Event to all GOs
+                for (int i = 0; i < _tappableGameobjectsInScene.Count; i++)
+                {
+                    _tappableGameobjectsInScene[i].OnTapWasLetGo();
+                }
+            }
+
+            // as long as there is touch, fire event
+            // used by GOs that need constant touch information, independent from wether or not they are touched (eg. Joystick)
+            ValidTouchEvent2D.Invoke(_touch, rayPos2D);
+
+
+        }
+        else //TODO: ONLY FIRE ONCE/A BIT THEN STOP RUNNING
+        {
+            for (int i = 0; i < _tappableGameobjectsInScene.Count; i++)
+            {
+                _tappableGameobjectsInScene[i].OnTapWasLetGo();
+            }
+        }
+    }
 
     // Checking for Double Tap secondary after single touch in Update
     void LateUpdate()
@@ -271,7 +313,27 @@ public class UI_InputHandler : MonoBehaviour
 
     }
 
-    private bool CheckForHitOnPlane(Touch touch, Plane plane, Transform zValue, Transform TransformToHit, out Vector3 worldPosHit, out GameObject target, out float distToCam)
+    private bool CheckForHitOnPlane(Touch touch, Transform zValue, out Vector3 worldPosHit, out GameObject target, out float distToCam)
+    {
+        //transform the touch position into word space from screen space
+        Ray mRay = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, zValue.position.z));
+        worldPosHit = Vector3.zero;
+        target = null;
+        distToCam = 0f;
+
+        if (Physics.Raycast(mRay, out RaycastHit h, 1000f))
+        {
+            distToCam = h.distance;
+
+            worldPosHit = Camera.main.WorldToScreenPoint(h.point);
+            target = h.collider.gameObject;
+            return true;
+
+        }
+        else return false;
+    }
+
+    private bool CheckForHitOnPlaneOLD(Touch touch, Plane plane, Transform zValue, Transform TransformToHit, out Vector3 worldPosHit, out GameObject target, out float distToCam)
     {
         //transform the touch position into word space from screen space
         Ray mRay = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, zValue.position.z));
@@ -284,8 +346,8 @@ public class UI_InputHandler : MonoBehaviour
             if (h.collider.gameObject.transform == TransformToHit)
             {
                 distToCam = h.distance;
-                
-                worldPosHit = Camera.main.WorldToScreenPoint( h.point );
+
+                worldPosHit = Camera.main.WorldToScreenPoint(h.point);
                 target = h.collider.gameObject;
                 return true;
             }
@@ -293,7 +355,6 @@ public class UI_InputHandler : MonoBehaviour
         }
         else return false;
     }
-
 
 
 }
