@@ -47,7 +47,7 @@ public class UI_InputHandler : MonoBehaviour
     {
         // SETUP INPUT EVENTS
         if (ValidTouchEvent2D == null) ValidTouchEvent2D = new ValidPlaneTouchEvent2D();
-   
+
         if (ValidDoubleTapEvent == null) ValidDoubleTapEvent = new ValidTouchEvent();
 
         // New Fetch Events Implementation
@@ -57,6 +57,7 @@ public class UI_InputHandler : MonoBehaviour
         {
             tappablesInScene[i].OnInitialize();
             _tappableGameobjectsInScene.Add(tappablesInScene[i]);
+
         }
 
 
@@ -77,83 +78,11 @@ public class UI_InputHandler : MonoBehaviour
 
     }
 
-    void FixedUpdate() => CheckForTapsOnGameObjects();
+    void Update() => CheckForTapsOnGameObjects();
 
 
     Vector3 hitPos, rayPos2D;
     GameObject hitGO;
-    private void CheckForTapsOnGameObjectsOLD()
-    {
-        if (Input.touchCount > 0)
-        {
-            _touch = Input.GetTouch(0);
-
-            // 2D
-
-            if (CheckForHitOnPlane2D(_touch, _uiPlane, _innerJoystick, out rayPos2D, out hitGO))
-            {
-                for (int i = 0; i < _tappableGameobjectsInScene.Count; i++)
-                {
-                    // Check for Taps on GOs with 2D Colliders
-                    if (_tappableGameobjectsInScene[i].GOTapRef == hitGO)
-                    {
-                        _tappableGameobjectsInScene[i].OnTap(_touch, rayPos2D); // pass all here that was passed in event
-
-                        SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
-                        _tappableFocus = _tappableGameobjectsInScene[i];
-                    }
-                }
-
-            }
-
-            // 3D 
-
-            else if (CheckForHitOnPlaneOLD(_touch, _uiPlane, _tapEffectPlane, _waterPlane, out hitPos, out hitGO, out float dist))
-            {
-                for (int i = 0; i < _tappableGameobjectsInScene.Count; i++)
-                {
-                    // Check for Taps on GOs with 3D Colliders
-                    if (_tappableGameobjectsInScene[i].GOTapRef == hitGO)
-                    {
-                        _tappableGameobjectsInScene[i].OnTap(_touch, hitPos, dist); // pass all here that was passed in event
-
-                        SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
-                        _tappableFocus = _tappableGameobjectsInScene[i];
-                    }
-                }
-
-            }
-            else
-            {
-                SetPOI(null);
-                _tappableFocus = null;
-            }
-
-
-            if (_touch.phase == TouchPhase.Ended)
-            {
-                // Send Touch Ended Event to all GOs
-                for (int i = 0; i < _tappableGameobjectsInScene.Count; i++)
-                {
-                    _tappableGameobjectsInScene[i].OnTapWasLetGo();
-                }
-            }
-
-            // as long as there is touch, fire event
-            // used by GOs that need constant touch information, independent from wether or not they are touched (eg. Joystick)
-            ValidTouchEvent2D.Invoke(_touch, rayPos2D); 
-
-
-        }
-        else
-        {
-            for (int i = 0; i < _tappableGameobjectsInScene.Count; i++)
-            {
-                _tappableGameobjectsInScene[i].OnTapWasLetGo();
-            }
-        }
-    }
-
     private void CheckForTapsOnGameObjects()
     {
         if (Input.touchCount > 0)
@@ -162,26 +91,28 @@ public class UI_InputHandler : MonoBehaviour
 
             for (int i = 0; i < _tappableGameobjectsInScene.Count; i++)
             {
-
-                if (CheckForHitOnPlane2D(_touch, _uiPlane, _tappableGameobjectsInScene[i].GOTapRef.transform, out rayPos2D, out hitGO))
+                // 2D
+                if (_tappableGameobjectsInScene[i].Tappable2D)
                 {
-                    // 2D
-
                     // Setup Plane for Touch Input Checks
                     _uiPlane = new Plane(UICamera.transform.forward * -1, _tappableGameobjectsInScene[i].ZValueRef.position);
 
-                    // Check for Taps on GOs with 2D Colliders
-                    if (_tappableGameobjectsInScene[i].GOTapRef == hitGO)
+                    if (CheckForHitOnPlane2D(_touch, _uiPlane, _tappableGameobjectsInScene[i].GOTapRef.transform, out rayPos2D, out hitGO))
                     {
-                        _tappableGameobjectsInScene[i].OnTap(_touch, rayPos2D); // pass all here that was passed in event
 
-                        SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
-                        _tappableFocus = _tappableGameobjectsInScene[i];
+                        // Check for Taps on GOs with 2D Colliders
+                        if (_tappableGameobjectsInScene[i].GOTapRef == hitGO)
+                        {
+                            _tappableGameobjectsInScene[i].OnTap(_touch, rayPos2D); // pass all here that was passed in event
+
+                            SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
+                            _tappableFocus = _tappableGameobjectsInScene[i];
+
+                        }
+
+
                     }
-
-
                 }
-
 
                 // 3D 
 
@@ -194,6 +125,7 @@ public class UI_InputHandler : MonoBehaviour
 
                         SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
                         _tappableFocus = _tappableGameobjectsInScene[i];
+
                     }
 
                 }
@@ -207,20 +139,18 @@ public class UI_InputHandler : MonoBehaviour
                     _tappableFocus = null;
                 }
 
-
-
-
-            }
-
-
-            if (_touch.phase == TouchPhase.Ended)
-            {
-                // Send Touch Ended Event to all GOs
-                for (int i = 0; i < _tappableGameobjectsInScene.Count; i++)
+                // IF TOUCHPHASE ENDED THEN SEND LET GO SIGNAL
+                if (_touch.phase == TouchPhase.Ended)
                 {
                     _tappableGameobjectsInScene[i].OnTapWasLetGo();
+
+                    if (_tappableFocus == _tappableGameobjectsInScene[i]) RegisterTapForDoubleTap(true, _tappableGameobjectsInScene[i]);
+                    else RegisterTapForDoubleTap(false, _tappableGameobjectsInScene[i]);
+
                 }
+
             }
+
 
             // as long as there is touch, fire event
             // used by GOs that need constant touch information, independent from wether or not they are touched (eg. Joystick)
@@ -235,33 +165,54 @@ public class UI_InputHandler : MonoBehaviour
                 _tappableGameobjectsInScene[i].OnTapWasLetGo();
             }
         }
+
+        Debug.Log("FRAME ENDED");
     }
 
-    // Checking for Double Tap secondary after single touch in Update
-    void LateUpdate()
+
+    private void RegisterTapForDoubleTap(bool tapValid, TappableGameobject tappable)
     {
-       
-        // Register Valid Touches for Double Tap
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended && _pointOfInterest != null) //<- needs to count what has been tapped
+        Debug.Log($"TapCount for {tappable} is {tappable.TapCount}");
+        // DOUBLE TAPPING HELELELELEL
+        if (tapValid)
         {
-            tapCount += 1; 
+            // On CountDown End: DoubleTap Counters reset
             StartCoroutine(Countdown());
-        }
 
-        // If Valid Double Tap Fade In / Out
-        if (tapCount == 2)
+            tappable.TapCount++;
+        }
+        else
         {
-            if (_lastPOI == _innerJoystick) ValidDoubleTapEvent.Invoke(_touch); //TODO: Change this to joystick event, make new events for other doubletaps or smth
-
-            tapCount = 0;
-            StopCoroutine(Countdown());
+            Debug.Log($"{tappable} got reset");
+            tappable.TapCount = 0;
+            return;
         }
+
+        if (tappable.TapCount == 2)
+        {
+            Debug.Log($"{tappable} got doubleTapped");
+
+            tappable.OnDoubleTap();
+            tappable.TapCount = 0;
+
+            StopCoroutine(Countdown());
+
+        }
+
+        Debug.Log($"TapCount for {tappable} got changed to {tappable.TapCount}");
 
     }
+
+
     private IEnumerator Countdown()
     {
         yield return new WaitForSeconds(_doubleTapSensitivity);
         tapCount = 0;
+
+        for (int i = 0; i < _tappableGameobjectsInScene.Count; i++)
+        {
+            RegisterTapForDoubleTap(false, _tappableGameobjectsInScene[i]);
+        }
     }
 
     private void SetPOI(Transform newPOI)
@@ -270,10 +221,10 @@ public class UI_InputHandler : MonoBehaviour
         {
             tapCount = 0;
             _pointOfInterest = newPOI;
-            
+
         }
 
-        if (_pointOfInterest != null ) _lastPOI = _pointOfInterest;
+        if (_pointOfInterest != null) _lastPOI = _pointOfInterest;
 
     }
 
@@ -329,29 +280,6 @@ public class UI_InputHandler : MonoBehaviour
             target = h.collider.gameObject;
             return true;
 
-        }
-        else return false;
-    }
-
-    private bool CheckForHitOnPlaneOLD(Touch touch, Plane plane, Transform zValue, Transform TransformToHit, out Vector3 worldPosHit, out GameObject target, out float distToCam)
-    {
-        //transform the touch position into word space from screen space
-        Ray mRay = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, zValue.position.z));
-        worldPosHit = Vector3.zero;
-        target = null;
-        distToCam = 0f;
-
-        if (Physics.Raycast(mRay, out RaycastHit h, 1000f))
-        {
-            if (h.collider.gameObject.transform == TransformToHit)
-            {
-                distToCam = h.distance;
-
-                worldPosHit = Camera.main.WorldToScreenPoint(h.point);
-                target = h.collider.gameObject;
-                return true;
-            }
-            else return false;
         }
         else return false;
     }

@@ -33,7 +33,7 @@ public class UI_JoystickHandler : TappableGameobject
         _innerJoystick = GetComponentInChildren<Collider2D>().transform;
 
         UI_InputHandler.ValidTouchEvent2D.AddListener(OnTap);
-        UI_InputHandler.ValidDoubleTapEvent.AddListener(ProcessDoubleTap);
+    //    UI_InputHandler.ValidDoubleTapEvent.AddListener(ProcessDoubleTap);
 
         JoystickStateChanged = new UnityEvent();
 
@@ -86,10 +86,20 @@ public class UI_JoystickHandler : TappableGameobject
     public override void OnTapWasLetGo()
     {
         base.OnTapWasLetGo();
+
         _snapBack = true;
-        Debug.Log("Resetting Joystick");
         ValidJoystickInput = false;
 
+    }
+
+    public override void OnDoubleTap()
+    {
+        base.OnDoubleTap();
+
+        _doubleTap = true;
+
+        if (JoystickStateClosed) _counter = _counterStart;
+        else _counter = _counterStartForClose;
     }
 
     private void FixedUpdate()
@@ -106,8 +116,6 @@ public class UI_JoystickHandler : TappableGameobject
 
         if (_snapBack)
         {
-            Debug.Log("Snapping Back");
-
             _innerJoystick.position = Mathfs.LerpLinear(_innerJoystick.position, new Vector3(_outerJoystick.position.x, _outerJoystick.position.y, _innerJoystick.position.z), Time.deltaTime * _touchSensitivity);
             if (Vector3.Distance(_innerJoystick.position, new Vector3(_outerJoystick.position.x, _outerJoystick.position.y, _innerJoystick.position.z)) <= 0.01)
             {
