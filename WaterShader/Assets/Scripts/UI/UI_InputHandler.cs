@@ -28,13 +28,11 @@ public class UI_InputHandler : MonoBehaviour
 
 
 
-    float tapCount;
     private Touch _touch;
 
     private Plane _uiPlane;
 
-    private Transform _pointOfInterest; // Currently tapped with first registered touch
-    private Transform _lastPOI; // last registered touch
+   // private Transform _pointOfInterest; // Currently tapped with first registered touch
 
     [SerializeField] private Transform _waterPlane; //FOR TAP DEBUG
     [SerializeField] private Transform _tapEffectPlane; //FOR TAP DEBUG
@@ -105,7 +103,7 @@ public class UI_InputHandler : MonoBehaviour
                         {
                             _tappableGameobjectsInScene[i].OnTap(_touch, rayPos2D); // pass all here that was passed in event
 
-                            SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
+                          // SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
                             _tappableFocus = _tappableGameobjectsInScene[i];
 
                         }
@@ -123,7 +121,7 @@ public class UI_InputHandler : MonoBehaviour
                     {
                         _tappableGameobjectsInScene[i].OnTap(_touch, hitPos, dist); // pass all here that was passed in event
 
-                        SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
+                     //   SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
                         _tappableFocus = _tappableGameobjectsInScene[i];
 
                     }
@@ -135,7 +133,7 @@ public class UI_InputHandler : MonoBehaviour
 
                 else
                 {
-                    SetPOI(null);
+                  //  SetPOI(null);
                     _tappableFocus = null;
                 }
 
@@ -166,14 +164,12 @@ public class UI_InputHandler : MonoBehaviour
             }
         }
 
-        Debug.Log("FRAME ENDED");
     }
 
 
     private void RegisterTapForDoubleTap(bool tapValid, TappableGameobject tappable)
     {
-        Debug.Log($"TapCount for {tappable} is {tappable.TapCount}");
-        // DOUBLE TAPPING HELELELELEL
+        // DOUBLE TAPPING 
         if (tapValid)
         {
             // On CountDown End: DoubleTap Counters reset
@@ -207,7 +203,6 @@ public class UI_InputHandler : MonoBehaviour
     private IEnumerator Countdown()
     {
         yield return new WaitForSeconds(_doubleTapSensitivity);
-        tapCount = 0;
 
         for (int i = 0; i < _tappableGameobjectsInScene.Count; i++)
         {
@@ -215,18 +210,17 @@ public class UI_InputHandler : MonoBehaviour
         }
     }
 
-    private void SetPOI(Transform newPOI)
-    {
-        if (_pointOfInterest != newPOI)
-        {
-            tapCount = 0;
-            _pointOfInterest = newPOI;
+    //private void SetPOI(Transform newPOI)
+    //{
+    //    if (_pointOfInterest != newPOI)
+    //    {
+    //        _pointOfInterest = newPOI;
 
-        }
+    //    }
 
-        if (_pointOfInterest != null) _lastPOI = _pointOfInterest;
+    //    if (_pointOfInterest != null) _lastPOI = _pointOfInterest;
 
-    }
+    //}
 
 
 
