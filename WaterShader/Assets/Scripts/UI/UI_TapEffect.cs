@@ -20,7 +20,8 @@ public class UI_TapEffect : MonoBehaviour, IPooledObject
     [SerializeField] private int[] _minMaxDistWaterPlaneToCamera = new int[2]; //min Dist is Camera -> Water at Screen, Max ist furthest into the Waterplane.
 
 
-    [SerializeField] private float _radius; // start Radius
+    [SerializeField] private float _radius = 0f; // start Radius
+
 
     private Vector3 _defaultScale;
 

@@ -21,8 +21,8 @@ public class UI_InputHandler : MonoBehaviour
     public static UnityEvent DoubleTapProcessed;
 
     public Camera UICamera = null;
-    [SerializeField] private Transform _outerJoystick = null; // Z- Value Reference for UI Checks
-    [SerializeField] private Transform _innerJoystick = null;
+    //[SerializeField] private Transform _outerJoystick = null; // Z- Value Reference for UI Checks
+    //[SerializeField] private Transform _innerJoystick = null;
 
     [SerializeField] private float _doubleTapSensitivity = .3f;
 

@@ -11,9 +11,9 @@ public class GameManager : MonoBehaviour
     private LevelManager _lM;
 
     public BoatBase Boat;
-    [SerializeField] private GameObject _boatPrefab;
-    [SerializeField] private LevelStorageScriptable _boatLevels;
-    public Data DataContainer;
+    [SerializeField] private GameObject _boatPrefab = null;
+    [SerializeField] private LevelStorageScriptable _boatLevels = null;
+    public Savedata DataContainer;
 
     public UnityEvent FishingSpeedup;
     void Awake()
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
-        DataContainer = GetComponent<Data>();
+        DataContainer = GetComponent<Savedata>();
     }
     // Start is called before the first frame update
     void Start()
