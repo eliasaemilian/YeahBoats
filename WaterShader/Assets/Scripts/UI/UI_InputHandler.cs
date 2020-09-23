@@ -21,21 +21,16 @@ public class UI_InputHandler : MonoBehaviour
     public static UnityEvent DoubleTapProcessed;
 
     public Camera UICamera = null;
-    //[SerializeField] private Transform _outerJoystick = null; // Z- Value Reference for UI Checks
-    //[SerializeField] private Transform _innerJoystick = null;
+
 
     [SerializeField] private float _doubleTapSensitivity = .3f;
 
 
 
     private Touch _touch;
-
     private Plane _uiPlane;
 
-   // private Transform _pointOfInterest; // Currently tapped with first registered touch
 
-    [SerializeField] private Transform _waterPlane; //FOR TAP DEBUG
-    [SerializeField] private Transform _tapEffectPlane; //FOR TAP DEBUG
 
     [SerializeField] private List<TappableGameobject> _tappableGameobjectsInScene;
     private TappableGameobject _tappableFocus;
@@ -179,14 +174,13 @@ public class UI_InputHandler : MonoBehaviour
         }
         else
         {
-            Debug.Log($"{tappable} got reset");
             tappable.TapCount = 0;
             return;
         }
 
         if (tappable.TapCount == 2)
         {
-            Debug.Log($"{tappable} got doubleTapped");
+         //   Debug.Log($"{tappable} got doubleTapped");
 
             tappable.OnDoubleTap();
             tappable.TapCount = 0;
@@ -195,7 +189,7 @@ public class UI_InputHandler : MonoBehaviour
 
         }
 
-        Debug.Log($"TapCount for {tappable} got changed to {tappable.TapCount}");
+      //  Debug.Log($"TapCount for {tappable} got changed to {tappable.TapCount}");
 
     }
 
