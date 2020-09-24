@@ -12,24 +12,23 @@ public class UI_TapEffectCameraZoom : TappableGameobject
     [SerializeField] private bool _zoomingIn = true;
     public bool ZoomingIn { get { return _zoomingIn; } set { _zoomingIn = value; } } // <- may not be needed if clear 2D / 3D split remains
 
-    [SerializeField] private GameObject _shopUI = null;
-    public GameObject ShopUI { get { return _shopUI; } set { _shopUI = value; } } 
-
     private TapEffect_CameraHandler _camHandler;
 
     private bool _isLookedAt;
 
-    private void Start()
+    [SerializeField] private List<GameObject> _UIToSetActive = null;
+
+
+    public override void OnStartInitialize()
     {
         _camHandler = FindObjectOfType<TapEffect_CameraHandler>();
         if (_camHandler == null) Debug.LogError("Camera Zoom TapEffect needs a TapEffect CameraHandler in the Scene!");
 
-       if (!ZoomingIn) gameObject.SetActive(false);
 
         _camHandler.OnCameraChange.AddListener(ReactToCameraChange);
     }
 
-    
+
     // 2D UI
     public override void OnTap(Touch touch, Vector3 pos)
     {
@@ -50,8 +49,9 @@ public class UI_TapEffectCameraZoom : TappableGameobject
         Debug.Log("Got Tapped, changing Camera Index to " + CameraIndex);
         _camHandler.OnCameraChange.Invoke(CameraIndex);
 
-        // Enable UI
-        _shopUI.SetActive(true); //TODO: Nice Fade in or smth
+        // Enable UI    
+        SetUIVisibility(true);
+        
 
     }
 
@@ -69,7 +69,19 @@ public class UI_TapEffectCameraZoom : TappableGameobject
         if (index == CameraIndex && _zoomingIn || _isLookedAt && index == 0) _isLookedAt = true;
         else _isLookedAt = false;
 
+        // Index 0 means nothing is looked at anymore and we are returning to the main scene
+        if (index == 0) SetUIVisibility(false);
+
+        // give some buffer time so users won't flip back and forth too much with accidental touches
         StartCoroutine(WaitUntilTappableAgain());
 
+    }
+
+    private void SetUIVisibility(bool newState)
+    {
+        for (int i = 0; i < _UIToSetActive.Count; i++)
+        {
+            _UIToSetActive[i].SetActive(newState); //TODO: Nice Fade in or smth
+        }
     }
 }
