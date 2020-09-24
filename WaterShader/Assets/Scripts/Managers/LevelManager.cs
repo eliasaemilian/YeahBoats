@@ -31,12 +31,8 @@ public class LevelManager : MonoBehaviour
     public UnityEvent FishingHookUpdate;
     void Awake()
     {
-        if (Instance == null) Instance = this;
-        else
-        {
-            Destroy(this);
-        }
-
+        Instance = this;
+        
         TMPLevelSetup();
     }
     // Start is called before the first frame update
@@ -50,30 +46,79 @@ public class LevelManager : MonoBehaviour
         InvokeRepeating("SaveData", 5, 5);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //MVP
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-           // CheckForNPCLevelup(NPCFishermanLevel + 1);
-            CheckForLevelup(ref NPCFishermanLevel, NPCLevels, NPCUpdate);
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            //CheckForBoatStorageLevelup(BoatStorageLevel + 1);
-            CheckForLevelup(ref BoatStorageLevel, BoatStorageLevels, BoatStorageUpdate);
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            CheckForLevelup(ref FishingHookLevel, FishingHookLevels, FishingHookUpdate);
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            CheckForLevelup(ref FishingRodLevel, FishingRodLevels, FishingRodUpdate);
-        }
-    }
 
+    void OnGUI()
+    {
+        //if (GUILayout.Button("BoatStorage"))
+        //{
+
+        //}
+        if (GUI.Button(new Rect(10, 10, 150, 20), "NPC Fisherman Level"))
+        {
+            if(CheckIfICanLevelup(ref NPCFishermanLevel, NPCLevels))
+            {
+                CanvasDisplay.Instance.UpdateText("You have enough money to upgrade");
+            }
+            else
+            {
+                CanvasDisplay.Instance.UpdateText("You need more money!");
+            }
+        }
+        if (GUI.Button(new Rect(160, 10, 150, 20), "Upgrade"))
+        {
+            Levelup(ref NPCFishermanLevel, NPCLevels, NPCUpdate);
+        }
+
+        if (GUI.Button(new Rect(10, 30, 150, 20), "Boat Storage"))
+        {
+            if(CheckIfICanLevelup(ref BoatStorageLevel, BoatStorageLevels))
+            {
+                CanvasDisplay.Instance.UpdateText("You have enough money to upgrade");
+            }
+            else
+            {
+                CanvasDisplay.Instance.UpdateText("You need more money!");
+            }
+
+        }
+        if (GUI.Button(new Rect(160, 30, 150, 20), "Upgrade"))
+        {
+            Levelup(ref BoatStorageLevel, BoatStorageLevels, BoatStorageUpdate);
+        }
+        if (GUI.Button(new Rect(10, 50, 150, 20), "Fishing Hook Level"))
+        {
+            if(CheckIfICanLevelup(ref FishingHookLevel, FishingHookLevels))
+            {
+                CanvasDisplay.Instance.UpdateText("You have enough money to upgrade");
+            }
+            else
+            {
+                CanvasDisplay.Instance.UpdateText("You need more money!");
+            }
+
+        }
+        if (GUI.Button(new Rect(160, 50, 150, 20), "Upgrade"))
+        {
+            Levelup(ref FishingHookLevel, FishingHookLevels, FishingHookUpdate);
+        }
+        if (GUI.Button(new Rect(10, 70, 150, 20), "Fishing Rod Level"))
+        {
+            if(CheckIfICanLevelup(ref FishingRodLevel, FishingRodLevels))
+            {
+                CanvasDisplay.Instance.UpdateText("You have enough money to upgrade");
+            }
+            else
+            {
+                CanvasDisplay.Instance.UpdateText("You need more money!");
+            }
+        }
+        if (GUI.Button(new Rect(160, 70, 150, 20), "Upgrade"))
+        {
+            Levelup(ref FishingRodLevel, FishingRodLevels, FishingRodUpdate);
+        }
+
+
+    }
     private void TMPLevelSetup()
     {
         MapLevel = 1;
@@ -86,25 +131,25 @@ public class LevelManager : MonoBehaviour
     }
     //less repetitive version testing
     // TODO: write it in 2 methods for checking & actual upgrading
-    public void CheckForLevelup(ref int currentLevel,LevelStorageScriptable LST,UnityEvent correspondingEvent)
+
+    public bool CheckIfICanLevelup(ref int currentLevel, LevelStorageScriptable LST)
     {
-        if (LST.Levels.Length < currentLevel+1) return;
+        //TODO: Add level cap
+        if (LST.Levels.Length < currentLevel + 1) return false;
 
         if (_mM.CheckMoney(LST.Levels[currentLevel].Cost))
         {
-            // UI Action if there is enough money
-            Debug.Log("I have enough money");
+            return true;
+        }
+        else return false;
 
+    }
+    public void Levelup(ref int currentLevel,LevelStorageScriptable LST,UnityEvent correspondingEvent)
+    {
             _mM.DeduceMoney(LST.Levels[currentLevel].Cost);
             currentLevel++;
             correspondingEvent.Invoke();
-        }
-        else
-        {
-            //UI action if ther is not enough money
-            Debug.Log("I don't have enough money");
-
-        }
+        
     }
 
     private void GetData()
@@ -129,78 +174,5 @@ public class LevelManager : MonoBehaviour
         _gM.DataContainer.BoatStorageLevel = BoatStorageLevel;
     }
 
-    // ------ Deprecated ------
-    //Call the next function to level up various stuff, not final, WIP
-    //public void CheckForNPCLevelup(int nextLevel)
-    //{
-    //    if (NPCLevels.Levels.Length < nextLevel) return;
-
-    //    if(_mM.CheckMoney(NPCLevels.Levels[nextLevel-1].Cost))
-    //    {
-    //        Debug.Log("I have enough money");
-
-    //        _mM.DeduceMoney(NPCLevels.Levels[nextLevel - 1].Cost);
-    //        NPCFishermanLevel++;
-    //        NPCUpdate.Invoke();
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("I don't have enough money");
-
-    //    }
-    //}
-    //public void CheckForBoatStorageLevelup(int nextLevel)
-    //{
-    //    if (BoatStorageLevels.Levels.Length < nextLevel) return;
-
-    //    if (_mM.CheckMoney(BoatStorageLevels.Levels[nextLevel - 1].Cost))
-    //    {
-    //        Debug.Log("I have enough money");
-
-    //        _mM.DeduceMoney(BoatStorageLevels.Levels[nextLevel - 1].Cost);
-    //        BoatStorageLevel++;
-    //        BoatStorageUpdate.Invoke();
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("I don't have enough money");
-
-    //    }
-    //}
-    //public void CheckForFishingRodLevelup(int nextLevel)
-    //{
-    //    if (FishingRodLevels.Levels.Length < nextLevel) return;
-
-    //    if (_mM.CheckMoney(FishingRodLevels.Levels[nextLevel - 1].Cost))
-    //    {
-    //        Debug.Log("I have enough money");
-
-    //        _mM.DeduceMoney(FishingRodLevels.Levels[nextLevel - 1].Cost);
-    //        FishingRodLevel++;
-    //        FishingRodUpdate.Invoke();
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("I don't have enough money");
-
-    //    }
-    //}
-    //public void CheckForFishingHookLevelup(int nextLevel)
-    //{
-    //    if (FishingHookLevels.Levels.Length < nextLevel) return;
-
-    //    if (_mM.CheckMoney(FishingHookLevels.Levels[nextLevel - 1].Cost))
-    //    {
-    //        Debug.Log("I have enough money");
-
-    //        _mM.DeduceMoney(FishingHookLevels.Levels[nextLevel - 1].Cost);
-    //        FishingHookLevel++;
-    //        FishingHookUpdate.Invoke();
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("I don't have enough money");
-
-    //    }
-    //}
+    
 }

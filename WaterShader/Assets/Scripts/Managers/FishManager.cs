@@ -14,11 +14,8 @@ public class FishManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance == null) Instance = this;
-        else
-        {
-            Destroy(this);
-        }
+        Instance = this;
+        
         _lM = LevelManager.Instance;
     }
 

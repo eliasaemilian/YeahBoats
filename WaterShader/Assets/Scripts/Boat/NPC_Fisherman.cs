@@ -11,6 +11,7 @@ public class NPC_Fisherman : MonoBehaviour
     private MoneyManager _mM = MoneyManager.Instance;
     private FishManager _fM = FishManager.Instance;
     private GameManager _gM = GameManager.Instance;
+    public BoatBase BB;
 
     //MVP
     private Renderer rend;
@@ -58,7 +59,7 @@ public class NPC_Fisherman : MonoBehaviour
 
     private void CatchAFish()
     {
-        if (_gM.Boat.AddFishToStorage())
+        if (BB.AddFishToStorage())
         {
             _mM.AddMoney( _fM.GetFish());
             StartCoroutine(NPCAnim());

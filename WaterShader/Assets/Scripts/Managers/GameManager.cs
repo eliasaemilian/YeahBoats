@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.TerrainAPI;
 using UnityEngine;
 using UnityEngine.Events;
 /// <summary>
@@ -11,18 +12,15 @@ public class GameManager : MonoBehaviour
     private LevelManager _lM;
 
     public BoatBase Boat;
-    [SerializeField] private GameObject _boatPrefab = null;
-    [SerializeField] private LevelStorageScriptable _boatLevels = null;
+    //[SerializeField] private GameObject _boatPrefab = null;
+    //[SerializeField] private LevelStorageScriptable _boatLevels = null;
     public Savedata DataContainer;
 
     public UnityEvent FishingSpeedup;
     void Awake()
     {
-        if (Instance == null) Instance = this;
-        else
-        {
-            Destroy(this);
-        }
+        Instance = this;
+        
         DataContainer = GetComponent<Savedata>();
     }
     // Start is called before the first frame update
@@ -30,14 +28,18 @@ public class GameManager : MonoBehaviour
     {
         _lM = LevelManager.Instance;
 
-        InstantiateBoat();
+       // InstantiateBoat();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //MVP for testing
-        if (Input.GetKeyDown(KeyCode.S))
+        
+    }
+
+    void OnGUI()
+    {
+        if (GUI.Button(new Rect(10, 130, 150, 20), "Tap on Screen"))
         {
             TapToSpeeUpCatch();
         }
@@ -50,13 +52,13 @@ public class GameManager : MonoBehaviour
     }
 
     //Setting up boat
-    private void InstantiateBoat()
-    {
-        GameObject b = _boatLevels.Levels[_lM.BoatLevel - 1].BoatPrefab;
-        GameObject boat = Instantiate(b, transform.position, Quaternion.identity);
-        Boat = boat.GetComponent<BoatBase>();
-        Debug.Log("Loading boat of level : " + _boatLevels.Levels[_lM.BoatLevel - 1].Level);
-    }
+    //private void InstantiateBoat()
+    //{
+    //    GameObject b = _boatLevels.Levels[_lM.BoatLevel - 1].BoatPrefab;
+    //    GameObject boat = Instantiate(b, transform.position, Quaternion.identity);
+    //    Boat = boat.GetComponent<BoatBase>();
+    //    Debug.Log("Loading boat of level : " + _boatLevels.Levels[_lM.BoatLevel - 1].Level);
+    //}
 
     
 }

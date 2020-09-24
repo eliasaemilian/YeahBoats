@@ -10,8 +10,9 @@ public class BoatBase : MonoBehaviour
     [SerializeField] private BoatScriptable _boatScriptable = null;
     [SerializeField] private NPCSpotsScript _nPCSpots = null;
     [SerializeField] private GameObject _nPCFishermanPrefab = null;
+    [SerializeField] private LevelStorageScriptable _boatLevels = null;
 
-    private LevelManager _lM = LevelManager.Instance;
+    private LevelManager _lM;
 
     public List<GameObject> SpawnPoints = new List<GameObject>();
 
@@ -20,25 +21,41 @@ public class BoatBase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //AddFisherman();
+        _lM = LevelManager.Instance;
+        InstantiateBoat();
+
         BoatStorageUpdate();
-        _lM.BoatStorageUpdate.AddListener(BoatStorageUpdate);
+        //_lM.BoatStorageUpdate.AddListener(BoatStorageUpdate);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            InstantiateBoat();
+        }
+    }
+
+    void OnGUI()
+    {
+        if(GUI.Button(new Rect(10, 90, 150, 20), "Add Fisherman"))
         {
             AddFisherman();
         }
-
-        //MVP
-        if (Input.GetKeyDown(KeyCode.A))
+        if(GUI.Button(new Rect(10, 110, 150, 20), "Empty Storage"))
         {
             EmptyStorage();
         }
+    }
 
+    private void InstantiateBoat()
+    {
+        GameObject b = _boatLevels.Levels[_lM.BoatLevel - 1].BoatPrefab;
+        GameObject boat = Instantiate(b, transform.position, Quaternion.identity);
+        boat.transform.parent = this.transform;
+        _nPCSpots = boat.gameObject.GetComponentInChildren<NPCSpotsScript>();
+        Debug.Log("Loading boat of level : " + _boatLevels.Levels[_lM.BoatLevel - 1].Level);
     }
     private bool AddFisherman()
     {
@@ -48,6 +65,7 @@ public class BoatBase : MonoBehaviour
             SpawnPoints.Add(gO);
 
             GameObject fisherman = Instantiate(_nPCFishermanPrefab,gO.transform.position,gO.transform.rotation, gO.transform);
+            fisherman.GetComponent<NPC_Fisherman>().BB = this;
             return true;
         }
         else return false;

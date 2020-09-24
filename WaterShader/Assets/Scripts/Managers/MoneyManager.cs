@@ -16,11 +16,8 @@ public class MoneyManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance == null) Instance = this;
-        else
-        {
-            Destroy(this);
-        }
+         Instance = this;
+     
     }
     // Start is called before the first frame update
     void Start()
