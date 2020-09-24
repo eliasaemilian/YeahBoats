@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UI_TapEffectCameraZoom : TappableGameobject
 {
+    [SerializeField] private float _waitTimeBetweenTappableAgain = 1f;
+
     [SerializeField] private int _cameraIndex = 0;
     public int CameraIndex { get { return _cameraIndex; } set { _cameraIndex = value; }  }
 
@@ -15,14 +17,20 @@ public class UI_TapEffectCameraZoom : TappableGameobject
 
     private TapEffect_CameraHandler _camHandler;
 
+    private bool _isLookedAt;
+
     private void Start()
     {
         _camHandler = FindObjectOfType<TapEffect_CameraHandler>();
         if (_camHandler == null) Debug.LogError("Camera Zoom TapEffect needs a TapEffect CameraHandler in the Scene!");
 
        if (!ZoomingIn) gameObject.SetActive(false);
+
+        _camHandler.OnCameraChange.AddListener(ReactToCameraChange);
     }
 
+    
+    // 2D UI
     public override void OnTap(Touch touch, Vector3 pos)
     {
         base.OnTap(touch, pos);
@@ -33,8 +41,11 @@ public class UI_TapEffectCameraZoom : TappableGameobject
         gameObject.SetActive(false);
     }
 
+    // 3D Gameobjects
     public override void OnTap(Touch touch, Vector3 pos, float dist)
     {
+        if (_isLookedAt) return;
+
         base.OnTap(touch, pos, dist);
         Debug.Log("Got Tapped, changing Camera Index to " + CameraIndex);
         _camHandler.OnCameraChange.Invoke(CameraIndex);
@@ -42,6 +53,23 @@ public class UI_TapEffectCameraZoom : TappableGameobject
         // Enable UI
         _shopUI.SetActive(true); //TODO: Nice Fade in or smth
 
-        // Disable own Collider
+    }
+
+    private IEnumerator WaitUntilTappableAgain()
+    {
+        yield return new WaitForSeconds(_waitTimeBetweenTappableAgain);
+        _isLookedAt = false;
+    }
+
+    private void ReactToCameraChange(int index)
+    {
+        if (!gameObject.activeSelf) return;
+
+        // if we are in the scene and now looked at OR if we were looked at and return button is pressed , set true
+        if (index == CameraIndex && _zoomingIn || _isLookedAt && index == 0) _isLookedAt = true;
+        else _isLookedAt = false;
+
+        StartCoroutine(WaitUntilTappableAgain());
+
     }
 }

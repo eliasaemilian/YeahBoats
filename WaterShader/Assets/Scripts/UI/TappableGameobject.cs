@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.MemoryProfiler;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -27,7 +28,9 @@ public class TappableGameobject : MonoBehaviour, ITappable
             _zValueRef = transform;
             Debug.LogWarning($"No ZValue has been set in Inspector for {gameObject.name}. Therefore ZValue wil be set to {gameObject.name}.");
         }
+
     }
+
 
     private void SetupTappable(GameObject refGO, bool is2D)
     {

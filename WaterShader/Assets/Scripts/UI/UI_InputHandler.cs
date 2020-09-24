@@ -114,7 +114,7 @@ public class UI_InputHandler : MonoBehaviour
                     // Check for Taps on GOs with 3D Colliders
                     if (_tappableGameobjectsInScene[i].GOTapRef == hitGO)
                     {
-                        _tappableGameobjectsInScene[i].OnTap(_touch, hitPos, dist); // pass all here that was passed in event
+                        _tappableGameobjectsInScene[i].OnTap(_touch, hitPos, dist); 
 
                      //   SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
                         _tappableFocus = _tappableGameobjectsInScene[i];
