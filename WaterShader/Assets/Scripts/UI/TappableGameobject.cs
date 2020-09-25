@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.MemoryProfiler;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,8 +12,9 @@ public class TappableGameobject : MonoBehaviour, ITappable
     [SerializeField] private Transform _zValueRef = null;
     public Transform ZValueRef { get { return _zValueRef; } set { _zValueRef = value; } } // Set to UI Plane if this has a corresponding Effect, else set to whichever GO needs the tap position
 
-    public int TapCount { get; set; }
+    [HideInInspector] public int TapCount { get; set; }
 
+    [SerializeField, Tooltip("Make sure GO is active in Scene or it will not be found by InputHandler")] private bool _sceneStartActiveStatus = true; // true, GO will be set to active at start of Scene
     public void OnInitialize()
     {
         // Check if GO has a Collider attached
@@ -27,7 +29,14 @@ public class TappableGameobject : MonoBehaviour, ITappable
             _zValueRef = transform;
             Debug.LogWarning($"No ZValue has been set in Inspector for {gameObject.name}. Therefore ZValue wil be set to {gameObject.name}.");
         }
+
+        // Irregardless of Scene Setup make sure GO is properly initialized
+        gameObject.SetActive(true);
+        OnStartInitialize();
+        gameObject.SetActive(_sceneStartActiveStatus);
     }
+
+    public virtual void OnStartInitialize() { }
 
     private void SetupTappable(GameObject refGO, bool is2D)
     {
