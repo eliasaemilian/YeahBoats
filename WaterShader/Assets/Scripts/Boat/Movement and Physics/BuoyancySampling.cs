@@ -13,7 +13,8 @@ public class BuoyancySampling : MonoBehaviour
     private float waterDrag; //TODO: move boat parameters to boat class
     private float waterAngularDrag;
 
-    private Boat myBoat;
+   // private Boat myBoat;
+    private BoatScriptable _boatSO;
 
     private float _waveHeight;
 
@@ -31,9 +32,10 @@ public class BuoyancySampling : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++) _positionsSamplePoints[i] = transform.GetChild(i);
 
         // Store Boat Info
-        myBoat = GetComponentInParent<BoatHandler>().ThisBoat;
-        waterDrag = myBoat.waterDrag;
-        waterAngularDrag = myBoat.waterAngularDrag;
+      //  myBoat = GetComponentInParent<BoatHandler>().ThisBoat;
+        _boatSO = GetComponentInParent<BoatBase>().BoatSO;
+        waterDrag = _boatSO.waterDrag;
+        waterAngularDrag = _boatSO.waterAngularDrag;
         _rb = GetComponentInParent<Rigidbody>();
     }
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using UnityEngine;
 
 /// <summary>
@@ -8,6 +9,8 @@ using UnityEngine;
 public class BoatBase : MonoBehaviour
 {
     [SerializeField] private BoatScriptable _boatScriptable = null;
+    public BoatScriptable BoatSO { get { return _boatScriptable; } set { _boatScriptable = value; } }
+
     [SerializeField] private NPCSpotsScript _nPCSpots = null;
     [SerializeField] private GameObject _nPCFishermanPrefab = null;
 
@@ -42,7 +45,7 @@ public class BoatBase : MonoBehaviour
     }
     private bool AddFisherman()
     {
-        if (SpawnPoints.Count < _boatScriptable.NPCSpawnPointAmmount)
+        if (SpawnPoints.Count < BoatSO.NPCSpawnPointAmmount)
         {
             GameObject gO = _nPCSpots._spots[SpawnPoints.Count];
             SpawnPoints.Add(gO);

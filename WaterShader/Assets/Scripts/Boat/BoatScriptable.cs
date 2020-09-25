@@ -14,4 +14,8 @@ public class BoatScriptable : ScriptableObject
     public int NPCSpawnPointAmmount;
     public GameObject BoatPrefab;
 
+    // Physics
+    public float waterDrag;
+    public float waterAngularDrag;
+
 }
