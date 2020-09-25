@@ -8,7 +8,7 @@ using UnityEngine;
 public class MoneyManager : MonoBehaviour
 {
     public static MoneyManager Instance;
-    private GameManager _gM;
+    public DataManager _dM;
 
     public float Money;
 
@@ -22,7 +22,7 @@ public class MoneyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _gM = GameManager.Instance;
+        //_dM = DataManager.Instance;
 
 
         TMPSetup();
@@ -56,12 +56,12 @@ public class MoneyManager : MonoBehaviour
 
     private void GetData()
     {
-        Money = _gM.DataContainer.Money;
-        Multiplyer = _gM.DataContainer.Multiplyer;
+        Money = _dM.DataContainer.Money;
+        Multiplyer = _dM.DataContainer.Multiplyer;
     }
     private void SaveData()
     {
-        _gM.DataContainer.Money = Money;
-        _gM.DataContainer.Multiplyer = Multiplyer;
+        _dM.DataContainer.Money = Money;
+        _dM.DataContainer.Multiplyer = Multiplyer;
     }
 }

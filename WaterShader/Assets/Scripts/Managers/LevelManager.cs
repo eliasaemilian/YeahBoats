@@ -9,9 +9,13 @@ using UnityEngine.Events;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
-    private GameManager _gM;
 
-    private MoneyManager _mM;
+    public DataManager _dM;
+    public MoneyManager _mM;
+
+    // Just for testing
+    public CanvasDisplay CD;
+
     public int MapLevel;
     public int BoatLevel;
     public int BoatStorageLevel;
@@ -38,8 +42,8 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _gM = GameManager.Instance;
-        _mM = MoneyManager.Instance;
+        //_dM = DataManager.Instance;
+        //_mM = MoneyManager.Instance;
 
         //For temporary saving
         GetData();
@@ -116,7 +120,10 @@ public class LevelManager : MonoBehaviour
         {
             Levelup(ref FishingRodLevel, FishingRodLevels, FishingRodUpdate);
         }
-
+        if (GUI.Button(new Rect(160, 90, 150, 20), "ResetLevels"))
+        {
+            TMPLevelSetup();
+        }
 
     }
     private void TMPLevelSetup()
@@ -129,8 +136,6 @@ public class LevelManager : MonoBehaviour
         Multiplier = 1;
         BoatStorageLevel = 1;
     }
-    //less repetitive version testing
-    // TODO: write it in 2 methods for checking & actual upgrading
 
     public bool CheckIfICanLevelup(ref int currentLevel, LevelStorageScriptable LST)
     {
@@ -154,24 +159,24 @@ public class LevelManager : MonoBehaviour
 
     private void GetData()
     {
-        MapLevel = _gM.DataContainer.MapLevel;
-        BoatLevel = _gM.DataContainer.BoatLevel;
-        NPCFishermanLevel = _gM.DataContainer.NPCFishermanLevel;
-        FishingRodLevel = _gM.DataContainer.FishingRodLevel;
-        FishingHookLevel = _gM.DataContainer.FishingHookLevel;
-        Multiplier = _gM.DataContainer.Multiplier;
-        BoatStorageLevel = _gM.DataContainer.BoatStorageLevel;
+        MapLevel = _dM.DataContainer.MapLevel;
+        BoatLevel = _dM.DataContainer.BoatLevel;
+        NPCFishermanLevel = _dM.DataContainer.NPCFishermanLevel;
+        FishingRodLevel = _dM.DataContainer.FishingRodLevel;
+        FishingHookLevel = _dM.DataContainer.FishingHookLevel;
+        Multiplier = _dM.DataContainer.Multiplier;
+        BoatStorageLevel = _dM.DataContainer.BoatStorageLevel;
     }
 
     private void SaveData()
     {
-        _gM.DataContainer.MapLevel = MapLevel;
-        _gM.DataContainer.BoatLevel = BoatLevel;
-        _gM.DataContainer.NPCFishermanLevel = NPCFishermanLevel;
-        _gM.DataContainer.FishingRodLevel = FishingRodLevel;
-        _gM.DataContainer.FishingHookLevel = FishingHookLevel;
-        _gM.DataContainer.Multiplier = Multiplier;
-        _gM.DataContainer.BoatStorageLevel = BoatStorageLevel;
+        _dM.DataContainer.MapLevel = MapLevel;
+        _dM.DataContainer.BoatLevel = BoatLevel;
+        _dM.DataContainer.NPCFishermanLevel = NPCFishermanLevel;
+        _dM.DataContainer.FishingRodLevel = FishingRodLevel;
+        _dM.DataContainer.FishingHookLevel = FishingHookLevel;
+        _dM.DataContainer.Multiplier = Multiplier;
+        _dM.DataContainer.BoatStorageLevel = BoatStorageLevel;
     }
 
     

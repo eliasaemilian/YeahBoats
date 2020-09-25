@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2258719203934792971
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2258719203934792969}
+  - component: {fileID: 2258719203934792968}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2258719203934792969
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2258719203934792971}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.12704, y: -0.4162866, z: -0.9657837}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2258719203934792968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2258719203934792971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 324a7dee4217f124e9cbc0030e49be93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dM: {fileID: 0}
+  _mM: {fileID: 0}
+  MapLevel: 0
+  BoatLevel: 0
+  BoatStorageLevel: 0
+  NPCFishermanLevel: 0
+  FishingRodLevel: 0
+  FishingHookLevel: 0
+  Multiplier: 0
+  NPCLevels: {fileID: 11400000, guid: 55f71fa1cbb785d4fb123d95b1b5635a, type: 2}
+  BoatStorageLevels: {fileID: 11400000, guid: b09651a855c20c9449d25e4c9aeeca90, type: 2}
+  FishingRodLevels: {fileID: 11400000, guid: e802e7a80a481064590b7396427c6ddb, type: 2}
+  FishingHookLevels: {fileID: 11400000, guid: 7ba6348fdc38b4941864a13768a367d5, type: 2}
+  NPCUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  BoatStorageUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  FishingRodUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  FishingHookUpdate:
+    m_PersistentCalls:
+      m_Calls: []

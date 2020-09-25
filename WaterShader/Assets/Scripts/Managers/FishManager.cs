@@ -8,7 +8,7 @@ public class FishManager : MonoBehaviour
 {
     public static FishManager Instance;
 
-    private LevelManager _lM;
+    public LevelManager _lM;
     public float _fishValue;
     private float _baseFishValue;
 
@@ -16,7 +16,7 @@ public class FishManager : MonoBehaviour
     {
         Instance = this;
         
-        _lM = LevelManager.Instance;
+        //_lM = LevelManager.Instance;
     }
 
     // Start is called before the first frame update

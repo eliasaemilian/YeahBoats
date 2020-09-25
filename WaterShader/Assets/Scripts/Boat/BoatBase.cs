@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Sets up the boat and its components
@@ -16,8 +17,11 @@ public class BoatBase : MonoBehaviour
 
     public List<GameObject> SpawnPoints = new List<GameObject>();
 
+    public UnityEvent FishingSpeedup;
+
     public int BoatStorage;
     private int _currentBoatStorage;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,10 +35,7 @@ public class BoatBase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            InstantiateBoat();
-        }
+       
     }
 
     void OnGUI()
@@ -43,9 +44,9 @@ public class BoatBase : MonoBehaviour
         {
             AddFisherman();
         }
-        if(GUI.Button(new Rect(10, 110, 150, 20), "Empty Storage"))
+        if(GUI.Button(new Rect(10, 110, 150, 20), "Speed up Catch"))
         {
-            EmptyStorage();
+            TapToSpeedupCatch();
         }
     }
 
@@ -85,6 +86,10 @@ public class BoatBase : MonoBehaviour
         }
     }
 
+    public void TapToSpeedupCatch()
+    {
+        FishingSpeedup.Invoke();
+    }
     public void EmptyStorage()
     {
         _currentBoatStorage = 0;
