@@ -189,34 +189,6 @@ Transform:
   m_Father: {fileID: 2008693973}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &34166521 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7010876820269769704, guid: e1b4764703b60b049a12f0ecfdb9c1cc,
-    type: 3}
-  m_PrefabInstance: {fileID: 7010876821675643106}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &34166522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 34166521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2107a9cf00e8d8846aa7a72761629f08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _boatScriptable: {fileID: 11400000, guid: 021537a24b854f54a85d2cbac5e2721a, type: 2}
-  _nPCSpots: {fileID: 0}
-  _nPCFishermanPrefab: {fileID: 5550221785519434258, guid: e650014c855cff64884b701c316ae570,
-    type: 3}
-  _boatLevels: {fileID: 11400000, guid: 705af923a2600044ca6635327be86112, type: 2}
-  SpawnPoints: []
-  FishingSpeedup:
-    m_PersistentCalls:
-      m_Calls: []
-  BoatStorage: 0
 --- !u!1001 &84157921
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -385,6 +357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _zValueRef: {fileID: 947672111}
+  _sceneStartActiveStatus: 1
   _tapEffectPrefab: {fileID: 7359006305725918849, guid: 7001bc0f04d9d844baddeeb98f0e962a,
     type: 3}
 --- !u!1 &372906391
@@ -586,7 +559,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670728958}
-  m_LocalRotation: {x: 0.011362737, y: 0.0000000026883238, z: -3.0566112e-11, w: 0.99993545}
+  m_LocalRotation: {x: 0.011362745, y: -0.0000000026883231, z: 3.053107e-11, w: 0.99993545}
   m_LocalPosition: {x: 5.3, y: 6.960002, z: -34.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -840,7 +813,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 892751132}
-  m_LocalRotation: {x: 0.011362737, y: 0.0000000026883238, z: -3.0566112e-11, w: 0.99993545}
+  m_LocalRotation: {x: 0.011362745, y: -0.0000000026883231, z: 3.053107e-11, w: 0.99993545}
   m_LocalPosition: {x: 5.3, y: 6.960002, z: -34.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []

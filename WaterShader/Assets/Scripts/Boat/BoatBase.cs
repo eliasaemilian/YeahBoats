@@ -29,17 +29,18 @@ public class BoatBase : MonoBehaviour
     void Start()
     {
         _lM = LevelManager.Instance;
+
         InstantiateBoat();
+
+        if (WaterTappableHandler.FishingTap != null)
+        {
+            WaterTappableHandler.FishingTap.AddListener(FishingSpeedup.Invoke);
+        }
 
         BoatStorageUpdate();
         //_lM.BoatStorageUpdate.AddListener(BoatStorageUpdate);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
 
     void OnGUI()
     {

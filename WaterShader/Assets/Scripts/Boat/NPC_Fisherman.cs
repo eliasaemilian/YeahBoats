@@ -16,7 +16,7 @@ public class NPC_Fisherman : MonoBehaviour
     //MVP
     private Renderer rend;
 
-    private float CatchSpeed { get; set; }
+    public float CatchSpeed { get; set; }
     public int Multiplier;
 
 
@@ -25,10 +25,7 @@ public class NPC_Fisherman : MonoBehaviour
     [SerializeField]private float _timer;
     private float _timerTapMultiplier;
 
-    void Awake()
-    {
-
-    }
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -39,7 +36,7 @@ public class NPC_Fisherman : MonoBehaviour
         _timerTapMultiplier = 1.5f;
         _lM.NPCUpdate.AddListener(UpdateValues);
         BB.FishingSpeedup.AddListener(ReduceTimer);
-
+        
         rend = GetComponentInChildren<Renderer>();
 
     }
