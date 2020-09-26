@@ -111,7 +111,7 @@ public class UI_JoystickHandler : TappableGameobject
     {
         if (_doubleTap)
         {
-            Debug.Log("Double Tapping");
+          //  Debug.Log("Double Tapping");
 
             // Start Fade In / Out
             if (!JoystickStateClosed) StartCoroutine(CloseJoystick());

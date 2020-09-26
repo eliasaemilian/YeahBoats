@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class WaterTappableHandler : TappableGameobject
 {
@@ -9,13 +10,9 @@ public class WaterTappableHandler : TappableGameobject
 
     private Camera _uiCamera;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
+    public static UnityEvent FishingTap = new UnityEvent();
 
 
-    }
 
     public override void OnStartInitialize()
     {

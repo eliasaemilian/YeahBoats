@@ -70,10 +70,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7010876820269769711}
   - component: {fileID: 7010876820269769710}
-  - component: {fileID: 7010876820269769705}
   - component: {fileID: 7010876820269769708}
   - component: {fileID: 4883072358330463547}
   - component: {fileID: 4244460986419502273}
+  - component: {fileID: 34166522}
   m_Layer: 0
   m_Name: Boat
   m_TagString: Untagged
@@ -114,22 +114,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7010876820269769705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7010876820269769704}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c188176b365b347a8d190f4e807900, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ThisBoat:
-    floatCounter: 5
-    waterDrag: 200
-    waterAngularDrag: 200
 --- !u!114 &7010876820269769708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,6 +161,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b71dbe89e178a04aa4ee5168a5ddf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &34166522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7010876820269769704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2107a9cf00e8d8846aa7a72761629f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _boatScriptable: {fileID: 11400000, guid: 021537a24b854f54a85d2cbac5e2721a, type: 2}
+  _nPCSpots: {fileID: 0}
+  _nPCFishermanPrefab: {fileID: 5550221785519434258, guid: e650014c855cff64884b701c316ae570,
+    type: 3}
+  _boatLevels: {fileID: 11400000, guid: 705af923a2600044ca6635327be86112, type: 2}
+  SpawnPoints: []
+  FishingSpeedup:
+    m_PersistentCalls:
+      m_Calls: []
+  BoatStorage: 0
 --- !u!1 &7010876820722573186
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,7 +488,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 9de7f188db2b418489724d7a02db2f5c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9de7f188db2b418489724d7a02db2f5c, type: 3}
