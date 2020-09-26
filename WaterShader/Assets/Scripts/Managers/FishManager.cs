@@ -8,18 +8,15 @@ public class FishManager : MonoBehaviour
 {
     public static FishManager Instance;
 
-    private LevelManager _lM;
+    public LevelManager _lM;
     public float _fishValue;
     private float _baseFishValue;
 
     void Awake()
     {
-        if (Instance == null) Instance = this;
-        else
-        {
-            Destroy(this);
-        }
-        _lM = LevelManager.Instance;
+        Instance = this;
+        
+        //_lM = LevelManager.Instance;
     }
 
     // Start is called before the first frame update

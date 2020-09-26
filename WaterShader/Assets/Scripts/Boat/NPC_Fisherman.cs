@@ -10,7 +10,8 @@ public class NPC_Fisherman : MonoBehaviour
     private LevelManager _lM = LevelManager.Instance;
     private MoneyManager _mM = MoneyManager.Instance;
     private FishManager _fM = FishManager.Instance;
-    private GameManager _gM = GameManager.Instance;
+    private DataManager _dM = DataManager.Instance;
+    public BoatBase BB;
 
     //MVP
     private Renderer rend;
@@ -37,7 +38,7 @@ public class NPC_Fisherman : MonoBehaviour
         _timer = 60/CatchSpeed;
         _timerTapMultiplier = 1.5f;
         _lM.NPCUpdate.AddListener(UpdateValues);
-        _gM.FishingSpeedup.AddListener(ReduceTimer);
+        BB.FishingSpeedup.AddListener(ReduceTimer);
 
         rend = GetComponentInChildren<Renderer>();
 
@@ -58,15 +59,16 @@ public class NPC_Fisherman : MonoBehaviour
 
     private void CatchAFish()
     {
-        if (_gM.Boat.AddFishToStorage())
-        {
-            _mM.AddMoney( _fM.GetFish());
-            StartCoroutine(NPCAnim());
-        }
-        else
-        {
-            Debug.Log("Your storage is full, go back to the Port to sell your fish");
-        }
+        _mM.AddMoney( _fM.GetFish());
+        StartCoroutine(NPCAnim());
+
+        //if (BB.AddFishToStorage())
+        //{
+        //}
+        //else
+        //{
+        //    Debug.Log("Your storage is full, go back to the Port to sell your fish");
+        //}
         
     }
 
