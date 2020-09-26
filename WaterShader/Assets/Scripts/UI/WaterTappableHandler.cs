@@ -13,9 +13,14 @@ public class WaterTappableHandler : TappableGameobject
     // Start is called before the first frame update
     void Start()
     {
+
+
+    }
+
+    public override void OnStartInitialize()
+    {
         if (FindObjectOfType<UI_JoystickHandler>() == null) Debug.LogError("No Joystick Handler could be found in this Scene. Delete WaterTappable from Waterplane or add a JoystickHandler");
         _uiCamera = FindObjectOfType<UI_InputHandler>().UICamera;
-
     }
 
     GameObject spawn;

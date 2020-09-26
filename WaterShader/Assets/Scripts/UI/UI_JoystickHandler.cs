@@ -27,13 +27,18 @@ public class UI_JoystickHandler : TappableGameobject
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
+    {
+
+    }
+
+    public override void OnStartInitialize()
     {
         _outerJoystick = transform;
         _innerJoystick = GetComponentInChildren<Collider2D>().transform;
 
         UI_InputHandler.ValidTouchEvent2D.AddListener(OnTap);
-    //    UI_InputHandler.ValidDoubleTapEvent.AddListener(ProcessDoubleTap);
+        //    UI_InputHandler.ValidDoubleTapEvent.AddListener(ProcessDoubleTap);
 
         JoystickStateChanged = new UnityEvent();
 

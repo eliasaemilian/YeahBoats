@@ -357,6 +357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _zValueRef: {fileID: 947672111}
+  _sceneStartActiveStatus: 1
   _tapEffectPrefab: {fileID: 7359006305725918849, guid: 7001bc0f04d9d844baddeeb98f0e962a,
     type: 3}
 --- !u!1 &372906391
@@ -484,7 +485,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670728958}
-  m_LocalRotation: {x: 0.011362745, y: -0.0000000026883236, z: 3.0534058e-11, w: 0.99993545}
+  m_LocalRotation: {x: 0.011362745, y: -0.0000000026883236, z: 3.0533874e-11, w: 0.99993545}
   m_LocalPosition: {x: 5.3, y: 6.960002, z: -34.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -664,7 +665,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 892751132}
-  m_LocalRotation: {x: 0.011362745, y: -0.0000000026883236, z: 3.0534058e-11, w: 0.99993545}
+  m_LocalRotation: {x: 0.011362745, y: -0.0000000026883236, z: 3.0533874e-11, w: 0.99993545}
   m_LocalPosition: {x: 5.3, y: 6.960002, z: -34.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -822,6 +823,29 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7945456630551912793}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1275796057 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7010876820269769704, guid: e1b4764703b60b049a12f0ecfdb9c1cc,
+    type: 3}
+  m_PrefabInstance: {fileID: 7010876821675643106}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1275796062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275796057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2107a9cf00e8d8846aa7a72761629f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _boatScriptable: {fileID: 11400000, guid: 021537a24b854f54a85d2cbac5e2721a, type: 2}
+  _nPCSpots: {fileID: 0}
+  _nPCFishermanPrefab: {fileID: 0}
+  SpawnPoints: []
+  BoatStorage: 0
 --- !u!4 &1405891341 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7010876820269769711, guid: e1b4764703b60b049a12f0ecfdb9c1cc,
@@ -2073,6 +2097,10 @@ PrefabInstance:
       propertyPath: _zValueRef
       value: 
       objectReference: {fileID: 1578447384}
+    - target: {fileID: 734917436, guid: 122a26694b97f6c4fbcb505621a03800, type: 3}
+      propertyPath: _sceneStartActiveStatus
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7945456629452628714, guid: 122a26694b97f6c4fbcb505621a03800,
         type: 3}
       propertyPath: m_Radius
