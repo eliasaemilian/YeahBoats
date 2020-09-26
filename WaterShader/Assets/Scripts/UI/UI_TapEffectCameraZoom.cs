@@ -17,6 +17,7 @@ public class UI_TapEffectCameraZoom : TappableGameobject
     private bool _isLookedAt;
 
     [SerializeField] private List<GameObject> _UIToSetActive = null;
+    [SerializeField] private List<GameObject> _UIToSetInactive = null;
 
 
     public override void OnStartInitialize()
@@ -82,6 +83,11 @@ public class UI_TapEffectCameraZoom : TappableGameobject
         for (int i = 0; i < _UIToSetActive.Count; i++)
         {
             _UIToSetActive[i].SetActive(newState); //TODO: Nice Fade in or smth
+        }
+
+        for (int i = 0; i < _UIToSetInactive.Count; i++)
+        {
+            _UIToSetInactive[i].SetActive(!newState); //TODO: Nice Fade in or smth
         }
     }
 }

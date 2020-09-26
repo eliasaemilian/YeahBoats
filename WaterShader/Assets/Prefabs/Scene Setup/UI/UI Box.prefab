@@ -125,7 +125,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 4.9999995
+  m_Radius: 10
 --- !u!1 &7945456629645087564
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,6 +219,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 894a1cb4a8f1f8b46af65bea9963bd93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _zValueRef: {fileID: 7945456629645087553}
+  _sceneStartActiveStatus: 1
   _lerpTime: 0.8
   _touchSensitivity: 30
   _distBetweenInnertoOuterJoystick: 0.8
