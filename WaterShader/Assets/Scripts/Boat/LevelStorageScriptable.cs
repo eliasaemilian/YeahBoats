@@ -8,8 +8,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Level Storage", menuName = "Scriptable/Level Storage")]
 public class LevelStorageScriptable : ScriptableObject
 {
-
     public LevelScriptable[] Levels;
+
+
     public List<int> FishingHookCost;
     public List<int> FishingRodCost;
     public List<int> BoatStorageCost;

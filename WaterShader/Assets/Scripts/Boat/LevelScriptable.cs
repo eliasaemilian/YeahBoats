@@ -7,8 +7,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Level", menuName = "Scriptable/Level")]
 public class LevelScriptable : ScriptableObject
 {
-    public int Level;
+    
     public int Cost;
     [Header("Use this if Boat")]
     public GameObject BoatPrefab;
+    public LevelStorageScriptable BoatSkillsLevels;
+
+    public int BoatStorageLevel = 1;
+    public int NPCFishermanLevel = 1;
+    public int FishingRodLevel = 1;
+    public int FishingHookLevel = 1;
 }
