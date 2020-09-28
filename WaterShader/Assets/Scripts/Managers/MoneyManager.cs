@@ -9,7 +9,7 @@ public class MoneyManager : MonoBehaviour
 {
     public static MoneyManager Instance;
     public DataManager _dM;
-
+    public CanvasDisplay CD;
     public float Money;
 
     public int Multiplyer;
@@ -30,6 +30,7 @@ public class MoneyManager : MonoBehaviour
         //For temporary saving
         GetData();
         InvokeRepeating("SaveData", 5, 5);
+        CD.UpdateCurrency((int)Money);
 
     }
 
@@ -38,10 +39,15 @@ public class MoneyManager : MonoBehaviour
         Money = 0;
         Multiplyer = 1;
     }
-
+    public void ResetMoney()
+    {
+        Money = 0;
+        CD.UpdateCurrency((int)Money);
+    }
     public void AddMoney(float ammount)
     {
         Money += (ammount * Multiplyer);
+        CD.UpdateCurrency((int)Money);
     }
 
     public bool CheckMoney(float ammount)

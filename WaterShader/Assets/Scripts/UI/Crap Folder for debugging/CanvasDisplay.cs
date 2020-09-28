@@ -9,6 +9,7 @@ public class CanvasDisplay : MonoBehaviour
     public static CanvasDisplay Instance;
 
     public TextMeshProUGUI _text;
+    public TextMeshProUGUI CurrencyCounter;
 
     void Awake()
     {
@@ -19,5 +20,10 @@ public class CanvasDisplay : MonoBehaviour
     {
         _text.text = res;
         
+    }
+
+    public void UpdateCurrency(int gold)
+    {
+        CurrencyCounter.text = gold.ToString();
     }
 }

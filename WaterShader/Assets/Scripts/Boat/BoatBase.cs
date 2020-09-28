@@ -15,6 +15,7 @@ public class BoatBase : MonoBehaviour
     [SerializeField] private NPCSpotsScript _nPCSpots = null;
     [SerializeField] private GameObject _nPCFishermanPrefab = null;
     [SerializeField] private LevelStorageScriptable _boatLevels = null;
+    private LevelStorageScriptable _boatSkillLevels = null;
 
     private LevelManager _lM;
 
@@ -57,10 +58,11 @@ public class BoatBase : MonoBehaviour
     private void InstantiateBoat()
     {
         GameObject b = _boatLevels.Levels[_lM.BoatLevel - 1].BoatPrefab;
+        //_lM.BoatSkillLevelCosts = _boatLevels.Levels[_lM.BoatLevel - 1].BoatSkillsLevels;
+        _lM.BoatSkillLevels = _boatLevels.Levels[_lM.BoatLevel - 1];
         GameObject boat = Instantiate(b, transform.position, Quaternion.identity);
         boat.transform.parent = this.transform;
         _nPCSpots = boat.gameObject.GetComponentInChildren<NPCSpotsScript>();
-        Debug.Log("Loading boat of level : " + _boatLevels.Levels[_lM.BoatLevel - 1].Level);
     }
     private bool AddFisherman()
     {
@@ -102,5 +104,10 @@ public class BoatBase : MonoBehaviour
     private void BoatStorageUpdate()
     {
         BoatStorage = 10 * (2 * _lM.BoatStorageLevel);
+    }
+
+    private void SyncLevels()
+    {
+
     }
 }
