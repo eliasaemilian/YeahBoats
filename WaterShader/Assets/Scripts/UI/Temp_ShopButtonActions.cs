@@ -10,6 +10,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
     public void OnClickLighthouseVoyageButton()
     {
         // Scene Switch to Pond
+        Debug.Log("Loading Pond");
         SceneManager.LoadScene(_sceneIndexPond);
     }
 
