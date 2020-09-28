@@ -18,9 +18,16 @@ public class LevelManager : MonoBehaviour
     public CanvasDisplay CD;
 
     //TODO: split into current and max level
-    public int MapLevel;
-    public int BoatLevel;
-    public int AmmountOfFishermen;
+    public int CurrentMapLevel;
+    public int MaxMapLevel;
+
+    public int CurrentBoatLevel;
+    public int MaxBoatLevel;
+
+    public int MaxAmmountOfFishermen;
+
+    private int _ownedFisherman;
+    public int OwnedFishermen { get { return _ownedFisherman; } set { _ownedFisherman = value; _boatSkillLevels.NPCFishermanAmmount = value; } }
 
     private int _boatStorageLevel;
     public int BoatStorageLevel { get { return _boatStorageLevel; } set { _boatStorageLevel = value; _boatSkillLevels.BoatStorageLevel = value; } }
@@ -57,8 +64,8 @@ public class LevelManager : MonoBehaviour
         Instance = this;
 
         TMPLevelSetup(false);
-        Debug.Log("Boat Level : " + (BoatLevel - 1));
-        _boatSkillLevelCosts = LevelCosts.LevelCost[BoatLevel - 1];
+        Debug.Log("Boat Level : " + (CurrentBoatLevel - 1));
+        _boatSkillLevelCosts = LevelCosts.LevelCost[CurrentBoatLevel - 1];
     }
     // Start is called before the first frame update
     void Start()
@@ -147,18 +154,20 @@ public class LevelManager : MonoBehaviour
     }
     private void TMPLevelSetup(bool IsReset)
     {
-        MapLevel = 1;
-        BoatLevel = 1;
+        CurrentMapLevel = 1;
+        CurrentBoatLevel = 1;
         _nPCFishermanLevel = 1;
         _fishingRodLevel = 1;
         _fishingHookLevel = 1;
         Multiplier = 1;
         _boatStorageLevel = 1;
+        MaxAmmountOfFishermen = 1;
 
         if (IsReset)
         {
             MM.ResetMoney();
             UpdateLevels();
+            OwnedFishermen = 1;
         }
     }
 
@@ -190,6 +199,9 @@ public class LevelManager : MonoBehaviour
         _nPCFishermanLevel = _boatSkillLevels.NPCFishermanLevel;
         _fishingRodLevel = _boatSkillLevels.FishingRodLevel;
         _fishingHookLevel = _boatSkillLevels.FishingHookLevel;
+        MaxAmmountOfFishermen = _boatSkillLevels.NPCFishermanAmmount;
+        OwnedFishermen = DM.DataContainer.OwnedFishermen;
+
     }
     private void UpdateLevels()
     {
@@ -197,12 +209,13 @@ public class LevelManager : MonoBehaviour
         _boatSkillLevels.NPCFishermanLevel = _nPCFishermanLevel;
         _boatSkillLevels.FishingRodLevel = _fishingRodLevel;
         _boatSkillLevels.FishingHookLevel = _fishingHookLevel;
+        _boatSkillLevels.NPCFishermanAmmount = OwnedFishermen;
     }
 
     private void GetData()
     {
-        MapLevel = DM.DataContainer.MapLevel;
-        BoatLevel = DM.DataContainer.BoatLevel;
+        CurrentMapLevel = DM.DataContainer.MapLevel;
+        CurrentBoatLevel = DM.DataContainer.BoatLevel;
         _nPCFishermanLevel = DM.DataContainer.NPCFishermanLevel;
         _fishingRodLevel = DM.DataContainer.FishingRodLevel;
         _fishingHookLevel = DM.DataContainer.FishingHookLevel;
@@ -212,8 +225,8 @@ public class LevelManager : MonoBehaviour
 
     private void SaveData()
     {
-        DM.DataContainer.MapLevel = MapLevel;
-        DM.DataContainer.BoatLevel = BoatLevel;
+        DM.DataContainer.MapLevel = CurrentMapLevel;
+        DM.DataContainer.BoatLevel = CurrentBoatLevel;
         DM.DataContainer.NPCFishermanLevel = _nPCFishermanLevel;
         DM.DataContainer.FishingRodLevel = _fishingRodLevel;
         DM.DataContainer.FishingHookLevel = _fishingHookLevel;

@@ -12,6 +12,7 @@ public class Savedata : MonoBehaviour
     public int FishingRodLevel = 1;
     public int FishingHookLevel = 1;
     public int Multiplier = 1;
+    public int OwnedFishermen = 1;
 
     public float Money = 0;
     public int Multiplyer = 1;
@@ -30,7 +31,7 @@ public class Savedata : MonoBehaviour
             FishingRodLevel = data.FishingRodLevel;
             FishingHookLevel = data.FishingHookLevel;
             Multiplier = data.Multiplier;
-
+            OwnedFishermen = data.OwnedFishermen;
             Money = data.Money;
             Multiplyer = data.Multiplyer;
         }
