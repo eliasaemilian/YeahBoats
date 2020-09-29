@@ -11,7 +11,6 @@ public class LevelScriptable : ScriptableObject
     public int Cost;
     [Header("Use this if Boat")]
     public GameObject BoatPrefab;
-    public LevelStorageScriptable BoatSkillsLevels;
 
     public int BoatStorageLevel = 1;
     public int NPCFishermanLevel = 1;

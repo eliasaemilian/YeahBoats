@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class Savedata : MonoBehaviour
 {
 
@@ -16,7 +15,8 @@ public class Savedata : MonoBehaviour
     public float Money = 0;
     public int Multiplyer = 1;
 
-    public LevelStorageScriptable BoatLevels;
+    //This is the shit that scares me
+    public BoatLevels BoatLevels;
 
 
     void Awake()
@@ -33,7 +33,7 @@ public class Savedata : MonoBehaviour
             OwnedFishermen = data.OwnedFishermen;
             Money = data.Money;
             Multiplyer = data.Multiplyer;
-            BoatLevels = data.BoatLevels;
+            //BoatLevels = data.BoatLevels;
         }
         else
         {
