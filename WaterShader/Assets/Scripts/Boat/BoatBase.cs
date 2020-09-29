@@ -47,7 +47,7 @@ public class BoatBase : MonoBehaviour
     {
         if(GUI.Button(new Rect(10, 90, 150, 20), "Add Fisherman"))
         {
-            AddFisherman();
+            BuyFisherman();
         }
         if(GUI.Button(new Rect(10, 110, 150, 20), "Speed up Catch"))
         {
@@ -59,6 +59,7 @@ public class BoatBase : MonoBehaviour
     {
         GameObject b = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1].BoatPrefab;
         _lM.BoatSkillLevels = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1];
+        _lM.MaxAmmountOfFishermen = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1].NPCFishermanAmmount;
         GameObject boat = Instantiate(b, transform.position, Quaternion.identity);
         boat.transform.parent = this.transform;
         _nPCSpots = boat.gameObject.GetComponentInChildren<NPCSpotsScript>();
@@ -93,6 +94,11 @@ public class BoatBase : MonoBehaviour
             return true;
         }
         else return false;
+    }
+
+    private void BuyFisherman()
+    {
+        _lM.OwnedFishermen++;
     }
 
 
