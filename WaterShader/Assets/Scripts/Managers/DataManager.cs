@@ -22,7 +22,7 @@ public class DataManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //_lM = LevelManager.Instance;
+        
 
     }
 

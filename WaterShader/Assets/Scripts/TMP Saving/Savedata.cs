@@ -5,18 +5,18 @@ using UnityEngine;
 public class Savedata : MonoBehaviour
 {
 
-    public int MapLevel = 1;
-    public int BoatLevel = 1;
+    public int CurrentMapLevel = 1;
+    public int MaxMapLevel = 1;
+    public int CurrentBoatLevel = 1;
+    public int MaxBoatLevel = 1;
     public int BoatStorageLevel = 1;
-    public int NPCFishermanLevel = 1;
-    public int FishingRodLevel = 1;
-    public int FishingHookLevel = 1;
     public int Multiplier = 1;
     public int OwnedFishermen = 1;
 
     public float Money = 0;
     public int Multiplyer = 1;
 
+    public LevelStorageScriptable BoatLevels;
 
 
     void Awake()
@@ -24,16 +24,16 @@ public class Savedata : MonoBehaviour
         GameData data = SaveSystem.LoadData();
         if (data != null)
         {
-            MapLevel = data.MapLevel;
-            BoatLevel = data.BoatLevel;
+            CurrentMapLevel = data.CurrentMapLevel;
+            MaxMapLevel = data.MaxMapLevel;
+            CurrentBoatLevel = data.CurrentBoatLevel;
+            MaxBoatLevel = data.MaxBoatLevel;
             BoatStorageLevel = data.BoatStorageLevel;
-            NPCFishermanLevel = data.NPCFishermanLevel;
-            FishingRodLevel = data.FishingRodLevel;
-            FishingHookLevel = data.FishingHookLevel;
             Multiplier = data.Multiplier;
             OwnedFishermen = data.OwnedFishermen;
             Money = data.Money;
             Multiplyer = data.Multiplyer;
+            BoatLevels = data.BoatLevels;
         }
         else
         {

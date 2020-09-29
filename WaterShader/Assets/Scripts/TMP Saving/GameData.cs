@@ -6,27 +6,29 @@ using UnityEngine;
 public class GameData
 {
     // variables to save come here
-    public int MapLevel;
-    public int BoatLevel;
+    public int CurrentMapLevel;
+    public int MaxMapLevel;
+    public int CurrentBoatLevel;
+    public int MaxBoatLevel;
     public int BoatStorageLevel;
-    public int NPCFishermanLevel;
-    public int FishingRodLevel;
-    public int FishingHookLevel;
     public int Multiplier;
     public int OwnedFishermen;
 
     public float Money;
     public int Multiplyer;
+
+    public LevelStorageScriptable BoatLevels;
+
     public GameData( Savedata data)
     {
-        MapLevel = data.MapLevel;
-        BoatLevel = data.BoatLevel;
+        CurrentMapLevel = data.CurrentMapLevel;
+        MaxMapLevel = data.MaxMapLevel;
+        CurrentBoatLevel = data.CurrentBoatLevel;
+        MaxBoatLevel = data.MaxBoatLevel;
         BoatStorageLevel = data.BoatStorageLevel;
-        NPCFishermanLevel = data.NPCFishermanLevel;
-        FishingRodLevel = data.FishingRodLevel;
-        FishingHookLevel = data.FishingHookLevel;
         Multiplier = data.Multiplier;
         OwnedFishermen = data.OwnedFishermen;
+        BoatLevels = data.BoatLevels;
 
         Money = data.Money;
         Multiplyer = data.Multiplyer;
