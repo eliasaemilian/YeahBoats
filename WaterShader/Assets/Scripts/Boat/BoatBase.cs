@@ -32,7 +32,7 @@ public class BoatBase : MonoBehaviour
         _lM = LevelManager.Instance;
 
         InstantiateBoat();
-
+        InstantiateFishermen();
         if (WaterTappableHandler.FishingTap != null)
         {
             WaterTappableHandler.FishingTap.AddListener(FishingSpeedup.Invoke);
@@ -57,12 +57,29 @@ public class BoatBase : MonoBehaviour
 
     private void InstantiateBoat()
     {
-        GameObject b = _boatLevels.Levels[_lM.BoatLevel - 1].BoatPrefab;
+        GameObject b = _boatLevels.Levels[_lM.CurrentBoatLevel - 1].BoatPrefab;
         //_lM.BoatSkillLevelCosts = _boatLevels.Levels[_lM.BoatLevel - 1].BoatSkillsLevels;
-        _lM.BoatSkillLevels = _boatLevels.Levels[_lM.BoatLevel - 1];
+        _lM.BoatSkillLevels = _boatLevels.Levels[_lM.CurrentBoatLevel - 1];
         GameObject boat = Instantiate(b, transform.position, Quaternion.identity);
         boat.transform.parent = this.transform;
         _nPCSpots = boat.gameObject.GetComponentInChildren<NPCSpotsScript>();
+    }
+    private void InstantiateFishermen()
+    {
+        if(_lM.OwnedFishermen > _lM.MaxAmmountOfFishermen)
+        {
+            for (int i = 0; i < _lM.MaxAmmountOfFishermen; i++)
+            {
+                AddFisherman();
+            }
+        }
+        else
+        {
+            for (int i = 0; i < _lM.OwnedFishermen; i++)
+            {
+                AddFisherman();
+            }
+        }
     }
     private bool AddFisherman()
     {
@@ -73,6 +90,7 @@ public class BoatBase : MonoBehaviour
 
             GameObject fisherman = Instantiate(_nPCFishermanPrefab,gO.transform.position,gO.transform.rotation, gO.transform);
             fisherman.GetComponent<NPC_Fisherman>().BB = this;
+            _lM.OwnedFishermen++;
             return true;
         }
         else return false;

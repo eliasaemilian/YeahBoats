@@ -15,4 +15,5 @@ public class LevelStorageScriptable : ScriptableObject
     public List<int> FishingRodCost;
     public List<int> BoatStorageCost;
     public List<int> FishingSpeedCost;
+    public List<int> FishermanCost;
 }

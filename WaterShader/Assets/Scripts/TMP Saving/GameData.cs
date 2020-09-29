@@ -13,6 +13,7 @@ public class GameData
     public int FishingRodLevel;
     public int FishingHookLevel;
     public int Multiplier;
+    public int OwnedFishermen;
 
     public float Money;
     public int Multiplyer;
@@ -25,6 +26,7 @@ public class GameData
         FishingRodLevel = data.FishingRodLevel;
         FishingHookLevel = data.FishingHookLevel;
         Multiplier = data.Multiplier;
+        OwnedFishermen = data.OwnedFishermen;
 
         Money = data.Money;
         Multiplyer = data.Multiplyer;
