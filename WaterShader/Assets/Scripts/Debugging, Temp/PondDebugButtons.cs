@@ -9,6 +9,7 @@ public class PondDebugButtons : MonoBehaviour
 
     public void OnClickReturnToPortButton()
     {
+        Debug.Log("Clicking");
         SceneManager.LoadScene(_portSceneIndex);
     }
 }
