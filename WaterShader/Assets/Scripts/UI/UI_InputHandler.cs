@@ -5,6 +5,7 @@ using System.Xml.Schema;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.Rendering.Universal;
 
 [Serializable] public class ValidPlaneTouchEvent2D : UnityEvent<Touch, Vector3> { }
@@ -73,6 +74,16 @@ public class UI_InputHandler : MonoBehaviour
 
     void Update() => CheckForTapsOnGameObjects();
 
+    // -> [ https://answers.unity.com/questions/1073979/android-touches-pass-through-ui-elements.html ]
+    private bool IsPointerOverUIObject()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
+    }
+
 
     Vector3 hitPos, rayPos2D;
     GameObject hitGO;
@@ -81,6 +92,9 @@ public class UI_InputHandler : MonoBehaviour
         if (Input.touchCount > 0)
         {
             _touch = Input.GetTouch(0);
+
+            if (IsPointerOverUIObject()) return;
+
 
             for (int i = 0; i < _tappableGameobjectsInScene.Count; i++)
             {
@@ -98,7 +112,7 @@ public class UI_InputHandler : MonoBehaviour
                         {
                             _tappableGameobjectsInScene[i].OnTap(_touch, rayPos2D); // pass all here that was passed in event
 
-                          // SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
+                            // SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
                             _tappableFocus = _tappableGameobjectsInScene[i];
 
                         }
@@ -114,9 +128,9 @@ public class UI_InputHandler : MonoBehaviour
                     // Check for Taps on GOs with 3D Colliders
                     if (_tappableGameobjectsInScene[i].GOTapRef == hitGO)
                     {
-                        _tappableGameobjectsInScene[i].OnTap(_touch, hitPos, dist); 
+                        _tappableGameobjectsInScene[i].OnTap(_touch, hitPos, dist);
 
-                     //   SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
+                        //   SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
                         _tappableFocus = _tappableGameobjectsInScene[i];
 
                     }
@@ -128,7 +142,7 @@ public class UI_InputHandler : MonoBehaviour
 
                 else
                 {
-                  //  SetPOI(null);
+                    //  SetPOI(null);
                     _tappableFocus = null;
                 }
 
@@ -180,7 +194,7 @@ public class UI_InputHandler : MonoBehaviour
 
         if (tappable.TapCount == 2)
         {
-         //   Debug.Log($"{tappable} got doubleTapped");
+            //   Debug.Log($"{tappable} got doubleTapped");
 
             tappable.OnDoubleTap();
             tappable.TapCount = 0;
@@ -189,7 +203,7 @@ public class UI_InputHandler : MonoBehaviour
 
         }
 
-      //  Debug.Log($"TapCount for {tappable} got changed to {tappable.TapCount}");
+        //  Debug.Log($"TapCount for {tappable} got changed to {tappable.TapCount}");
 
     }
 

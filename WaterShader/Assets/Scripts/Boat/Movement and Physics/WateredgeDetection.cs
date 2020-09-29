@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoatHandler : MonoBehaviour
+public class WateredgeDetection : MonoBehaviour
 {
-    public Boat ThisBoat;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -16,5 +14,10 @@ public class BoatHandler : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Boink");
     }
 }

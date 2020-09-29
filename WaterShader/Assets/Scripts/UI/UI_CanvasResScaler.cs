@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 // [ -> https://forum.unity.com/threads/canvashelper-resizes-a-recttransform-to-iphone-xs-safe-area.521107/ ]
 
-[RequireComponent(typeof (Canvas))]
+[RequireComponent(typeof (RectTransform))]
 public class UI_CanvasResScaler : MonoBehaviour
 {
     public static UnityEvent OnResolutionOrOrientationChanged = new UnityEvent();
@@ -21,7 +21,7 @@ public class UI_CanvasResScaler : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        _canvas = GetComponent<Canvas>();
+        _canvas = GetComponentInParent<Canvas>();
         _rect = GetComponent<RectTransform>();
 
         _rect.anchorMin = new Vector2(0,0);
