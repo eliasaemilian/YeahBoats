@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 public class StartMenuDebugButtons : MonoBehaviour
 {
 
-    [SerializeField] private int _fishingSceneIndex;
-    [SerializeField] private int _portSceneIndex;
+    [SerializeField] private int _fishingSceneIndex = 0;
+    [SerializeField] private int _portSceneIndex = 0;
 
 
     public void OnClickFishing()

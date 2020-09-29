@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PondDebugButtons : MonoBehaviour
 {
-    [SerializeField] private int _portSceneIndex;
+    [SerializeField] private int _portSceneIndex = 0;
 
     public void OnClickReturnToPortButton()
     {
