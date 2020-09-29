@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Temp_ShopButtonActions : MonoBehaviour
 {
-    [SerializeField] private int _sceneIndexPond;
+    [SerializeField] private int _sceneIndexPond = 0;
 
     public void OnClickLighthouseVoyageButton()
     {

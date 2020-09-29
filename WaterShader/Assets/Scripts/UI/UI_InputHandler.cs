@@ -232,6 +232,18 @@ public class UI_InputHandler : MonoBehaviour
 
 
 
+    public static Camera FetchUICameraInScene()
+    {
+        Camera[] cameras = FindObjectsOfType<Camera>();
+        for (int i = 0; i < cameras.Length; i++)
+        {
+            var cameraData = cameras[i].GetUniversalAdditionalCameraData();
+            if (cameraData.renderType == CameraRenderType.Overlay) return cameras[i];
+        }
+
+        Debug.LogWarning("No UI Camera (Camera Type: Overlay) could be found in this Scene"); // [!] This will break in a scene with more than 1 overlay camera, camera NEEDS to be set in inspector if that is the case
+        return null;
+    }
 
 
     private bool CheckForHitOnPlane2D(Touch touch, Plane plane, Transform zValue, out Vector3 rayPos, out GameObject target)
