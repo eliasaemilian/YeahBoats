@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 6596d4b8a6972dc4e93d0111b8913bd6, type: 2}
   m_HaloStrength: 0.4
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -181,7 +181,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 22149134}
-  m_LocalRotation: {x: 0.24106953, y: 0.48441303, z: -0.14084978, w: 0.8290904}
+  m_LocalRotation: {x: 0.24106951, y: 0.484413, z: -0.14084975, w: 0.8290904}
   m_LocalPosition: {x: -25.890942, y: 28.9, z: -25.480238}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -563,7 +563,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670728958}
-  m_LocalRotation: {x: 0.011362745, y: -0.0000000026883231, z: 3.051913e-11, w: 0.99993545}
+  m_LocalRotation: {x: 0.011362745, y: -0.0000000026883231, z: 3.0518785e-11, w: 0.99993545}
   m_LocalPosition: {x: 5.3, y: 6.960002, z: -34.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -817,7 +817,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 892751132}
-  m_LocalRotation: {x: 0.011362745, y: -0.0000000026883231, z: 3.051913e-11, w: 0.99993545}
+  m_LocalRotation: {x: 0.011362745, y: -0.0000000026883231, z: 3.0518785e-11, w: 0.99993545}
   m_LocalPosition: {x: 5.3, y: 6.960002, z: -34.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -2160,7 +2160,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 0.7877358, g: 0.9683085, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -3252,6 +3252,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _sunIntensity.m_Curve.Array.data[2].time
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2707456272987868557, guid: daefd573bf75d764f809aafa9cfe6f43,
+        type: 3}
+      propertyPath: _moonMaxIntensityValue
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2707456272987868558, guid: daefd573bf75d764f809aafa9cfe6f43,
         type: 3}
