@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Shader Graphs_CloudsShader
+  m_Shader: {fileID: -6465566751694194690, guid: f78cd484cdae37e4e8ca71383fe367ee,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Floats:
+    - _BaseScale: 0.001
+    - _BaseSpeed: 2.76
+    - _BaseStrength: 0.96
+    - _CloudSpeed: 1.95
+    - _CurvatureRadius: 200
+    - _DisplacementStrength: 5
+    - _EmissionStrength: 1.44
+    - _FresnelOpacity: 0.8
+    - _FresnelStrength: 34.21
+    - _NoisePowerStrength: 1.32
+    - _NoiseScale: 0.04
+    m_Colors:
+    - _CloudRemapMinMax: {r: 0.23, g: 0.85, b: 0.18, a: 0.84}
+    - _ColorAccent: {r: 0.19166073, g: 0.5450808, b: 0.6886792, a: 0}
+    - _ColorBase: {r: 0.615566, g: 0.7678027, b: 0.8207547, a: 0}
+    - _RotateProjection: {r: 1, g: 0, b: 0, a: 80}
