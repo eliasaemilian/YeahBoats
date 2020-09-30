@@ -21,7 +21,9 @@ public class Savedata : MonoBehaviour
 
     void Awake()
     {
-        GameData data = SaveSystem.LoadData();
+        //GameData data = SaveSystem.LoadData();
+        GameData data = SaveSystem.LoadDataJson();
+
         if (data != null)
         {
             CurrentMapLevel = data.CurrentMapLevel;
@@ -37,14 +39,16 @@ public class Savedata : MonoBehaviour
         }
         else
         {
-            SaveSystem.SaveData(this);
+            //SaveSystem.SaveData(this);
+            SaveSystem.SaveDataJson(this);
         }
         InvokeRepeating("Saving", 6, 5);
     }
 
     private void Saving()
     {
-        SaveSystem.SaveData(this);
+        //SaveSystem.SaveData(this);
+        SaveSystem.SaveDataJson(this);
         Debug.Log("Saving ...");
     }
 }

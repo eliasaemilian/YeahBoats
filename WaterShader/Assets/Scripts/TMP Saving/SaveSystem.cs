@@ -34,4 +34,34 @@ public static class SaveSystem
             return null;
         }
     }
+
+    //JSON
+    public static void SaveDataJson(Savedata data)
+    {
+        using (StreamWriter stream = new StreamWriter(SavePath))
+        {
+            GameData gamedata = new GameData(data);
+
+            string json = JsonUtility.ToJson(gamedata);
+            stream.Write(json);
+        }
+    }
+    public static GameData LoadDataJson()
+    {
+        if (File.Exists(SavePath))
+        {
+            using (StreamReader stream = new StreamReader(SavePath))
+            {
+                string json = stream.ReadToEnd();
+                GameData ps = JsonUtility.FromJson<GameData>(json);
+                Debug.Log("Data Loaded");
+                return ps;
+            }
+        }
+        else
+        {
+            Debug.Log("Save file not found in " + SavePath);
+            return null;
+        }
+    }
 }
