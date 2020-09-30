@@ -6,7 +6,6 @@ using UnityEngine;
 /// Saves the costs of evey level
 /// </summary>
 [CreateAssetMenu(fileName = "LevelCosts", menuName = "Scriptable/LevelCosts")]
-
 public class LevelCostsScriptable : ScriptableObject
 {
     public List<LevelStorageScriptable> LevelCost;

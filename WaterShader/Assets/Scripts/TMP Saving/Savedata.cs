@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class Savedata : MonoBehaviour
 {
 
@@ -16,12 +15,15 @@ public class Savedata : MonoBehaviour
     public float Money = 0;
     public int Multiplyer = 1;
 
-    public LevelStorageScriptable BoatLevels;
+    //This is the shit that scares me
+    public BoatLevels BoatLevels;
 
 
     void Awake()
     {
-        GameData data = SaveSystem.LoadData();
+        //GameData data = SaveSystem.LoadData();
+        GameData data = SaveSystem.LoadDataJson();
+
         if (data != null)
         {
             CurrentMapLevel = data.CurrentMapLevel;
@@ -33,18 +35,20 @@ public class Savedata : MonoBehaviour
             OwnedFishermen = data.OwnedFishermen;
             Money = data.Money;
             Multiplyer = data.Multiplyer;
-            BoatLevels = data.BoatLevels;
+            //BoatLevels = data.BoatLevels;
         }
         else
         {
-            SaveSystem.SaveData(this);
+            //SaveSystem.SaveData(this);
+            SaveSystem.SaveDataJson(this);
         }
         InvokeRepeating("Saving", 6, 5);
     }
 
     private void Saving()
     {
-        SaveSystem.SaveData(this);
+        //SaveSystem.SaveData(this);
+        SaveSystem.SaveDataJson(this);
         Debug.Log("Saving ...");
     }
 }

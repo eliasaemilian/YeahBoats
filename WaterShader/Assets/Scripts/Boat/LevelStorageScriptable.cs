@@ -6,11 +6,9 @@ using UnityEngine;
 /// Scriptable object used to store the cost of various levels
 /// </summary>
 [CreateAssetMenu(fileName = "New Level Storage", menuName = "Scriptable/Level Storage")]
+[System.Serializable]
 public class LevelStorageScriptable : ScriptableObject
 {
-    public LevelScriptable[] Levels;
-
-
     public List<int> FishingHookCost;
     public List<int> FishingRodCost;
     public List<int> BoatStorageCost;

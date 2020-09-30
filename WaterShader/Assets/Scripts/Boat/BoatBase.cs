@@ -14,8 +14,8 @@ public class BoatBase : MonoBehaviour
 
     [SerializeField] private NPCSpotsScript _nPCSpots = null;
     [SerializeField] private GameObject _nPCFishermanPrefab = null;
-    [SerializeField] private LevelStorageScriptable _boatLevels = null;
-    private LevelStorageScriptable _boatSkillLevels = null;
+    //[SerializeField] private LevelStorageScriptable _boatLevels = null;
+    //private LevelStorageScriptable _boatSkillLevels = null;
 
     private LevelManager _lM;
 
@@ -47,7 +47,7 @@ public class BoatBase : MonoBehaviour
     {
         if(GUI.Button(new Rect(10, 90, 150, 20), "Add Fisherman"))
         {
-            AddFisherman();
+            BuyFisherman();
         }
         if(GUI.Button(new Rect(10, 110, 150, 20), "Speed up Catch"))
         {
@@ -57,9 +57,9 @@ public class BoatBase : MonoBehaviour
 
     private void InstantiateBoat()
     {
-        GameObject b = _boatLevels.Levels[_lM.CurrentBoatLevel - 1].BoatPrefab;
-        //_lM.BoatSkillLevelCosts = _boatLevels.Levels[_lM.BoatLevel - 1].BoatSkillsLevels;
-        _lM.BoatSkillLevels = _boatLevels.Levels[_lM.CurrentBoatLevel - 1];
+        GameObject b = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1].BoatPrefab;
+        _lM.BoatSkillLevels = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1];
+        _lM.MaxAmmountOfFishermen = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1].NPCFishermanAmmount;
         GameObject boat = Instantiate(b, transform.position, Quaternion.identity);
         boat.transform.parent = this.transform;
         _nPCSpots = boat.gameObject.GetComponentInChildren<NPCSpotsScript>();
@@ -90,10 +90,15 @@ public class BoatBase : MonoBehaviour
 
             GameObject fisherman = Instantiate(_nPCFishermanPrefab,gO.transform.position,gO.transform.rotation, gO.transform);
             fisherman.GetComponent<NPC_Fisherman>().BB = this;
-            _lM.OwnedFishermen++;
+            
             return true;
         }
         else return false;
+    }
+
+    private void BuyFisherman()
+    {
+        _lM.OwnedFishermen++;
     }
 
 

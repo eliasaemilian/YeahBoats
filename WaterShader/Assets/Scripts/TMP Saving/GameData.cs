@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 [System.Serializable]
 public class GameData
 {
@@ -17,7 +16,7 @@ public class GameData
     public float Money;
     public int Multiplyer;
 
-    public LevelStorageScriptable BoatLevels;
+    //public BoatLevels BoatLevels;
 
     public GameData( Savedata data)
     {
@@ -28,7 +27,7 @@ public class GameData
         BoatStorageLevel = data.BoatStorageLevel;
         Multiplier = data.Multiplier;
         OwnedFishermen = data.OwnedFishermen;
-        BoatLevels = data.BoatLevels;
+        //BoatLevels = data.BoatLevels;
 
         Money = data.Money;
         Multiplyer = data.Multiplyer;
