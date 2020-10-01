@@ -35,10 +35,10 @@ public class LevelManager : MonoBehaviour
     private int _nPCFishermanLevel;
     public int NPCFishermanLevel { get { return _nPCFishermanLevel; } set { _nPCFishermanLevel = value; _boatSkillLevels.NPCFishermanLevel = value; } }
 
-    private int _fishingRodLevel;
+    public int _fishingRodLevel;
     public int FishingRodLevel { get { return _fishingRodLevel; } set { _fishingRodLevel = value; _boatSkillLevels.FishingRodLevel = value; } }
 
-    private int _fishingHookLevel;
+    public int _fishingHookLevel;
     public int FishingHookLevel { get { return _fishingHookLevel; } set { _fishingHookLevel = value; _boatSkillLevels.FishingHookLevel = value; } }
 
     public int Multiplier;
@@ -61,13 +61,14 @@ public class LevelManager : MonoBehaviour
         Instance = this;
 
         //TMPLevelSetup(false);
-
-        GetData();
     }
     // Start is called before the first frame update
     void Start()
     {
+        GetData();
         _boatSkillLevelCosts = LevelCosts.LevelCost[CurrentBoatLevel - 1];
+        BoatSkillLevels = BoatLevels.Levels[CurrentBoatLevel - 1];
+
         //For temporary saving
         InvokeRepeating("SaveData", 5, 5);
     }
@@ -81,13 +82,13 @@ public class LevelManager : MonoBehaviour
         //}
         if (GUI.Button(new Rect(10, 10, 150, 20), "NPC Fisherman Level"))
         {
-            if (CheckIfICanLevelup(NPCFishermanLevel, BoatSkillLevelCosts.FishingSpeedCost))
+            if (CheckIfICanLevelup( NPCFishermanLevel, BoatSkillLevelCosts.FishingSpeedCost))
             {
-                CanvasDisplay.Instance.UpdateText("You have enough money to upgrade");
+                CD.UpdateText("You have enough money to upgrade");
             }
             else
             {
-                CanvasDisplay.Instance.UpdateText("You need more money!");
+                CD.UpdateText("You need more money!");
             }
         }
         if (GUI.Button(new Rect(160, 10, 150, 20), "Upgrade"))
@@ -100,11 +101,11 @@ public class LevelManager : MonoBehaviour
         {
             if (CheckIfICanLevelup(BoatStorageLevel, BoatSkillLevelCosts.BoatStorageCost))
             {
-                CanvasDisplay.Instance.UpdateText("You have enough money to upgrade");
+                CD.UpdateText("You have enough money to upgrade");
             }
             else
             {
-                CanvasDisplay.Instance.UpdateText("You need more money!");
+                CD.UpdateText("You need more money!");
             }
 
         }
@@ -116,11 +117,11 @@ public class LevelManager : MonoBehaviour
         {
             if (CheckIfICanLevelup(FishingHookLevel, BoatSkillLevelCosts.FishingHookCost))
             {
-                CanvasDisplay.Instance.UpdateText("You have enough money to upgrade");
+                CD.UpdateText("You have enough money to upgrade");
             }
             else
             {
-                CanvasDisplay.Instance.UpdateText("You need more money!");
+                CD.UpdateText("You need more money!");
             }
 
         }
@@ -132,11 +133,11 @@ public class LevelManager : MonoBehaviour
         {
             if (CheckIfICanLevelup(FishingRodLevel, BoatSkillLevelCosts.FishingRodCost))
             {
-                CanvasDisplay.Instance.UpdateText("You have enough money to upgrade");
+                CD.UpdateText("You have enough money to upgrade");
             }
             else
             {
-                CanvasDisplay.Instance.UpdateText("You need more money!");
+                CD.UpdateText("You need more money!");
             }
         }
         if (GUI.Button(new Rect(160, 70, 150, 20), "Upgrade"))
@@ -175,7 +176,6 @@ public class LevelManager : MonoBehaviour
 
         if (MM.CheckMoney(LST[currentLevel]))
         {
-            Debug.Log("Cost : " + LST[currentLevel-1]);
             return true;
         }
         else return false;
@@ -183,7 +183,7 @@ public class LevelManager : MonoBehaviour
     }
     public void Levelup(ref int currentLevel, List<int> LST, UnityEvent correspondingEvent)
     {
-        MM.DeduceMoney(LST[currentLevel-1]);
+        MM.DeduceMoney(LST[currentLevel]);
         currentLevel++;
         UpdateLevels();
         correspondingEvent.Invoke();
