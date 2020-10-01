@@ -20,7 +20,15 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs: []
-    m_Floats: []
+    m_Floats:
+    - _SunIntensity: 0.1
+    - _SunRadA: 0.027
+    - _SunRadB: 0.037
+    - _SunSize: 0.1
     m_Colors:
     - Color_2B36919A: {r: 0.005339969, g: 0.08156326, b: 0.37735847, a: 0}
     - Color_B1C5FD3F: {r: 0.52358484, g: 0.8612847, b: 1, a: 0}
+    - _BaseColorGround: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 1}
+    - _BaseColorSky: {r: 0.09825561, g: 0.12510802, b: 0.3018868, a: 1}
+    - _SunColor: {r: 0.9593644, g: 0.7122642, b: 1, a: 1}
+    - _SunDirection: {r: -0.74433434, g: 0.00000008742278, b: 0.66780716, a: 0}

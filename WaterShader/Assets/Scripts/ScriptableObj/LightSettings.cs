@@ -20,4 +20,7 @@ public class LightSettings : ScriptableObject
     public float MoonMinIntensityValue;
     public float MoonMaxIntensityValue;
     public CurveField MoonIntensity;
+
+    public Gradient SkyBoxColorSky;
+    public Gradient SkyBoxColorGround;
 }

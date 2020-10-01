@@ -4,8 +4,11 @@ using UnityEditor.Presets;
 using UnityEditor.UIElements;
 using UnityEngine;
 
-public class TimeOfDayHandler : MonoBehaviour
+[ExecuteAlways]
+public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont come at me luca
 {
+    [SerializeField] private bool _pause;
+
     [SerializeField] private bool _useDebugTime;
     [SerializeField, Range(0, 1)] private float _timeOfDayDebug = 0f;
 
@@ -21,6 +24,8 @@ public class TimeOfDayHandler : MonoBehaviour
 
     [SerializeField] private LightSettings _lightSettings;
 
+    Material _sky;
+
     void Awake()
     {
         if (_sun == null && !AttemptToFetchSun())
@@ -32,16 +37,27 @@ public class TimeOfDayHandler : MonoBehaviour
 
         //UpdateValuesForTime();
         //UpdateGlobalLightingForTimeOfDay();
+        _sky = RenderSettings.skybox;
+
+
 
     }
 
+    private void Start()
+    {
+        // SHADER COMMUNICATION 
+
+    }
 
 
     // Update is called once per frame // THIS BEING IN UPDATE IS FOR DEBUGGING
     void Update()
     {
+        if (_pause) return;
+
         UpdateValuesForTime();
         UpdateGlobalLightingForTimeOfDay();
+
     }
 
     private void UpdateValuesForTime()
@@ -89,6 +105,14 @@ public class TimeOfDayHandler : MonoBehaviour
 
 
 
+
+        // SHADER STUFF
+        RenderSettings.skybox.SetVector("_SunDirection", _sun.transform.forward);
+        RenderSettings.skybox.SetFloat("_SunIntensity", _sun.intensity);
+        RenderSettings.skybox.SetColor("_SunColor", _sun.color);
+
+        RenderSettings.skybox.SetColor("_BaseColorSky", _lightSettings.SkyBoxColorSky.Evaluate(_timeOfDay));
+        RenderSettings.skybox.SetColor("_BaseColorGround", _lightSettings.SkyBoxColorGround.Evaluate(_timeOfDay));
     }
 
     /// <summary>

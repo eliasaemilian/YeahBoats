@@ -12,8 +12,8 @@
    
       //Hardcoded data, used for the preview shader inside the graph
       //where light functions are not available
-    Direction = float3(-0.5, 0.5, -0.5);
-    Color = float3(1, 1, 1);
+    Direction = float3(0.5, 0.5, -0.5);
+    Color = float3(.5, .5, 1);
     ShadowAttenuation = 0.4;
     
       
