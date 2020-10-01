@@ -828,7 +828,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670728958}
-  m_LocalRotation: {x: 0.011362737, y: 0.0000000026883238, z: -3.0583137e-11, w: 0.99993545}
+  m_LocalRotation: {x: 0.011362745, y: -0.0000000026883231, z: 3.0514154e-11, w: 0.99993545}
   m_LocalPosition: {x: 5.3, y: 6.960002, z: -34.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1113,7 +1113,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 892751132}
-  m_LocalRotation: {x: 0.011362737, y: 0.0000000026883238, z: -3.0583137e-11, w: 0.99993545}
+  m_LocalRotation: {x: 0.011362745, y: -0.0000000026883231, z: 3.0514154e-11, w: 0.99993545}
   m_LocalPosition: {x: 5.3, y: 6.960002, z: -34.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1755,6 +1755,12 @@ PrefabInstance:
       propertyPath: LevelCosts
       value: 
       objectReference: {fileID: 11400000, guid: 9e3d1a39197b148439c1139fad869b7c,
+        type: 2}
+    - target: {fileID: 2258719203934792968, guid: 4a0f92fb8fe14e745a80875949e922be,
+        type: 3}
+      propertyPath: BoatLevels
+      value: 
+      objectReference: {fileID: 11400000, guid: 677b290cf76f25d40a380869df9b0153,
         type: 2}
     - target: {fileID: 2258719203934792969, guid: 4a0f92fb8fe14e745a80875949e922be,
         type: 3}
@@ -3687,6 +3693,12 @@ PrefabInstance:
       propertyPath: _moonMaxIntensityValue
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 2707456272987868557, guid: daefd573bf75d764f809aafa9cfe6f43,
+        type: 3}
+      propertyPath: _lightSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: ac699b67a7a02d44f9b329d3fe92a770,
+        type: 2}
     - target: {fileID: 2707456272987868558, guid: daefd573bf75d764f809aafa9cfe6f43,
         type: 3}
       propertyPath: m_Name

@@ -31,6 +31,8 @@ public class TimeOfDayHandler : MonoBehaviour
     [SerializeField] private Gradient _MoonGradient;
     [SerializeField] private CurveField _moonIntensity;
 
+    [SerializeField] private LightSettings _lightSettings;
+
     void Awake()
     {
         if (_sun == null && !AttemptToFetchSun())
@@ -39,9 +41,19 @@ public class TimeOfDayHandler : MonoBehaviour
             return;
         }
         else _currentSunY = _sun.transform.rotation.eulerAngles.y;
-        
+
         //UpdateValuesForTime();
         //UpdateGlobalLightingForTimeOfDay();
+
+
+        _lightSettings.SunGradient = _SunGradient;
+        _lightSettings.SunIntensity = _sunIntensity;
+        _lightSettings.SunMaxIntensityValue = _sunMaxIntensityValue;
+        _lightSettings.SunMinIntensityValue = _sunMinIntensityValue;
+        _lightSettings.MoonGradient = _MoonGradient;
+        _lightSettings.MoonIntensity = _moonIntensity;
+        _lightSettings.MoonMaxIntensityValue = _moonMaxIntensityValue;
+        _lightSettings.MoonMinIntensityValue = _moonMinIntensityValue;
 
     }
 
