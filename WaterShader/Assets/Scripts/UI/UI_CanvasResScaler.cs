@@ -56,7 +56,7 @@ public class UI_CanvasResScaler : MonoBehaviour
     {
         if (_rect == null) return;
 
-        Debug.Log("Resolution got set");
+      //  Debug.Log("Resolution got set");
 
         //   bool verticalOrientation = _rect.rect.width < _rect.rect.height ? true : false; this would get orientation if needed, or use device orientation
 

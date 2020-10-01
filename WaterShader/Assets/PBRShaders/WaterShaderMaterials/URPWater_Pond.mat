@@ -42,21 +42,21 @@ Material:
     - Vector1_F5FDB782: 0
     - _Depth: 4.28
     - _DepthShoreFade: 3.34
-    - _FoamAmount: 12.39
-    - _FoamCutoff: 3.4
+    - _FoamAmount: 0
+    - _FoamCutoff: 20
     - _FoamScale: 400
-    - _FoamSpeed: 0.02
+    - _FoamSpeed: 0
     - _Metallic: 0
     - _NormalStrength: 0.05
     - _RefractionScale: 70.5
     - _RefractionSpeed: 0.25
-    - _RefractionStrength: 0.214
+    - _RefractionStrength: 0.3
     - _Smoothness: 0.6
     - _Strength: 0
     - _StrengthShoreFade: 0.67
     - _TextureStrength: 0.69
-    - _Transparency: 0.95
-    - _WaterFogDensity: 0.77
+    - _Transparency: 0.88
+    - _WaterFogDensity: 0
     - _WaveSpeed: 0.05
     m_Colors:
     - Color_32664067: {r: 0, g: 0.99095273, b: 1, a: 1}
@@ -66,6 +66,6 @@ Material:
     - _ShallowWaterColor: {r: 0.26886788, g: 1, b: 0.9489154, a: 0.3607843}
     - _WaterColor: {r: 0.19971518, g: 0.742623, b: 0.8301887, a: 1}
     - _WaterColorShore: {r: 0.11372549, g: 0.81960785, b: 0.81960785, a: 1}
-    - _WaveA: {r: 1, g: 1, b: 0.05, a: 40}
-    - _WaveB: {r: 0, g: 0.6, b: 0.1, a: 31}
+    - _WaveA: {r: 1, g: 1, b: 0.01, a: 100}
+    - _WaveB: {r: 0, g: 0.6, b: 0.05, a: 31}
     - _WaveC: {r: 0.5, g: 1.3, b: 0.05, a: 18}

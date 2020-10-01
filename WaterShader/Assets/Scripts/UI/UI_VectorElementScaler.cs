@@ -6,7 +6,9 @@ public class UI_VectorElementScaler : MonoBehaviour
 {
     [SerializeField, Range(0,1), Tooltip("Use the Gizmos Sphere to set the position of this GO relative to screenspace")] private float _screenPosX = .5f;
     [SerializeField, Range(0,1), Tooltip("Use the Gizmos Sphere to set the position of this GO relative to screenspace")] private float _screenPosY = .5f;
-    [SerializeField] Camera _uiCamera;
+    [SerializeField] private Camera _uiCamera;
+
+    [SerializeField, Tooltip("All Canvas UI that needs to be centered to the same point as this GO, put in this list")] private List<RectTransform> _canvasUIElements;
 
 
     private void Start()
@@ -14,10 +16,17 @@ public class UI_VectorElementScaler : MonoBehaviour
         if (_uiCamera == null && UI_InputHandler.FetchUICameraInScene() == null) Debug.LogError($"No Camera set or could be found for {gameObject.name}");
         else if (_uiCamera == null) _uiCamera = UI_InputHandler.FetchUICameraInScene();
 
-        // Subscribe to Canvas Scale Resolution Changed Events id relevant to Scene
-        if (UI_CanvasResScaler.OnResolutionOrOrientationChanged != null) UI_CanvasResScaler.OnResolutionOrOrientationChanged.AddListener(GetScreenDependendPosition);
+        // Subscribe to Canvas Scale Resolution Changed Events if relevant to Scene
+        if (UI_CanvasResScaler.OnResolutionOrOrientationChanged != null) UI_CanvasResScaler.OnResolutionOrOrientationChanged.AddListener(SetPositionInScreenSpace);
 
-        GetScreenDependendPosition();
+        SetPositionInScreenSpace();
+    }
+
+    private void SetPositionInScreenSpace()
+    {
+        Vector3 wPos = GetScreenDependendPosition(_uiCamera);
+        transform.position = wPos;
+        if (_canvasUIElements.Count > 0) for (int i = 0; i < _canvasUIElements.Count; i++) _canvasUIElements[i].transform.position = wPos;
     }
 
 
@@ -25,15 +34,27 @@ public class UI_VectorElementScaler : MonoBehaviour
     /// Will Position this Gameobject as set in the inspector, independent from device resolution.
     /// Use this for GOs that always need to be kept at a certain position in relevance to their camera eg. Vector UI
     /// </summary>
-    private void GetScreenDependendPosition()
+    private Vector3 GetScreenDependendPosition(Camera camera)
     {
         float x = Mathfs.Remap(_screenPosX, 0, 1, 0, Screen.width);
         float y = Mathfs.Remap(_screenPosY, 0, 1, 0, Screen.height);
 
-        Vector3 worldPos = _uiCamera.ScreenToWorldPoint(new Vector3(x, y, 0));
+        Vector3 worldPos = camera.ScreenToWorldPoint(new Vector3(x, y, 0));
         worldPos.z = transform.position.z;
         // Get Screen pos rel to GO
-        transform.position = worldPos;
+
+        //if (_canvasUIElements.Count > 0)
+        //{
+        //    for (int i = 0; i < _canvasUIElements.Count; i++)
+        //    {
+
+        //        _canvasUIElements[i].transform.position = Camera.main.ScreenToWorldPoint( new Vector3 (x, y, _canvasUIElements[i].transform.position.z) );
+        //        Debug.Log("Setting Canvas UI Position to " + Camera.main.ScreenToWorldPoint(new Vector3(x, y, _canvasUIElements[i].transform.position.z)));
+        //    }
+
+
+        //}
+        return worldPos;
     }
 
 #if UNITY_EDITOR

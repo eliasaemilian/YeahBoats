@@ -5,9 +5,9 @@ using UnityEngine.Events;
 
 public class UI_JoystickHandler : TappableGameobject
 {
-    public static bool JoystickStateClosed { get; set; } // [ false ] open, -> State: Moving, [ true ] closed -> State: Fishing
-    public static float JoystickDirInDegrees { get; set; }
-    public static bool ValidJoystickInput { get; set; } = false;
+    public static bool JoystickStateClosed { get; private set; } // [ false ] open, -> State: Moving, [ true ] closed -> State: Fishing
+    public static float JoystickDirInDegrees { get; private set; }
+    public static bool ValidJoystickInput { get; private set; } = false;
 
     public static UnityEvent JoystickStateChanged;
 
