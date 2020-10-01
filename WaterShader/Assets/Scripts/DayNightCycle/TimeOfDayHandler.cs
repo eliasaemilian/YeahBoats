@@ -101,7 +101,7 @@ public class TimeOfDayHandler : MonoBehaviour
         // if Sun is set in Lighting Settings, choose this
         _sun = RenderSettings.sun;
         if (_sun != null) return true;
-
+        Debug.Log("ejo");
         // else attempt to find a directional Light in the Scene.
         Light[] lights = FindObjectsOfType<Light>();
         for (int i = 0; i < lights.Length; i++) if (lights[i].type == LightType.Directional)

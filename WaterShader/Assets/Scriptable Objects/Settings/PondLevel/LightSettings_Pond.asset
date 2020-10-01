@@ -14,19 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SunGradient:
     serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
+    key0: {r: 0.74509805, g: 0.050980404, b: 0.28215778, a: 1}
+    key1: {r: 0.9528302, g: 0.924838, b: 0.5438323, a: 1}
+    key2: {r: 1, g: 1, b: 1, a: 0}
+    key3: {r: 0.990566, g: 0.659095, b: 0.19157171, a: 0}
+    key4: {r: 0.754717, g: 0.15750395, b: 0.13883947, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
+    ctime1: 12722
+    ctime2: 30069
+    ctime3: 53392
+    ctime4: 63993
     ctime5: 0
     ctime6: 0
     ctime7: 0
@@ -39,29 +39,56 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_NumColorKeys: 2
+    m_NumColorKeys: 5
     m_NumAlphaKeys: 2
   SunMinIntensityValue: 0
-  SunMaxIntensityValue: 0
+  SunMaxIntensityValue: 1
   SunIntensity:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.009697773
+      outSlope: 0.009697773
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.2400486
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: -0.0023193604
+      outSlope: -0.0023193604
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   MoonGradient:
     serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
+    key0: {r: 0.7126202, g: 0.9520718, b: 0.9622642, a: 1}
     key1: {r: 1, g: 1, b: 1, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
+    key2: {r: 0.9593644, g: 0.7122642, b: 1, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 65535
-    ctime2: 0
+    ctime1: 31226
+    ctime2: 65535
     ctime3: 0
     ctime4: 0
     ctime5: 0
@@ -76,7 +103,7 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_NumColorKeys: 2
+    m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   MoonMinIntensityValue: 0
-  MoonMaxIntensityValue: 0
+  MoonMaxIntensityValue: 0.1
