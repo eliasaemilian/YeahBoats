@@ -17,19 +17,7 @@ public class TimeOfDayHandler : MonoBehaviour
     private bool _isNight;
 
     [SerializeField] private Light _moon;
-    [SerializeField] private float _moonMinIntensityValue;
-    [SerializeField] private float _moonMaxIntensityValue;
 
-    //[SerializeField] private Gradient _AmbientLightGradient;
-    //[SerializeField] private Gradient _FogGradient;
-
-    [SerializeField] private Gradient _SunGradient;
-    [SerializeField] private float _sunMinIntensityValue;
-    [SerializeField] private float _sunMaxIntensityValue;
-    [SerializeField] private AnimationCurve _sunIntensity;
-
-    [SerializeField] private Gradient _MoonGradient;
-    [SerializeField] private CurveField _moonIntensity;
 
     [SerializeField] private LightSettings _lightSettings;
 
@@ -45,19 +33,11 @@ public class TimeOfDayHandler : MonoBehaviour
         //UpdateValuesForTime();
         //UpdateGlobalLightingForTimeOfDay();
 
-
-        _lightSettings.SunGradient = _SunGradient;
-        _lightSettings.SunIntensity = _sunIntensity;
-        _lightSettings.SunMaxIntensityValue = _sunMaxIntensityValue;
-        _lightSettings.SunMinIntensityValue = _sunMinIntensityValue;
-        _lightSettings.MoonGradient = _MoonGradient;
-        _lightSettings.MoonIntensity = _moonIntensity;
-        _lightSettings.MoonMaxIntensityValue = _moonMaxIntensityValue;
-        _lightSettings.MoonMinIntensityValue = _moonMinIntensityValue;
-
     }
 
-    // Update is called once per frame
+
+
+    // Update is called once per frame // THIS BEING IN UPDATE IS FOR DEBUGGING
     void Update()
     {
         UpdateValuesForTime();
@@ -88,8 +68,8 @@ public class TimeOfDayHandler : MonoBehaviour
 
 
 
-        _sun.color = _SunGradient.Evaluate(_timeOfDay);
-        _moon.color = _MoonGradient.Evaluate(_timeOfDay);
+        _sun.color = _lightSettings.SunGradient.Evaluate(_timeOfDay);
+        _moon.color = _lightSettings.MoonGradient.Evaluate(_timeOfDay);
 
 
         // move sun & moon depending of time of day
@@ -98,11 +78,11 @@ public class TimeOfDayHandler : MonoBehaviour
         _moon.transform.rotation = Quaternion.Euler(new Vector3(x, _currentSunY - 180, 0f));
 
 
-        float sunIntensity = Mathf.Clamp01(_sunIntensity.Evaluate(_timeOfDay));
+        float sunIntensity = Mathf.Clamp01(_lightSettings.SunIntensity.Evaluate(_timeOfDay));
         float moonIntensity = Mathf.Abs(sunIntensity - 1);
 
-        _sun.intensity = Mathf.Lerp(_sunMinIntensityValue, _sunMaxIntensityValue, sunIntensity);
-        _moon.intensity = Mathf.Lerp(_moonMinIntensityValue, _moonMaxIntensityValue, moonIntensity);
+        _sun.intensity = Mathf.Lerp(_lightSettings.SunMinIntensityValue, _lightSettings.SunMaxIntensityValue, sunIntensity);
+        _moon.intensity = Mathf.Lerp(_lightSettings.MoonMinIntensityValue, _lightSettings.MoonMaxIntensityValue, moonIntensity);
 
         if (_sun.intensity <= 0.05) RenderSettings.sun = _moon;
         else RenderSettings.sun = _sun;
