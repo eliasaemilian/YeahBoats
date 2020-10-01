@@ -8,7 +8,6 @@ using UnityEngine.Events;
 public class DataManager : MonoBehaviour
 {
     public static DataManager Instance;
-
     public LevelManager _lM;
 
     public Savedata DataContainer;
@@ -16,14 +15,7 @@ public class DataManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        
         DataContainer = GetComponent<Savedata>();
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-
-    }
-
+    
 }
