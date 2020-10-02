@@ -96,7 +96,7 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
         // move sun & moon depending of time of day
         float x = Mathf.Lerp(-90, 270, _timeOfDay);
         _sun.transform.rotation = Quaternion.Euler(new Vector3(x, _currentSunY, 0f));
-        _moon.transform.rotation = Quaternion.Euler(new Vector3(x - 180, _currentMoonY, 0f));
+        _moon.transform.rotation = Quaternion.Euler(new Vector3(x - 180, _currentMoonY, 180f));
 
 
         float sunIntensity = Mathf.Clamp01(_lightSettings.SunIntensity.Evaluate(_timeOfDay));
@@ -126,6 +126,11 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
         RenderSettings.skybox.SetColor("_BaseColorSky", _lightSettings.SkyBoxColorSky.Evaluate(_timeOfDay));
         RenderSettings.skybox.SetColor("_BaseColorGround", _lightSettings.SkyBoxColorGround.Evaluate(_timeOfDay));
         RenderSettings.skybox.SetColor("_HorizonColor", _lightSettings.SkyBoxColorHorizon.Evaluate(_timeOfDay));
+
+
+        float starVis = Mathf.Lerp(0, 1, _timeOfDay);
+
+        RenderSettings.skybox.SetFloat("_StarsVisibility", starVis);
     }
 
     /// <summary>
