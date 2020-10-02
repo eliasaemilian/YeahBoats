@@ -60,6 +60,10 @@ public class MoneyManager : MonoBehaviour
         Money -= ammount;
     }
 
+    public void UpdateMoney()
+    {
+        CD.UpdateCurrency((int)Money);
+    }
     private void GetData()
     {
         Money = _dM.DataContainer.Money;
