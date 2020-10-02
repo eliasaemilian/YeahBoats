@@ -1,6 +1,7 @@
 ﻿using Shapes2D;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using TMPro;
 using UnityEngine;
 
@@ -58,6 +59,9 @@ public class UI_PannelOnEnable : MonoBehaviour
 
     public void SetColor()
     {
+        if (_shape != null)
+        {
+
         if(_upgradeCost < MM.Money)
         {
              _shape.settings.fillColor = new Color(0.9245283f, 0.2791029f, 0.2791029f, 1);
@@ -66,6 +70,7 @@ public class UI_PannelOnEnable : MonoBehaviour
         {
             _shape.settings.fillColor = new Color(0.5f, 0.5f, 0.5f, 1);
 
+        }
         }
     }
 

@@ -188,6 +188,7 @@ public class LevelManager : MonoBehaviour
         
         UpdateLevels();
         correspondingEvent.Invoke();
+        MM.UpdateMoney();
         return (currentLevel + 1);
 
     }
