@@ -12,6 +12,7 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
 {
     [SerializeField] private bool _pause;
 
+    [SerializeField] private string Time;
     [SerializeField] private bool _useDebugTime;
     [SerializeField, Range(0, 1)] private float _timeOfDayDebug = 0f;
 
@@ -74,7 +75,11 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
         _timeOfDay = Mathf.Clamp01(sysHours / 24f);
 
 #if UNITY_EDITOR
-        if (_useDebugTime) _timeOfDay = _timeOfDayDebug;
+        if (_useDebugTime)
+        {
+            _timeOfDay = _timeOfDayDebug;
+            Time = (_timeOfDay * 24f).ToString();
+        }
 #endif
 
        
@@ -95,8 +100,18 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
 
         // move sun & moon depending of time of day
         float x = Mathf.Lerp(-90, 270, _timeOfDay);
+        float moonX = x;
+        moonX -= 180;
+
+        if (moonX > 0 && moonX < 168) moonX = Mathf.Lerp(-10, 12, _timeOfDay); //sundown
+        else if (moonX < 190 && moonX > 12) moonX = Mathf.Lerp(12, -10, _timeOfDay);
+    //   if (_timeOfDay < .25 || _timeOfDay > .75) moonX = Mathf.Lerp(-10, 12, _timeOfDay); //sundown
+
         _sun.transform.rotation = Quaternion.Euler(new Vector3(x, _currentSunY, 0f));
-        _moon.transform.rotation = Quaternion.Euler(new Vector3(x - 180, _currentMoonY, 180f));
+
+  
+
+        _moon.transform.rotation = Quaternion.Euler(new Vector3(moonX, _currentMoonY, 180f));
 
 
         float sunIntensity = Mathf.Clamp01(_lightSettings.SunIntensity.Evaluate(_timeOfDay));
@@ -108,11 +123,6 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
         if (_sun.intensity <= 0.05) RenderSettings.sun = _moon;
         else RenderSettings.sun = _sun;
 
-
-        Vector3 moonDir = _moon.transform.rotation * Vector3.forward;
-        Vector3 sunDir = _sun.transform.rotation * Vector3.forward;
-        //Debug.Log($"Moon Rot: {_moon.transform.rotation.eulerAngles}, Forward: {_moon.transform.forward}, Sun Rot: {_sun.transform.rotation.eulerAngles}, Forward: {_sun.transform.forward}");
-        Debug.Log($"Moon Rot: {_moon.transform.rotation.eulerAngles}, Forward: {moonDir}, Sun Rot: {_sun.transform.rotation.eulerAngles}, Forward: {sunDir}");
 
         // SHADER STUFF
         RenderSettings.skybox.SetVector("_SunDirection", _sun.transform.forward);
@@ -128,9 +138,7 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
         RenderSettings.skybox.SetColor("_HorizonColor", _lightSettings.SkyBoxColorHorizon.Evaluate(_timeOfDay));
 
 
-        float starVis = Mathf.Lerp(0, 1, _timeOfDay);
-
-        RenderSettings.skybox.SetFloat("_StarsVisibility", starVis);
+        RenderSettings.skybox.SetFloat("_StarsVisibility", _lightSettings.StarVisibility.Evaluate(_timeOfDay));
     }
 
     /// <summary>
