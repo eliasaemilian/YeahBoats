@@ -31,15 +31,14 @@ public class BoatBase : MonoBehaviour
     {
         _lM = LevelManager.Instance;
 
-        InstantiateBoat();
-        InstantiateFishermen();
+        
         if (WaterTappableHandler.FishingTap != null)
         {
             WaterTappableHandler.FishingTap.AddListener(FishingSpeedup.Invoke);
         }
 
         BoatStorageUpdate();
-        //_lM.BoatStorageUpdate.AddListener(BoatStorageUpdate);
+        StartCoroutine(LateStart());
     }
 
 
@@ -57,6 +56,7 @@ public class BoatBase : MonoBehaviour
 
     private void InstantiateBoat()
     {
+        Debug.Log("Current Boat Level : " + _lM.CurrentBoatLevel);
         GameObject b = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1].BoatPrefab;
         _lM.BoatSkillLevels = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1];
         _lM.MaxAmmountOfFishermen = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1].NPCFishermanAmmount;
@@ -129,8 +129,10 @@ public class BoatBase : MonoBehaviour
         BoatStorage = 10 * (2 * _lM.BoatStorageLevel);
     }
 
-    private void SyncLevels()
+    private IEnumerator LateStart()
     {
-
+        yield return new WaitForEndOfFrame();
+        InstantiateBoat();
+        InstantiateFishermen();
     }
 }
