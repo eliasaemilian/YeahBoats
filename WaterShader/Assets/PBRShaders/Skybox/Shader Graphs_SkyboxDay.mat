@@ -21,14 +21,22 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Floats:
-    - _SunIntensity: 0.1
+    - _MoonFuzziness: 0.49
+    - _MoonIntensity: 0.03236254
+    - _MoonSize: 0.06
+    - _StarDensity: 15
+    - _SunFuzziness: 0.083
+    - _SunIntensity: 0.6763746
     - _SunRadA: 0.027
     - _SunRadB: 0.037
     - _SunSize: 0.1
     m_Colors:
     - Color_2B36919A: {r: 0.005339969, g: 0.08156326, b: 0.37735847, a: 0}
+    - Color_3F66240E: {r: 0.8867924, g: 0.88572806, b: 0.6734603, a: 0}
     - Color_B1C5FD3F: {r: 0.52358484, g: 0.8612847, b: 1, a: 0}
-    - _BaseColorGround: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 1}
-    - _BaseColorSky: {r: 0.09825561, g: 0.12510802, b: 0.3018868, a: 1}
-    - _SunColor: {r: 0.9593644, g: 0.7122642, b: 1, a: 1}
-    - _SunDirection: {r: -0.74433434, g: 0.00000008742278, b: 0.66780716, a: 0}
+    - _BaseColorGround: {r: 0.375283, g: 0.36890975, b: 0.36890975, a: 1}
+    - _BaseColorSky: {r: 0.54537463, g: 0.30515376, b: 0.8561483, a: 1}
+    - _HorizonColor: {r: 0.54537463, g: 0.30515376, b: 0.8561483, a: 1}
+    - _MoonDirection: {r: -0.00000008128364, g: 0.36812463, b: -0.92977643, a: 0}
+    - _SunColor: {r: 0.99387187, g: 0.77855504, b: 0.47486132, a: 1}
+    - _SunDirection: {r: 0.00000008128364, g: -0.3681246, b: 0.9297765, a: 0}

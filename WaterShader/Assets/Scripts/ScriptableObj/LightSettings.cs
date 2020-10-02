@@ -23,4 +23,5 @@ public class LightSettings : ScriptableObject
 
     public Gradient SkyBoxColorSky;
     public Gradient SkyBoxColorGround;
+    public Gradient SkyBoxColorHorizon;
 }

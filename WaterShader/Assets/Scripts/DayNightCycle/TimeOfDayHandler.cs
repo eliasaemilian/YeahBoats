@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEditor.Presets;
 using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
+using LightType = UnityEngine.LightType;
+using RenderSettings = UnityEngine.RenderSettings;
 
 [ExecuteAlways]
 public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont come at me luca
@@ -14,8 +17,9 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
 
     [SerializeField] private float _timeOfDay; // Range between 0-1
 
-    private float _currentSunY;
-    private Light _sun;
+    private float _currentSunY, _currentMoonY;
+    [SerializeField] private Light _sun;
+    
 
     private bool _isNight;
 
@@ -28,18 +32,19 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
 
     void Awake()
     {
-        if (_sun == null && !AttemptToFetchSun())
-        {
-            Debug.LogError("No Directional Light found in Scene. Place a Directional Light and set it as Sun in Lighting Settings");
-            return;
-        }
-        else _currentSunY = _sun.transform.rotation.eulerAngles.y;
+        //if (_sun == null && !AttemptToFetchSun())
+        //{
+        //    Debug.LogError("No Directional Light found in Scene. Place a Directional Light and set it as Sun in Lighting Settings");
+        //    return;
+        //}
+        //else _currentSunY = _sun.transform.rotation.eulerAngles.y;
+
+        _currentSunY = _sun.transform.rotation.eulerAngles.y;
+        _currentMoonY = _moon.transform.rotation.eulerAngles.y;
 
         //UpdateValuesForTime();
         //UpdateGlobalLightingForTimeOfDay();
         _sky = RenderSettings.skybox;
-
-
 
     }
 
@@ -89,9 +94,9 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
 
 
         // move sun & moon depending of time of day
-        float x = Mathf.Lerp(0, 180, _timeOfDay);
+        float x = Mathf.Lerp(-90, 270, _timeOfDay);
         _sun.transform.rotation = Quaternion.Euler(new Vector3(x, _currentSunY, 0f));
-        _moon.transform.rotation = Quaternion.Euler(new Vector3(x, _currentSunY - 180, 0f));
+        _moon.transform.rotation = Quaternion.Euler(new Vector3(x - 180, _currentMoonY, 0f));
 
 
         float sunIntensity = Mathf.Clamp01(_lightSettings.SunIntensity.Evaluate(_timeOfDay));
@@ -104,15 +109,23 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
         else RenderSettings.sun = _sun;
 
 
-
+        Vector3 moonDir = _moon.transform.rotation * Vector3.forward;
+        Vector3 sunDir = _sun.transform.rotation * Vector3.forward;
+        //Debug.Log($"Moon Rot: {_moon.transform.rotation.eulerAngles}, Forward: {_moon.transform.forward}, Sun Rot: {_sun.transform.rotation.eulerAngles}, Forward: {_sun.transform.forward}");
+        Debug.Log($"Moon Rot: {_moon.transform.rotation.eulerAngles}, Forward: {moonDir}, Sun Rot: {_sun.transform.rotation.eulerAngles}, Forward: {sunDir}");
 
         // SHADER STUFF
         RenderSettings.skybox.SetVector("_SunDirection", _sun.transform.forward);
         RenderSettings.skybox.SetFloat("_SunIntensity", _sun.intensity);
         RenderSettings.skybox.SetColor("_SunColor", _sun.color);
 
+        RenderSettings.skybox.SetVector("_MoonDirection", _moon.transform.forward);
+        RenderSettings.skybox.SetFloat("_MoonIntensity", _moon.intensity);
+        RenderSettings.skybox.SetColor("_MoonColor", _moon.color);
+
         RenderSettings.skybox.SetColor("_BaseColorSky", _lightSettings.SkyBoxColorSky.Evaluate(_timeOfDay));
         RenderSettings.skybox.SetColor("_BaseColorGround", _lightSettings.SkyBoxColorGround.Evaluate(_timeOfDay));
+        RenderSettings.skybox.SetColor("_HorizonColor", _lightSettings.SkyBoxColorHorizon.Evaluate(_timeOfDay));
     }
 
     /// <summary>
