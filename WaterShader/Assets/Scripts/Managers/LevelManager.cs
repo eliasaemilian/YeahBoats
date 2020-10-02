@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
 using UnityEngine;
 using UnityEngine.Events;
 /// <summary>
@@ -35,10 +36,10 @@ public class LevelManager : MonoBehaviour
     private int _nPCFishermanLevel;
     public int NPCFishermanLevel { get { return _nPCFishermanLevel; } set { _nPCFishermanLevel = value; _boatSkillLevels.NPCFishermanLevel = value; } }
 
-    public int _fishingRodLevel;
+    private int _fishingRodLevel;
     public int FishingRodLevel { get { return _fishingRodLevel; } set { _fishingRodLevel = value; _boatSkillLevels.FishingRodLevel = value; } }
 
-    public int _fishingHookLevel;
+    private int _fishingHookLevel;
     public int FishingHookLevel { get { return _fishingHookLevel; } set { _fishingHookLevel = value; _boatSkillLevels.FishingHookLevel = value; } }
 
     public int Multiplier;
@@ -94,7 +95,7 @@ public class LevelManager : MonoBehaviour
         if (GUI.Button(new Rect(160, 10, 150, 20), "Upgrade"))
         {
             Debug.Log("About to upgrade");
-            Levelup(ref _nPCFishermanLevel, BoatSkillLevelCosts.FishingSpeedCost, NPCUpdate);
+            NPCFishermanLevel = Levelup(NPCFishermanLevel, BoatSkillLevelCosts.FishingSpeedCost, NPCUpdate);
         }
 
         if (GUI.Button(new Rect(10, 30, 150, 20), "Boat Storage"))
@@ -111,7 +112,7 @@ public class LevelManager : MonoBehaviour
         }
         if (GUI.Button(new Rect(160, 30, 150, 20), "Upgrade"))
         {
-            Levelup(ref _boatStorageLevel, BoatSkillLevelCosts.BoatStorageCost, BoatStorageUpdate);
+            BoatStorageLevel = Levelup(BoatStorageLevel, BoatSkillLevelCosts.BoatStorageCost, BoatStorageUpdate);
         }
         if (GUI.Button(new Rect(10, 50, 150, 20), "Fishing Hook Level"))
         {
@@ -127,7 +128,7 @@ public class LevelManager : MonoBehaviour
         }
         if (GUI.Button(new Rect(160, 50, 150, 20), "Upgrade"))
         {
-            Levelup(ref _fishingHookLevel, BoatSkillLevelCosts.FishingHookCost, FishingHookUpdate);
+            FishingHookLevel = Levelup(FishingHookLevel, BoatSkillLevelCosts.FishingHookCost, FishingHookUpdate);
         }
         if (GUI.Button(new Rect(10, 70, 150, 20), "Fishing Rod Level"))
         {
@@ -142,7 +143,7 @@ public class LevelManager : MonoBehaviour
         }
         if (GUI.Button(new Rect(160, 70, 150, 20), "Upgrade"))
         {
-            Levelup(ref _fishingRodLevel, BoatSkillLevelCosts.FishingRodCost, FishingRodUpdate);
+            FishingRodLevel = Levelup(FishingRodLevel, BoatSkillLevelCosts.FishingRodCost, FishingRodUpdate);
         }
         if (GUI.Button(new Rect(160, 90, 150, 20), "ResetLevels"))
         {
@@ -181,13 +182,22 @@ public class LevelManager : MonoBehaviour
         else return false;
 
     }
-    public void Levelup(ref int currentLevel, List<int> LST, UnityEvent correspondingEvent)
+    public int Levelup(int currentLevel, List<int> LST, UnityEvent correspondingEvent)
     {
         MM.DeduceMoney(LST[currentLevel]);
-        currentLevel++;
+        
         UpdateLevels();
         correspondingEvent.Invoke();
+        return (currentLevel + 1);
 
+    }
+
+    public bool ChanceLevelupForFisherman(int chanceInPercentage)
+    {
+        int rnd = UnityEngine.Random.Range(1, 101);
+        if(chanceInPercentage >= rnd) return true;
+        else return false;
+        
     }
     //update the levels when loading SO
     private void SetupLevels()

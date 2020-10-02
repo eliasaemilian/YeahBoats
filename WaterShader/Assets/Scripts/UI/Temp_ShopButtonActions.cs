@@ -18,6 +18,8 @@ public class Temp_ShopButtonActions : MonoBehaviour
     [SerializeField] private int _sceneIndexPond = 0;
     [SerializeField] private LevelManager LM = null;
     [SerializeField] private List<UI_PannelOnEnable> _pannels = null;
+    [SerializeField] private GameObject _notEnoughMoneyPannel = null;
+    [SerializeField] private GameObject _fishermanFailHirePannel = null;
 
     public void OnClickLighthouseVoyageButton()
     {
@@ -32,12 +34,13 @@ public class Temp_ShopButtonActions : MonoBehaviour
         {
             //TODO: Particle effect
             Debug.Log("I can Level Up");
-            LM.Levelup(ref LM._fishingHookLevel, LM.BoatSkillLevelCosts.FishingHookCost, LM.FishingHookUpdate);
+            LM.FishingHookLevel = LM.Levelup(LM.FishingHookLevel, LM.BoatSkillLevelCosts.FishingHookCost, LM.FishingHookUpdate);
             ResetColors();
         }
         else
         {
             Debug.Log("I can not Level Up");
+            _notEnoughMoneyPannel.SetActive(true);
 
         }
     }
@@ -45,19 +48,36 @@ public class Temp_ShopButtonActions : MonoBehaviour
     {
         if (LM.CheckIfICanLevelup(LM.FishingRodLevel,LM.BoatSkillLevelCosts.FishingRodCost))
         {
-            LM.Levelup(ref LM._fishingRodLevel, LM.BoatSkillLevelCosts.FishingRodCost, LM.FishingRodUpdate);
+            LM.FishingRodLevel = LM.Levelup(LM.FishingRodLevel, LM.BoatSkillLevelCosts.FishingRodCost, LM.FishingRodUpdate);
             ResetColors();
         }
         else
         {
             Debug.Log("I can not Level Up");
+            _notEnoughMoneyPannel.SetActive(true);
 
         }
     }
 
     public void OnClickPubHireMenButton()
     {
-        // Hire big burly seamen for ship right here
+        if (LM.CheckIfICanLevelup(LM.OwnedFishermen, LM.BoatSkillLevelCosts.FishermanCost))
+        {
+            if(LM.ChanceLevelupForFisherman(25))
+            {
+                //Hire succeeded
+                LM.OwnedFishermen = LM.Levelup(LM.OwnedFishermen, LM.BoatSkillLevelCosts.FishermanCost, LM.NPCUpdate);
+            }
+            else
+            {
+                //Hire failed
+                _fishermanFailHirePannel.SetActive(true);
+            }
+        }
+        else
+        {
+            _notEnoughMoneyPannel.SetActive(true);
+        }
     }
 
    
