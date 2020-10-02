@@ -19,17 +19,14 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
     [SerializeField] private float _timeOfDay; // Range between 0-1
 
     private float _currentSunY, _currentMoonY;
-    [SerializeField] private Light _sun;
-    
 
-    private bool _isNight;
-
+    [SerializeField] private Light _sun;  
     [SerializeField] private Light _moon;
 
 
     [SerializeField] private LightSettings _lightSettings;
 
-    Material _sky;
+
 
     void Awake()
     {
@@ -43,17 +40,10 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
         _currentSunY = _sun.transform.rotation.eulerAngles.y;
         _currentMoonY = _moon.transform.rotation.eulerAngles.y;
 
-        //UpdateValuesForTime();
-        //UpdateGlobalLightingForTimeOfDay();
-        _sky = RenderSettings.skybox;
+        if (_sun == null || _moon == null) Debug.LogError("You fucked up! where is sun & moon??? D:");
 
     }
 
-    private void Start()
-    {
-        // SHADER COMMUNICATION 
-
-    }
 
 
     // Update is called once per frame // THIS BEING IN UPDATE IS FOR DEBUGGING
@@ -63,6 +53,7 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
 
         UpdateValuesForTime();
         UpdateGlobalLightingForTimeOfDay();
+        SetShaderProperties();
 
     }
 
@@ -90,9 +81,6 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
         // change light colors 
         //RenderSettings.ambientLight = _AmbientLightGradient.Evaluate(_timeOfDay); // seems to do fuck all these days, maky :/
         //RenderSettings.fogColor = _FogGradient.Evaluate(_timeOfDay);
-        Debug.Log("Setting sun for Time: " + _timeOfDay);
-
-
 
         _sun.color = _lightSettings.SunGradient.Evaluate(_timeOfDay);
         _moon.color = _lightSettings.MoonGradient.Evaluate(_timeOfDay);
@@ -104,15 +92,10 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
         moonX -= 180;
 
         if (moonX > 0 && moonX < 168) moonX = Mathf.Lerp(-10, 12, _timeOfDay); //sundown
-        else if (moonX < 190 && moonX > 12) moonX = Mathf.Lerp(12, -10, _timeOfDay);
-    //   if (_timeOfDay < .25 || _timeOfDay > .75) moonX = Mathf.Lerp(-10, 12, _timeOfDay); //sundown
+        else if (moonX < 190 && moonX > 12) moonX = Mathf.Lerp(12, -10, _timeOfDay); //sunrise
 
         _sun.transform.rotation = Quaternion.Euler(new Vector3(x, _currentSunY, 0f));
-
-  
-
         _moon.transform.rotation = Quaternion.Euler(new Vector3(moonX, _currentMoonY, 180f));
-
 
         float sunIntensity = Mathf.Clamp01(_lightSettings.SunIntensity.Evaluate(_timeOfDay));
         float moonIntensity = Mathf.Abs(sunIntensity - 1);
@@ -123,8 +106,10 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
         if (_sun.intensity <= 0.05) RenderSettings.sun = _moon;
         else RenderSettings.sun = _sun;
 
+    }
 
-        // SHADER STUFF
+    private void SetShaderProperties()
+    {
         RenderSettings.skybox.SetVector("_SunDirection", _sun.transform.forward);
         RenderSettings.skybox.SetFloat("_SunIntensity", _sun.intensity);
         RenderSettings.skybox.SetColor("_SunColor", _sun.color);
@@ -149,9 +134,8 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
     private bool AttemptToFetchSun()
     {
         // if Sun is set in Lighting Settings, choose this
-        _sun = RenderSettings.sun;
+        _sun = RenderSettings.sun; //<- trouble child, have think about this whole function
         if (_sun != null) return true;
-        Debug.Log("ejo");
         // else attempt to find a directional Light in the Scene.
         Light[] lights = FindObjectsOfType<Light>();
         for (int i = 0; i < lights.Length; i++) if (lights[i].type == LightType.Directional)
