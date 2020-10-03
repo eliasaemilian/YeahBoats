@@ -1,9 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Presets;
-using UnityEditor.UIElements;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 using LightType = UnityEngine.LightType;
 using RenderSettings = UnityEngine.RenderSettings;
 
@@ -49,8 +46,9 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
     // Update is called once per frame // THIS BEING IN UPDATE IS FOR DEBUGGING
     void Update()
     {
-        if (_pause) return;
+        if (_pause) return; //DENGELNG DEBUGGING
 
+        //TODO: TICK FUNCTION THIS SHIT OR QUERY IT ONLY EVERY ONCE IN A WHILE LIKE SCENE SWITCH, APPLICATION OUT OF STANDBY ETC
         UpdateValuesForTime();
         UpdateGlobalLightingForTimeOfDay();
         SetShaderProperties();

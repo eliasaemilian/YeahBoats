@@ -9,8 +9,10 @@ public class StartMenuDebugButtons : MonoBehaviour
     [SerializeField] private int _portSceneIndex = 0;
 
 
+
     public void OnClickFishing()
     {
+        Debug.Log("Clicked Fish");
         SceneManager.LoadScene(_fishingSceneIndex);
     }
 
