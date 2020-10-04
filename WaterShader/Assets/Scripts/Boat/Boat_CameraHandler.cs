@@ -6,9 +6,11 @@ public class Boat_CameraHandler : MonoBehaviour
 {
     private Animator _anim;
 
+    private UI_JoystickHandler _joystickHandler;
     // Start is called before the first frame update
     void Start()
     {
+        _joystickHandler = FindObjectOfType<UI_JoystickHandler>();
         _anim = GetComponent<Animator>();
         if (UI_JoystickHandler.JoystickStateChanged == null) Debug.LogError("Boat CameraHandler needs a Joystick in the Scene. Add a JoystickHandler or delete CameraHandler from Boat");
         UI_JoystickHandler.JoystickStateChanged.AddListener(On_UI_InputDetect_Joystick_JoystickEventChanged);
@@ -22,7 +24,7 @@ public class Boat_CameraHandler : MonoBehaviour
 
     private void On_UI_InputDetect_Joystick_JoystickEventChanged()
     {
-        if (UI_JoystickHandler.JoystickStateClosed) _anim.SetBool("State_Fishing", true);
+        if (_joystickHandler.JoystickStateClosed) _anim.SetBool("State_Fishing", true);
         else _anim.SetBool("State_Fishing", false);
     }
 }

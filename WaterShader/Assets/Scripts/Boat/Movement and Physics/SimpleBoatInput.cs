@@ -15,9 +15,11 @@ public class SimpleBoatInput : MonoBehaviour
 
     private Rigidbody _rb;
     private BoatScriptable _boatSO;
+    private UI_JoystickHandler _joystickHandler;
 
     void Start()
     {
+        _joystickHandler = FindObjectOfType<UI_JoystickHandler>();
         _rb = GetComponent<Rigidbody>();
         _boatSO = GetComponent<BoatBase>().BoatSO;
         _speed = _boatSO.speed;
@@ -31,7 +33,7 @@ public class SimpleBoatInput : MonoBehaviour
     float speed;
     private void CalculateBoatMovementFromJoystickInput()
     {
-        if (!UI_JoystickHandler.ValidJoystickInput || UI_JoystickHandler.JoystickStateClosed) return;
+        if (!UI_JoystickHandler.ValidJoystickInput || _joystickHandler.JoystickStateClosed) return;
 
         // Calculate Move Towards Direction and Apply Force & Rotation
         Vector2 dir2D = Mathfs.GetUnitVectorByAngle(UI_JoystickHandler.JoystickDirInDegrees * Mathf.Deg2Rad);

@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class UI_JoystickHandler : TappableGameobject
 {
-    public static bool JoystickStateClosed { get; private set; } // [ false ] open, -> State: Moving, [ true ] closed -> State: Fishing
+    public bool JoystickStateClosed { get; private set; } // [ false ] open, -> State: Moving, [ true ] closed -> State: Fishing
     public static float JoystickDirInDegrees { get; private set; }
     public static bool ValidJoystickInput { get; private set; } = false;
 
@@ -26,11 +26,6 @@ public class UI_JoystickHandler : TappableGameobject
     private Material _mat_InnerJoystick;
 
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-
-    }
 
     public override void OnStartInitialize()
     {
@@ -140,11 +135,11 @@ public class UI_JoystickHandler : TappableGameobject
 
     }
 
-    public static void ChangeJoystickState(bool newState)
+    public void ChangeJoystickState(bool newState)
     {
-        if (newState == UI_JoystickHandler.JoystickStateClosed) return;
+        if (newState == JoystickStateClosed) return;
 
-        UI_JoystickHandler.JoystickStateClosed = newState;
+        JoystickStateClosed = newState;
         JoystickStateChanged.Invoke();
     }
 

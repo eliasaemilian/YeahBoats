@@ -9,6 +9,7 @@ public class WaterTappableHandler : TappableGameobject
     [SerializeField] private GameObject _tapEffectPrefab = null;
 
     private Camera _uiCamera;
+    private UI_JoystickHandler _joystickHandler;
 
     public static UnityEvent FishingTap = new UnityEvent();
 
@@ -16,6 +17,8 @@ public class WaterTappableHandler : TappableGameobject
 
     public override void OnStartInitialize()
     {
+        _joystickHandler = FindObjectOfType<UI_JoystickHandler>();
+
         if (FindObjectOfType<UI_JoystickHandler>() == null) Debug.LogError("No Joystick Handler could be found in this Scene. Delete WaterTappable from Waterplane or add a JoystickHandler");
         _uiCamera = FindObjectOfType<UI_InputHandler>().UICamera;
 
@@ -25,7 +28,7 @@ public class WaterTappableHandler : TappableGameobject
     Vector3 transPos;
     public override void OnTap(Touch touch, Vector3 pos, float dist)
     {
-        if (!UI_JoystickHandler.JoystickStateClosed) return;
+        if (!_joystickHandler.JoystickStateClosed) return;
 
         if (touch.phase == TouchPhase.Began)
         {
