@@ -110,9 +110,7 @@ public class UI_InputHandler : MonoBehaviour
                         // Check for Taps on GOs with 2D Colliders
                         if (_tappableGameobjectsInScene[i].GOTapRef == hitGO)
                         {
-                            _tappableGameobjectsInScene[i].OnTap(_touch, rayPos2D); // pass all here that was passed in event
-
-                            // SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
+                            _tappableGameobjectsInScene[i].OnTap(_touch, rayPos2D);
                             _tappableFocus = _tappableGameobjectsInScene[i];
 
                         }
@@ -129,8 +127,6 @@ public class UI_InputHandler : MonoBehaviour
                     if (_tappableGameobjectsInScene[i].GOTapRef == hitGO)
                     {
                         _tappableGameobjectsInScene[i].OnTap(_touch, hitPos, dist);
-
-                        //   SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
                         _tappableFocus = _tappableGameobjectsInScene[i];
 
                     }
@@ -217,18 +213,6 @@ public class UI_InputHandler : MonoBehaviour
             RegisterTapForDoubleTap(false, _tappableGameobjectsInScene[i]);
         }
     }
-
-    //private void SetPOI(Transform newPOI)
-    //{
-    //    if (_pointOfInterest != newPOI)
-    //    {
-    //        _pointOfInterest = newPOI;
-
-    //    }
-
-    //    if (_pointOfInterest != null) _lastPOI = _pointOfInterest;
-
-    //}
 
 
 

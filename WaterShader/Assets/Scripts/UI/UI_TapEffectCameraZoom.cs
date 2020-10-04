@@ -30,15 +30,31 @@ public class UI_TapEffectCameraZoom : TappableGameobject
     }
 
 
+    //TEMPORARY UNTIL SHAPES UI MOVE
+    public void ReturnButtonPress()
+    {
+        Debug.Log(gameObject.name + " Got pressed to return, changing Camera Index to " + CameraIndex);
+        _camHandler.OnCameraChange.Invoke(CameraIndex);
+
+        // I am Return Button bc I am 2D
+        // gameObject.SetActive(false);
+        // Enable UI    
+        if (ZoomingIn) SetUIVisibility(true);
+        else gameObject.SetActive(false);
+    }
+
     // 2D UI
     public override void OnTap(Touch touch, Vector3 pos)
     {
         base.OnTap(touch, pos);
-        Debug.Log("Got Tapped, changing Camera Index to " + CameraIndex);
+        Debug.Log( gameObject.name + " Got Tapped, changing Camera Index to " + CameraIndex);
         _camHandler.OnCameraChange.Invoke(CameraIndex);
 
         // I am Return Button bc I am 2D
-        gameObject.SetActive(false);
+        // gameObject.SetActive(false);
+        // Enable UI    
+        if (ZoomingIn) SetUIVisibility(true);
+        else gameObject.SetActive(false);
     }
 
     // 3D Gameobjects
@@ -51,8 +67,9 @@ public class UI_TapEffectCameraZoom : TappableGameobject
         _camHandler.OnCameraChange.Invoke(CameraIndex);
 
         // Enable UI    
-        SetUIVisibility(true);
-        
+        if (ZoomingIn) SetUIVisibility(true);
+        else gameObject.SetActive(false);
+
 
     }
 
