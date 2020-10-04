@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class UI_TapEffect : MonoBehaviour, IPooledObject
 {
+    public string PoolTag;
     public Vector3 SpawnPos;
     public float SpawnDistToCam;
 
@@ -57,8 +58,6 @@ public class UI_TapEffect : MonoBehaviour, IPooledObject
 
         // Set position of Plane to Pos
         _tapEffectPlane.SetActive(true);
-        //Vector3 transPos = _uiCamera.ScreenToWorldPoint(pos);
-        //_tapEffectPlane.transform.position = new Vector3 (transPos.x, transPos.y, _tapEffectPlane.transform.position.z);
         _runTapEffect = true;
         _counter = 0;
 
@@ -99,7 +98,9 @@ public class UI_TapEffect : MonoBehaviour, IPooledObject
         yield return new WaitUntil(() => _counter >= _lerpTime + (_lerpTime * .5f));
 
         _runTapEffect = false;
+        ObjectPooler.Instance.ReturnToPool(tag, gameObject);
         _tapEffectPlane.SetActive(false);
+
     }
 
     public void OnInstantiation()

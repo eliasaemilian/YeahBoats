@@ -17,5 +17,8 @@ public class BoatScriptable : ScriptableObject
     // Physics
     public float waterDrag;
     public float waterAngularDrag;
+    public float speed;
+    public float reversingSpeed;
+    public float rotationSpeed;
 
 }

@@ -2,22 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent (typeof (Rigidbody))]
+[RequireComponent (typeof (Rigidbody))] [RequireComponent (typeof (BoatBase))]
 public class SimpleBoatInput : MonoBehaviour
 {
-    Rigidbody _rb;
 
-    [SerializeField] float _speed = 3f;
-    [SerializeField] float _reversingSpeed = .8f;
-    [SerializeField] float _rSpeed = 10f;
+    private float _speed = 3f;
+    private float _reversingSpeed = .8f;
+    private float _rotationSpeed = 10f;
 
 
-    [SerializeField] bool _reversedInput = false; // TODO: [Refactoring] Move to Settings -> store in PlayerPrefs
+    [SerializeField] private bool _reversedInput = false; // TODO: [Refactoring] Move to Settings -> store in PlayerPrefs
 
-    
+    private Rigidbody _rb;
+    private BoatScriptable _boatSO;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        _boatSO = GetComponent<BoatBase>().BoatSO;
+        _speed = _boatSO.speed;
+        _reversingSpeed = _boatSO.reversingSpeed;
+        _rotationSpeed = _boatSO.rotationSpeed;
     }
 
    
@@ -40,7 +45,7 @@ public class SimpleBoatInput : MonoBehaviour
         else speed = -_reversingSpeed; //Reverse 
 
         Quaternion dirQ = Quaternion.LookRotation(dir);
-        Quaternion slerp = Quaternion.Slerp(transform.rotation, dirQ, dir.magnitude * _rSpeed * Time.deltaTime);
+        Quaternion slerp = Quaternion.Slerp(transform.rotation, dirQ, dir.magnitude * _rotationSpeed * Time.deltaTime);
 
         _rb.MoveRotation(slerp);
         _rb.AddForce(dir * speed * Time.deltaTime, ForceMode.Acceleration);

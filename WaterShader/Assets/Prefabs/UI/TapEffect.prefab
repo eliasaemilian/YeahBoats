@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7359006305527118343}
   - component: {fileID: 7359006305527118340}
   - component: {fileID: 7359006305527118341}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: TapPlane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,6 +55,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -79,6 +80,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &7359006305725918849
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,7 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7359006305725918850}
   - component: {fileID: 7359006305725918853}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: TapEffect
   m_TagString: TapEffect
   m_Icon: {fileID: 0}
@@ -123,6 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5848345769d2f374bbdaf1349632b528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PoolTag: 
   SpawnPos: {x: 0, y: 0, z: 0}
   SpawnDistToCam: 0
   _finalRadius: 1.7

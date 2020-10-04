@@ -35,6 +35,7 @@ public class WaterTappableHandler : TappableGameobject
             spawn = ObjectPooler.Instance.SpawnFromPool(_tapEffectPrefab.tag, transPos, _tapEffectPrefab.transform.rotation);
             spawn.GetComponent<UI_TapEffect>().SpawnDistToCam = dist; //TODO: david get this lesbian plant outta here
             spawn.GetComponent<UI_TapEffect>().SpawnPos = pos;
+            spawn.GetComponent<UI_TapEffect>().PoolTag = _tapEffectPrefab.tag;
             spawn.SetActive(true);
         }
 
