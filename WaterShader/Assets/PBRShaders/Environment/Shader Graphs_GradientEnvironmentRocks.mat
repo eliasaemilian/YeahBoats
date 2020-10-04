@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Shader Graphs_GradientEnvironmentRocks
+  m_Shader: {fileID: -6465566751694194690, guid: 2a75d8aa430ef9446b81956ace54069d,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Floats:
+    - _BlendLower: 1
+    - _BlendUpper: 0
+    m_Colors:
+    - _ColorBottom: {r: 0.60784316, g: 0.65882355, b: 0.61960787, a: 1}
+    - _ColorTop: {r: 0.6067996, g: 0.6603774, b: 0.6206901, a: 0}
+  m_BuildTextureStacks: []

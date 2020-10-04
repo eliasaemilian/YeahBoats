@@ -126,9 +126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c3ae53124b067b48a3972c38363ee28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 300
-  _reversingSpeed: 300
-  _rSpeed: 1
   _reversedInput: 0
 --- !u!95 &4883072358330463547
 Animator:
@@ -177,7 +174,6 @@ MonoBehaviour:
   _nPCSpots: {fileID: 0}
   _nPCFishermanPrefab: {fileID: 5550221785519434258, guid: e650014c855cff64884b701c316ae570,
     type: 3}
-  _boatLevels: {fileID: 11400000, guid: 705af923a2600044ca6635327be86112, type: 2}
   SpawnPoints: []
   FishingSpeedup:
     m_PersistentCalls:
@@ -222,7 +218,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7010876821273376837}
-  - component: {fileID: 7010876821273376842}
+  - component: {fileID: 7437341658134528383}
   m_Layer: 0
   m_Name: Bouyancy Samplers
   m_TagString: Untagged
@@ -249,7 +245,7 @@ Transform:
   m_Father: {fileID: 7010876820269769711}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7010876821273376842
+--- !u!114 &7437341658134528383
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -258,11 +254,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7010876821273376836}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 093dd533e00a403468194f077f702dff, type: 3}
+  m_Script: {fileID: 11500000, guid: efa4a3a41c2cc3c4692b62d6063ea3f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   depthBeforeSubmerged: 1
   displacementAmount: 3
+  waterDrag: 0
+  waterAngularDrag: 0
 --- !u!1 &7010876821366175072
 GameObject:
   m_ObjectHideFlags: 0

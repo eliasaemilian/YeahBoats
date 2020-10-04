@@ -9,12 +9,12 @@ public class BuoyancySampling : MonoBehaviour
     [SerializeField] private float displacementAmount = 3f; // change these for rigidbody properties
 
     private Transform[] _positionsSamplePoints;
-     
-    private float waterDrag; //TODO: move boat parameters to boat class
-    private float waterAngularDrag;
 
-   // private Boat myBoat;
-    private BoatScriptable _boatSO;
+
+    [SerializeField] protected float waterDrag; //TODO: move boat parameters to boat class
+    [SerializeField] protected float waterAngularDrag;
+
+
 
     private float _waveHeight;
 
@@ -31,12 +31,9 @@ public class BuoyancySampling : MonoBehaviour
         _positionsSamplePoints = new Transform[transform.childCount];
         for (int i = 0; i < transform.childCount; i++) _positionsSamplePoints[i] = transform.GetChild(i);
 
-        // Store Boat Info
-      //  myBoat = GetComponentInParent<BoatHandler>().ThisBoat;
-        _boatSO = GetComponentInParent<BoatBase>().BoatSO;
-        waterDrag = _boatSO.waterDrag;
-        waterAngularDrag = _boatSO.waterAngularDrag;
         _rb = GetComponentInParent<Rigidbody>();
+
+        OnInitialize();
     }
 
     void FixedUpdate()
@@ -58,6 +55,9 @@ public class BuoyancySampling : MonoBehaviour
         }
 
     }
+
+    // Gets called in Start
+    public virtual void OnInitialize() { }
 
     /// <summary>
     /// Applies a force in opposition to the water plane and in relation to the objects body parameters
