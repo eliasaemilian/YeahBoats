@@ -22,9 +22,8 @@ public class ToDAdjustable_PostProcessing : TimeOfDayAdjustable
         AnalyzeVolume();
     }
 
-    public override void OnTimeOfDayValueChange()
+    public override void OnTimeOfDayValueChange(float newTime)
     {
-        base.OnTimeOfDayValueChange();
 
         if (_bloom != null)
         {

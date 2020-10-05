@@ -1,12 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using LightType = UnityEngine.LightType;
 using RenderSettings = UnityEngine.RenderSettings;
+
+[Serializable] public class TimeOfDayUpdated : UnityEvent<float> { }
+
 
 [ExecuteAlways]
 public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont come at me luca
 {
+    public TimeOfDayUpdated TimeOfDayIsUpdated = new TimeOfDayUpdated();
+
     [SerializeField] private bool _pause;
 
     [SerializeField] private string Time;
@@ -52,6 +59,8 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
         UpdateValuesForTime();
         UpdateGlobalLightingForTimeOfDay();
         SetShaderProperties();
+
+        TimeOfDayIsUpdated.Invoke(_timeOfDay);
 
     }
 
