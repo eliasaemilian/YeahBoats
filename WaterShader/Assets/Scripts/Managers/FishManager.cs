@@ -49,7 +49,7 @@ public class FishManager : MonoBehaviour
 
     private void UpdateFishValue()
     {
-        //Debug.Log("FishingrodLevel : "+ _lM.FishingRodLevel+" MapLevel : "+ _lM.CurrentMapLevel+" Multiplier : "+ _lM.Multiplier);
+        UnityEngine.Debug.Log("FishingrodLevel : "+ _lM.FishingRodLevel+" MapLevel : "+ _lM.CurrentMapLevel+" Multiplier : "+ _lM.Multiplier);
         _fishValue = (_baseFishValue + 2* Mathf.Sqrt(_lM.FishingRodLevel)) * Mathf.Sqrt(_lM.CurrentMapLevel) * _lM.Multiplier;
     }
 
