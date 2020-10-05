@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 /// <summary>
 /// Managesh the fishes, their cost and rarity
@@ -48,6 +49,7 @@ public class FishManager : MonoBehaviour
 
     private void UpdateFishValue()
     {
+        //Debug.Log("FishingrodLevel : "+ _lM.FishingRodLevel+" MapLevel : "+ _lM.CurrentMapLevel+" Multiplier : "+ _lM.Multiplier);
         _fishValue = (_baseFishValue + 2* Mathf.Sqrt(_lM.FishingRodLevel)) * Mathf.Sqrt(_lM.CurrentMapLevel) * _lM.Multiplier;
     }
 
