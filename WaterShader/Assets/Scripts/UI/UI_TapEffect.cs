@@ -56,6 +56,9 @@ public class UI_TapEffect : MonoBehaviour, IPooledObject
     {
         if (_runTapEffect) return;
 
+
+        Debug.Log("Tapping Fish Effect");
+
         // Set position of Plane to Pos
         _tapEffectPlane.SetActive(true);
         _runTapEffect = true;
@@ -98,7 +101,8 @@ public class UI_TapEffect : MonoBehaviour, IPooledObject
         yield return new WaitUntil(() => _counter >= _lerpTime + (_lerpTime * .5f));
 
         _runTapEffect = false;
-        ObjectPooler.Instance.ReturnToPool(tag, gameObject);
+        ObjectPooler.Instance.ReturnToPool(PoolTag, gameObject);
+        Debug.Log("Returning to pool " + PoolTag);
         _tapEffectPlane.SetActive(false);
 
     }
@@ -111,9 +115,10 @@ public class UI_TapEffect : MonoBehaviour, IPooledObject
     public void OnObjectSpawn()
     {
         // do the fade
-     //   if (SpawnPos == null || SpawnDistToCam == 0) Debug.LogError("Heck");
+        //   if (SpawnPos == null || SpawnDistToCam == 0) Debug.LogError("Heck");
 
         //OnTapFish_Effect(SpawnPos, SpawnDistToCam);
+        OnEnable();
     }
 
     public void OnObjectDespawn()
