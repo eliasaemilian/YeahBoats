@@ -63,6 +63,7 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
         if (sysMin > 30) sysHours++;
         _timeOfDay = Mathf.Clamp01(sysHours / 24f);
 
+
 #if UNITY_EDITOR
         if (_useDebugTime)
         {
@@ -71,8 +72,9 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
         }
 #endif
 
-       
+
     }
+
 
     private void UpdateGlobalLightingForTimeOfDay()
     {
