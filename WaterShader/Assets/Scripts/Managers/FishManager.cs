@@ -29,11 +29,6 @@ public class FishManager : MonoBehaviour
         _lM.FishingRodUpdate.AddListener(UpdateFishValue);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     //does all needed to get fish
     public float GetFish()

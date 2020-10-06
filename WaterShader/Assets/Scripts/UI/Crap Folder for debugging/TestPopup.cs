@@ -10,7 +10,7 @@ public class TestPopup : MonoBehaviour
     void Start()
     {
         Transform g = Instantiate(CoinPopupPrefab, transform.position, Camera.transform.rotation);
-        g.GetComponent<CoinPopup>().Setup(25);
+        g.GetComponent<Popup>().Setup(25);
 
     }
 
@@ -19,8 +19,9 @@ public class TestPopup : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Transform g = Instantiate(CoinPopupPrefab, transform.position, Camera.transform.rotation);
-            g.GetComponent<CoinPopup>().Setup(25);
+            g.GetComponent<Popup>().Setup(25);
         }
     }
 
+    
 }
