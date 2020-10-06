@@ -79,7 +79,7 @@ namespace UnityEngine.Rendering.Universal
             }
             else
             {
-                Destroy(obj);
+                DestroyImmediate(obj); // should be destroy but this gets called in editor lo :/
             }
         }
 
@@ -102,11 +102,6 @@ namespace UnityEngine.Rendering.Universal
                 if (_reflectionCamera == null)
                     _reflectionCamera = CreateMirrorObjects();
 
-                if (_reflectionCamera.orthographic)
-                {
-                    Debug.Log("AHA");
-                    return;
-                }
             }
             else _reflectionCamera = DebugCam;
 
@@ -216,8 +211,8 @@ namespace UnityEngine.Rendering.Universal
             reflectionCamera.transform.SetPositionAndRotation(t.position, t.rotation);
             reflectionCamera.depth = -10;
             reflectionCamera.enabled = false;
-            //    go.hideFlags = HideFlags.HideAndDontSave;
-            go.hideFlags = HideFlags.DontSave;
+               go.hideFlags = HideFlags.HideAndDontSave;
+           // go.hideFlags = HideFlags.DontSave;
 
             return reflectionCamera;
         }
