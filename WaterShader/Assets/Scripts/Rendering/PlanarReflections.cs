@@ -26,6 +26,8 @@ namespace UnityEngine.Rendering.Universal
             public bool m_Shadows;
         }
 
+        [SerializeField] Camera DebugCam;
+
         [SerializeField]
         public PlanarReflectionSettings m_settings = new PlanarReflectionSettings();
 
@@ -95,8 +97,18 @@ namespace UnityEngine.Rendering.Universal
 
         private void UpdateReflectionCamera(Camera realCamera)
         {
-            if (_reflectionCamera == null)
-                _reflectionCamera = CreateMirrorObjects();
+            if (DebugCam == null)
+            {
+                if (_reflectionCamera == null)
+                    _reflectionCamera = CreateMirrorObjects();
+
+                if (_reflectionCamera.orthographic)
+                {
+                    Debug.Log("AHA");
+                    return;
+                }
+            }
+            else _reflectionCamera = DebugCam;
 
             // find out the reflection plane: position and normal in world space
             Vector3 pos = Vector3.zero;
@@ -204,7 +216,8 @@ namespace UnityEngine.Rendering.Universal
             reflectionCamera.transform.SetPositionAndRotation(t.position, t.rotation);
             reflectionCamera.depth = -10;
             reflectionCamera.enabled = false;
-            go.hideFlags = HideFlags.HideAndDontSave;
+            //    go.hideFlags = HideFlags.HideAndDontSave;
+            go.hideFlags = HideFlags.DontSave;
 
             return reflectionCamera;
         }
