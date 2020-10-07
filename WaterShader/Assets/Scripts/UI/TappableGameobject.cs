@@ -52,7 +52,7 @@ public class TappableGameobject : MonoBehaviour, ITappable
     // for GOs with a 2D Collider
     public virtual void OnTap(Touch touch, Vector3 pos)
     {
-       // Debug.Log(gameObject.name + " got Tapped, am 2D");
+        Debug.Log(gameObject.name + " got Tapped, am 2D");
     }
 
     // for GOs with a 3D Collider

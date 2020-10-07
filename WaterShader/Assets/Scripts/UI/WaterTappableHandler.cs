@@ -42,7 +42,7 @@ public class WaterTappableHandler : TappableGameobject
             spawn.SetActive(true);
 
             //Shitty Popup is here
-            PopupManager.Instance.CallFishAndCoinPopup(transPos);
+            PopupManager.Instance.CallFishAndCoinPopup(transPos + new Vector3(0,1,0));
         }
 
     }

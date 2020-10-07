@@ -1,4 +1,5 @@
-﻿using Shapes2D;
+﻿using Shapes;
+using Shapes2D;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
@@ -11,12 +12,14 @@ public class UI_PannelOnEnable : MonoBehaviour
     [SerializeField] private LevelManager LM = null;
     [SerializeField] private MoneyManager MM = null;
     private Shape _shape;
+    private Rectangle _rect;
     public TextMeshProUGUI UpgradeCost = null;
     public TextMeshProUGUI UpgradeDescription = null;
     private int _upgradeCost;
     void OnEnable()
     {
-        _shape = GetComponent<Shape>();
+        //_shape = GetComponent<Shape>();
+        _rect = GetComponent<Rectangle>();
         SetUpgradeCost();
         SetColor();
     }
@@ -59,18 +62,19 @@ public class UI_PannelOnEnable : MonoBehaviour
 
     public void SetColor()
     {
-        if (_shape != null)
+        if (_rect != null)
         {
 
         if(_upgradeCost < MM.Money)
         {
-             _shape.settings.fillColor = new Color(0.9245283f, 0.2791029f, 0.2791029f, 1);
-        }
+             //_shape.settings.fillColor = new Color(0.9245283f, 0.2791029f, 0.2791029f, 1);
+             _rect.Color = new Color(0.9245283f, 0.2791029f, 0.2791029f, 1);
+            }
         else
         {
-            _shape.settings.fillColor = new Color(0.5f, 0.5f, 0.5f, 1);
-
-        }
+            //_shape.settings.fillColor = new Color(0.5f, 0.5f, 0.5f, 1);
+            _rect.Color = new Color(0.5f, 0.5f, 0.5f, 1);
+            }
         }
     }
 

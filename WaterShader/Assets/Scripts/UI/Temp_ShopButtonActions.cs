@@ -10,7 +10,9 @@ public enum UpgradeType
     Fisherman,
     FishingHook,
     FishingRod,
-    FishingSpeed
+    FishingSpeed,
+    TapCost,
+    Tapfish
 }
 public class Temp_ShopButtonActions : MonoBehaviour
 {
@@ -18,7 +20,9 @@ public class Temp_ShopButtonActions : MonoBehaviour
     [SerializeField] private LevelManager LM = null;
     [SerializeField] private List<UI_PannelOnEnable> _pannels = null;
     [SerializeField] private GameObject _notEnoughMoneyPannel = null;
+    [SerializeField] private GameObject _notEnoughMoneyText = null;
     [SerializeField] private GameObject _fishermanFailHirePannel = null;
+    [SerializeField] private GameObject _fishermanFailHireText = null;
 
     public void OnClickLighthouseVoyageButton()
     {
@@ -40,6 +44,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
         {
             Debug.Log("I can not Level Up");
             _notEnoughMoneyPannel.SetActive(true);
+            _notEnoughMoneyText.SetActive(true);
 
         }
     }
@@ -54,6 +59,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
         {
             Debug.Log("I can not Level Up");
             _notEnoughMoneyPannel.SetActive(true);
+            _notEnoughMoneyText.SetActive(true);
 
         }
     }
@@ -71,11 +77,13 @@ public class Temp_ShopButtonActions : MonoBehaviour
             {
                 //Hire failed
                 _fishermanFailHirePannel.SetActive(true);
+                _fishermanFailHireText.SetActive(true);
             }
         }
         else
         {
             _notEnoughMoneyPannel.SetActive(true);
+            _notEnoughMoneyText.SetActive(true);
         }
     }
 
