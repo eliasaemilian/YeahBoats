@@ -13,6 +13,8 @@ public class NPC_Fisherman : MonoBehaviour
     private DataManager _dM = DataManager.Instance;
     private PopupManager _pM = PopupManager.Instance;
 
+    private Vector3 _offset;
+
     public BoatBase BB;
 
     //MVP
@@ -38,6 +40,7 @@ public class NPC_Fisherman : MonoBehaviour
         _timerTapMultiplier = 1.5f;
         _lM.NPCUpdate.AddListener(UpdateValues);
         BB.FishingSpeedup.AddListener(ReduceTimer);
+        _offset = transform.position + new Vector3(0, 2, 0);
         
         rend = GetComponentInChildren<Renderer>();
 
@@ -63,7 +66,8 @@ public class NPC_Fisherman : MonoBehaviour
         StartCoroutine(NPCAnim());
 
         //Popup
-        _pM.CallCoinPopup(transform.position, (int)FishCost);
+        Debug.Log("Calling Popup");
+        _pM.CallCoinPopup(_offset, (int)FishCost);
 
         
     }

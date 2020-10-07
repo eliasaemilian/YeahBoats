@@ -7,6 +7,8 @@ public class PopupManager : MonoBehaviour
 {
     public static PopupManager Instance;
 
+    [SerializeField] private LevelManager _lM = null;
+
     [SerializeField] private GameObject _coinPopup;
     [SerializeField] private GameObject _FishPopup;
     [SerializeField] private Camera _camera;
@@ -16,15 +18,6 @@ public class PopupManager : MonoBehaviour
         Instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector3 pos = new Vector3(0, 3, 0);
-            CallFishAndCoinPopup(pos, 15,1);
-        }
-    }
 
     public void CallCoinPopup(Vector3 position, int value)
     {
@@ -37,9 +30,9 @@ public class PopupManager : MonoBehaviour
         g.GetComponent<Popup>().Setup(value);
     }
 
-    public void CallFishAndCoinPopup(Vector3 position, int value, int fish)
+    public void CallFishAndCoinPopup(Vector3 position)
     {
-        StartCoroutine(CallCoroutine(position, value,fish));
+        StartCoroutine(CallCoroutine(position, TapCost(), _lM.TapFishLevel));
     }
 
     IEnumerator CallCoroutine(Vector3 position, int value, int fish)
@@ -47,5 +40,10 @@ public class PopupManager : MonoBehaviour
         CallFishPopup(position, fish);
         yield return new WaitForSeconds(0.4f);
         CallCoinPopup(position, value);
+    }
+
+    private int TapCost()
+    {
+        return (int)(_lM.TapCoinLevel * 1.4f);
     }
 }
