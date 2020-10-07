@@ -11,6 +11,8 @@ public class Savedata : MonoBehaviour
     public int BoatStorageLevel = 1;
     public int Multiplier = 1;
     public int OwnedFishermen = 1;
+    public int TapCoinLevel = 1;
+    public int TapFishLevel = 1;
 
     public float Money = 0;
     public int Multiplyer = 1;
@@ -33,6 +35,8 @@ public class Savedata : MonoBehaviour
             BoatStorageLevel = data.BoatStorageLevel;
             Multiplier = data.Multiplier;
             OwnedFishermen = data.OwnedFishermen;
+            TapCoinLevel = data.TapCoinLevel;
+            TapFishLevel = data.TapFishLevel;
             Money = data.Money;
             Multiplyer = data.Multiplyer;
             //BoatLevels = data.BoatLevels;

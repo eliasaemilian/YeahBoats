@@ -63,7 +63,7 @@ public class NPC_Fisherman : MonoBehaviour
         StartCoroutine(NPCAnim());
 
         //Popup
-        //_pM.CallCoinPopup(transform.position, (int)FishCost);
+        _pM.CallCoinPopup(transform.position, (int)FishCost);
 
         
     }
