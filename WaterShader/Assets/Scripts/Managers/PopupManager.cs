@@ -8,6 +8,7 @@ public class PopupManager : MonoBehaviour
     public static PopupManager Instance;
 
     [SerializeField] private LevelManager _lM = null;
+    [SerializeField] private MoneyManager _mM = null;
 
     [SerializeField] private GameObject _coinPopup;
     [SerializeField] private GameObject _FishPopup;
@@ -45,7 +46,10 @@ public class PopupManager : MonoBehaviour
 
     public void CallFishAndCoinPopup(Vector3 position)
     {
-        StartCoroutine(CallCoroutine(position, TapCost(), _lM.TapFishLevel));
+        int cost = CalculateCost();
+        StartCoroutine(CallCoroutine(position,cost, _lM.TapFishLevel));
+
+        _mM.AddMoney(cost);
     }
 
     IEnumerator CallCoroutine(Vector3 position, int value, int fish)
@@ -58,5 +62,10 @@ public class PopupManager : MonoBehaviour
     private int TapCost()
     {
         return (int)(_lM.TapCoinLevel * 1.4f);
+    }
+    private int CalculateCost()
+    {
+        int cost = TapCost() * _lM.TapFishLevel;
+        return cost;
     }
 }
