@@ -11,6 +11,8 @@ public class NPC_Fisherman : MonoBehaviour
     private MoneyManager _mM = MoneyManager.Instance;
     private FishManager _fM = FishManager.Instance;
     private DataManager _dM = DataManager.Instance;
+    private PopupManager _pM = PopupManager.Instance;
+
     public BoatBase BB;
 
     //MVP
@@ -56,16 +58,13 @@ public class NPC_Fisherman : MonoBehaviour
 
     private void CatchAFish()
     {
-        _mM.AddMoney( _fM.GetFish());
+        float FishCost = _fM.GetFish();
+        _mM.AddMoney(FishCost);
         StartCoroutine(NPCAnim());
 
-        //if (BB.AddFishToStorage())
-        //{
-        //}
-        //else
-        //{
-        //    Debug.Log("Your storage is full, go back to the Port to sell your fish");
-        //}
+        //Popup
+        //_pM.CallCoinPopup(transform.position, (int)FishCost);
+
         
     }
 
