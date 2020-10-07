@@ -6,9 +6,9 @@ public class UI_VectorElementScaler : MonoBehaviour
 {
     [SerializeField, Range(0,1), Tooltip("Use the Gizmos Sphere to set the position of this GO relative to screenspace")] private float _screenPosX = .5f;
     [SerializeField, Range(0,1), Tooltip("Use the Gizmos Sphere to set the position of this GO relative to screenspace")] private float _screenPosY = .5f;
-    [SerializeField] private Camera _uiCamera;
+    [SerializeField] private Camera _uiCamera = null;
 
-    [SerializeField, Tooltip("All Canvas UI that needs to be centered to the same point as this GO, put in this list")] private List<RectTransform> _canvasUIElements;
+    [SerializeField, Tooltip("All Canvas UI that needs to be centered to the same point as this GO, put in this list")] private List<RectTransform> _canvasUIElements = null;
 
 
     private void Start()
