@@ -40,6 +40,9 @@ public class WaterTappableHandler : TappableGameobject
             spawn.GetComponent<UI_TapEffect>().SpawnPos = pos;
             spawn.GetComponent<UI_TapEffect>().PoolTag = _tapEffectPrefab.tag;
             spawn.SetActive(true);
+
+            //Shitty Popup is here
+            PopupManager.Instance.CallFishAndCoinPopup(transPos);
         }
 
     }

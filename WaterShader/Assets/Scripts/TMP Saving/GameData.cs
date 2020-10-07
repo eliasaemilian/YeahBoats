@@ -12,6 +12,8 @@ public class GameData
     public int BoatStorageLevel;
     public int Multiplier;
     public int OwnedFishermen;
+    public int TapCoinLevel;
+    public int TapFishLevel;
 
     public float Money;
     public int Multiplyer;
@@ -27,6 +29,8 @@ public class GameData
         BoatStorageLevel = data.BoatStorageLevel;
         Multiplier = data.Multiplier;
         OwnedFishermen = data.OwnedFishermen;
+        TapCoinLevel = data.TapCoinLevel;
+        TapFishLevel = data.TapFishLevel;
         //BoatLevels = data.BoatLevels;
 
         Money = data.Money;

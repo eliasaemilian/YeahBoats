@@ -24,6 +24,13 @@ public class LevelManager : MonoBehaviour
 
     public int CurrentBoatLevel;
     public int MaxBoatLevel;
+
+    private int _tapCoinLevel;
+    public int TapCoinLevel { get { return _tapCoinLevel; } set { _tapCoinLevel = value; } }
+
+    private int _tapFishLevel;
+    public int TapFishLevel { get { return _tapFishLevel; } set { _tapFishLevel = value; } }
+
     private int _ownedFisherman;
     public int OwnedFishermen { get { return _ownedFisherman; } set { _ownedFisherman = value; _boatSkillLevels.NPCFishermanAmmount = value; } }
 
@@ -228,6 +235,8 @@ public class LevelManager : MonoBehaviour
         Multiplier = DM.DataContainer.Multiplier;
         _boatStorageLevel = DM.DataContainer.BoatStorageLevel;
         _ownedFisherman = DM.DataContainer.OwnedFishermen;
+        TapCoinLevel = DM.DataContainer.TapCoinLevel;
+        TapFishLevel = DM.DataContainer.TapFishLevel;
         //BoatLevels = DM.DataContainer.BoatLevels;
     }
 
@@ -240,6 +249,8 @@ public class LevelManager : MonoBehaviour
         DM.DataContainer.Multiplier = Multiplier;
         DM.DataContainer.BoatStorageLevel = _boatStorageLevel;
         DM.DataContainer.OwnedFishermen = OwnedFishermen;
+        DM.DataContainer.TapCoinLevel = TapCoinLevel;
+        DM.DataContainer.TapFishLevel = TapFishLevel;
         //DM.DataContainer.BoatLevels = BoatLevels;
     }
 

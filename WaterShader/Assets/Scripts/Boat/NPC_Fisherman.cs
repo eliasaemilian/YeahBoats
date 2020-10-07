@@ -13,6 +13,8 @@ public class NPC_Fisherman : MonoBehaviour
     private DataManager _dM = DataManager.Instance;
     private PopupManager _pM = PopupManager.Instance;
 
+    private Vector3 _offset;
+
     public BoatBase BB;
 
     //MVP
@@ -27,6 +29,8 @@ public class NPC_Fisherman : MonoBehaviour
     [SerializeField]private float _timer;
     private float _timerTapMultiplier;
 
+    private Camera _uiCamera;
+    private UI_InputHandler _inputHandler;
     
     // Start is called before the first frame update
     void Start()
@@ -38,8 +42,12 @@ public class NPC_Fisherman : MonoBehaviour
         _timerTapMultiplier = 1.5f;
         _lM.NPCUpdate.AddListener(UpdateValues);
         BB.FishingSpeedup.AddListener(ReduceTimer);
+        _offset = transform.position + new Vector3(0, 2, 0);
         
         rend = GetComponentInChildren<Renderer>();
+
+        _inputHandler = FindObjectOfType<UI_InputHandler>();
+        if (_uiCamera == null) _uiCamera = _inputHandler.UICamera;
 
     }
 
@@ -63,7 +71,10 @@ public class NPC_Fisherman : MonoBehaviour
         StartCoroutine(NPCAnim());
 
         //Popup
-        //_pM.CallCoinPopup(transform.position, (int)FishCost);
+        Debug.Log("Calling Popup");
+        Vector3 transPos = Camera.main.WorldToScreenPoint(_offset);
+        transPos = _uiCamera.ScreenToWorldPoint(transPos);
+        _pM.CallCoinPopup(transPos, (int)FishCost);
 
         
     }
