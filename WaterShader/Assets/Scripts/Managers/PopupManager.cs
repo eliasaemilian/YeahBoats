@@ -11,22 +11,35 @@ public class PopupManager : MonoBehaviour
 
     [SerializeField] private GameObject _coinPopup;
     [SerializeField] private GameObject _FishPopup;
+
+    [SerializeField] private Transform _PopupContainer;
+
     [SerializeField] private Camera _camera;
+
+    private Transform _canvas;
 
     void Awake()
     {
         Instance = this;
     }
 
+    void Start()
+    {
+        _canvas = FindObjectOfType<Canvas>().transform;
+        if (_canvas == null) Debug.LogError("You fucked up where is Canvas??");
+    }
+
 
     public void CallCoinPopup(Vector3 position, int value)
     {
         GameObject g = Instantiate(_coinPopup, position, _camera.transform.rotation);
+        g.transform.SetParent(_PopupContainer);
         g.GetComponent<Popup>().Setup(value);
     }
     public void CallFishPopup(Vector3 position, int value)
     {
         GameObject g = Instantiate(_FishPopup, position, _camera.transform.rotation);
+        g.transform.SetParent(_PopupContainer);
         g.GetComponent<Popup>().Setup(value);
     }
 

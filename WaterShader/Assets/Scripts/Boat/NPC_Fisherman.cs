@@ -29,6 +29,8 @@ public class NPC_Fisherman : MonoBehaviour
     [SerializeField]private float _timer;
     private float _timerTapMultiplier;
 
+    private Camera _uiCamera;
+    private UI_InputHandler _inputHandler;
     
     // Start is called before the first frame update
     void Start()
@@ -43,6 +45,9 @@ public class NPC_Fisherman : MonoBehaviour
         _offset = transform.position + new Vector3(0, 2, 0);
         
         rend = GetComponentInChildren<Renderer>();
+
+        _inputHandler = FindObjectOfType<UI_InputHandler>();
+        if (_uiCamera == null) _uiCamera = _inputHandler.UICamera;
 
     }
 
@@ -67,7 +72,9 @@ public class NPC_Fisherman : MonoBehaviour
 
         //Popup
         Debug.Log("Calling Popup");
-        _pM.CallCoinPopup(_offset, (int)FishCost);
+        Vector3 transPos = Camera.main.WorldToScreenPoint(_offset);
+        transPos = _uiCamera.ScreenToWorldPoint(transPos);
+        _pM.CallCoinPopup(transPos, (int)FishCost);
 
         
     }
