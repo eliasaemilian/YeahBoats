@@ -26,8 +26,6 @@ namespace UnityEngine.Rendering.Universal
             public bool m_Shadows;
         }
 
-        [SerializeField] Camera DebugCam;
-
         [SerializeField]
         public PlanarReflectionSettings m_settings = new PlanarReflectionSettings();
 
@@ -99,13 +97,8 @@ namespace UnityEngine.Rendering.Universal
 
         private void UpdateReflectionCamera(Camera realCamera)
         {
-            if (DebugCam == null)
-            {
-                if (_reflectionCamera == null)
-                    _reflectionCamera = CreateMirrorObjects();
-
-            }
-            else _reflectionCamera = DebugCam;
+            if (_reflectionCamera == null)
+                _reflectionCamera = CreateMirrorObjects();
 
             // find out the reflection plane: position and normal in world space
             Vector3 pos = Vector3.zero;

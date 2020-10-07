@@ -11,7 +11,7 @@ public class WaterTappableHandler : TappableGameobject
     private Camera _uiCamera;
     private UI_JoystickHandler _joystickHandler;
 
-    public static UnityEvent FishingTap = new UnityEvent();
+    public static UnityEvent FishingTap = new UnityEvent(); // [unused]
 
 
 

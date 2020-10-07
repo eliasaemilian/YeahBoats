@@ -14,21 +14,21 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
 {
     public TimeOfDayUpdated TimeOfDayIsUpdated = new TimeOfDayUpdated();
 
-    [SerializeField] private bool _pause;
+    [SerializeField] private bool _pause = false;
 
-    [SerializeField] private string Time;
-    [SerializeField] private bool _useDebugTime;
+    [SerializeField] private string Time = "";
+    [SerializeField] private bool _useDebugTime = false;
     [SerializeField, Range(0, 1)] private float _timeOfDayDebug = 0f;
 
     [SerializeField] private float _timeOfDay; // Range between 0-1
 
     private float _currentSunY, _currentMoonY;
 
-    [SerializeField] private Light _sun;  
-    [SerializeField] private Light _moon;
+    [SerializeField] private Light _sun = null;  
+    [SerializeField] private Light _moon = null;
 
 
-    [SerializeField] private LightSettings _lightSettings;
+    [SerializeField] private LightSettings _lightSettings = null;
 
 
 

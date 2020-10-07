@@ -7,10 +7,10 @@ public class TimeOfDayAdjustable_Light : TimeOfDayAdjustable
     private Light _light;
 
     // put in SO eventually I gueess mayhaps
-    [SerializeField] private float _maxIntensity;
+    [SerializeField] private float _maxIntensity = 1f;
 
-    [SerializeField] private AnimationCurve _lightIntensity;
-    [SerializeField] private Gradient _lightColor;
+    [SerializeField] private AnimationCurve _lightIntensity = null;
+    [SerializeField] private Gradient _lightColor = null;
 
 
     public override void OnInitialize()
