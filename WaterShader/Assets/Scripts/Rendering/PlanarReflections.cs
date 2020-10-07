@@ -85,9 +85,11 @@ namespace UnityEngine.Rendering.Universal
 
         private void UpdateCamera(Camera src, Camera dest)
         {
+            if (src.orthographic) return;
             if (dest == null) return;
 
             dest.CopyFrom(src);
+            dest.tag = "Untagged";
             dest.useOcclusionCulling = false;
             if (dest.gameObject.TryGetComponent(out UniversalAdditionalCameraData camData))
             {
@@ -240,7 +242,7 @@ namespace UnityEngine.Rendering.Universal
         private void ExecutePlanarReflections(ScriptableRenderContext context, Camera camera)
         {
             // we dont want to render planar reflections in reflections or previews
-            if (camera.cameraType == CameraType.Reflection || camera.cameraType == CameraType.Preview)
+            if (camera.cameraType == CameraType.Reflection || camera.cameraType == CameraType.Preview || camera.orthographic)
                 return;
 
             UpdateReflectionCamera(camera); // create reflected camera
