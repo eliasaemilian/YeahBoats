@@ -20,9 +20,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
     [SerializeField] private LevelManager LM = null;
     [SerializeField] private List<UI_PannelOnEnable> _pannels = null;
     [SerializeField] private GameObject _notEnoughMoneyPannel = null;
-    [SerializeField] private GameObject _notEnoughMoneyText = null;
     [SerializeField] private GameObject _fishermanFailHirePannel = null;
-    [SerializeField] private GameObject _fishermanFailHireText = null;
 
     public void OnClickLighthouseVoyageButton()
     {
@@ -37,14 +35,13 @@ public class Temp_ShopButtonActions : MonoBehaviour
         {
             //TODO: Particle effect
             Debug.Log("I can Level Up");
-            LM.FishingHookLevel = LM.Levelup(LM.FishingHookLevel, LM.BoatSkillLevelCosts.FishingHookCost, LM.FishingHookUpdate);
+            LM.FishingHookLevel = LM.Levelup(LM.FishingHookLevel, LM.BoatSkillLevelCosts.FishingHookCost);
             ResetColors();
         }
         else
         {
             Debug.Log("I can not Level Up");
             _notEnoughMoneyPannel.SetActive(true);
-            _notEnoughMoneyText.SetActive(true);
 
         }
     }
@@ -52,18 +49,42 @@ public class Temp_ShopButtonActions : MonoBehaviour
     {
         if (LM.CheckIfICanLevelup(LM.FishingRodLevel,LM.BoatSkillLevelCosts.FishingRodCost))
         {
-            LM.FishingRodLevel = LM.Levelup(LM.FishingRodLevel, LM.BoatSkillLevelCosts.FishingRodCost, LM.FishingRodUpdate);
+            LM.FishingRodLevel = LM.Levelup(LM.FishingRodLevel, LM.BoatSkillLevelCosts.FishingRodCost);
             ResetColors();
         }
         else
         {
             Debug.Log("I can not Level Up");
             _notEnoughMoneyPannel.SetActive(true);
-            _notEnoughMoneyText.SetActive(true);
 
         }
     }
-
+    public void OnClickUpgradeTapCoinButton()
+    {
+        if (LM.CheckIfICanLevelup(LM.TapCoinLevel, LM.IndependentBoatSkillLevelCosts.TapCoinCost))
+        {
+            LM.TapCoinLevel = LM.Levelup(LM.TapCoinLevel, LM.IndependentBoatSkillLevelCosts.TapCoinCost);
+            ResetColors();
+        }
+        else
+        {
+            Debug.Log("I can not Level Up");
+            _notEnoughMoneyPannel.SetActive(true);
+        }
+    }
+    public void OnClickUpgradeTapFishButton()
+    {
+        if (LM.CheckIfICanLevelup(LM.TapFishLevel, LM.IndependentBoatSkillLevelCosts.TapFishCost))
+        {
+            LM.TapFishLevel = LM.Levelup(LM.TapFishLevel, LM.IndependentBoatSkillLevelCosts.TapFishCost);
+            ResetColors();
+        }
+        else
+        {
+            Debug.Log("I can not Level Up");
+            _notEnoughMoneyPannel.SetActive(true);
+        }
+    }
     public void OnClickPubHireMenButton()
     {
         if (LM.CheckIfICanLevelup(LM.OwnedFishermen, LM.BoatSkillLevelCosts.FishermanCost))
@@ -71,19 +92,17 @@ public class Temp_ShopButtonActions : MonoBehaviour
             if(LM.ChanceLevelupForFisherman(25))
             {
                 //Hire succeeded
-                LM.OwnedFishermen = LM.Levelup(LM.OwnedFishermen, LM.BoatSkillLevelCosts.FishermanCost, LM.NPCUpdate);
+                LM.OwnedFishermen = LM.Levelup(LM.OwnedFishermen, LM.BoatSkillLevelCosts.FishermanCost);
             }
             else
             {
                 //Hire failed
                 _fishermanFailHirePannel.SetActive(true);
-                _fishermanFailHireText.SetActive(true);
             }
         }
         else
         {
             _notEnoughMoneyPannel.SetActive(true);
-            _notEnoughMoneyText.SetActive(true);
         }
     }
 

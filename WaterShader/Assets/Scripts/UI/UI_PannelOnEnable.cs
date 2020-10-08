@@ -12,14 +12,12 @@ public class UI_PannelOnEnable : MonoBehaviour
     [SerializeField] private LevelManager LM = null;
     [SerializeField] private MoneyManager MM = null;
     private Shape _shape;
-    private Rectangle _rect;
     public TextMeshProUGUI UpgradeCost = null;
     public TextMeshProUGUI UpgradeDescription = null;
     private int _upgradeCost;
     void OnEnable()
     {
-        //_shape = GetComponent<Shape>();
-        _rect = GetComponent<Rectangle>();
+        _shape = GetComponent<Shape>();
         SetUpgradeCost();
         SetColor();
     }
@@ -53,6 +51,16 @@ public class UI_PannelOnEnable : MonoBehaviour
                 _upgradeCost = LM.BoatSkillLevelCosts.FishingSpeedCost[LM.NPCFishermanLevel];
                 SetDescription(LM.NPCFishermanLevel);
                 break;
+            case UpgradeType.TapCost:
+                UpgradeCost.text = "Upgrade for : " + LM.IndependentBoatSkillLevelCosts.TapCoinCost[LM.TapCoinLevel].ToString();
+                _upgradeCost = LM.IndependentBoatSkillLevelCosts.TapCoinCost[LM.TapCoinLevel];
+                SetDescription(LM.TapCoinLevel);
+                break;
+            case UpgradeType.Tapfish:
+                UpgradeCost.text = "Upgrade for : " + LM.IndependentBoatSkillLevelCosts.TapFishCost[LM.TapFishLevel].ToString();
+                _upgradeCost = LM.IndependentBoatSkillLevelCosts.TapFishCost[LM.TapFishLevel];
+                SetDescription(LM.TapFishLevel);
+                break;
             default:
                 UpgradeCost.text = "no cost found";
                 break;
@@ -62,18 +70,18 @@ public class UI_PannelOnEnable : MonoBehaviour
 
     public void SetColor()
     {
-        if (_rect != null)
+        if (_shape != null)
         {
 
         if(_upgradeCost < MM.Money)
         {
-             //_shape.settings.fillColor = new Color(0.9245283f, 0.2791029f, 0.2791029f, 1);
-             _rect.Color = new Color(0.9245283f, 0.2791029f, 0.2791029f, 1);
+             _shape.settings.fillColor = new Color(0.9245283f, 0.2791029f, 0.2791029f, 1);
+             //_rect.Color = new Color(0.9245283f, 0.2791029f, 0.2791029f, 1);
             }
         else
         {
-            //_shape.settings.fillColor = new Color(0.5f, 0.5f, 0.5f, 1);
-            _rect.Color = new Color(0.5f, 0.5f, 0.5f, 1);
+            _shape.settings.fillColor = new Color(0.5f, 0.5f, 0.5f, 1);
+            //_rect.Color = new Color(0.5f, 0.5f, 0.5f, 1);
             }
         }
     }

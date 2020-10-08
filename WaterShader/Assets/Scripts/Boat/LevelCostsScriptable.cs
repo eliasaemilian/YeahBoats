@@ -8,6 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LevelCosts", menuName = "Scriptable/LevelCosts")]
 public class LevelCostsScriptable : ScriptableObject
 {
+    public LevelStorageScriptable IndependentLevelCosts;
     public List<LevelStorageScriptable> LevelCost;
 
 }
