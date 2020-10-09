@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5935299956213195568}
   m_Layer: 0
-  m_Name: BirchTree_3
+  m_Name: BirchTree_3_BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23,9 +23,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7207221779942363427}
-  m_LocalRotation: {x: -0, y: 0.11615022, z: -0, w: 0.99323165}
+  m_LocalRotation: {x: 0, y: 0.1161507, z: 0, w: 0.9932316}
   m_LocalPosition: {x: -18.967741, y: 0.14405632, z: 58.823784}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 2808517592690436583}
   m_Father: {fileID: 0}
@@ -93,6 +93,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3064975937290255914, guid: a0622b45a89427d4fa3cfc99fc6f2076,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 97d5b36289a88eb44b543b43d22e3073, type: 2}
+    - target: {fileID: -3064975937290255914, guid: a0622b45a89427d4fa3cfc99fc6f2076,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 97d5b36289a88eb44b543b43d22e3073, type: 2}
     - target: {fileID: 919132149155446097, guid: a0622b45a89427d4fa3cfc99fc6f2076,
         type: 3}
       propertyPath: m_Name
