@@ -12,11 +12,9 @@ public class ToDAdjustable_PostProcessing : TimeOfDayAdjustable
     Bloom _bloom;
 
     [SerializeField] private PostProcessingSettings _postProcessingSettings;
-    
 
- //   List<VolumeComponent> _activeOverrides;
 
-    private void Awake()
+    public override void OnInitialize()
     {
         _volume = GetComponent<Volume>();
         AnalyzeVolume();
@@ -24,19 +22,28 @@ public class ToDAdjustable_PostProcessing : TimeOfDayAdjustable
 
     public override void OnTimeOfDayValueChange(float newTime)
     {
-
         if (_bloom != null)
         {
+            if (_postProcessingSettings.Bloom.IntensityOn)
+            {
+                var intensity = _postProcessingSettings.Bloom.Intensity.Evaluate(newTime);
+                _bloom.intensity.value = Mathfs.Remap(intensity, 0, 1, _postProcessingSettings.Bloom.MinIntensity, _postProcessingSettings.Bloom.MaxIntensity);
+            }
+            if (_postProcessingSettings.Bloom.ScatterOn)
+            {
+                _bloom.scatter.value = Mathf.Clamp01( _postProcessingSettings.Bloom.Scatter.Evaluate(newTime) );
+            }
 
         }
     }
 
     private void AnalyzeVolume()
     {
-        Bloom bloom;
-        if (_volume.profile.TryGet<Bloom>(out bloom))
+        if (_postProcessingSettings.Bloom != null)
         {
-            _bloom = bloom;
+            if (_volume.profile.TryGet(out Bloom bloom)) _bloom = bloom;
+            else _bloom = _volume.profile.Add<Bloom>();
         }
+
     }
 }

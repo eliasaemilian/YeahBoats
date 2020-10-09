@@ -1,19 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu (menuName = "Settings/PostProcessingSettings")]
+[CreateAssetMenu (menuName = "Settings/PostProcessingSettings/PostProcessingSettings")]
 public class PostProcessingSettings : ScriptableObject
 {
     public TimeSetting Test;
 
-    // Bloom
-    public bool ThresholdOn;
-    public AnimationCurve Threshold;
-    public bool IntensityOn;
-    public AnimationCurve Intensity;
-    public bool ScatterOn;
-    public AnimationCurve Scatter;
-    public bool TintOn;
-    public Gradient Tint;
+    // Bloom FOR TESTING LOLO
+   // public bool Bloom;
+    public PPS_Bloom Bloom;
+
 }
