@@ -8,7 +8,18 @@ public class ServicesInitializer : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        Debug.Log("Henlo??");
         if (!RuntimeManager.IsInitialized()) RuntimeManager.Init();
+        Debug.Log("Init completed");
+        Debug.Log("Init completed");
+        Debug.Log("Init completed");
+        Debug.Log("Init completed");
+        Debug.Log("Init completed");
+        Debug.Log("Init completed");
+        Debug.Log("Init completed");
+        Debug.Log("Init completed");
+        Debug.Log("Init completed");
+        Debug.Log("Init completed");
         Debug.Log("Init completed");
     }
 
@@ -17,4 +28,6 @@ public class ServicesInitializer : MonoBehaviour
     {
         
     }
+
+   
 }

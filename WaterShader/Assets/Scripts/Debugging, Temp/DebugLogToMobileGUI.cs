@@ -34,7 +34,7 @@ public class DebugLogToMobileGUI : MonoBehaviour
     {
         if (!Application.isEditor) //Do not display in editor ( or you can use the UNITY_EDITOR macro to also disable the rest)
         {
-            myLog = GUI.TextArea(new Rect(10, 10, Screen.width - 10, Screen.height - 10), myLog);
+            myLog = GUI.TextArea(new Rect(10, 10, Screen.width - 10, Screen.height * .5f), myLog);
         }
     }
     //#endif

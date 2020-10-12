@@ -244,7 +244,7 @@ MonoBehaviour:
     mValidateGooglePlayReceipt: 1
     mProducts: []
   mNotificationSettings:
-    mAutoInit: 1
+    mAutoInit: 0
     mAutoInitDelay: 2
     mIosAuthOptions: 7
     mPushNotificationService: 0
@@ -291,7 +291,14 @@ MonoBehaviour:
       mContent: 
       mTitle: Privacy Consent
       mToggles: []
-      mActionButtons: []
+      mActionButtons:
+      - id: 
+        title: 
+        interactable: 0
+        titleColor: {r: 0, g: 0, b: 0, a: 0}
+        backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+        uninteractableTitleColor: {r: 0, g: 0, b: 0, a: 0}
+        uninteractableBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
     mConsentDialogComposerSettings:
       mToggleSelectedIndex: 0
       mButtonSelectedIndex: 0
@@ -355,5 +362,5 @@ MonoBehaviour:
   mIsGameServiceModuleEnable: 0
   mIsNotificationModuleEnable: 1
   mIsSharingModuleEnable: 0
-  mActiveModuleIndex: 5
-  mIsSelectingModule: 0
+  mActiveModuleIndex: 6
+  mIsSelectingModule: 1

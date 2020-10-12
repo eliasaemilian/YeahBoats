@@ -26,6 +26,13 @@ public class NotificationHandler : MonoBehaviour
 
     public void ScheduleLocalNotification()
     {
+        Debug.Log("RUNTIME MANAGER Init is " + RuntimeManager.IsInitialized());
+        if (!RuntimeManager.IsInitialized()) RuntimeManager.Init();
+
+        if (!Notifications.IsInitialized()) Notifications.Init();
+        bool isInitialized = Notifications.IsInitialized();
+        Debug.Log("Notification Init is " + isInitialized);
+
         NotificationContent content = PrepareNotificationContent();
         TimeSpan delay = new TimeSpan(0, 0, 10);
         Notifications.ScheduleLocalNotification(delay, content);
