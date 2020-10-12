@@ -54,7 +54,7 @@ public class AmbientSoundHandler : MonoBehaviour
     private void PlayNewSoundOrMusic()
     {
         float r = Random.Range(0f, 1f);
-        Debug.Log("R is " + r);
+
 
         if (r > _chanceToPlayMusic)
         {
