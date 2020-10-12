@@ -30,6 +30,9 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
 
     [SerializeField] private LightSettings _lightSettings = null;
 
+    private static bool _isNight;
+    public static bool IsNight {  get => _isNight; set => _isNight = value; }
+
 
 
     void Awake()
@@ -70,18 +73,23 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
         int sysHours = System.DateTime.Now.Hour;
         int sysMin = System.DateTime.Now.Minute;
         if (sysMin > 30) sysHours++;
-        _timeOfDay = Mathf.Clamp01(sysHours / 24f);
 
 
 #if UNITY_EDITOR
         if (_useDebugTime)
         {
-            _timeOfDay = _timeOfDayDebug;
-            Time = (_timeOfDay * 24f).ToString();
+            _timeOfDay = ( _timeOfDayDebug * 24f);
+            Time = _timeOfDay.ToString();
         }
 #endif
 
+        if (_timeOfDay > 20 || _timeOfDay < 6) _isNight = true;
+        else _isNight = false;
 
+        _timeOfDay = Mathf.Clamp01(sysHours / 24f);
+
+
+        Debug.Log("Night is " + _isNight);
     }
 
 

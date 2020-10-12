@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.Events;
 
-[Serializable] public class MusicEvent : UnityEvent<int, float, float> { }
+[Serializable] public class MusicEvent : UnityEvent<int> { }
 [Serializable] public class SoundEvent : UnityEvent<int> { }
 public class SoundscapeManager : MonoBehaviour
 {
@@ -19,9 +20,10 @@ public class SoundscapeManager : MonoBehaviour
     private AudioSource[] _ambientMusicPlayers;
     private AudioSource _soundsPlayer;
 
-    private int activePlayerIndex;
-
     private IEnumerator[] _crossfaders = new IEnumerator[2];
+
+    [SerializeField, Range(0f, 1f)] private float _volume = 1f;
+    [SerializeField] private float _fadeDuration = 5f;
 
     // Start is called before the first frame update
     void Awake()
@@ -88,8 +90,8 @@ public class SoundscapeManager : MonoBehaviour
 
     }
 
-    private void OnQueueNewMusic(int index, float duration, float volume) => MergeNewToPlay(Music[index], duration, volume);
-    private void OnQueueNewAmbient(int index, float duration, float volume) => MergeNewToPlay(AmbientSounds[index], duration, volume);
+    private void OnQueueNewMusic(int index) => MergeNewToPlay(Music[index]);
+    private void OnQueueNewAmbient(int index) => MergeNewToPlay(AmbientSounds[index]);
 
 
     private void OnPlaySound(int index)
@@ -100,7 +102,7 @@ public class SoundscapeManager : MonoBehaviour
 
 
     private int activePlayer;
-    public void MergeNewToPlay(AudioClip clip, float fadeDuration, float volume)
+    public void MergeNewToPlay(AudioClip clip)
     {
         //Prevent fading the same clip on both players 
         if (clip == _ambientMusicPlayers[activePlayer].clip) return;
@@ -117,7 +119,7 @@ public class SoundscapeManager : MonoBehaviour
         //Fade-out the active play, if it is not silent (eg: first start)
         if (_ambientMusicPlayers[activePlayer].volume > 0)
         {
-            _crossfaders[0] = FadeAudioSource(_ambientMusicPlayers[activePlayer], fadeDuration, 0.0f, () => { _crossfaders[0] = null; });
+            _crossfaders[0] = FadeAudioSource(_ambientMusicPlayers[activePlayer], _fadeDuration, 0.0f, () => { _crossfaders[0] = null; });
             StartCoroutine(_crossfaders[0]);
         }
 
@@ -125,7 +127,7 @@ public class SoundscapeManager : MonoBehaviour
         int NextPlayer = (activePlayer + 1) % _ambientMusicPlayers.Length;
         _ambientMusicPlayers[NextPlayer].clip = clip;
         _ambientMusicPlayers[NextPlayer].Play();
-        _crossfaders[1] = FadeAudioSource(_ambientMusicPlayers[NextPlayer], fadeDuration, volume, () => { _crossfaders[1] = null; });
+        _crossfaders[1] = FadeAudioSource(_ambientMusicPlayers[NextPlayer], _fadeDuration, _volume, () => { _crossfaders[1] = null; });
         StartCoroutine(_crossfaders[1]);
 
         //Register new active player
@@ -135,14 +137,16 @@ public class SoundscapeManager : MonoBehaviour
     public void DebugMusic()
     {
         Debug.Log("Playing new Music");
-        QueueNewMusic.Invoke(0, 10, 1);
+        QueueNewMusic.Invoke(0);
     }
 
     public void DebugAmbient()
     {
         Debug.Log("Playing new Ambient");
-        QueueNewAmbientSounds.Invoke(0, 10, 1);
+        QueueNewAmbientSounds.Invoke(0);
     }
+
+
 
 }
 
