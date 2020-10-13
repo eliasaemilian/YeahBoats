@@ -13,6 +13,9 @@ public class NPC_Fisherman : MonoBehaviour
     private DataManager _dM = DataManager.Instance;
     private PopupManager _pM = PopupManager.Instance;
 
+    private Animator _animator;
+    private UI_JoystickHandler _joystickHandler;
+
     private Vector3 _offset;
 
     public BoatBase BB;
@@ -44,7 +47,13 @@ public class NPC_Fisherman : MonoBehaviour
         BB.FishingSpeedup.AddListener(ReduceTimer);
         _offset = transform.position + new Vector3(0, 2, 0);
         
+        //MVP
         rend = GetComponentInChildren<Renderer>();
+
+        _animator = GetComponentInChildren<Animator>();
+        _joystickHandler = FindObjectOfType<UI_JoystickHandler>();
+        UI_JoystickHandler.JoystickStateChanged.AddListener(UpdateFishingState);
+
 
         _inputHandler = FindObjectOfType<UI_InputHandler>();
         if (_uiCamera == null) _uiCamera = _inputHandler.UICamera;
@@ -54,29 +63,31 @@ public class NPC_Fisherman : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _timer -= Time.deltaTime;
-
-        if(_timer <= 0)
+        if (_animator.GetBool("FishingMode"))
         {
-            Debug.Log("Got a fish!");
-            CatchAFish();
-            _timer =  60/CatchSpeed;
+            _timer -= Time.deltaTime;
+            if(_timer <= 0)
+            {
+                CatchAFish();
+                _timer =  60/CatchSpeed;
+            }
         }
+       
     }
 
     private void CatchAFish()
     {
         float FishCost = _fM.GetFish();
         _mM.AddMoney(FishCost);
-        StartCoroutine(NPCAnim());
+        //StartCoroutine(NPCAnim());
 
         //Popup
-        Debug.Log("Calling Popup");
         Vector3 transPos = Camera.main.WorldToScreenPoint(_offset);
         transPos = _uiCamera.ScreenToWorldPoint(transPos);
+        transPos.y += 2;
         _pM.CallCoinPopup(transPos, (int)FishCost);
 
-        
+        _animator.SetTrigger("CaughtFish");
     }
 
     public void UpdateValues()
@@ -96,6 +107,19 @@ public class NPC_Fisherman : MonoBehaviour
      // gets called to speed up fishing
     public void ReduceTimer()
     {
+        Debug.Log("Reducing timer");
         _timer /= _timerTapMultiplier;
+    }
+
+    private void UpdateFishingState()
+    {
+        if (_joystickHandler.JoystickStateClosed)
+        {
+            _animator.SetBool("FishingMode", true);
+        }
+        else
+        {
+            _animator.SetBool("FishingMode", false);
+        }
     }
 }

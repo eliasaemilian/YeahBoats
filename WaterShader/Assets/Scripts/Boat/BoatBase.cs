@@ -26,12 +26,14 @@ public class BoatBase : MonoBehaviour
     public int BoatStorage;
     private int _currentBoatStorage;
 
+
     // Start is called before the first frame update
     void Start()
     {
         _lM = LevelManager.Instance;
 
         
+
         if (WaterTappableHandler.FishingTap != null)
         {
             WaterTappableHandler.FishingTap.AddListener(FishingSpeedup.Invoke);
@@ -115,6 +117,7 @@ public class BoatBase : MonoBehaviour
         }
     }
 
+    
     public void TapToSpeedupCatch()
     {
         FishingSpeedup.Invoke();

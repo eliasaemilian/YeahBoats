@@ -43,6 +43,7 @@ public class WaterTappableHandler : TappableGameobject
 
             //Shitty Popup is here
             PopupManager.Instance.CallFishAndCoinPopup(transPos + new Vector3(0,1,0));
+            FishingTap.Invoke();
         }
 
     }
