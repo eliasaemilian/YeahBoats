@@ -1253,6 +1253,63 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &220416033
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 220416035}
+  - component: {fileID: 220416034}
+  m_Layer: 0
+  m_Name: FishSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &220416034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220416033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fd604a69039de74ba3c262ac0d7d8c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fishPrefabs:
+  - {fileID: 5593137920853319692, guid: e5ffff8b24266e24f92ddd3943fbed66, type: 3}
+  _spawnAmmount: 10
+  _fishDecayTime: 10
+  _minFishSpeed: 1
+  _maxFishSpeed: 3
+  _directionChangeChance: 25
+  _directionChangeDelay: 1
+  _x: 13
+  _y: 3
+  _z: 13
+  _markerAmmount: 20
+  _initialDelay: 5
+  _removeTimer: 1
+--- !u!4 &220416035
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220416033}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.09, y: 4.62, z: -4.0246253}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &458448648
 GameObject:
   m_ObjectHideFlags: 0
@@ -2518,6 +2575,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Blob_v1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219078367063776444, guid: 2eb68a2731ada334a88a774169ff8f80,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6702845532845852166, guid: 2eb68a2731ada334a88a774169ff8f80,
         type: 3}
