@@ -50,6 +50,7 @@ public class LevelManager : MonoBehaviour
     public int FishingHookLevel { get { return _fishingHookLevel; } set { _fishingHookLevel = value; _boatSkillLevels.FishingHookLevel = value; } }
 
     public int Multiplier;
+    public float CatchSpeedMultiplier;
 
     public BoatLevels BoatLevels;
 
@@ -62,8 +63,9 @@ public class LevelManager : MonoBehaviour
     private LevelScriptable _boatSkillLevels = null;
     public LevelScriptable BoatSkillLevels{ get { return _boatSkillLevels; } set { _boatSkillLevels = value; SetupLevels(); } }
 
-
+    //still needed for now
     public UnityEvent NPCUpdate;
+    //deprecated
     public UnityEvent BoatStorageUpdate;
     public UnityEvent FishingRodUpdate;
     public UnityEvent FishingHookUpdate;
@@ -81,6 +83,7 @@ public class LevelManager : MonoBehaviour
         _independentBoatSkillLevelCosts = LevelCosts.IndependentLevelCosts;
         BoatSkillLevels = BoatLevels.Levels[CurrentBoatLevel - 1];
 
+        CatchSpeedMultiplier = 1;
         //For temporary saving
         InvokeRepeating("SaveData", 5, 5);
     }

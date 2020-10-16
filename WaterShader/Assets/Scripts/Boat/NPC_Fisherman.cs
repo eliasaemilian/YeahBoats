@@ -24,7 +24,7 @@ public class NPC_Fisherman : MonoBehaviour
     private Renderer rend;
 
     public float CatchSpeed { get; set; }
-    public int Multiplier;
+    public float Multiplier;
 
 
     [SerializeField] private float _catchSpeedBase = 10;
@@ -38,7 +38,7 @@ public class NPC_Fisherman : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Multiplier = _lM.Multiplier;
+        Multiplier = _lM.CatchSpeedMultiplier;
         CatchSpeed = _catchSpeedBase * (_lM.NPCFishermanLevel) * Multiplier;
 
         _timer = 60/CatchSpeed;
@@ -92,7 +92,7 @@ public class NPC_Fisherman : MonoBehaviour
 
     public void UpdateValues()
     {
-        Multiplier = _lM.Multiplier;
+        Multiplier = _lM.CatchSpeedMultiplier;
         CatchSpeed = _catchSpeedBase * (_lM.NPCFishermanLevel) * Multiplier;
     }
 
