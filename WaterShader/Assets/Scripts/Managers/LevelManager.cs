@@ -175,6 +175,8 @@ public class LevelManager : MonoBehaviour
         Multiplier = 1;
         _boatStorageLevel = 1;
         MaxAmmountOfFishermen = 1;
+        TapCoinLevel = 1;
+        TapFishLevel = 1;
 
         if (IsReset)
         {
