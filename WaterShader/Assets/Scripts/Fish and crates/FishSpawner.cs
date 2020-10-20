@@ -39,6 +39,8 @@ public class FishSpawner : MonoBehaviour
     private bool _isBoatHere;
 
     private float _multiplier;
+
+    private ObjectPooler _oP;
     public float Multiplier 
     {
         get
@@ -59,6 +61,7 @@ public class FishSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _oP = ObjectPooler.Instance;
         FishList = new List<FishAI>();
         Markers = new List<Vector3>();
         SpawnMarkers();
@@ -97,7 +100,12 @@ public class FishSpawner : MonoBehaviour
         {
             Vector3 pos = Markers[Random.Range(0,Markers.Count)];
             GameObject prefab = _fishPrefabs[Random.Range(0, _fishPrefabs.Count)];
-            FishAI fish = Instantiate(prefab, pos, Quaternion.identity).GetComponent<FishAI>();
+            //old one
+            //FishAI fish = Instantiate(prefab, pos, Quaternion.identity).GetComponent<FishAI>();
+
+            //new pooled version
+            FishAI fish = _oP.SpawnFromPool("Fish", pos, Quaternion.identity).GetComponent<FishAI>();
+
             fish.FishSpawner = this;
             fish.MinFishSpeed = _minFishSpeed;
             fish.MaxFishSpeed = _maxFishSpeed;
@@ -111,7 +119,13 @@ public class FishSpawner : MonoBehaviour
     {
         Vector3 pos = Markers[Random.Range(0, Markers.Count)];
         GameObject prefab = _fishPrefabs[Random.Range(0, _fishPrefabs.Count)];
-        FishAI fish = Instantiate(prefab, pos, Quaternion.identity).GetComponent<FishAI>();
+
+        //Old one
+        //FishAI fish = Instantiate(prefab, pos, Quaternion.identity).GetComponent<FishAI>();
+
+        //New pooled version
+        FishAI fish = _oP.SpawnFromPool("Fish", pos, Quaternion.identity).GetComponent<FishAI>();
+
         fish.FishSpawner = this;
         fish.MinFishSpeed = _minFishSpeed;
         fish.MaxFishSpeed = _maxFishSpeed;
@@ -173,13 +187,18 @@ public class FishSpawner : MonoBehaviour
         }
 
     }
+    //Removes the fish
     private void RemoveFish()
     {
         if(FishList.Count > 0)
         {
+            _oP.ReturnToPool("Fish", FishList[FishList.Count - 1].gameObject);
 
-        Destroy(FishList[FishList.Count - 1].gameObject);
-        FishList.RemoveAt(FishList.Count - 1);
+            //Destroy(FishList[FishList.Count - 1].gameObject);
+
+            FishList.RemoveAt(FishList.Count - 1);
+
+        
         }
     }
 
