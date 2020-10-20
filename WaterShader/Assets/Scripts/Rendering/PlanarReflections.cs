@@ -199,6 +199,7 @@ namespace UnityEngine.Rendering.Universal
 
             cameraData.requiresColorOption = CameraOverrideOption.Off;
             cameraData.requiresDepthOption = CameraOverrideOption.Off;
+            
             cameraData.SetRenderer(1);
 
             var t = transform;
