@@ -2,19 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CrateScript : MonoBehaviour
+public class CrateScript : TappableGameobject, IPooledObject
 {
     public CrateSpawner CS;
-    // Start is called before the first frame update
-    void Start()
+
+    public void OnInstantiation()
     {
-        
+        throw new System.NotImplementedException();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnObjectDespawn()
     {
-        
+        throw new System.NotImplementedException();
+    }
+
+    public void OnObjectSpawn()
+    {
+        throw new System.NotImplementedException();
     }
 
     private void OnTriggerEnter(Collider other)

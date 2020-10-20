@@ -40,7 +40,6 @@ public class FishSpawner : MonoBehaviour
 
     private float _multiplier;
 
-    private ObjectPooler _oP;
     public float Multiplier 
     {
         get
@@ -61,7 +60,6 @@ public class FishSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _oP = ObjectPooler.Instance;
         FishList = new List<FishAI>();
         Markers = new List<Vector3>();
         SpawnMarkers();
@@ -104,7 +102,7 @@ public class FishSpawner : MonoBehaviour
             //FishAI fish = Instantiate(prefab, pos, Quaternion.identity).GetComponent<FishAI>();
 
             //new pooled version
-            FishAI fish = _oP.SpawnFromPool("Fish", pos, Quaternion.identity).GetComponent<FishAI>();
+            FishAI fish = ObjectPooler.Instance.SpawnFromPool("Fish", pos, Quaternion.identity).GetComponent<FishAI>();
 
             fish.FishSpawner = this;
             fish.MinFishSpeed = _minFishSpeed;
@@ -124,7 +122,7 @@ public class FishSpawner : MonoBehaviour
         //FishAI fish = Instantiate(prefab, pos, Quaternion.identity).GetComponent<FishAI>();
 
         //New pooled version
-        FishAI fish = _oP.SpawnFromPool("Fish", pos, Quaternion.identity).GetComponent<FishAI>();
+        FishAI fish = ObjectPooler.Instance.SpawnFromPool("Fish", pos, Quaternion.identity).GetComponent<FishAI>();
 
         fish.FishSpawner = this;
         fish.MinFishSpeed = _minFishSpeed;
@@ -192,7 +190,7 @@ public class FishSpawner : MonoBehaviour
     {
         if(FishList.Count > 0)
         {
-            _oP.ReturnToPool("Fish", FishList[FishList.Count - 1].gameObject);
+            ObjectPooler.Instance.ReturnToPool("Fish", FishList[FishList.Count - 1].gameObject);
 
             //Destroy(FishList[FishList.Count - 1].gameObject);
 

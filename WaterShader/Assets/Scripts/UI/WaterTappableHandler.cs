@@ -39,7 +39,7 @@ public class WaterTappableHandler : TappableGameobject
             spawn.GetComponent<UI_TapEffect>().SpawnDistToCam = dist; //TODO: david get this lesbian plant outta here
             spawn.GetComponent<UI_TapEffect>().SpawnPos = pos;
             spawn.GetComponent<UI_TapEffect>().PoolTag = _tapEffectPrefab.tag;
-            spawn.SetActive(true);
+            //spawn.SetActive(true);
 
             //Shitty Popup is here
             PopupManager.Instance.CallFishAndCoinPopup(transPos + new Vector3(0,1,0));
