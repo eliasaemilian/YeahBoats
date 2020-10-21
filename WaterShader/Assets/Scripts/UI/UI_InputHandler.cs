@@ -218,17 +218,6 @@ public class UI_InputHandler : MonoBehaviour
         }
     }
 
-    //private void SetPOI(Transform newPOI)
-    //{
-    //    if (_pointOfInterest != newPOI)
-    //    {
-    //        _pointOfInterest = newPOI;
-
-    //    }
-
-    //    if (_pointOfInterest != null) _lastPOI = _pointOfInterest;
-
-    //}
 
 
 
@@ -298,5 +287,10 @@ public class UI_InputHandler : MonoBehaviour
         else return false;
     }
 
+    public void RegisterTappabeGameObject(TappableGameobject tappable)
+    {
+        if (_tappableGameobjectsInScene.Count <= 0) _tappableGameobjectsInScene = new List<TappableGameobject>();
 
+        if (!_tappableGameobjectsInScene.Contains(tappable)) _tappableGameobjectsInScene.Add(tappable);
+    }
 }

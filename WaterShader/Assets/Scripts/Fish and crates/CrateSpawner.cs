@@ -51,16 +51,24 @@ public class CrateSpawner : MonoBehaviour
 
     private void CrateSpawn()
     {
-        GameObject go = Instantiate(_cratePrefab, SpawnPositions[Random.Range(0, SpawnPositions.Count)].position, Quaternion.identity);
-        go.GetComponent<CrateScript>().CS = this;
-        CratesList.Add(go);
+        //GameObject go = Instantiate(_cratePrefab, SpawnPositions[Random.Range(0, SpawnPositions.Count)].position, Quaternion.identity);
+        //go.GetComponent<CrateScript>().CS = this;
+        //CratesList.Add(go);
+
+        GameObject crate = ObjectPooler.Instance.SpawnFromPool("Crate", SpawnPositions[Random.Range(0, SpawnPositions.Count)].position, Quaternion.identity);
+        crate.GetComponent<CrateScript>().CS = this;
+        CratesList.Add(crate);
+
+        Debug.Log("Spawning a crate");
     }
 
     private void ClearCrate(GameObject crate)
     {
         CratesList.Remove(crate);
 
-        Destroy(crate.gameObject);
+    //    Destroy(crate.gameObject);
+
+        ObjectPooler.Instance.ReturnToPool("Crate", crate);
         
     }
 

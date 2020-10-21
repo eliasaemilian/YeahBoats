@@ -31,6 +31,7 @@ public class TappableGameobject : MonoBehaviour, ITappable
 
         // Irregardless of Scene Setup make sure GO is properly initialized
         gameObject.SetActive(true);
+        CheckForRegistrationWithInputHandler();
         OnStartInitialize();
         gameObject.SetActive(_sceneStartActiveStatus);
     }
@@ -66,5 +67,12 @@ public class TappableGameobject : MonoBehaviour, ITappable
     public virtual void OnTapWasLetGo()
     {
       //  Debug.Log("Tap was let go");
+    }
+
+    private void CheckForRegistrationWithInputHandler()
+    {
+        UI_InputHandler inputHandler = FindObjectOfType<UI_InputHandler>();
+        if (inputHandler != null) inputHandler.RegisterTappabeGameObject(this);
+        else Debug.LogError("No Input Handler can be found in Scene. Tappable GameObjects won't be processed");
     }
 }
