@@ -21,6 +21,7 @@ public class LevelManager : MonoBehaviour
     //Boat Independent
     public int CurrentMapLevel;
     public int MaxMapLevel;
+    public int MapPieces;
 
     public int CurrentBoatLevel;
     public int MaxBoatLevel;
@@ -49,7 +50,8 @@ public class LevelManager : MonoBehaviour
     private int _fishingHookLevel;
     public int FishingHookLevel { get { return _fishingHookLevel; } set { _fishingHookLevel = value; _boatSkillLevels.FishingHookLevel = value; } }
 
-    public int Multiplier;
+    private int _multiplier;
+    public int Multiplier { get { return _multiplier; } set { _multiplier = value; MultiplierUpdate.Invoke(); } }
     public float CatchSpeedMultiplier;
 
     public BoatLevels BoatLevels;
@@ -65,6 +67,7 @@ public class LevelManager : MonoBehaviour
 
     //still needed for now
     public UnityEvent NPCUpdate;
+    public UnityEvent MultiplierUpdate;
     //deprecated
     public UnityEvent BoatStorageUpdate;
     public UnityEvent FishingRodUpdate;
@@ -177,6 +180,7 @@ public class LevelManager : MonoBehaviour
         MaxAmmountOfFishermen = 1;
         TapCoinLevel = 1;
         TapFishLevel = 1;
+        MapPieces = 0;
 
         if (IsReset)
         {
@@ -216,6 +220,11 @@ public class LevelManager : MonoBehaviour
         else return false;
         
     }
+
+    public void AddMapPiece()
+    {
+        MapPieces++;
+    }
     //update the levels when loading SO
     private void SetupLevels()
     {
@@ -239,6 +248,7 @@ public class LevelManager : MonoBehaviour
     {
         CurrentMapLevel = DM.DataContainer.CurrentMapLevel;
         MaxMapLevel = DM.DataContainer.MaxMapLevel;
+        MapPieces = DM.DataContainer.MapPieces;
         CurrentBoatLevel = DM.DataContainer.CurrentBoatLevel;
         MaxBoatLevel = DM.DataContainer.MaxBoatLevel;
         Multiplier = DM.DataContainer.Multiplier;
@@ -253,6 +263,7 @@ public class LevelManager : MonoBehaviour
     {
         DM.DataContainer.CurrentMapLevel = CurrentMapLevel;
         DM.DataContainer.MaxMapLevel = MaxMapLevel;
+        DM.DataContainer.MapPieces = MapPieces;
         DM.DataContainer.CurrentBoatLevel = CurrentBoatLevel;
         DM.DataContainer.MaxBoatLevel = MaxBoatLevel;
         DM.DataContainer.Multiplier = Multiplier;

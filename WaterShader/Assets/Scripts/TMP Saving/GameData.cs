@@ -7,6 +7,7 @@ public class GameData
     // variables to save come here
     public int CurrentMapLevel;
     public int MaxMapLevel;
+    public int MapPieces;
     public int CurrentBoatLevel;
     public int MaxBoatLevel;
     public int BoatStorageLevel;
@@ -24,6 +25,7 @@ public class GameData
     {
         CurrentMapLevel = data.CurrentMapLevel;
         MaxMapLevel = data.MaxMapLevel;
+        MapPieces = data.MapPieces;
         CurrentBoatLevel = data.CurrentBoatLevel;
         MaxBoatLevel = data.MaxBoatLevel;
         BoatStorageLevel = data.BoatStorageLevel;

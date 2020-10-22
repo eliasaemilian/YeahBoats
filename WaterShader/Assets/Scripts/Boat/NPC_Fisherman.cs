@@ -16,7 +16,7 @@ public class NPC_Fisherman : MonoBehaviour
     private Animator _animator;
     private UI_JoystickHandler _joystickHandler;
 
-    private Vector3 _offset;
+    
 
     public BoatBase BB;
 
@@ -45,7 +45,7 @@ public class NPC_Fisherman : MonoBehaviour
         _timerTapMultiplier = 1.5f;
         _lM.NPCUpdate.AddListener(UpdateValues);
         BB.FishingSpeedup.AddListener(ReduceTimer);
-        _offset = transform.position + new Vector3(0, 2, 0);
+        _lM.MultiplierUpdate.AddListener(UpdateValues);
         
         //MVP
         rend = GetComponentInChildren<Renderer>();
@@ -81,10 +81,11 @@ public class NPC_Fisherman : MonoBehaviour
         _mM.AddMoney(FishCost);
         //StartCoroutine(NPCAnim());
 
+        Vector3 _offset = transform.position + new Vector3(0, 2, 0);
         //Popup
         Vector3 transPos = Camera.main.WorldToScreenPoint(_offset);
         transPos = _uiCamera.ScreenToWorldPoint(transPos);
-        transPos.y += 2;
+        //transPos.y += 2;
         _pM.CallCoinPopup(transPos, (int)FishCost);
 
         _animator.SetTrigger("CaughtFish");

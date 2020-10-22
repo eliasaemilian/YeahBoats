@@ -6,6 +6,7 @@ public class Savedata : MonoBehaviour
 
     public int CurrentMapLevel = 1;
     public int MaxMapLevel = 1;
+    public int MapPieces = 0;
     public int CurrentBoatLevel = 1;
     public int MaxBoatLevel = 1;
     public int BoatStorageLevel = 1;
@@ -30,6 +31,7 @@ public class Savedata : MonoBehaviour
         {
             CurrentMapLevel = data.CurrentMapLevel;
             MaxMapLevel = data.MaxMapLevel;
+            MapPieces = data.MapPieces;
             CurrentBoatLevel = data.CurrentBoatLevel;
             MaxBoatLevel = data.MaxBoatLevel;
             BoatStorageLevel = data.BoatStorageLevel;

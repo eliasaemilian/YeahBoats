@@ -26,7 +26,7 @@ public class MoneyManager : MonoBehaviour
 
 
         TMPSetup();
-
+        LevelManager.Instance.MultiplierUpdate.AddListener(UpdateMultiplier);
         //For temporary saving
         GetData();
         InvokeRepeating("SaveData", 5, 5);
@@ -63,6 +63,10 @@ public class MoneyManager : MonoBehaviour
     public void UpdateMoney()
     {
         CD.UpdateCurrency((int)Money);
+    }
+    private void UpdateMultiplier()
+    {
+        Multiplyer = LevelManager.Instance.Multiplier;
     }
     private void GetData()
     {

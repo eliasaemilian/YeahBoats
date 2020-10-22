@@ -10,13 +10,15 @@ public class CrateEvent : UnityEvent<GameObject>
 
 public class CrateSpawner : MonoBehaviour
 {
-
-    [SerializeField] private GameObject _cratePrefab;
+    [SerializeField] private MultiplierManager _MM;
 
     [SerializeField] private float _crateSpawnTime;
     [SerializeField] private int _crateMaxAmmount;
 
-    private List<GameObject> CratesList;
+    public GameObject MapTab;
+    public GameObject MultiplierTab;
+
+    private int CratesCount;
 
     public List<Transform> SpawnPositions;
 
@@ -24,13 +26,14 @@ public class CrateSpawner : MonoBehaviour
 
 
     private float _timer;
+    private int _previousSpawnPosition;
     // Start is called before the first frame update
     void Start()
     {
         m_CrateEvent = new CrateEvent();
         m_CrateEvent.AddListener(TappedOnCrate);
         m_CrateEvent.AddListener(ClearCrate);
-        CratesList = new List<GameObject>();
+        CratesCount = 0;
         _timer = _crateSpawnTime;
     }
 
@@ -40,7 +43,7 @@ public class CrateSpawner : MonoBehaviour
         _timer -= Time.deltaTime;
         if(_timer <= 0)
         {
-            if(CratesList.Count < _crateMaxAmmount)
+            if(CratesCount < _crateMaxAmmount)
             {
                 CrateSpawn();
 
@@ -51,22 +54,23 @@ public class CrateSpawner : MonoBehaviour
 
     private void CrateSpawn()
     {
-        //GameObject go = Instantiate(_cratePrefab, SpawnPositions[Random.Range(0, SpawnPositions.Count)].position, Quaternion.identity);
-        //go.GetComponent<CrateScript>().CS = this;
-        //CratesList.Add(go);
+        int spawnPosition = Random.Range(0, SpawnPositions.Count);
+        while(spawnPosition == _previousSpawnPosition)
+        {
+            spawnPosition = Random.Range(0, SpawnPositions.Count);
+        }
 
-        GameObject crate = ObjectPooler.Instance.SpawnFromPool("Crate", SpawnPositions[Random.Range(0, SpawnPositions.Count)].position, Quaternion.identity);
+        _previousSpawnPosition = spawnPosition;
+        GameObject crate = ObjectPooler.Instance.SpawnFromPool("Crate", SpawnPositions[spawnPosition].position, Quaternion.identity);
         crate.GetComponent<CrateScript>().CS = this;
-        CratesList.Add(crate);
+        CratesCount++;
 
         Debug.Log("Spawning a crate");
     }
 
     private void ClearCrate(GameObject crate)
     {
-        CratesList.Remove(crate);
-
-    //    Destroy(crate.gameObject);
+        CratesCount--;
 
         ObjectPooler.Instance.ReturnToPool("Crate", crate);
         
@@ -74,17 +78,29 @@ public class CrateSpawner : MonoBehaviour
 
     public void TappedOnCrate(GameObject crate)
     {
+        if(LevelManager.Instance.MapPieces < 4)
+        {
+
         int res = Random.Range(0, 2);
         if(res == 0)
         {
-            // I received a map piece
             Debug.Log("Received a Map piece");
+            LevelManager.Instance.AddMapPiece();
+            MapTab.SetActive(true);
 
         }
         else
         {
-            // I received a multiplyer
             Debug.Log("Received a multiplier");
+            MultiplierTab.SetActive(true);
+            _MM.AddTimeToMultiplier(2, 2);
+        }
+        }
+        else
+        {
+            Debug.Log("Received a multiplier");
+            MultiplierTab.SetActive(true);
+            _MM.AddTimeToMultiplier(2, 2);
         }
     }
 }

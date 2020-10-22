@@ -10,8 +10,6 @@ public class CrateScript : TappableGameobject, IPooledObject
     {
         base.OnStartInitialize();
         Debug.Log("Crate init");
-        //I need help dunno what to do
-     //   ObjectPooler.Instance.ReturnToPool("Crate", this.gameObject);
 
     }
     public void OnInstantiation()
@@ -32,12 +30,14 @@ public class CrateScript : TappableGameobject, IPooledObject
 
     private void OnTriggerEnter(Collider other)
     {
-        CS.m_CrateEvent.Invoke(this.gameObject);
+        //CS.m_CrateEvent.Invoke(this.gameObject);
     }
 
     public override void OnTap(Touch touch, Vector3 pos, float dist)
     {
         base.OnTap(touch, pos, dist);
         Debug.Log("I was tapped");
+        CS.m_CrateEvent.Invoke(this.gameObject);
+        //ObjectPooler.Instance.ReturnToPool("Crate", this.gameObject);
     }
 }

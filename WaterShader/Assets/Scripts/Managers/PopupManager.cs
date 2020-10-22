@@ -65,7 +65,7 @@ public class PopupManager : MonoBehaviour
     }
     private int CalculateCost()
     {
-        int cost = TapCost() * _lM.TapFishLevel;
+        int cost = TapCost() * _lM.TapFishLevel * _lM.Multiplier;
         return cost;
     }
 }
