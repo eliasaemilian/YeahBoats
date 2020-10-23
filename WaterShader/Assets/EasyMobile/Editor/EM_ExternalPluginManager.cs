@@ -61,6 +61,13 @@ namespace EasyMobile.Editor
         // PlayMaker Unity UI add-on
         public const string PlayMakerUguiAddOnClass = "PlayMakerUGuiSceneProxy";
 
+        // External Dependency Manager namespaces and classes
+        public const string GoogleNameSpace = "Google";
+        public const string IosResolverClass = "IOSResolver";
+        public const string JarResolverNamespace = "Google.JarResolver";
+        public const string JarResolverDependencyClass = "Dependency";
+        public const string PackageManagerResolverClass = "PackageManagerResolver";
+
         // Advertising 3rd party plugins URLs
         public const string AdColonyDownloadURL = "https://github.com/AdColony/AdColony-Unity-Plugin";
         public const string ChartboostDownloadURL = "https://answers.chartboost.com/en-us/articles/download";
@@ -366,7 +373,13 @@ namespace EasyMobile.Editor
 
         public static bool IsPlayServicesResolverImported()
         {
-            return EM_ProjectSettings.Instance.GetBool(EM_Constants.PSK_ImportedPlayServicesResolver, false);
+            var imported = EM_ProjectSettings.Instance.GetBool(EM_Constants.PSK_ImportedPlayServicesResolver, false);
+
+            var iosResolver = EM_EditorUtil.FindClass(IosResolverClass, GoogleNameSpace);
+            var jarResolver = EM_EditorUtil.FindClass(JarResolverDependencyClass, JarResolverNamespace);
+            var packageResolver = EM_EditorUtil.FindClass(PackageManagerResolverClass, GoogleNameSpace);
+
+            return iosResolver != null || jarResolver != null || packageResolver != null || imported;
         }
 
         public static void ImportPlayServicesResolver(bool interactive)

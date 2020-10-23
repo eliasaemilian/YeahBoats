@@ -244,15 +244,13 @@ MonoBehaviour:
     mValidateGooglePlayReceipt: 1
     mProducts: []
   mNotificationSettings:
-    mAutoInit: 0
-    mAutoInitDelay: 2
+    mAutoInit: 1
+    mAutoInitDelay: 0
     mIosAuthOptions: 7
     mPushNotificationService: 0
     mOneSignalAppId: 
     mFirebaseTopics: []
-    mCategoryGroups:
-    - id: notification.port.upgrade
-      name: Port Upgrade Notifications
+    mCategoryGroups: []
     mDefaultCategory:
       id: notification.category.default
       groupId: 
@@ -268,21 +266,7 @@ MonoBehaviour:
       sound: 1
       soundName: 
       actionButtons: []
-    mUserCategories:
-    - id: port.test
-      groupId: notification.port.upgrade
-      name: Port Test
-      description: this is a test popup
-      importance: 0
-      enableBadge: 1
-      lights: 1
-      lightColor: {r: 1, g: 1, b: 1, a: 1}
-      vibration: 1
-      vibrationPattern: 
-      lockScreenVisibility: 2
-      sound: 1
-      soundName: 
-      actionButtons: []
+    mUserCategories: []
     mAndroidPermissions:
     - mElementName: uses-permission
       mValue: android.permission.RECEIVE_BOOT_COMPLETED
@@ -291,14 +275,7 @@ MonoBehaviour:
       mContent: 
       mTitle: Privacy Consent
       mToggles: []
-      mActionButtons:
-      - id: 
-        title: 
-        interactable: 0
-        titleColor: {r: 0, g: 0, b: 0, a: 0}
-        backgroundColor: {r: 0, g: 0, b: 0, a: 0}
-        uninteractableTitleColor: {r: 0, g: 0, b: 0, a: 0}
-        uninteractableBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+      mActionButtons: []
     mConsentDialogComposerSettings:
       mToggleSelectedIndex: 0
       mButtonSelectedIndex: 0
@@ -360,7 +337,7 @@ MonoBehaviour:
   mIsAdModuleEnable: 0
   mIsIAPModuleEnable: 0
   mIsGameServiceModuleEnable: 0
-  mIsNotificationModuleEnable: 1
+  mIsNotificationModuleEnable: 0
   mIsSharingModuleEnable: 0
-  mActiveModuleIndex: 8
+  mActiveModuleIndex: 0
   mIsSelectingModule: 1

@@ -88,7 +88,7 @@ namespace EasyMobile.Editor
 
             // Copy the template lib folder to the Plugins/Android folder, removing the old folder if it exists.
             string templateLibFolder = EM_Constants.TemplateFolder + "/" + AndroidLibTemplateFolder;
-            string targetLibFolder = EM_Constants.AssetsPluginsAndroidFolder + "/" + job.config.targetLibFolderName;
+            string targetLibFolder = EM_Constants.AssetsPluginsAndroidFolder + "/" + job.config.targetLibFolderName + ".androidlib";
             if (!FileIO.FolderExists(EM_Constants.AssetsPluginsAndroidFolder))
             {
                 FileIO.CreateFolder(EM_Constants.AssetsPluginsAndroidFolder);
