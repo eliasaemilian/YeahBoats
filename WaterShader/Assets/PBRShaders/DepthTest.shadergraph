@@ -893,6 +893,12 @@
         },
         {
             "typeInfo": {
+                "fullName": "UnityEditor.ShaderGraph.ScreenPositionNode"
+            },
+            "JSONnodeData": "{\n    \"m_GuidSerialized\": \"c4917377-4b56-44ba-a15e-e14f0bd47e0c\",\n    \"m_GroupGuidSerialized\": \"00000000-0000-0000-0000-000000000000\",\n    \"m_Name\": \"Screen Position\",\n    \"m_NodeVersion\": 0,\n    \"m_DrawState\": {\n        \"m_Expanded\": true,\n        \"m_Position\": {\n            \"serializedVersion\": \"2\",\n            \"x\": -3254.39990234375,\n            \"y\": -519.199951171875,\n            \"width\": 208.0,\n            \"height\": 312.79998779296877\n        }\n    },\n    \"m_SerializableSlots\": [\n        {\n            \"typeInfo\": {\n                \"fullName\": \"UnityEditor.ShaderGraph.Vector4MaterialSlot\"\n            },\n            \"JSONnodeData\": \"{\\n    \\\"m_Id\\\": 0,\\n    \\\"m_DisplayName\\\": \\\"Out\\\",\\n    \\\"m_SlotType\\\": 1,\\n    \\\"m_Priority\\\": 2147483647,\\n    \\\"m_Hidden\\\": false,\\n    \\\"m_ShaderOutputName\\\": \\\"Out\\\",\\n    \\\"m_StageCapability\\\": 3,\\n    \\\"m_Value\\\": {\\n        \\\"x\\\": 0.0,\\n        \\\"y\\\": 0.0,\\n        \\\"z\\\": 0.0,\\n        \\\"w\\\": 0.0\\n    },\\n    \\\"m_DefaultValue\\\": {\\n        \\\"x\\\": 0.0,\\n        \\\"y\\\": 0.0,\\n        \\\"z\\\": 0.0,\\n        \\\"w\\\": 0.0\\n    }\\n}\"\n        }\n    ],\n    \"m_Precision\": 0,\n    \"m_PreviewExpanded\": true,\n    \"m_CustomColors\": {\n        \"m_SerializableColors\": []\n    },\n    \"m_ScreenSpaceType\": 0\n}"
+        },
+        {
+            "typeInfo": {
                 "fullName": "UnityEditor.ShaderGraph.PropertyNode"
             },
             "JSONnodeData": "{\n    \"m_GuidSerialized\": \"c4af0e10-8335-46ee-ab55-676fe8bd0811\",\n    \"m_GroupGuidSerialized\": \"6b933804-1292-4d80-bbd3-b7826b322660\",\n    \"m_Name\": \"Property\",\n    \"m_NodeVersion\": 0,\n    \"m_DrawState\": {\n        \"m_Expanded\": true,\n        \"m_Position\": {\n            \"serializedVersion\": \"2\",\n            \"x\": 1539.199951171875,\n            \"y\": 962.39990234375,\n            \"width\": 184.800048828125,\n            \"height\": 33.599971771240237\n        }\n    },\n    \"m_SerializableSlots\": [\n        {\n            \"typeInfo\": {\n                \"fullName\": \"UnityEditor.ShaderGraph.Vector1MaterialSlot\"\n            },\n            \"JSONnodeData\": \"{\\n    \\\"m_Id\\\": 0,\\n    \\\"m_DisplayName\\\": \\\"WaterRipples Cutoff\\\",\\n    \\\"m_SlotType\\\": 1,\\n    \\\"m_Priority\\\": 2147483647,\\n    \\\"m_Hidden\\\": false,\\n    \\\"m_ShaderOutputName\\\": \\\"Out\\\",\\n    \\\"m_StageCapability\\\": 3,\\n    \\\"m_Value\\\": 0.0,\\n    \\\"m_DefaultValue\\\": 0.0,\\n    \\\"m_Labels\\\": [\\n        \\\"X\\\"\\n    ]\\n}\"\n        }\n    ],\n    \"m_Precision\": 0,\n    \"m_PreviewExpanded\": true,\n    \"m_CustomColors\": {\n        \"m_SerializableColors\": []\n    },\n    \"m_PropertyGuidSerialized\": \"b345d0c4-8c05-4ba9-a04e-1ffe9e9b3b97\"\n}"
@@ -1726,12 +1732,6 @@
             "typeInfo": {
                 "fullName": "UnityEditor.Graphing.Edge"
             },
-            "JSONnodeData": "{\n    \"m_OutputSlot\": {\n        \"m_SlotId\": 1,\n        \"m_NodeGUIDSerialized\": \"825fc869-2899-45d8-a269-2fcd5a108ff3\"\n    },\n    \"m_InputSlot\": {\n        \"m_SlotId\": 1336614164,\n        \"m_NodeGUIDSerialized\": \"658d0a98-1803-4fd5-abff-35729125b5ba\"\n    }\n}"
-        },
-        {
-            "typeInfo": {
-                "fullName": "UnityEditor.Graphing.Edge"
-            },
             "JSONnodeData": "{\n    \"m_OutputSlot\": {\n        \"m_SlotId\": 0,\n        \"m_NodeGUIDSerialized\": \"827ac060-2567-4fa3-9e84-d21bd9973675\"\n    },\n    \"m_InputSlot\": {\n        \"m_SlotId\": 0,\n        \"m_NodeGUIDSerialized\": \"95ae2572-a41d-4e31-ba8c-ef3a695df71d\"\n    }\n}"
         },
         {
@@ -1931,6 +1931,12 @@
                 "fullName": "UnityEditor.Graphing.Edge"
             },
             "JSONnodeData": "{\n    \"m_OutputSlot\": {\n        \"m_SlotId\": 2,\n        \"m_NodeGUIDSerialized\": \"bff14255-52c5-40cc-94f0-239fed63894c\"\n    },\n    \"m_InputSlot\": {\n        \"m_SlotId\": 2,\n        \"m_NodeGUIDSerialized\": \"d0a2a7ef-a97b-451a-b027-4fc5ec149402\"\n    }\n}"
+        },
+        {
+            "typeInfo": {
+                "fullName": "UnityEditor.Graphing.Edge"
+            },
+            "JSONnodeData": "{\n    \"m_OutputSlot\": {\n        \"m_SlotId\": 0,\n        \"m_NodeGUIDSerialized\": \"c4917377-4b56-44ba-a15e-e14f0bd47e0c\"\n    },\n    \"m_InputSlot\": {\n        \"m_SlotId\": 1336614164,\n        \"m_NodeGUIDSerialized\": \"658d0a98-1803-4fd5-abff-35729125b5ba\"\n    }\n}"
         },
         {
             "typeInfo": {
