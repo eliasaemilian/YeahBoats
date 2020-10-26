@@ -18,6 +18,8 @@ public class Savedata : MonoBehaviour
     public float Money = 0;
     public int Multiplyer = 1;
 
+    public string DateTime;
+
     //This is the shit that scares me
     public BoatLevels BoatLevels;
 
@@ -41,6 +43,7 @@ public class Savedata : MonoBehaviour
             TapFishLevel = data.TapFishLevel;
             Money = data.Money;
             Multiplyer = data.Multiplyer;
+            DateTime = data.DateTime;
             //BoatLevels = data.BoatLevels;
         }
         else

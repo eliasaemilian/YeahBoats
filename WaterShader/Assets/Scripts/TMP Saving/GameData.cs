@@ -19,6 +19,8 @@ public class GameData
     public float Money;
     public int Multiplyer;
 
+    public string DateTime;
+
     //public BoatLevels BoatLevels;
 
     public GameData( Savedata data)
@@ -33,6 +35,7 @@ public class GameData
         OwnedFishermen = data.OwnedFishermen;
         TapCoinLevel = data.TapCoinLevel;
         TapFishLevel = data.TapFishLevel;
+        DateTime = data.DateTime;
         //BoatLevels = data.BoatLevels;
 
         Money = data.Money;
