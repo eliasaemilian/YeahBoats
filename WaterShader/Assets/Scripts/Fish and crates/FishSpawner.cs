@@ -60,6 +60,7 @@ public class FishSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Physics.IgnoreLayerCollision(0, 12);
         FishList = new List<FishAI>();
         Markers = new List<Vector3>();
         SpawnMarkers();
