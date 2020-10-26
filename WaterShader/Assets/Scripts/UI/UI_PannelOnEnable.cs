@@ -9,6 +9,8 @@ using UnityEngine;
 public class UI_PannelOnEnable : MonoBehaviour
 {
     [SerializeField] private UpgradeType UT = new UpgradeType();
+    [Header("Only for boat")]
+    [SerializeField] private int _boatLevel;
     [SerializeField] private LevelManager LM = null;
     [SerializeField] private MoneyManager MM = null;
     private Shape _shape;
@@ -18,6 +20,7 @@ public class UI_PannelOnEnable : MonoBehaviour
     void OnEnable()
     {
         _shape = GetComponent<Shape>();
+
         SetUpgradeCost();
         SetColor();
     }
@@ -61,6 +64,22 @@ public class UI_PannelOnEnable : MonoBehaviour
                 _upgradeCost = LM.IndependentBoatSkillLevelCosts.TapFishCost[LM.TapFishLevel];
                 SetDescription(LM.TapFishLevel);
                 break;
+            case UpgradeType.Boat:
+                if (_boatLevel == LM.CurrentBoatLevel)
+                {
+                    UpgradeCost.text = "Current Boat";
+                }
+                else if (_boatLevel != LM.CurrentBoatLevel && LM.MaxBoatLevel >= _boatLevel)
+                {
+                    UpgradeCost.text = "Select this boat";
+                }
+                else
+                {
+                    UpgradeCost.text = "Buy for : " + LM.BoatLevels.Levels[_boatLevel - 1].Cost.ToString();
+                    _upgradeCost = LM.BoatLevels.Levels[_boatLevel - 1].Cost;
+                }
+
+                    break;
             default:
                 UpgradeCost.text = "no cost found";
                 break;
@@ -73,15 +92,35 @@ public class UI_PannelOnEnable : MonoBehaviour
         if (_shape != null)
         {
 
-        if(_upgradeCost < MM.Money)
-        {
-             _shape.settings.fillColor = new Color(0.9245283f, 0.2791029f, 0.2791029f, 1);
-             //_rect.Color = new Color(0.9245283f, 0.2791029f, 0.2791029f, 1);
+            if (UT != UpgradeType.Boat)
+            {
+                if (_upgradeCost < MM.Money)
+                {
+                    _shape.settings.fillColor = new Color(0.9245283f, 0.2791029f, 0.2791029f, 1);
+                }
+                else
+                {
+                    _shape.settings.fillColor = new Color(0.5f, 0.5f, 0.5f, 1);
+                }
             }
-        else
-        {
-            _shape.settings.fillColor = new Color(0.5f, 0.5f, 0.5f, 1);
-            //_rect.Color = new Color(0.5f, 0.5f, 0.5f, 1);
+            else
+            {
+                if(_boatLevel <= LM.MaxBoatLevel)
+                {
+                    _shape.settings.fillColor = new Color(0.9245283f, 0.2791029f, 0.2791029f, 1);
+
+                }
+                else
+                {
+                    if (_upgradeCost < MM.Money)
+                    {
+                        _shape.settings.fillColor = new Color(0.9245283f, 0.2791029f, 0.2791029f, 1);
+                    }
+                    else
+                    {
+                        _shape.settings.fillColor = new Color(0.5f, 0.5f, 0.5f, 1);
+                    }
+                }
             }
         }
     }
@@ -95,5 +134,22 @@ public class UI_PannelOnEnable : MonoBehaviour
     {
 
         UpgradeDescription.text = level+" Fisherman >> " + (level + 1)+ " Fisherman";
+    }
+
+    public void UpdateBoatTab()
+    {
+        if (_boatLevel == LM.CurrentBoatLevel)
+        {
+            UpgradeCost.text = "Current Boat";
+        }
+        else if (_boatLevel != LM.CurrentBoatLevel && LM.MaxBoatLevel >= _boatLevel)
+        {
+            UpgradeCost.text = "Select this boat";
+        }
+        else
+        {
+            UpgradeCost.text = "Buy for : " + LM.BoatLevels.Levels[_boatLevel - 1].Cost.ToString();
+            _upgradeCost = LM.BoatLevels.Levels[_boatLevel - 1].Cost;
+        }
     }
 }

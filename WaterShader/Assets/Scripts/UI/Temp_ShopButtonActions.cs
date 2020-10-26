@@ -12,13 +12,15 @@ public enum UpgradeType
     FishingRod,
     FishingSpeed,
     TapCost,
-    Tapfish
+    Tapfish,
+    Boat
 }
 public class Temp_ShopButtonActions : MonoBehaviour
 {
     [SerializeField] private int _sceneIndexPond = 0;
     [SerializeField] private LevelManager LM = null;
     [SerializeField] private List<UI_PannelOnEnable> _pannels = null;
+    [SerializeField] private List<UI_PannelOnEnable> _boatPannels = null;
     [SerializeField] private GameObject _notEnoughMoneyPannel = null;
     [SerializeField] private GameObject _fishermanFailHirePannel = null;
 
@@ -93,6 +95,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
             {
                 //Hire succeeded
                 LM.OwnedFishermen = LM.Levelup(LM.OwnedFishermen, LM.BoatSkillLevelCosts.FishermanCost);
+                ResetColors();
             }
             else
             {
@@ -106,7 +109,42 @@ public class Temp_ShopButtonActions : MonoBehaviour
         }
     }
 
+    public void OnClickBoatButton(int ButtonLevel)
+    {
+        if(LM.MaxBoatLevel == ButtonLevel - 1)
+        {
+            if (LM.CheckIfICanLevelupBoat(LM.MaxBoatLevel))
+            {
+                LM.MaxBoatLevel = LM.LevelupBoat(LM.MaxBoatLevel);
+                ResetColors();
+            }
+            else
+            {
+                Debug.Log("I can not Level Up");
+                _notEnoughMoneyPannel.SetActive(true);
+
+            }
+        }
+        else if (LM.CurrentBoatLevel != ButtonLevel)
+        {
+            LM.CurrentBoatLevel = ButtonLevel;
+            
+        }
+        else
+        {
+            LM.CurrentBoatLevel = ButtonLevel;
+
+        }
+
+    }
    
+    public void UpdateBoatPanels()
+    {
+        foreach (UI_PannelOnEnable panel in _boatPannels)
+        {
+            panel.UpdateBoatTab();
+        }
+    }
     private void ResetColors()
     {
         foreach (UI_PannelOnEnable panel in _pannels)

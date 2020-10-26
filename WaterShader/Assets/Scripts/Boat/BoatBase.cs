@@ -23,9 +23,6 @@ public class BoatBase : MonoBehaviour
 
     public UnityEvent FishingSpeedup;
 
-    public int BoatStorage;
-    private int _currentBoatStorage;
-
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +36,6 @@ public class BoatBase : MonoBehaviour
             WaterTappableHandler.FishingTap.AddListener(FishingSpeedup.Invoke);
         }
 
-        BoatStorageUpdate();
         StartCoroutine(LateStart());
     }
 
@@ -85,7 +81,7 @@ public class BoatBase : MonoBehaviour
     }
     private bool AddFisherman()
     {
-        if (SpawnPoints.Count < BoatSO.NPCSpawnPointAmmount)
+        if (SpawnPoints.Count < _lM.MaxAmmountOfFishermen)
         {
             GameObject gO = _nPCSpots._spots[SpawnPoints.Count];
             SpawnPoints.Add(gO);
@@ -104,33 +100,14 @@ public class BoatBase : MonoBehaviour
     }
 
 
-    public bool AddFishToStorage()
-    {
-        if(_currentBoatStorage < BoatStorage)
-        {
-            _currentBoatStorage++;
-            return true;
-        }
-        else
-        {
-           return false;
-        }
-    }
 
     
     public void TapToSpeedupCatch()
     {
         FishingSpeedup.Invoke();
     }
-    public void EmptyStorage()
-    {
-        _currentBoatStorage = 0;
-    }
+    
 
-    private void BoatStorageUpdate()
-    {
-        BoatStorage = 10 * (2 * _lM.BoatStorageLevel);
-    }
 
     private IEnumerator LateStart()
     {

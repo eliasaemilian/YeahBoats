@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8fdef29a25d20a7428ae40d24ce08ae6, type: 3}
-  m_Name: BoatLevel1
+  m_Name: BoatLevel3
   m_EditorClassIdentifier: 
-  Cost: 0
-  BoatPrefab: {fileID: 4742857868022216489, guid: 8e111e6b1fbc0464788be2e4d81675fe,
-    type: 3}
+  Cost: 100000
+  BoatPrefab: {fileID: 0}
   BoatStorageLevel: 1
   NPCFishermanLevel: 1
   FishingRodLevel: 1
   FishingHookLevel: 1
-  NPCFishermanAmmount: 2
+  NPCFishermanAmmount: 0

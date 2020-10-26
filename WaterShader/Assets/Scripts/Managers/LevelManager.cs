@@ -202,6 +202,14 @@ public class LevelManager : MonoBehaviour
         else return false;
 
     }
+    public bool CheckIfICanLevelupBoat(int currentLevel)
+    {
+        if (MM.CheckMoney(BoatLevels.Levels[currentLevel].Cost))
+        {
+            return true;
+        }
+        else return false;
+    }
     public int Levelup(int currentLevel, List<int> LST)
     {
         MM.DeduceMoney(LST[currentLevel]);
@@ -211,6 +219,15 @@ public class LevelManager : MonoBehaviour
         MM.UpdateMoney();
         return (currentLevel + 1);
 
+    }
+
+    public int LevelupBoat(int currentLevel)
+    {
+        MM.DeduceMoney(BoatLevels.Levels[currentLevel].Cost);
+
+        UpdateLevels();
+        MM.UpdateMoney();
+        return (currentLevel + 1);
     }
 
     public bool ChanceLevelupForFisherman(int chanceInPercentage)
