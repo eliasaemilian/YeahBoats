@@ -228,7 +228,7 @@ public class LevelManager : MonoBehaviour
         //BoatLevels = DM.DataContainer.BoatLevels;
     }
 
-    private void SaveData()
+    public void SaveData()
     {
         DM.DataContainer.CurrentMapLevel = CurrentMapLevel;
         DM.DataContainer.MaxMapLevel = MaxMapLevel;

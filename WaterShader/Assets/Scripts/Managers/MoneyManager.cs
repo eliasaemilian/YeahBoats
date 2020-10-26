@@ -73,7 +73,7 @@ public class MoneyManager : MonoBehaviour
         Money = _dM.DataContainer.Money;
         Multiplyer = _dM.DataContainer.Multiplyer;
     }
-    private void SaveData()
+    public void SaveData()
     {
         _dM.DataContainer.Money = Money;
         _dM.DataContainer.Multiplyer = Multiplyer;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Savedata : MonoBehaviour
 {
-
+    public static Savedata Instance;
     public int CurrentMapLevel = 1;
     public int MaxMapLevel = 1;
     public int MapPieces = 0;
@@ -26,6 +26,7 @@ public class Savedata : MonoBehaviour
 
     void Awake()
     {
+        Instance = this;
         //GameData data = SaveSystem.LoadData();
         GameData data = SaveSystem.LoadDataJson();
 
@@ -54,7 +55,7 @@ public class Savedata : MonoBehaviour
         InvokeRepeating("Saving", 6, 5);
     }
 
-    private void Saving()
+    public void Saving()
     {
         //SaveSystem.SaveData(this);
         SaveSystem.SaveDataJson(this);
