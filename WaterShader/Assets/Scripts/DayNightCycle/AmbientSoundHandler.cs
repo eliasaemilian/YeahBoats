@@ -12,11 +12,11 @@ public class AmbientSoundHandler : MonoBehaviour
     private int nextSwitch;
     private int newTimeToSwitch => Random.Range(_minMaxTimeBetweenAmbient[0], _minMaxTimeBetweenAmbient[1]) * 60;
 
-    [SerializeField] private int[] _indexDayAmbientSounds;
-    [SerializeField] private int[] _indexNightAmbientSounds;
+    [SerializeField] private int[] _indexDayAmbientSounds = null;
+    [SerializeField] private int[] _indexNightAmbientSounds = null;
 
-    [SerializeField] private int[] _indexDayMusic;
-    [SerializeField] private int[] _indexNightMusic;
+    [SerializeField] private int[] _indexDayMusic = null;
+    [SerializeField] private int[] _indexNightMusic = null;
 
     [SerializeField, Range(0f, 1f)] private float _chanceToPlayMusic = .5f;
 

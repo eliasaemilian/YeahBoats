@@ -11,7 +11,7 @@ public class ToDAdjustable_PostProcessing : TimeOfDayAdjustable
 
     Bloom _bloom;
 
-    [SerializeField] private PostProcessingSettings _postProcessingSettings;
+    [SerializeField] private PostProcessingSettings _postProcessingSettings = null;
 
 
     public override void OnInitialize()

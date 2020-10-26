@@ -87,15 +87,12 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
             if (_timeOfDayDebug * 24f > 20 || _timeOfDayDebug * 24f < 6) _isNight = true;
             else IsNight = false;
 
-            Time = _timeOfDay.ToString();
-            Debug.Log("Using Debug Time");
+            Time = (_timeOfDay * 24f).ToString();
+
         }
 #endif
 
 
-
-
-        Debug.Log("Night is " + _isNight);
     }
 
 

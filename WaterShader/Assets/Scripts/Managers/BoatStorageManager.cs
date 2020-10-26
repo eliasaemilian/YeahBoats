@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class BoatStorageManager : MonoBehaviour
 {
-    [SerializeField] private LevelManager _lM;
-    [SerializeField] private GameObject _aFKPopup;
-    [SerializeField] private TextMeshProUGUI _aFKPopupText;
+    [SerializeField] private LevelManager _lM = null;
+    [SerializeField] private GameObject _aFKPopup = null;
+    [SerializeField] private TextMeshProUGUI _aFKPopupText = null;
     private DateTime _dateTime;
     public int BoatStorage;
     public int FishInStorage;

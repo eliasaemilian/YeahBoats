@@ -10,10 +10,10 @@ public class CrateEvent : UnityEvent<GameObject>
 
 public class CrateSpawner : MonoBehaviour
 {
-    [SerializeField] private MultiplierManager _MM;
+    [SerializeField] private MultiplierManager _MM = null;
 
-    [SerializeField] private float _crateSpawnTime;
-    [SerializeField] private int _crateMaxAmmount;
+    [SerializeField] private float _crateSpawnTime = 5f;
+    [SerializeField] private int _crateMaxAmmount = 1;
 
     public GameObject MapTab;
     public GameObject MultiplierTab;

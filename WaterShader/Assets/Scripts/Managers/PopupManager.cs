@@ -10,12 +10,12 @@ public class PopupManager : MonoBehaviour
     [SerializeField] private LevelManager _lM = null;
     [SerializeField] private MoneyManager _mM = null;
 
-    [SerializeField] private GameObject _coinPopup;
-    [SerializeField] private GameObject _FishPopup;
+    [SerializeField] private GameObject _coinPopup = null;
+    [SerializeField] private GameObject _FishPopup = null;
 
-    [SerializeField] private Transform _PopupContainer;
+    [SerializeField] private Transform _PopupContainer = null;
 
-    [SerializeField] private Camera _camera;
+    [SerializeField] private Camera _camera = null;
 
     private Transform _canvas;
 

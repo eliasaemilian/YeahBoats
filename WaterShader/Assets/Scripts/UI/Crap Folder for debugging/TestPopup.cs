@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TestPopup : MonoBehaviour
 {
-    [SerializeField] private Transform CoinPopupPrefab;
-    [SerializeField] GameObject Camera;
+    [SerializeField] private Transform CoinPopupPrefab = null;
+    [SerializeField] GameObject Camera = null;
     // Start is called before the first frame update
     void Start()
     {

@@ -5,10 +5,9 @@ using UnityEngine;
 [RequireComponent (typeof (Camera))]
 public class WaterRipplesEffect : MonoBehaviour
 {
-    [SerializeField]
-    RenderTexture rt;
-    [SerializeField]
-    Transform target;
+    [SerializeField] RenderTexture rt = null;
+    [SerializeField] Transform target = null;
+
     // Start is called before the first frame update
     void Awake()
     {
