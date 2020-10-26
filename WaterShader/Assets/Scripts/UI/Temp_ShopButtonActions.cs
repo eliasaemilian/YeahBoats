@@ -24,11 +24,11 @@ public class Temp_ShopButtonActions : MonoBehaviour
     [SerializeField] private GameObject _notEnoughMoneyPannel = null;
     [SerializeField] private GameObject _fishermanFailHirePannel = null;
 
-    public void OnClickLighthouseVoyageButton()
+    public void OnClickLighthouseVoyageButton(int Sceneindex)
     {
         // Scene Switch to Pond
-        Debug.Log("Loading Pond");
-        SceneManager.LoadScene(_sceneIndexPond);
+        //Debug.Log("Loading Pond");
+        SceneManager.LoadScene(Sceneindex); ;
     }
 
     public void OnClickUpgradeFishingHookButton()
