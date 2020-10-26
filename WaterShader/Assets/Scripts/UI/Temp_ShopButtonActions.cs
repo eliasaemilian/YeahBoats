@@ -28,6 +28,9 @@ public class Temp_ShopButtonActions : MonoBehaviour
     {
         // Scene Switch to Pond
         //Debug.Log("Loading Pond");
+        LevelManager.Instance.SaveData();
+        MoneyManager.Instance.SaveData();
+        Savedata.Instance.Saving();
         SceneManager.LoadScene(Sceneindex); ;
     }
 
