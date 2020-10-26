@@ -8224,8 +8224,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.99817425, g: 0.98707205, b: 1, a: 1}
-  m_Intensity: 0
+  m_Color: {r: 0.9949401, g: 0.9641714, b: 1, a: 1}
+  m_Intensity: 0.0019757152
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -8281,7 +8281,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1173641078}
-  m_LocalRotation: {x: 0.00000009272586, y: 0.7071068, z: 0.7071068, w: -0.00000009272586}
+  m_LocalRotation: {x: 0.7933534, y: -0.00000006128838, z: -0.00000006128838, w: -0.60876137}
   m_LocalPosition: {x: 0, y: 3, z: 91.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -13232,8 +13232,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.99890846, g: 0.96055686, b: 0.90646386, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0.997804, g: 0.92064416, b: 0.8118142, a: 1}
+  m_Intensity: 0.98024285
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -13289,7 +13289,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1953715250}
-  m_LocalRotation: {x: 0.7071068, y: 0.00000003090862, z: -0.00000003090862, w: 0.7071068}
+  m_LocalRotation: {x: 0.7933534, y: 0.000000026609806, z: -0.000000034678582, w: 0.60876137}
   m_LocalPosition: {x: 0, y: 3, z: 91.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -16133,6 +16133,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CrateSpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 7188438680948112092, guid: a67519463487a154ca804c1d14a8dcf3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a67519463487a154ca804c1d14a8dcf3, type: 3}

@@ -83,6 +83,7 @@ public class UI_JoystickHandler : TappableGameobject
         //}
     }
 
+
     public override void OnTapWasLetGo()
     {
         base.OnTapWasLetGo();
@@ -95,6 +96,8 @@ public class UI_JoystickHandler : TappableGameobject
     public override void OnDoubleTap()
     {
         base.OnDoubleTap();
+
+        Debug.Log("Joystick double tapped");
 
         _doubleTap = true;
 

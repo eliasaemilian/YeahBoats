@@ -114,7 +114,7 @@ public class UI_InputHandler : MonoBehaviour
 
                             // SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
                             _tappableFocus = _tappableGameobjectsInScene[i];
-
+                           
                         }
 
 

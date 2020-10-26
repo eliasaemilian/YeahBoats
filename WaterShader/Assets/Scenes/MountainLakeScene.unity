@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 6596d4b8a6972dc4e93d0111b8913bd6, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: b4a886e60a6d96e42929bdac3949aa91, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1953715251}
-  m_IndirectSpecularColor: {r: 0.18078813, g: 0.22631514, b: 0.30718598, a: 1}
+  m_IndirectSpecularColor: {r: 0.29075053, g: 0.64662474, b: 0.8896784, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 508e8b494a4df914d880f7ff4efdde09,
     type: 2}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 87b98002d7e682c4bb82397e839aee26,
+  m_LightingSettings: {fileID: 4890085278179872738, guid: af189bdb951a81544aced8e26c137bfb,
     type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -2874,8 +2874,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.99817425, g: 0.98707205, b: 1, a: 1}
-  m_Intensity: 0
+  m_Color: {r: 0.9958223, g: 0.9958223, b: 0.9958223, a: 1}
+  m_Intensity: 0.06152479
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2931,7 +2931,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1173641078}
-  m_LocalRotation: {x: 0.7071068, y: -0.000000061817246, z: -0.000000061817246, w: -0.7071068}
+  m_LocalRotation: {x: 0.00000003269926, y: 0.9925036, z: -0.12221585, w: -0.00000008142521}
   m_LocalPosition: {x: 0, y: 3, z: 91.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -2999,7 +2999,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 395ff6dc61e68034a9f5f2c054044e38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _postProcessingSettings: {fileID: 11400000, guid: e2e5d0d72a41ab840ac6b04d8c03777d,
+  _postProcessingSettings: {fileID: 11400000, guid: ba24daa185461144689ddbbc61ff2d01,
     type: 2}
 --- !u!1001 &1209923138
 PrefabInstance:
@@ -4899,8 +4899,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.99890846, g: 0.96055686, b: 0.90646386, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0.9293397, g: 0.9213151, b: 0.81011707, a: 1}
+  m_Intensity: 0.19237605
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -4956,7 +4956,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1953715250}
-  m_LocalRotation: {x: -0.000000030908623, y: 0.7071068, z: -0.7071068, w: -0.000000030908623}
+  m_LocalRotation: {x: -0.12221582, y: 0.000000043383707, z: 0.000000005342223, w: 0.9925036}
   m_LocalPosition: {x: 0, y: 3, z: 91.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -5633,6 +5633,18 @@ Transform:
   m_Father: {fileID: 1983535103}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2114372148 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3346001435050125968, guid: daefd573bf75d764f809aafa9cfe6f43,
+    type: 3}
+  m_PrefabInstance: {fileID: 3346001434522032754}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c83b8c4d84499e4b8a1dc40f8cd0f26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &205950898618183164
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5982,23 +5994,34 @@ PrefabInstance:
     - target: {fileID: 3346001435050125968, guid: daefd573bf75d764f809aafa9cfe6f43,
         type: 3}
       propertyPath: _timeOfDayDebug
-      value: 0.467
+      value: 0.211
       objectReference: {fileID: 0}
     - target: {fileID: 3346001435050125968, guid: daefd573bf75d764f809aafa9cfe6f43,
         type: 3}
       propertyPath: Time
-      value: 11.208
+      value: 0.211
       objectReference: {fileID: 0}
     - target: {fileID: 3346001435050125968, guid: daefd573bf75d764f809aafa9cfe6f43,
         type: 3}
       propertyPath: _timeOfDay
-      value: 0.467
+      value: 0.211
       objectReference: {fileID: 0}
     - target: {fileID: 3346001435050125968, guid: daefd573bf75d764f809aafa9cfe6f43,
         type: 3}
       propertyPath: _pause
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3346001435050125968, guid: daefd573bf75d764f809aafa9cfe6f43,
+        type: 3}
+      propertyPath: Instance
+      value: 
+      objectReference: {fileID: 2114372148}
+    - target: {fileID: 3346001435050125968, guid: daefd573bf75d764f809aafa9cfe6f43,
+        type: 3}
+      propertyPath: _lightSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 556bfa67fefebe040994cad7d371c646,
+        type: 2}
     - target: {fileID: 3346001435050125969, guid: daefd573bf75d764f809aafa9cfe6f43,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -37,6 +37,7 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
 
     void Awake()
     {
+
         //if (_sun == null && !AttemptToFetchSun())
         //{
         //    Debug.LogError("No Directional Light found in Scene. Place a Directional Light and set it as Sun in Lighting Settings");
@@ -74,19 +75,24 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
         int sysMin = System.DateTime.Now.Minute;
         if (sysMin > 30) sysHours++;
 
-
-#if UNITY_EDITOR
-        if (_useDebugTime)
-        {
-            _timeOfDay = ( _timeOfDayDebug * 24f);
-            Time = _timeOfDay.ToString();
-        }
-#endif
-
         if (_timeOfDay > 20 || _timeOfDay < 6) _isNight = true;
         else _isNight = false;
 
         _timeOfDay = Mathf.Clamp01(sysHours / 24f);
+
+#if UNITY_EDITOR
+        if (_useDebugTime)
+        {
+            _timeOfDay = _timeOfDayDebug;
+            if (_timeOfDayDebug * 24f > 20 || _timeOfDayDebug * 24f < 6) _isNight = true;
+            else IsNight = false;
+
+            Time = _timeOfDay.ToString();
+            Debug.Log("Using Debug Time");
+        }
+#endif
+
+
 
 
         Debug.Log("Night is " + _isNight);
@@ -141,6 +147,8 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
 
 
         RenderSettings.skybox.SetFloat("_StarsVisibility", _lightSettings.StarVisibility.Evaluate(_timeOfDay));
+
+        DynamicGI.UpdateEnvironment();
     }
 
     /// <summary>
