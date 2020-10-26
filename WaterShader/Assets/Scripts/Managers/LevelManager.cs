@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.ExceptionServices;
 using UnityEngine;
 using UnityEngine.Events;
@@ -98,70 +99,21 @@ public class LevelManager : MonoBehaviour
         //{
 
         //}
-        if (GUI.Button(new Rect(10, 10, 150, 20), "NPC Fisherman Level"))
+        
+        if (GUI.Button(new Rect(160, 50, 150, 20), "Delete Saves"))
         {
-            if (CheckIfICanLevelup( NPCFishermanLevel, BoatSkillLevelCosts.FishingSpeedCost))
+            if(File.Exists(Application.persistentDataPath + "/Data.txt"))
             {
-                CD.UpdateText("You have enough money to upgrade");
+                File.Delete(Application.persistentDataPath + "/Data.txt");
+                Debug.Log("files deleted");
             }
             else
             {
-                CD.UpdateText("You need more money!");
+                
+                Debug.Log("nothing to delete");
             }
         }
-        if (GUI.Button(new Rect(160, 10, 150, 20), "Upgrade"))
-        {
-            Debug.Log("About to upgrade");
-            NPCFishermanLevel = Levelup(NPCFishermanLevel, BoatSkillLevelCosts.FishingSpeedCost);
-        }
-
-        if (GUI.Button(new Rect(10, 30, 150, 20), "Boat Storage"))
-        {
-            if (CheckIfICanLevelup(BoatStorageLevel, BoatSkillLevelCosts.BoatStorageCost))
-            {
-                CD.UpdateText("You have enough money to upgrade");
-            }
-            else
-            {
-                CD.UpdateText("You need more money!");
-            }
-
-        }
-        if (GUI.Button(new Rect(160, 30, 150, 20), "Upgrade"))
-        {
-            BoatStorageLevel = Levelup(BoatStorageLevel, BoatSkillLevelCosts.BoatStorageCost);
-        }
-        if (GUI.Button(new Rect(10, 50, 150, 20), "Fishing Hook Level"))
-        {
-            if (CheckIfICanLevelup(FishingHookLevel, BoatSkillLevelCosts.FishingHookCost))
-            {
-                CD.UpdateText("You have enough money to upgrade");
-            }
-            else
-            {
-                CD.UpdateText("You need more money!");
-            }
-
-        }
-        if (GUI.Button(new Rect(160, 50, 150, 20), "Upgrade"))
-        {
-            FishingHookLevel = Levelup(FishingHookLevel, BoatSkillLevelCosts.FishingHookCost);
-        }
-        if (GUI.Button(new Rect(10, 70, 150, 20), "Fishing Rod Level"))
-        {
-            if (CheckIfICanLevelup(FishingRodLevel, BoatSkillLevelCosts.FishingRodCost))
-            {
-                CD.UpdateText("You have enough money to upgrade");
-            }
-            else
-            {
-                CD.UpdateText("You need more money!");
-            }
-        }
-        if (GUI.Button(new Rect(160, 70, 150, 20), "Upgrade"))
-        {
-            FishingRodLevel = Levelup(FishingRodLevel, BoatSkillLevelCosts.FishingRodCost);
-        }
+        
         if (GUI.Button(new Rect(160, 90, 150, 20), "ResetLevels"))
         {
             TMPLevelSetup(true);
