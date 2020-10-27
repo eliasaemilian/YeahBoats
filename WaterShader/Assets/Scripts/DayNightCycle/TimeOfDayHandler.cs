@@ -16,7 +16,6 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
 
     [SerializeField] private bool _pause = false;
 
-    [SerializeField] private string Time = "";
     [SerializeField] private bool _useDebugTime = false;
     [SerializeField, Range(0, 1)] private float _timeOfDayDebug = 0f;
 
@@ -52,19 +51,27 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
 
     }
 
+    private void Start() => UpdateCallForAllDayNight();
 
 
-    // Update is called once per frame // THIS BEING IN UPDATE IS FOR DEBUGGING
-    void Update()
+    private void UpdateCallForAllDayNight()
     {
-        if (_pause) return; //DENGELNG DEBUGGING
-
-        //TODO: TICK FUNCTION THIS SHIT OR QUERY IT ONLY EVERY ONCE IN A WHILE LIKE SCENE SWITCH, APPLICATION OUT OF STANDBY ETC
         UpdateValuesForTime();
         UpdateGlobalLightingForTimeOfDay();
         SetShaderProperties();
 
         TimeOfDayIsUpdated.Invoke(_timeOfDay);
+    }
+
+
+    // DEBUGGING
+    void Update()
+    {
+        if (_pause) return;
+
+#if UNITY_EDITOR
+        UpdateCallForAllDayNight();
+#endif
 
     }
 
@@ -86,8 +93,6 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
             _timeOfDay = _timeOfDayDebug;
             if (_timeOfDayDebug * 24f > 20 || _timeOfDayDebug * 24f < 6) _isNight = true;
             else IsNight = false;
-
-            Time = (_timeOfDay * 24f).ToString();
 
         }
 #endif
