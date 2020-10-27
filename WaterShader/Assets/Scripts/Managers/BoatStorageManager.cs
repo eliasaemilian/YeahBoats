@@ -71,7 +71,7 @@ public class BoatStorageManager : MonoBehaviour
     private void AddFishToStorage(double time)
     {
         Debug.Log("Time passed : " + time);
-        int fish = (int) (time / 1);
+        int fish = (int) (time / 20);
 
         Debug.Log("Ammount of fish : " + fish);
         if(fish > BoatStorage)
