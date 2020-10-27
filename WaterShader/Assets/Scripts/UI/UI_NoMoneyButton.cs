@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UI_NoMoneyButton : MonoBehaviour
 {
-    [SerializeField] private GameObject _tab;
+    [SerializeField] private GameObject _tab = null;
 
     public void DisableTab()
     {

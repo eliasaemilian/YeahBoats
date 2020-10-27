@@ -10,7 +10,7 @@ public class UI_PannelOnEnable : MonoBehaviour
 {
     [SerializeField] private UpgradeType UT = new UpgradeType();
     [Header("Only for boat")]
-    [SerializeField] private int _boatLevel;
+    [SerializeField] private int _boatLevel = 0;
     [SerializeField] private LevelManager LM = null;
     [SerializeField] private MoneyManager MM = null;
     private Shape _shape;

@@ -16,25 +16,25 @@ public class FishSpawner : MonoBehaviour
 
     [Header("Fish Setup")]
 
-    [SerializeField] private float _spawnAmmount;
-    [SerializeField] private float _minFishSpeed, _maxFishSpeed;
+    [SerializeField] private float _spawnAmmount = 0f;
+    [SerializeField] private float _minFishSpeed, _maxFishSpeed = 0f;
 
-    [SerializeField] private int _directionChangeChance;
-    [SerializeField] private int _directionChangeDelay;
+    [SerializeField] private int _directionChangeChance = 0;
+    [SerializeField] private int _directionChangeDelay = 0;
 
     [Header("Spawner Setup")]
     [Header("Spawner Size")]
 
-    [SerializeField] private float _x;
-    [SerializeField] private float _y;
-    [SerializeField] private float _z;
+    [SerializeField] private float _x = 0;
+    [SerializeField] private float _y = 0;
+    [SerializeField] private float _z = 0;
     [Header("Markers")]
 
-    [SerializeField] private int _markerAmmount;
+    [SerializeField] private int _markerAmmount = 0;
 
     [Header("Fish Removal")]
-    [SerializeField] private float _initialDelay;
-    [SerializeField] private float _removeTimer;
+    [SerializeField] private float _initialDelay = 0f;
+    [SerializeField] private float _removeTimer = 0f;
 
     private bool _isBoatHere;
 
