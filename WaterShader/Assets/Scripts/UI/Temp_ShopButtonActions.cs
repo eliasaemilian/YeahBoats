@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.VFX;
 
 public enum UpgradeType
 {
@@ -23,6 +24,16 @@ public class Temp_ShopButtonActions : MonoBehaviour
     [SerializeField] private List<UI_PannelOnEnable> _boatPannels = null;
     [SerializeField] private GameObject _notEnoughMoneyPannel = null;
     [SerializeField] private GameObject _fishermanFailHirePannel = null;
+    [SerializeField] private List<VisualEffect> _FireworkPrefabs = null;
+
+    void Start()
+    {
+        foreach(VisualEffect firework in _FireworkPrefabs)
+        {
+            firework.Stop();
+
+        }
+    }
 
     public void OnClickLighthouseVoyageButton(int Sceneindex)
     {
@@ -42,6 +53,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
             Debug.Log("I can Level Up");
             LM.FishingHookLevel = LM.Levelup(LM.FishingHookLevel, LM.BoatSkillLevelCosts.FishingHookCost);
             ResetColors();
+            ShootFireworks();
         }
         else
         {
@@ -56,6 +68,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
         {
             LM.FishingRodLevel = LM.Levelup(LM.FishingRodLevel, LM.BoatSkillLevelCosts.FishingRodCost);
             ResetColors();
+            ShootFireworks();
         }
         else
         {
@@ -70,6 +83,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
         {
             LM.TapCoinLevel = LM.Levelup(LM.TapCoinLevel, LM.IndependentBoatSkillLevelCosts.TapCoinCost);
             ResetColors();
+            ShootFireworks();
         }
         else
         {
@@ -83,6 +97,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
         {
             LM.TapFishLevel = LM.Levelup(LM.TapFishLevel, LM.IndependentBoatSkillLevelCosts.TapFishCost);
             ResetColors();
+            ShootFireworks();
         }
         else
         {
@@ -99,6 +114,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
                 //Hire succeeded
                 LM.OwnedFishermen = LM.Levelup(LM.OwnedFishermen, LM.BoatSkillLevelCosts.FishermanCost);
                 ResetColors();
+                ShootFireworks();
             }
             else
             {
@@ -120,6 +136,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
             {
                 LM.MaxBoatLevel = LM.LevelupBoat(LM.MaxBoatLevel);
                 ResetColors();
+                ShootFireworks();
             }
             else
             {
@@ -154,5 +171,16 @@ public class Temp_ShopButtonActions : MonoBehaviour
         {
             panel.SetColor();
         }
+    }
+
+    private void ShootFireworks()
+    {
+        foreach (VisualEffect firework in _FireworkPrefabs)
+        {
+            firework.Play();
+            firework.playRate = 2;
+
+        }
+        // And sum audio to come here
     }
 }
