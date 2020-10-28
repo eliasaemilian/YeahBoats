@@ -5,13 +5,11 @@ using UnityEngine;
 [RequireComponent (typeof (Rigidbody))] [RequireComponent (typeof (BoatBase))]
 public class SimpleBoatInput : MonoBehaviour
 {
+    [SerializeField] private bool _reversedInput = false; // TODO: [Refactoring] Move to Settings -> store in PlayerPrefs
 
     private float _speed = 3f;
     private float _reversingSpeed = .8f;
     private float _rotationSpeed = 10f;
-
-
-    [SerializeField] private bool _reversedInput = false; // TODO: [Refactoring] Move to Settings -> store in PlayerPrefs
 
     private Rigidbody _rb;
     private BoatScriptable _boatSO;

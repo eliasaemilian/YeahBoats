@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Defines a Wave used in the WaveManager to calculate the position of the vertices of the waterplane
+/// in accordance with the water shader
+/// </summary>
 public class Wave
 {
     public float steepness;

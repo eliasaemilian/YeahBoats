@@ -4,18 +4,14 @@ using UnityEngine;
 
 public class BuoyancySampling : MonoBehaviour
 {
-    private Rigidbody _rb;
     [SerializeField] private float depthBeforeSubmerged = 1f;
-    [SerializeField] private float displacementAmount = 3f; // change these for rigidbody properties
+    [SerializeField] private float displacementAmount = 3f; 
 
+    [SerializeField] protected float waterDrag = 20f; 
+    [SerializeField] protected float waterAngularDrag = 60f;
+
+    private Rigidbody _rb;
     private Transform[] _positionsSamplePoints;
-
-
-    [SerializeField] protected float waterDrag; //TODO: move boat parameters to boat class
-    [SerializeField] protected float waterAngularDrag;
-
-
-
     private float _waveHeight;
 
     void Start()
@@ -49,7 +45,6 @@ public class BuoyancySampling : MonoBehaviour
             if (_positionsSamplePoints[i].position.y < _waveHeight)
             {
                 ApplyUpwardsForce(_waveHeight, _positionsSamplePoints[i].position);
-
             }
 
         }
@@ -76,6 +71,7 @@ public class BuoyancySampling : MonoBehaviour
         //    Debug.Log("Pushed up");
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         if (_positionsSamplePoints == null || _positionsSamplePoints.Length <= 0) return;
@@ -88,4 +84,5 @@ public class BuoyancySampling : MonoBehaviour
             Gizmos.DrawWireSphere(pos, .25f);
         }
     }
+#endif
 }

@@ -7,13 +7,11 @@ public class BuoyancySampling_Boat : BuoyancySampling
     // private Boat myBoat;
     private BoatScriptable _boatSO;
 
-
-
     public override void OnInitialize()
     {
         base.OnInitialize();
 
-        // Store Boat Info
+        // Store Boat Info, override drag infos
         _boatSO = GetComponentInParent<BoatBase>().BoatSO;
         waterDrag = _boatSO.waterDrag;
         waterAngularDrag = _boatSO.waterAngularDrag;
