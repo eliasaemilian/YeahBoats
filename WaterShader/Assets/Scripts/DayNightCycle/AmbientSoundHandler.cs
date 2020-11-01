@@ -20,6 +20,7 @@ public class AmbientSoundHandler : MonoBehaviour
 
     [SerializeField, Range(0f, 1f)] private float _chanceToPlayMusic = .5f;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,7 +55,6 @@ public class AmbientSoundHandler : MonoBehaviour
     private void PlayNewSoundOrMusic()
     {
         float r = Random.Range(0f, 1f);
-        Debug.Log("R is " + r);
 
         if (r > _chanceToPlayMusic)
         {

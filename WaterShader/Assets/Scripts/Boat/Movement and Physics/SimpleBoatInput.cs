@@ -1,11 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using UnityEngine;
 
 [RequireComponent (typeof (Rigidbody))] [RequireComponent (typeof (BoatBase))]
 public class SimpleBoatInput : MonoBehaviour
 {
-    [SerializeField] private bool _reversedInput = false; // TODO: [Refactoring] Move to Settings -> store in PlayerPrefs
+    private bool ReverseInput
+    {
+        get
+        {
+            if (SettingsHandler.RequestSetting(SettingsHandler.ReverseInput, out float reverseInput))
+            {
+                if (reverseInput > 0) return false;
+                else return true;
+            }
+            else return false;           
+        }
+    } 
 
     private float _speed = 3f;
     private float _reversingSpeed = .8f;
@@ -37,7 +49,7 @@ public class SimpleBoatInput : MonoBehaviour
         Vector2 dir2D = Mathfs.GetUnitVectorByAngle(UI_JoystickHandler.JoystickDirInDegrees * Mathf.Deg2Rad);
         Vector3 dir = new Vector3(dir2D.x, 0, dir2D.y);
 
-        if (_reversedInput) dir = -dir;
+        if (ReverseInput) dir = -dir;
 
         dir = transform.TransformDirection(dir);
 

@@ -43,7 +43,7 @@ public class BoatStorageManager : MonoBehaviour
         DateTime oldDate = DateTime.FromBinary(temp);
 
         TimeSpan difference = currentDate.Subtract(oldDate);
-        Debug.Log("Difference: " + difference);
+   //     Debug.Log("Difference: " + difference);
 
         if(difference.TotalSeconds > 10)
         {

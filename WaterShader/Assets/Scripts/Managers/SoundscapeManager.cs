@@ -22,7 +22,32 @@ public class SoundscapeManager : MonoBehaviour
 
     private IEnumerator[] _crossfaders = new IEnumerator[2];
 
-    [SerializeField, Range(0f, 1f)] private float _volume = 1f;
+ //   [SerializeField, Range(0f, 1f)] private float _volume = 1f;
+
+    private float VolumeSound
+    {
+        get
+        {
+            if (SettingsHandler.RequestSetting(SettingsHandler.SoundVol, out float soundVol))
+            {
+                return soundVol;
+            }
+            else return 1f;
+        }
+    }
+
+    private float VolumeMusic
+    {
+        get
+        {
+            if (SettingsHandler.RequestSetting(SettingsHandler.MusicVol, out float musicVol))
+            {
+                return musicVol;
+            }
+            else return 1f;
+        }
+    }
+
     [SerializeField] private float _fadeDuration = 5f;
 
     // Start is called before the first frame update
@@ -96,8 +121,14 @@ public class SoundscapeManager : MonoBehaviour
 
     private void OnPlaySound(int index)
     {
+        if (SettingsHandler.RequestSetting(SettingsHandler.Sound, out bool soundOnOff))
+        {
+            if (!soundOnOff) return;
+        }
+
         // Play a new Sound
         _soundsPlayer.PlayOneShot(Sounds[index]);
+        _soundsPlayer.volume = VolumeSound;
     }
 
 
@@ -127,25 +158,31 @@ public class SoundscapeManager : MonoBehaviour
         int NextPlayer = (activePlayer + 1) % _ambientMusicPlayers.Length;
         _ambientMusicPlayers[NextPlayer].clip = clip;
         _ambientMusicPlayers[NextPlayer].Play();
-        _crossfaders[1] = FadeAudioSource(_ambientMusicPlayers[NextPlayer], _fadeDuration, _volume, () => { _crossfaders[1] = null; });
+        _crossfaders[1] = FadeAudioSource(_ambientMusicPlayers[NextPlayer], _fadeDuration, VolumeMusic, () => { _crossfaders[1] = null; });
         StartCoroutine(_crossfaders[1]);
 
         //Register new active player
         activePlayer = NextPlayer;
     }
 
-    public void DebugMusic()
+    public void KillAllMusic()
     {
-        Debug.Log("Playing new Music");
-        QueueNewMusic.Invoke(0);
+        //Kill all playing
+        foreach (IEnumerator i in _crossfaders)
+        {
+            if (i != null)
+            {
+                StopCoroutine(i);
+            }
+        }
+
+        _ambientMusicPlayers[activePlayer].Stop();
     }
 
-    public void DebugAmbient()
+    public void ResumeMusic()
     {
-        Debug.Log("Playing new Ambient");
-        QueueNewAmbientSounds.Invoke(0);
+        _ambientMusicPlayers[activePlayer].Play();
     }
-
 
 
 }
