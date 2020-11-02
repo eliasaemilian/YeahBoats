@@ -102,7 +102,10 @@ public class ObjectPooler : MonoBehaviour
 
     }
 
-
+    /// <summary>
+    /// Pull a new Gameobject from the Pool according to it's tag. Sets its position, rotation
+    /// And sets GO to active
+    /// </summary>
     public GameObject SpawnFromPool (string tag, Vector3 position, Quaternion rotation)
     {
         if (!poolDictionary.ContainsKey(tag))
@@ -125,6 +128,9 @@ public class ObjectPooler : MonoBehaviour
         return obj;
     }
 
+    /// <summary>
+    /// Returns GO to the Pool and sets it to inactive
+    /// </summary>
     public void ReturnToPool (string tag, GameObject obj)
     {
         if (!poolDictionary.ContainsKey(tag))
@@ -133,13 +139,10 @@ public class ObjectPooler : MonoBehaviour
             return;
         }
 
-      //  Debug.Log(obj.name + " returned to pool");
-
         IPooledObject pooled = obj.GetComponent<IPooledObject>();
         if (pooled != null) pooled.OnObjectDespawn();
         poolDictionary[tag].Enqueue(obj);
         obj.SetActive(false);
-
 
     }
 

@@ -24,8 +24,6 @@ public class TimeOfDayAdjustable_Light : TimeOfDayAdjustable
 
     public override void OnTimeOfDayValueChange(float newTime)
     {
-        Debug.Log("Updating Lights");
-
         // Everything that needs to react to the time of day goes here
         _light.intensity = _maxIntensity * _lightIntensity.Evaluate(newTime);
         _light.color = _lightColor.Evaluate(newTime);

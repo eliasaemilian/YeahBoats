@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-[Serializable]
+[Serializable] // REDUNDANT
 public class TimeSetting
 {
     // thoughts:

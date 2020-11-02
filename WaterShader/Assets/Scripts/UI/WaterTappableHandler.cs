@@ -4,6 +4,11 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Inits and Handles the TapEffect Vector Planes when the user is tapping
+/// on the Waterplane while Fishing. TapPlanes are pulled and returned to the Object Pool
+/// FishingTap Event fires after each tap, alerting Listeners
+/// </summary>
 public class WaterTappableHandler : TappableGameobject
 {
     [SerializeField] private GameObject _tapEffectPrefab = null;
@@ -11,7 +16,7 @@ public class WaterTappableHandler : TappableGameobject
     private Camera _uiCamera;
     private UI_JoystickHandler _joystickHandler;
 
-    public static UnityEvent FishingTap = new UnityEvent(); // [unused]
+    public static UnityEvent FishingTap = new UnityEvent(); 
 
 
 
@@ -36,12 +41,10 @@ public class WaterTappableHandler : TappableGameobject
             transPos = new Vector3(transPos.x, transPos.y, ZValueRef.position.z);
 
             spawn = ObjectPooler.Instance.SpawnFromPool(_tapEffectPrefab.tag, transPos, _tapEffectPrefab.transform.rotation);
-            spawn.GetComponent<UI_TapEffect>().SpawnDistToCam = dist; //TODO: david get this lesbian plant outta here
+            spawn.GetComponent<UI_TapEffect>().SpawnDistToCam = dist; 
             spawn.GetComponent<UI_TapEffect>().SpawnPos = pos;
             spawn.GetComponent<UI_TapEffect>().PoolTag = _tapEffectPrefab.tag;
-            //spawn.SetActive(true);
 
-            //Shitty Popup is here
             PopupManager.Instance.CallFishAndCoinPopup(transPos + new Vector3(0,1,0));
             FishingTap.Invoke();
         }

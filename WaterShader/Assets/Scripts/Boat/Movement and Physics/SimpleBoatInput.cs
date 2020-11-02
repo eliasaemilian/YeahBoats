@@ -1,17 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using UnityEngine;
 
 [RequireComponent (typeof (Rigidbody))] [RequireComponent (typeof (BoatBase))]
 public class SimpleBoatInput : MonoBehaviour
 {
+    private bool ReverseInput
+    {
+        get
+        {
+            if (SettingsHandler.RequestSetting(SettingsHandler.ReverseInput, out float reverseInput))
+            {
+                if (reverseInput > 0) return false;
+                else return true;
+            }
+            else return false;           
+        }
+    } 
 
     private float _speed = 3f;
     private float _reversingSpeed = .8f;
     private float _rotationSpeed = 10f;
-
-
-    [SerializeField] private bool _reversedInput = false; // TODO: [Refactoring] Move to Settings -> store in PlayerPrefs
 
     private Rigidbody _rb;
     private BoatScriptable _boatSO;
@@ -31,6 +41,9 @@ public class SimpleBoatInput : MonoBehaviour
     void FixedUpdate() => CalculateBoatMovementFromJoystickInput();
 
     float speed;
+    /// <summary>
+    /// Takes Joystick Input in Degree and translates this to movement & rotation direction for the current boat
+    /// </summary>
     private void CalculateBoatMovementFromJoystickInput()
     {
         if (!UI_JoystickHandler.ValidJoystickInput || _joystickHandler.JoystickStateClosed) return;
@@ -39,7 +52,7 @@ public class SimpleBoatInput : MonoBehaviour
         Vector2 dir2D = Mathfs.GetUnitVectorByAngle(UI_JoystickHandler.JoystickDirInDegrees * Mathf.Deg2Rad);
         Vector3 dir = new Vector3(dir2D.x, 0, dir2D.y);
 
-        if (_reversedInput) dir = -dir;
+        if (ReverseInput) dir = -dir;
 
         dir = transform.TransformDirection(dir);
 

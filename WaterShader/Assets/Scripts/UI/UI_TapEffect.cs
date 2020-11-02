@@ -28,7 +28,6 @@ public class UI_TapEffect : MonoBehaviour, IPooledObject
 
     private void Awake()
     {
-        // Create Object Pool of Tap Planes
         _tapEffectPlane = GetComponentInChildren<MeshRenderer>().gameObject;
         _mat_TapPlane = _tapEffectPlane.GetComponent<MeshRenderer>().material;
         _tapEffectPlane.SetActive(false);
@@ -37,11 +36,7 @@ public class UI_TapEffect : MonoBehaviour, IPooledObject
         _defaultScale = _tapEffectPlane.transform.localScale;
 
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-       // UI_InputHandler.ValidWaterTouchEvent.AddListener(OnTapFish_Effect);
-    }
+
 
     // Update is called once per frame
     void Update()
@@ -123,7 +118,7 @@ public class UI_TapEffect : MonoBehaviour, IPooledObject
 
     public void OnObjectDespawn()
     {
-        // reset appropriately
+       
     }
 
     private void OnEnable()

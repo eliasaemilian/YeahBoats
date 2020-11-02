@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Every 2D or 3D Object in the Scene that is not Unity UI and should react to Touches will need to inherit from
+/// Tappable GameObject.
+/// Tappable GO will delegate to OnTap() when the GO was tapped, OnTapWasLetGo() when touches have been lifted and 
+/// OnDoubleTap() if a double tap was registered for this GO
+/// Everything that needs to be setup for this GO at the Start of Scene needs to run in OnStartInitialize()
+/// _sceneStartActiveStatus will set the GO active/inactive after initialization at the Start of the Scene
+/// </summary>
 public class TappableGameobject : MonoBehaviour, ITappable
 {
     public bool Tappable2D { get; set; }
@@ -43,31 +51,17 @@ public class TappableGameobject : MonoBehaviour, ITappable
         Tappable2D = is2D;
         GOTapRef = refGO;
     }
-    public virtual void OnDoubleTap()
-    {
-       // Debug.Log(gameObject.name + " got double Tapped");
 
-    }
-
+    public virtual void OnDoubleTap() { }
 
     // for GOs with a 2D Collider
-    public virtual void OnTap(Touch touch, Vector3 pos)
-    {
-        Debug.Log(gameObject.name + " got Tapped, am 2D");
-    }
+    public virtual void OnTap(Touch touch, Vector3 pos) { }
 
     // for GOs with a 3D Collider
-    public virtual void OnTap(Touch touch, Vector3 pos, float dist)
-    {
-        Debug.Log(gameObject.name + " got Tapped, am 3D");
-    }
+    public virtual void OnTap(Touch touch, Vector3 pos, float dist) { }
 
+    public virtual void OnTapWasLetGo() { }
 
-
-    public virtual void OnTapWasLetGo()
-    {
-      //  Debug.Log("Tap was let go");
-    }
 
     private void CheckForRegistrationWithInputHandler()
     {

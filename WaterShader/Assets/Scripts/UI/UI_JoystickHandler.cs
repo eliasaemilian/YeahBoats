@@ -25,6 +25,7 @@ public class UI_JoystickHandler : TappableGameobject
     private Material _mat_OuterJoystick;
     private Material _mat_InnerJoystick;
 
+    private float _radius;
 
 
     public override void OnStartInitialize()
@@ -32,8 +33,10 @@ public class UI_JoystickHandler : TappableGameobject
         _outerJoystick = transform;
         _innerJoystick = GetComponentInChildren<Collider2D>().transform;
 
+        _radius = _outerJoystick.GetComponent<MeshRenderer>().bounds.extents.x - _innerJoystick.GetComponent<MeshRenderer>().bounds.extents.x - _distBetweenInnertoOuterJoystick; 
+
+
         UI_InputHandler.ValidTouchEvent2D.AddListener(OnTap);
-        //    UI_InputHandler.ValidDoubleTapEvent.AddListener(ProcessDoubleTap);
 
         JoystickStateChanged = new UnityEvent();
 
@@ -50,8 +53,13 @@ public class UI_JoystickHandler : TappableGameobject
     }
 
 
-    float radius;
     Vector3 dir, newPos;
+    /// <summary>
+    /// Calculate Joystick movement according to tap position.
+    /// Calculates Degree Offset for Movement needed for the Boat Input
+    /// </summary>
+    /// <param name="touch"></param>
+    /// <param name="pos"></param>
     public override void OnTap (Touch touch, Vector3 pos)
     {
         base.OnTap(touch, pos);
@@ -61,8 +69,6 @@ public class UI_JoystickHandler : TappableGameobject
         {
             if (JoystickStateClosed) return;
 
-            radius = _outerJoystick.GetComponent<MeshRenderer>().bounds.extents.x - _innerJoystick.GetComponent<MeshRenderer>().bounds.extents.x - _distBetweenInnertoOuterJoystick;  //REFACTOR: SAVE ON START
-
             pos = new Vector3(pos.x, pos.y, _innerJoystick.position.z);
             dir = pos - _center;
 
@@ -70,17 +76,11 @@ public class UI_JoystickHandler : TappableGameobject
 
             JoystickDirInDegrees = (angRad > 0 ? angRad : (2 * Mathfs.PI + angRad)) * 360 / (2 * Mathfs.PI); //Remap from  [ 0 - 180, -180 - 0 ] to [ 0 - 360 ]
 
-            newPos = _center + (dir.normalized * radius);
+            newPos = _center + (dir.normalized * _radius);
 
             _innerJoystick.position = new Vector3(newPos.x, newPos.y, _innerJoystick.position.z);
         }
       
-
-        //else if (touch.phase == TouchPhase.Ended)
-        //{
-        //    _snapBack = true;
-        //    Debug.Log("Snapping back");
-        //}
     }
 
 
@@ -93,11 +93,13 @@ public class UI_JoystickHandler : TappableGameobject
 
     }
 
+    /// <summary>
+    /// On Double Tap Joystick switches between Closed / Open
+    /// Changing the Boat View between Fishing and Moving
+    /// </summary>
     public override void OnDoubleTap()
     {
         base.OnDoubleTap();
-
-        Debug.Log("Joystick double tapped");
 
         _doubleTap = true;
 
@@ -109,8 +111,6 @@ public class UI_JoystickHandler : TappableGameobject
     {
         if (_doubleTap)
         {
-          //  Debug.Log("Double Tapping");
-
             // Start Fade In / Out
             if (!JoystickStateClosed) StartCoroutine(CloseJoystick());
             else StartCoroutine(Fade());
@@ -119,6 +119,7 @@ public class UI_JoystickHandler : TappableGameobject
 
         if (_snapBack)
         {
+            // Lerp Joystick back to default position on tap let go
             _innerJoystick.position = Mathfs.LerpLinear(_innerJoystick.position, new Vector3(_outerJoystick.position.x, _outerJoystick.position.y, _innerJoystick.position.z), Time.deltaTime * _touchSensitivity);
             if (Vector3.Distance(_innerJoystick.position, new Vector3(_outerJoystick.position.x, _outerJoystick.position.y, _innerJoystick.position.z)) <= 0.01)
             {
@@ -129,14 +130,6 @@ public class UI_JoystickHandler : TappableGameobject
 
     }
 
-    private void ProcessDoubleTap(Touch touch)
-    {
-        _doubleTap = true;
-
-        if (JoystickStateClosed) _counter = _counterStart;
-        else _counter = _counterStartForClose;
-
-    }
 
     public void ChangeJoystickState(bool newState)
     {

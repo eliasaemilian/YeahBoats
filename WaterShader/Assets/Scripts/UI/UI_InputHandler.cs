@@ -87,14 +87,18 @@ public class UI_InputHandler : MonoBehaviour
 
     Vector3 hitPos, rayPos2D;
     GameObject hitGO;
+    /// <summary>
+    /// Each Frame the InputHandler checks for any touches occuring on TappableGameObjects
+    /// TouchHandler prioritises 2D Colliders over 3D Colliders, therefore ensuring that
+    /// 2D Elements used as UI will be preferred over Background Gameobjects
+    /// </summary>
     private void CheckForTapsOnGameObjects()
     {
         if (Input.touchCount > 0)
         {
             _touch = Input.GetTouch(0);
 
-           // if (IsPointerOverUIObject()) return;
-
+           // if (IsPointerOverUIObject()) return; //not needed
 
             for (int i = 0; i < _tappableGameobjectsInScene.Count; i++)
             {
@@ -165,7 +169,7 @@ public class UI_InputHandler : MonoBehaviour
 
 
         }
-        else //TODO: ONLY FIRE ONCE/A BIT THEN STOP RUNNING
+        else 
         {
             for (int i = 0; i < _tappableGameobjectsInScene.Count; i++)
             {
