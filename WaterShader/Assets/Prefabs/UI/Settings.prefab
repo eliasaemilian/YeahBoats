@@ -1318,7 +1318,7 @@ GameObject:
   - component: {fileID: 5014195482362088381}
   - component: {fileID: 5014195482362088380}
   m_Layer: 5
-  m_Name: Handle
+  m_Name: Handle-Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1772,6 +1772,7 @@ GameObject:
   - component: {fileID: 5014195482449600729}
   - component: {fileID: 5014195482449600731}
   - component: {fileID: 5014195482449600730}
+  - component: {fileID: 426424235}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1836,6 +1837,61 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &426424235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5014195482449600728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 5014195482449600730}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1103471372}
+        m_TargetAssemblyTypeName: SettingsHandler, Assembly-CSharp
+        m_MethodName: OnClickOpenCloseSettings
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5014195482485171096
 GameObject:
   m_ObjectHideFlags: 0
@@ -4615,7 +4671,7 @@ GameObject:
   - component: {fileID: 5014195483819665537}
   - component: {fileID: 5014195483819665536}
   m_Layer: 5
-  m_Name: Handle
+  m_Name: Handle-Sound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5053,14 +5109,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _soundSlider: {fileID: 5014195483039079091}
-  _soundSliderHandle: {fileID: 5014195482722694004}
+  _soundSliderHandle: {fileID: 5014195483819665536}
   _musicSlider: {fileID: 5014195483407857701}
-  _musicSliderHandle: {fileID: 5014195483671174363}
+  _musicSliderHandle: {fileID: 5014195482362088380}
   _soundButtonText: {fileID: 5014195482152216298}
   _musicButtonText: {fileID: 5014195482270920700}
   _notifButtonText: {fileID: 5014195484036356582}
   _reverseInputButtonText: {fileID: 5014195483872899971}
-  _disabledElementColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  _disabledElementColor: {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 1}
 --- !u!1 &5014195483863920124
 GameObject:
   m_ObjectHideFlags: 0

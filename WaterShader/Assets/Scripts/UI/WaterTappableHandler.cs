@@ -44,6 +44,8 @@ public class WaterTappableHandler : TappableGameobject
             spawn.GetComponent<UI_TapEffect>().SpawnDistToCam = dist; 
             spawn.GetComponent<UI_TapEffect>().SpawnPos = pos;
             spawn.GetComponent<UI_TapEffect>().PoolTag = _tapEffectPrefab.tag;
+            spawn.GetComponent<UI_TapEffect>().TriggerTapEffect();
+            
 
             PopupManager.Instance.CallFishAndCoinPopup(transPos + new Vector3(0,1,0));
             FishingTap.Invoke();

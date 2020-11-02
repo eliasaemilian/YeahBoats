@@ -15,9 +15,7 @@ public class PopupManager : MonoBehaviour
 
     [SerializeField] private Transform _PopupContainer = null;
 
-    [SerializeField] private Camera _camera = null;
-
-    private Transform _canvas;
+    private Camera _uiCamera = null;
 
     void Awake()
     {
@@ -26,20 +24,20 @@ public class PopupManager : MonoBehaviour
 
     void Start()
     {
-        _canvas = FindObjectOfType<Canvas>().transform;
-        if (_canvas == null) Debug.LogError("You fucked up where is Canvas??");
+        if (FindObjectOfType<UI_JoystickHandler>() == null) Debug.LogError("No Joystick Handler could be found in this Scene. Delete WaterTappable from Waterplane or add a JoystickHandler");
+        _uiCamera = FindObjectOfType<UI_InputHandler>().UICamera;
     }
 
 
     public void CallCoinPopup(Vector3 position, int value)
     {
-        GameObject g = Instantiate(_coinPopup, position, _camera.transform.rotation);
+        GameObject g = Instantiate(_coinPopup, position, _uiCamera.transform.rotation);
         g.transform.SetParent(_PopupContainer);
         g.GetComponent<Popup>().Setup(value);
     }
     public void CallFishPopup(Vector3 position, int value)
     {
-        GameObject g = Instantiate(_FishPopup, position, _camera.transform.rotation);
+        GameObject g = Instantiate(_FishPopup, position, _uiCamera.transform.rotation);
         g.transform.SetParent(_PopupContainer);
         g.GetComponent<Popup>().Setup(value);
     }

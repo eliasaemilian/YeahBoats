@@ -45,6 +45,9 @@ public class SettingsHandler : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Initialize Default Values for PlayerPrefs on first StartUp
+    /// </summary>
     private void InitPreferences()
     {
 
@@ -86,7 +89,6 @@ public class SettingsHandler : MonoBehaviour
         }
 
         UpdateSliderVisibility(Music, _musicSlider, _musicSliderHandle);
-
 
     }
 
@@ -188,5 +190,14 @@ public class SettingsHandler : MonoBehaviour
             handle.color = _handleDefaultCol;
         }
 
+    }
+
+    public void OnClickOpenCloseSettings()
+    {
+        if (gameObject.activeSelf)
+        {
+            gameObject.SetActive(false);
+        }
+        else gameObject.SetActive(true);
     }
 }

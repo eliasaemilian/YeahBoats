@@ -109,11 +109,7 @@ public class UI_TapEffect : MonoBehaviour, IPooledObject
        
     public void OnObjectSpawn()
     {
-        // do the fade
-        //   if (SpawnPos == null || SpawnDistToCam == 0) Debug.LogError("Heck");
 
-        //OnTapFish_Effect(SpawnPos, SpawnDistToCam);
-        OnEnable();
     }
 
     public void OnObjectDespawn()
@@ -121,11 +117,12 @@ public class UI_TapEffect : MonoBehaviour, IPooledObject
        
     }
 
-    private void OnEnable()
+
+    public void TriggerTapEffect()
     {
         if (SpawnPos == null || SpawnDistToCam == 0) return;
 
         OnTapFish_Effect(SpawnPos, SpawnDistToCam);
-
+        Debug.Log("Fish Tap");
     }
 }
