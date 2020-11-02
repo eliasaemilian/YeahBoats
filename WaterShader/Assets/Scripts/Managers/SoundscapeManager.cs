@@ -17,12 +17,7 @@ public class SoundscapeManager : MonoBehaviour
     public static MusicEvent QueueNewAmbientSounds;
     public static SoundEvent PlaySound;
 
-    private AudioSource[] _ambientMusicPlayers;
-    private AudioSource _soundsPlayer;
-
-    private IEnumerator[] _crossfaders = new IEnumerator[2];
-
- //   [SerializeField, Range(0f, 1f)] private float _volume = 1f;
+    [SerializeField] private float _fadeDuration = 5f;
 
     private float VolumeSound
     {
@@ -48,14 +43,19 @@ public class SoundscapeManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private float _fadeDuration = 5f;
+    private AudioSource[] _ambientMusicPlayers;
+    private AudioSource _soundsPlayer;
+
+    private IEnumerator[] _crossfaders = new IEnumerator[2];
+
+    private int activePlayer; // Ambient Music Player currently playing
+
 
     // Start is called before the first frame update
     void Awake()
     {
         QueueNewMusic = new MusicEvent();
         QueueNewAmbientSounds = new MusicEvent();
-
         PlaySound = new SoundEvent();
 
         QueueNewMusic.AddListener(OnQueueNewMusic);
@@ -66,7 +66,9 @@ public class SoundscapeManager : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// Setup Audio Sources for Ambient Crossfade and Sounds
+    /// </summary>
     private void InitializeAudioSources()
     {
         if (Sounds.Count > 0)
@@ -92,12 +94,17 @@ public class SoundscapeManager : MonoBehaviour
 
     }
 
-    // [ -> https://jwiese.eu/en/blog/2017/06/unity-3d-cross-fade-two-audioclips-with-two-audiosources/ ]
-    public float volumeChangesPerSecond = 10;
+ 
+    private readonly float volChangesPerSecond = 10;
+    /// <summary>
+    /// Fades between 2 Audiosources
+    /// [ -> https://jwiese.eu/en/blog/2017/06/unity-3d-cross-fade-two-audioclips-with-two-audiosources/ ]
+    /// </summary>
+    /// <returns></returns>
     IEnumerator FadeAudioSource(AudioSource player, float duration, float targetVolume, Action finishedCallback)
     {
         //Calculate the steps
-        int Steps = (int)(volumeChangesPerSecond * duration);
+        int Steps = (int)(volChangesPerSecond * duration);
         float StepTime = duration / Steps;
         float StepSize = (targetVolume - player.volume) / Steps;
 
@@ -117,8 +124,6 @@ public class SoundscapeManager : MonoBehaviour
 
     private void OnQueueNewMusic(int index) => MergeNewToPlay(Music[index]);
     private void OnQueueNewAmbient(int index) => MergeNewToPlay(AmbientSounds[index]);
-
-
     private void OnPlaySound(int index)
     {
         if (SettingsHandler.RequestSetting(SettingsHandler.Sound, out bool soundOnOff))
@@ -131,8 +136,10 @@ public class SoundscapeManager : MonoBehaviour
         _soundsPlayer.volume = VolumeSound;
     }
 
-
-    private int activePlayer;
+    /// <summary>
+    /// Queue new Audioclip to fade with currently playing Ambient
+    /// </summary>
+    /// <param name="clip"></param>
     public void MergeNewToPlay(AudioClip clip)
     {
         //Prevent fading the same clip on both players 
@@ -165,25 +172,9 @@ public class SoundscapeManager : MonoBehaviour
         activePlayer = NextPlayer;
     }
 
-    public void KillAllMusic()
-    {
-        //Kill all playing
-        foreach (IEnumerator i in _crossfaders)
-        {
-            if (i != null)
-            {
-                StopCoroutine(i);
-            }
-        }
-
-        _ambientMusicPlayers[activePlayer].Stop();
-    }
-
-    public void ResumeMusic()
-    {
-        _ambientMusicPlayers[activePlayer].Play();
-    }
-
+    public void KillAllMusic() => _ambientMusicPlayers[activePlayer].Stop();
+    public void ResumeMusic() => _ambientMusicPlayers[activePlayer].Play();
+    public void VolumeChanged() => _ambientMusicPlayers[activePlayer].volume = VolumeMusic;
 
 }
 

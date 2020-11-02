@@ -7,13 +7,10 @@ using UnityEngine.Rendering.Universal;
 [RequireComponent (typeof(Volume))]
 public class ToDAdjustable_PostProcessing : TimeOfDayAdjustable
 {
-    Volume _volume;
-
-    Bloom _bloom;
-
     [SerializeField] private PostProcessingSettings _postProcessingSettings = null;
 
-
+    Volume _volume;
+    Bloom _bloom;
     public override void OnInitialize()
     {
         _volume = GetComponent<Volume>();

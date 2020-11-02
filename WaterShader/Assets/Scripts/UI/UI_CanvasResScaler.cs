@@ -4,7 +4,10 @@ using UnityEngine;
 using UnityEngine.Events;
 
 // [ -> https://forum.unity.com/threads/canvashelper-resizes-a-recttransform-to-iphone-xs-safe-area.521107/ ]
-
+/// <summary>
+/// Adjusts UI Element positions for the phones specific resolution and SafeArea
+/// to make sure they are always within the SafeArea at the specified location
+/// </summary>
 [RequireComponent(typeof (RectTransform))]
 public class UI_CanvasResScaler : MonoBehaviour
 {
@@ -41,11 +44,6 @@ public class UI_CanvasResScaler : MonoBehaviour
         SetResolution();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     void OnRectTransformDimensionsChange() //like lmao I dont even think this is relevant BUT IF SOME FUCKER EVER CHANGES THEIR RESOLUTION IM FUCKING WATCHING
     {
@@ -57,7 +55,6 @@ public class UI_CanvasResScaler : MonoBehaviour
         if (_rect == null) return;
 
       //  Debug.Log("Resolution got set");
-
         //   bool verticalOrientation = _rect.rect.width < _rect.rect.height ? true : false; this would get orientation if needed, or use device orientation
 
         var safeArea = Screen.safeArea;

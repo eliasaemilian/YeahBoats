@@ -6,6 +6,7 @@ using Unity.Mathematics;
 namespace UnityEngine.Rendering.Universal
 {
     [ExecuteAlways]
+    // [ -> https://github.com/UnityTechnologies/LWRPScriptableRenderPass_ExampleLibrary, as seen in the URP Boat Attack Demo ]
     public class PlanarReflections : MonoBehaviour
     {
         [Serializable]

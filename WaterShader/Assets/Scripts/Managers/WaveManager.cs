@@ -53,8 +53,13 @@ public class WaveManager : MonoBehaviour
         Timer += Time.deltaTime;
     }
 
-
-    public float GetWaveHeight(Vector3 pos) // from Shader
+    /// <summary>
+    /// Calculate WaveHeight at a given position according to the same
+    /// calculations run for the water shader
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <returns></returns>
+    public float GetWaveHeight(Vector3 pos)
     {
         Vector2 p = new Vector2(pos.x, pos.z);
         p /= _waterScale;
@@ -67,6 +72,13 @@ public class WaveManager : MonoBehaviour
         return WaveHeightResult;
     }
 
+    /// <summary>
+    /// Single Gerstner Wave Calculation
+    /// Same as Custom Node GernsterWaves for the WaterShader
+    /// </summary>
+    /// <param name="wave">Wave Params for calculated Wave</param>
+    /// <param name="p">Position on the Waterplane</param>
+    /// <returns></returns>
     private float GerstnerWave(Wave wave, Vector2 p)
     {
         float _cOffset = wave.c * Timer ; //TODO: Add WaveSpeed

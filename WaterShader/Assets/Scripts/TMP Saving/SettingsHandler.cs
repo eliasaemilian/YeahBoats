@@ -8,12 +8,16 @@ using UnityEngine.UI;
 public class SettingsHandler : MonoBehaviour
 {
     [SerializeField] private Slider _soundSlider = null;
+    [SerializeField] private Image _soundSliderHandle = null;
     [SerializeField] private Slider _musicSlider = null;
+    [SerializeField] private Image _musicSliderHandle = null;
 
     [SerializeField] private TextMeshProUGUI _soundButtonText = null;
     [SerializeField] private TextMeshProUGUI _musicButtonText = null;
     [SerializeField] private TextMeshProUGUI _notifButtonText = null;
     [SerializeField] private TextMeshProUGUI _reverseInputButtonText = null;
+
+    [SerializeField] private Color _disabledElementColor = Color.grey;
 
     public static readonly string ReverseInput = "ReverseInput";
     public static readonly string Sound = "Sound";
@@ -25,12 +29,15 @@ public class SettingsHandler : MonoBehaviour
 
     private SoundscapeManager _soundscapeManager;
 
+    private Color _handleDefaultCol;
 
     // Start is called before the first frame update
     void Start()
     {
         _soundSlider.onValueChanged.AddListener(delegate { OnChangedVolumeSliderSound(); });
         _musicSlider.onValueChanged.AddListener(delegate { OnChangedVolumeSliderMusic(); });
+
+        _handleDefaultCol = _musicSliderHandle.color;
 
         InitPreferences();
 
@@ -40,6 +47,11 @@ public class SettingsHandler : MonoBehaviour
 
     private void InitPreferences()
     {
+
+#if UNITY_EDITOR
+        PlayerPrefs.DeleteAll();
+#endif
+
         if (PlayerPrefs.HasKey(notif)) return;
 
         PlayerPrefs.SetFloat(notif, 0);
@@ -57,6 +69,7 @@ public class SettingsHandler : MonoBehaviour
     public void OnChangedVolumeSliderMusic()
     {
         ChangePreference(MusicVol, _musicSlider.value);
+        _soundscapeManager.VolumeChanged();
     }
 
     public void OnClickMusicOnOff()
@@ -72,7 +85,7 @@ public class SettingsHandler : MonoBehaviour
             _soundscapeManager.KillAllMusic();
         }
 
-        UpdateSliderVisibility(Music, _musicSlider);
+        UpdateSliderVisibility(Music, _musicSlider, _musicSliderHandle);
 
 
     }
@@ -82,7 +95,7 @@ public class SettingsHandler : MonoBehaviour
         if (ChangeBoolPref(Sound)) _soundButtonText.text = "Sounds are On";
         else _soundButtonText.text = "Sounds are Off";
 
-        UpdateSliderVisibility(Sound, _soundSlider);
+        UpdateSliderVisibility(Sound, _soundSlider, _soundSliderHandle);
     }
 
     public void OnClickNotificationsOnOff()
@@ -110,7 +123,6 @@ public class SettingsHandler : MonoBehaviour
         else
         {
             value = PlayerPrefs.GetFloat(key);
-            Debug.Log(key + " is " + value);
             return true;
         }
     }
@@ -122,7 +134,6 @@ public class SettingsHandler : MonoBehaviour
         else
         {
             value = ReadBoolPref(key);
-            Debug.Log(key + " is " + value);
             return true;
         }
     }
@@ -155,10 +166,27 @@ public class SettingsHandler : MonoBehaviour
         else return false;
     }
 
-    private void UpdateSliderVisibility(string key, Slider slider)
+    private void UpdateSliderVisibility(string key, Slider slider, Image handle)
     {
-        if (PlayerPrefs.GetFloat(key) > 0) slider.enabled = true;
-        else slider.enabled = false;
+        Image[] sliderComps = slider.GetComponentsInChildren<Image>();
+        if (PlayerPrefs.GetFloat(key) > 0)
+        {
+            slider.enabled = false;
+            for (int i = 0; i < sliderComps.Length; i++)
+            {
+                sliderComps[i].color = _disabledElementColor;
+            }
+        }
+        else
+        {
+            slider.enabled = true;
+            for (int i = 0; i < sliderComps.Length; i++)
+            {
+                sliderComps[i].color = Color.white;
+            }
+
+            handle.color = _handleDefaultCol;
+        }
 
     }
 }

@@ -75,6 +75,9 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
 
     }
 
+    /// <summary>
+    /// Update current Time for akk TimeOfDayAdjustables
+    /// </summary>
     private void UpdateValuesForTime()
     {
         // get current time on scale between 0 - 1
@@ -92,15 +95,16 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
         {
             _timeOfDay = _timeOfDayDebug;
             if (_timeOfDayDebug * 24f > 20 || _timeOfDayDebug * 24f < 6) _isNight = true;
-            else IsNight = false;
+            else _isNight = false;
 
         }
 #endif
 
-
     }
 
-
+    /// <summary>
+    /// Update Global Lighting, Skybox, Directional Lights for Time Of Day
+    /// </summary>
     private void UpdateGlobalLightingForTimeOfDay()
     {
         // change light colors 
@@ -133,6 +137,9 @@ public class TimeOfDayHandler : MonoBehaviour // BIG ASS CONSTRUCTION SITE dont 
 
     }
 
+    /// <summary>
+    /// Update Skybox shader properties with current Time of Day dependable values
+    /// </summary>
     private void SetShaderProperties()
     {
         RenderSettings.skybox.SetVector("_SunDirection", _sun.transform.forward);

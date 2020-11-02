@@ -6,11 +6,7 @@ using UnityEngine.Rendering;
 
 public class AmbientSoundHandler : MonoBehaviour
 {
-    private float _timer;
     [SerializeField, Tooltip("Time in Minutes")] private int[] _minMaxTimeBetweenAmbient = new int[2];
-
-    private int nextSwitch;
-    private int newTimeToSwitch => Random.Range(_minMaxTimeBetweenAmbient[0], _minMaxTimeBetweenAmbient[1]) * 60;
 
     [SerializeField] private int[] _indexDayAmbientSounds = null;
     [SerializeField] private int[] _indexNightAmbientSounds = null;
@@ -20,38 +16,34 @@ public class AmbientSoundHandler : MonoBehaviour
 
     [SerializeField, Range(0f, 1f)] private float _chanceToPlayMusic = .5f;
 
+    private int newTimeToSwitch => Random.Range(_minMaxTimeBetweenAmbient[0], _minMaxTimeBetweenAmbient[1]) * 60;
+    private float _timer;
 
-    // Start is called before the first frame update
+
     void Start()
     {
-        nextSwitch = newTimeToSwitch;
-
         // Check for TimeOfDayHandler in Scene
         if (FindObjectOfType<TimeOfDayHandler>() == null) Debug.LogError("Place a Time of Day Handler in the Scene!");
 
         PlayNewSoundOrMusic();
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        // run timer
         _timer += Time.deltaTime;
 
         if (_timer > newTimeToSwitch)
         {
-            nextSwitch = newTimeToSwitch;
             _timer = 0f;
             PlayNewSoundOrMusic();
-
         }
-        // every X interval
-        // play new ambient
-
 
     }
 
+    /// <summary>
+    /// Select new Ambient Music or Sounds to play in dependence of Time of Day and queue new clip for the Soundscape Manager
+    /// </summary>
     private void PlayNewSoundOrMusic()
     {
         float r = Random.Range(0f, 1f);

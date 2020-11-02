@@ -25,11 +25,6 @@ public class NotificationHandler : MonoBehaviour
         ScheduleNotification("Test", "blablablabla", .1f);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void InitAndroid()
     {
@@ -44,6 +39,12 @@ public class NotificationHandler : MonoBehaviour
         AndroidNotificationCenter.RegisterNotificationChannel(channel);
     }
 
+    /// <summary>
+    /// Schedules a new notification to be delivered at a given Time
+    /// </summary>
+    /// <param name="title">Notification Title</param>
+    /// <param name="content">Notification Description Text</param>
+    /// <param name="minUntilScheduled">Minutes from now until notification should be send</param>
     public static void ScheduleNotification(string title, string content, float minUntilScheduled)
     {
         var notification = new AndroidNotification();
@@ -58,6 +59,10 @@ public class NotificationHandler : MonoBehaviour
         Debug.Log("Notification scheduled");
     }
 
+    /// <summary>
+    /// If the App was opened through clicking on a notification
+    /// DO x
+    /// </summary>
     private void CheckIfOpenedThroughNotification()
     {
         var notificationIntentData = AndroidNotificationCenter.GetLastNotificationIntent();

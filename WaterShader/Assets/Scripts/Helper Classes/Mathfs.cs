@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Helper Class for commonly used Math functions and constants
+/// </summary>
 public static class Mathfs 
 {
     public const float PI = 3.14159265359f;
@@ -25,17 +28,7 @@ public static class Mathfs
         return Mathf.Atan2(vector.y, vector.x);
     }
 
-    public static int GetDirectionIndicationFromAngRad(float angRad)
-    {
-        int indication = 0;
 
-        if (angRad > PI * .5f)
-        {
-
-        }
-
-        return indication;
-    }
     public static Vector3 LerpLinear(Vector3 start, Vector3 end, float t)
     {
         float x = ((end.x - start.x) * t) + start.x;

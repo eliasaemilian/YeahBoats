@@ -41,6 +41,9 @@ public class SimpleBoatInput : MonoBehaviour
     void FixedUpdate() => CalculateBoatMovementFromJoystickInput();
 
     float speed;
+    /// <summary>
+    /// Takes Joystick Input in Degree and translates this to movement & rotation direction for the current boat
+    /// </summary>
     private void CalculateBoatMovementFromJoystickInput()
     {
         if (!UI_JoystickHandler.ValidJoystickInput || _joystickHandler.JoystickStateClosed) return;

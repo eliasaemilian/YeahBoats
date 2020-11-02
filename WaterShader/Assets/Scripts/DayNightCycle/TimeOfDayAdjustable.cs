@@ -14,7 +14,13 @@ public abstract class TimeOfDayAdjustable : MonoBehaviour
         OnInitialize();
     }
 
+    /// <summary>
+    /// Gets called at Start of Scene for all TimeOfDayAdjustables
+    /// </summary>
     public virtual void OnInitialize() { }
 
+    /// <summary>
+    /// Gets called for all TimeOfDayAdjustables whenever a new change in Time of Day gets evaluated eg. at Application restart
+    /// </summary>
     public virtual void OnTimeOfDayValueChange(float newTime) { }
 }

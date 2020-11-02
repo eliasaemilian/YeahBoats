@@ -820,7 +820,6 @@ GameObject:
   - component: {fileID: 5014195482294049745}
   - component: {fileID: 5014195482294049744}
   - component: {fileID: 5014195482294049743}
-  - component: {fileID: 5014195482294049742}
   m_Layer: 5
   m_Name: Upgrade Button
   m_TagString: Untagged
@@ -998,24 +997,6 @@ MonoBehaviour:
     _usePolygonMap: 0
   wasConverted: 0
   preConvertedScale: {x: 0, y: 0, z: 0}
---- !u!114 &5014195482294049742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5014195482294049740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cce5462a9b95bdf4fbde54f262c751dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UT: 3
-  _boatLevel: 0
-  LM: {fileID: 0}
-  MM: {fileID: 0}
-  UpgradeCost: {fileID: 5014195482270920700}
-  UpgradeDescription: {fileID: 0}
 --- !u!1 &5014195482323245387
 GameObject:
   m_ObjectHideFlags: 0
@@ -2401,7 +2382,7 @@ GameObject:
   - component: {fileID: 5014195482722694005}
   - component: {fileID: 5014195482722694004}
   m_Layer: 5
-  m_Name: Fill
+  m_Name: Fill-Sound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3002,7 +2983,6 @@ GameObject:
   - component: {fileID: 5014195483252295917}
   - component: {fileID: 5014195483252295916}
   - component: {fileID: 5014195483252295915}
-  - component: {fileID: 5014195483252295914}
   m_Layer: 5
   m_Name: Upgrade Button
   m_TagString: Untagged
@@ -3180,24 +3160,6 @@ MonoBehaviour:
     _usePolygonMap: 0
   wasConverted: 0
   preConvertedScale: {x: 0, y: 0, z: 0}
---- !u!114 &5014195483252295914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5014195483252295912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cce5462a9b95bdf4fbde54f262c751dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UT: 3
-  _boatLevel: 0
-  LM: {fileID: 0}
-  MM: {fileID: 0}
-  UpgradeCost: {fileID: 5014195482152216298}
-  UpgradeDescription: {fileID: 0}
 --- !u!1 &5014195483257224340
 GameObject:
   m_ObjectHideFlags: 0
@@ -4220,7 +4182,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -4578,7 +4540,7 @@ GameObject:
   - component: {fileID: 5014195483671174364}
   - component: {fileID: 5014195483671174363}
   m_Layer: 5
-  m_Name: Fill
+  m_Name: Fill-Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4729,7 +4691,6 @@ GameObject:
   - component: {fileID: 5014195483842632999}
   - component: {fileID: 5014195483842632998}
   - component: {fileID: 5014195483842632997}
-  - component: {fileID: 5014195483842632996}
   m_Layer: 5
   m_Name: Upgrade Button
   m_TagString: Untagged
@@ -4907,24 +4868,6 @@ MonoBehaviour:
     _usePolygonMap: 0
   wasConverted: 0
   preConvertedScale: {x: 0, y: 0, z: 0}
---- !u!114 &5014195483842632996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5014195483842632994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cce5462a9b95bdf4fbde54f262c751dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UT: 5
-  _boatLevel: 0
-  LM: {fileID: 0}
-  MM: {fileID: 0}
-  UpgradeCost: {fileID: 5014195484036356582}
-  UpgradeDescription: {fileID: 0}
 --- !u!1 &5014195483842712255
 GameObject:
   m_ObjectHideFlags: 0
@@ -5110,11 +5053,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _soundSlider: {fileID: 5014195483039079091}
+  _soundSliderHandle: {fileID: 5014195482722694004}
   _musicSlider: {fileID: 5014195483407857701}
+  _musicSliderHandle: {fileID: 5014195483671174363}
   _soundButtonText: {fileID: 5014195482152216298}
   _musicButtonText: {fileID: 5014195482270920700}
   _notifButtonText: {fileID: 5014195484036356582}
   _reverseInputButtonText: {fileID: 5014195483872899971}
+  _disabledElementColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &5014195483863920124
 GameObject:
   m_ObjectHideFlags: 0
