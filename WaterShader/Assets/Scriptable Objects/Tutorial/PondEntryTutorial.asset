@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 122874fdced98694a9ff53a7c7b6876b, type: 3}
+  m_Name: PondEntryTutorial
+  m_EditorClassIdentifier: 
+  Instructions:
+  - Instruction: Hello and welcome to Idle Fishing. This seems to be your first time
+      here. Let me show you around
+    ScreenPos: {x: 0.5, y: 0.5}
+  - Instruction: You can move your boat around by dragging the joystick controls.
+      Try it out!
+    ScreenPos: {x: 0.5, y: 0.3}
+  - Instruction: This seems like a good spot to fish. Double Tap the Joystick to
+      start fishing!
+    ScreenPos: {x: 0, y: 0}
