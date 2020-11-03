@@ -15,4 +15,5 @@ public class TutorialInstruction
 {
     public string Instruction;
     public Vector2 ScreenPos;
+    public Vector2 PopUpSize;
 }

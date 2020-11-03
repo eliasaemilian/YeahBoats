@@ -16,9 +16,12 @@ MonoBehaviour:
   - Instruction: Hello and welcome to Idle Fishing. This seems to be your first time
       here. Let me show you around
     ScreenPos: {x: 0.5, y: 0.5}
+    PopUpSize: {x: 20, y: 8}
   - Instruction: You can move your boat around by dragging the joystick controls.
       Try it out!
     ScreenPos: {x: 0.5, y: 0.3}
+    PopUpSize: {x: 0, y: 0}
   - Instruction: This seems like a good spot to fish. Double Tap the Joystick to
       start fishing!
     ScreenPos: {x: 0, y: 0}
+    PopUpSize: {x: 0, y: 0}
