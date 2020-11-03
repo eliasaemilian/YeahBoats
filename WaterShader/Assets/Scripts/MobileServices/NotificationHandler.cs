@@ -47,6 +47,12 @@ public class NotificationHandler : MonoBehaviour
     /// <param name="minUntilScheduled">Minutes from now until notification should be send</param>
     public static void ScheduleNotification(string title, string content, float minUntilScheduled)
     {
+        if (SettingsHandler.RequestSetting(SettingsHandler.Notif, out bool notifOnOff))
+        {
+            if (!notifOnOff) return;
+            //TODO: ALSO CANCEL NOTIFICATIONS THAT HAVE BEEN SCHEDULED IF SETTING GETS CHANGED
+        }
+
         var notification = new AndroidNotification();
         notification.Title = title;
         notification.Text = content;

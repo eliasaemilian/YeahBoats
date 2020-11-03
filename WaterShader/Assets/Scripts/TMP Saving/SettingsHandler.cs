@@ -24,8 +24,7 @@ public class SettingsHandler : MonoBehaviour
     public static readonly string SoundVol = "SoundVolume";
     public static readonly string Music = "Music";
     public static readonly string MusicVol = "MusicVolume";
-
-    private readonly string notif = "Notifications";
+    public static readonly string Notif = "Notifications";
 
     private SoundscapeManager _soundscapeManager;
 
@@ -55,9 +54,9 @@ public class SettingsHandler : MonoBehaviour
         PlayerPrefs.DeleteAll();
 #endif
 
-        if (PlayerPrefs.HasKey(notif)) return;
+        if (PlayerPrefs.HasKey(Notif)) return;
 
-        PlayerPrefs.SetFloat(notif, 0);
+        PlayerPrefs.SetFloat(Notif, 0);
         PlayerPrefs.SetFloat(Music, 0);
         PlayerPrefs.SetFloat(MusicVol, 1);
         PlayerPrefs.SetFloat(Sound, 0);
@@ -102,10 +101,10 @@ public class SettingsHandler : MonoBehaviour
 
     public void OnClickNotificationsOnOff()
     {
-        if (ChangeBoolPref(notif)) _notifButtonText.text = "Notifications are On";
+        if (ChangeBoolPref(Notif)) _notifButtonText.text = "Notifications are On";
         else _notifButtonText.text = "Notifications are Off";
 
-        ChangeBoolPref(notif);
+        ChangeBoolPref(Notif);
     }
 
     public void OnClickReverseFishingInput()

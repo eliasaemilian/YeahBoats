@@ -16,4 +16,15 @@ public class TutorialInstruction
     public string Instruction;
     public Vector2 ScreenPos;
     public Vector2 PopUpSize;
+    public ConfirmType Confirmation;
+    public GameObject ConfirmationGO;
+    public bool IsConfirmed;
+}
+
+public enum ConfirmType
+{
+    TapOnGO,
+    DoubleTapOnGO,
+    TapAnywhere
+
 }

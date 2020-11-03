@@ -51,6 +51,9 @@ public class UI_TutorialPopUp : MonoBehaviour
         }
         _promptText.gameObject.SetActive(false);
 
+        gameObject.SetActive(false);
+        _textfield.gameObject.SetActive(false);
+
         //DEBUG
         OnTutorialTriggered();
     }
@@ -58,6 +61,13 @@ public class UI_TutorialPopUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (tutSet.Instructions[_tutIndexCount].IsConfirmed)
+        {
+            // once confirmed move to next tutorial
+            _tutIndexCount++;
+        }
+
+
         if (_openWindow)
         {
             StartCoroutine(OpenTutorialPopUp());
@@ -76,6 +86,8 @@ public class UI_TutorialPopUp : MonoBehaviour
         _openWindow = true;
 
 
+        gameObject.SetActive(true);
+        _textfield.gameObject.SetActive(true);
         // start arrow movement
 
     }
@@ -108,6 +120,10 @@ public class UI_TutorialPopUp : MonoBehaviour
         _promptText.gameObject.SetActive(true);
 
     }
+
+
+    // enum continue types (tap, double tap, anywhere)
+    // listener > depending on count waits for X
 
 
 }
