@@ -9,7 +9,7 @@ using UnityEngine.Events;
 /// </summary>
 public class BoatBase : MonoBehaviour
 {
-    [SerializeField] private BoatScriptable _boatScriptable = null;
+    private BoatScriptable _boatScriptable = null;
     public BoatScriptable BoatSO { get { return _boatScriptable; } set { _boatScriptable = value; } }
 
     [SerializeField] private NPCSpotsScript _nPCSpots = null;
@@ -23,12 +23,15 @@ public class BoatBase : MonoBehaviour
 
     public UnityEvent FishingSpeedup;
 
-
+    private void Awake()
+    {
+        
+        _lM = LevelManager.Instance;
+        BoatSO = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel].boatScriptable;
+    }
     // Start is called before the first frame update
     void Start()
     {
-        _lM = LevelManager.Instance;
-
         
 
         if (WaterTappableHandler.FishingTap != null)

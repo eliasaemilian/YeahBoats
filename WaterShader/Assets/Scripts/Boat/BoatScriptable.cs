@@ -8,11 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New SmolBoat", menuName = "Scriptable/boat")]
 public class BoatScriptable : ScriptableObject
 {
-    public string Name;
-    public int Level;
     public int MaxLevel;
-    public int NPCSpawnPointAmmount;
-    public GameObject BoatPrefab;
 
     // Physics
     public float waterDrag;
