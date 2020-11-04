@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4000010343244918}
   - component: {fileID: 33000011186548782}
   - component: {fileID: 23000012140252938}
-  - component: {fileID: 65000012317980604}
   m_Layer: 0
   m_Name: cabin-beach
   m_TagString: Untagged
@@ -82,16 +81,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &65000012317980604
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000012217082492}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.0610149, y: 2.6565065, z: 1.1812832}
-  m_Center: {x: 0.008728027, y: 1.3300188, z: -0.13827515}
