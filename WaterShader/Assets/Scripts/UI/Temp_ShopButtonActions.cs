@@ -16,12 +16,19 @@ public enum UpgradeType
     Tapfish,
     Boat
 }
+public enum ButtonType
+{
+    Upgrade,
+    MapDisplay,
+    MapTravel
+}
 public class Temp_ShopButtonActions : MonoBehaviour
 {
     [SerializeField] private int _sceneIndexPond = 0;
     [SerializeField] private LevelManager LM = null;
     [SerializeField] private List<UI_PannelOnEnable> _pannels = null;
     [SerializeField] private List<UI_PannelOnEnable> _boatPannels = null;
+    [SerializeField] private List<UI_PannelOnEnable> _lighthousePannels = null;
     [SerializeField] private GameObject _notEnoughMoneyPannel = null;
     [SerializeField] private GameObject _fishermanFailHirePannel = null;
     [SerializeField] private List<VisualEffect> _FireworkPrefabs = null;
@@ -31,18 +38,34 @@ public class Temp_ShopButtonActions : MonoBehaviour
         foreach(VisualEffect firework in _FireworkPrefabs)
         {
             firework.Stop();
-
+            
         }
     }
 
     public void OnClickLighthouseVoyageButton(int Sceneindex)
     {
+        if(Sceneindex - 1 <= LM.MaxMapLevel)
+        {
+            // go to this map
+            LevelManager.Instance.SaveData();
+            MoneyManager.Instance.SaveData();
+            Savedata.Instance.Saving();
+            SceneManager.LoadScene(Sceneindex);
+        }
+        else
+        {
+            if(LM.MapPieces == 4)
+            {
+                LM.MapPieces = 0;
+                LM.MaxMapLevel++;
+                UpdateLighthousePannels();
+            }
+            else{
+                //yade yade dont do this
+            }
+        }
         // Scene Switch to Pond
         //Debug.Log("Loading Pond");
-        LevelManager.Instance.SaveData();
-        MoneyManager.Instance.SaveData();
-        Savedata.Instance.Saving();
-        SceneManager.LoadScene(Sceneindex); ;
     }
 
     public void OnClickUpgradeFishingHookButton()
@@ -119,6 +142,8 @@ public class Temp_ShopButtonActions : MonoBehaviour
             else
             {
                 //Hire failed
+                LM.Levelup(LM.OwnedFishermen, LM.BoatSkillLevelCosts.FishermanCost);
+                ResetColors();
                 _fishermanFailHirePannel.SetActive(true);
             }
         }
@@ -165,6 +190,13 @@ public class Temp_ShopButtonActions : MonoBehaviour
             panel.UpdateBoatTab();
         }
     }
+    public void UpdateLighthousePannels()
+    {
+        foreach (UI_PannelOnEnable panel in _lighthousePannels)
+        {
+            panel.UnlockThisMapGodDammit();
+        }
+    }
     private void ResetColors()
     {
         foreach (UI_PannelOnEnable panel in _pannels)
@@ -172,7 +204,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
             panel.SetColor();
         }
     }
-
+    
     private void ShootFireworks()
     {
         foreach (VisualEffect firework in _FireworkPrefabs)

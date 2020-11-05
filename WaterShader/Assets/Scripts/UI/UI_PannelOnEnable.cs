@@ -9,6 +9,7 @@ using UnityEngine;
 public class UI_PannelOnEnable : MonoBehaviour
 {
     [SerializeField] private UpgradeType UT = new UpgradeType();
+    [SerializeField] private ButtonType BT = new ButtonType();
     [Header("Only for boat")]
     [SerializeField] private int _boatLevel = 0;
     [SerializeField] private LevelManager LM = null;
@@ -16,12 +17,27 @@ public class UI_PannelOnEnable : MonoBehaviour
     private Shape _shape;
     public TextMeshProUGUI UpgradeCost = null;
     public TextMeshProUGUI UpgradeDescription = null;
+    [Header("only for Map Pieces")]
+    public TextMeshProUGUI MapText = null;
+    public int SceneIndex = 0;
     private int _upgradeCost;
     void OnEnable()
     {
         _shape = GetComponent<Shape>();
 
-        SetUpgradeCost();
+        switch (BT)
+        {
+            case ButtonType.Upgrade:
+                SetUpgradeCost();
+                break;
+            case ButtonType.MapDisplay:
+                SetMapPieces();
+                break;
+            case ButtonType.MapTravel:
+                UnlockThisMapGodDammit();
+                break;
+        }
+        
         SetColor();
     }
 
@@ -87,6 +103,18 @@ public class UI_PannelOnEnable : MonoBehaviour
 
     }
 
+    public void SetMapPieces()
+    {
+        if(LM.MapPieces != 4)
+        {
+            MapText.text = LM.MapPieces + " / 4 Collected";
+        }
+        else
+        {
+            MapText.text = "4 / 4 Collected \n\r You can unlock a new Region!";
+        }
+    }
+
     public void SetColor()
     {
         if (_shape != null)
@@ -150,6 +178,25 @@ public class UI_PannelOnEnable : MonoBehaviour
         {
             UpgradeCost.text = "Buy for : " + LM.BoatLevels.Levels[_boatLevel - 1].Cost.ToString();
             _upgradeCost = LM.BoatLevels.Levels[_boatLevel - 1].Cost;
+        }
+    }
+
+    public void UnlockThisMapGodDammit()
+    {
+        Debug.Log("Max map level: "+LM.MaxMapLevel);
+        if(SceneIndex <= LM.MaxMapLevel + 1)
+        {
+            MapText.text = "Travel";
+
+        }
+        else if(SceneIndex == LM.MaxMapLevel + 2 && LM.MapPieces == 4)
+        {
+            MapText.text = "Unlock";
+        }
+        else
+        {
+            MapText.text = "Locked";
+
         }
     }
 }
