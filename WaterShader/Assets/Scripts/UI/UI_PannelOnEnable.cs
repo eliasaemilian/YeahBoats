@@ -29,6 +29,7 @@ public class UI_PannelOnEnable : MonoBehaviour
         {
             case ButtonType.Upgrade:
                 SetUpgradeCost();
+                SetColor();
                 break;
             case ButtonType.MapDisplay:
                 SetMapPieces();
@@ -38,7 +39,6 @@ public class UI_PannelOnEnable : MonoBehaviour
                 break;
         }
         
-        SetColor();
     }
 
     public void SetUpgradeCost()
