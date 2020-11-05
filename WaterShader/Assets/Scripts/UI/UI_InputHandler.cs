@@ -98,7 +98,7 @@ public class UI_InputHandler : MonoBehaviour
         {
             _touch = Input.GetTouch(0);
 
-           // if (IsPointerOverUIObject()) return; //not needed
+            if (IsPointerOverUIObject()) return; 
 
             for (int i = 0; i < _tappableGameobjectsInScene.Count; i++)
             {

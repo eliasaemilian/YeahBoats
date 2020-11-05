@@ -30,6 +30,16 @@ public class SettingsHandler : MonoBehaviour
 
     private Color _handleDefaultCol;
 
+
+    private string _musicOn = "Music is On";
+    private string _musicOff = "Music is Off";
+    private string _soundOn = "Sounds are On";
+    private string _soundOff = "Sounds are Off";
+    private string _notifOn = "Notifications are On";
+    private string _notifOff = "Notifications are Off";
+    private string _reverseOn = "Reverse Boat Input On";
+    private string _reverseOff = "Reverse Boat Input Off";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,16 +61,28 @@ public class SettingsHandler : MonoBehaviour
     {
 
 #if UNITY_EDITOR
-        PlayerPrefs.DeleteAll();
+      //  PlayerPrefs.DeleteAll();
 #endif
 
-        if (PlayerPrefs.HasKey(Notif)) return;
+        if (!PlayerPrefs.HasKey(Notif))
+        {
+            PlayerPrefs.SetFloat(Notif, 0);
+            PlayerPrefs.SetFloat(Music, 0);
+            PlayerPrefs.SetFloat(MusicVol, 1);
+            PlayerPrefs.SetFloat(Sound, 0);
+            PlayerPrefs.SetFloat(SoundVol, 1);
+        }
 
-        PlayerPrefs.SetFloat(Notif, 0);
-        PlayerPrefs.SetFloat(Music, 0);
-        PlayerPrefs.SetFloat(MusicVol, 1);
-        PlayerPrefs.SetFloat(Sound, 0);
-        PlayerPrefs.SetFloat(SoundVol, 1);
+        _musicSlider.value = PlayerPrefs.GetFloat(MusicVol);
+        _soundSlider.value = PlayerPrefs.GetFloat(SoundVol);
+        SetBoolToPrefValue(Music);
+        SetBoolToPrefValue(Sound);
+        SetBoolToPrefValue(Notif);
+        SetBoolToPrefValue(ReverseInput);
+
+        UpdateSliderVisibility(Music, _musicSlider, _musicSliderHandle);
+        UpdateSliderVisibility(Sound, _soundSlider, _soundSliderHandle);
+
     }
 
     public void OnChangedVolumeSliderSound()
@@ -78,12 +100,12 @@ public class SettingsHandler : MonoBehaviour
     {
         if (ChangeBoolPref(Music))
         {
-            _musicButtonText.text = "Music is On";
+            _musicButtonText.text = _musicOn;
             _soundscapeManager.ResumeMusic();
         }
         else 
         {
-            _musicButtonText.text = "Music is Off";
+            _musicButtonText.text = _musicOff;
             _soundscapeManager.KillAllMusic();
         }
 
@@ -93,24 +115,24 @@ public class SettingsHandler : MonoBehaviour
 
     public void OnClickSoundOnOff()
     {
-        if (ChangeBoolPref(Sound)) _soundButtonText.text = "Sounds are On";
-        else _soundButtonText.text = "Sounds are Off";
+        if (ChangeBoolPref(Sound)) _soundButtonText.text = _soundOn;
+        else _soundButtonText.text = _soundOff;
 
         UpdateSliderVisibility(Sound, _soundSlider, _soundSliderHandle);
     }
 
     public void OnClickNotificationsOnOff()
     {
-        if (ChangeBoolPref(Notif)) _notifButtonText.text = "Notifications are On";
-        else _notifButtonText.text = "Notifications are Off";
+        if (ChangeBoolPref(Notif)) _notifButtonText.text = _notifOn;
+        else _notifButtonText.text = _notifOff;
 
         ChangeBoolPref(Notif);
     }
 
     public void OnClickReverseFishingInput()
     {
-        if (ChangeBoolPref(Sound)) _reverseInputButtonText.text = "Reverse Boat Input On";
-        else _reverseInputButtonText.text = "Reverse Boat Input Off";
+        if (ChangeBoolPref(Sound)) _reverseInputButtonText.text = _reverseOn;
+        else _reverseInputButtonText.text = _reverseOff;
 
         ChangeBoolPref(ReverseInput);
     }
@@ -198,5 +220,29 @@ public class SettingsHandler : MonoBehaviour
             gameObject.SetActive(false);
         }
         else gameObject.SetActive(true);
+    }
+
+    private void SetBoolToPrefValue(string key)
+    {
+        if (key == Music)
+        {
+            if (ReadBoolPref(key)) _musicButtonText.text = _musicOn;
+            else _musicButtonText.text = _musicOff;
+        }
+        else if (key == Sound)
+        {
+            if (ReadBoolPref(key)) _soundButtonText.text = _soundOn;
+            else _soundButtonText.text = _soundOff;
+        }
+        else if (key == Notif)
+        {
+            if (ReadBoolPref(key)) _notifButtonText.text = _notifOn;
+            else _notifButtonText.text = _notifOff;
+        }
+        else if (key == ReverseInput)
+        {
+            if (ReadBoolPref(key)) _reverseInputButtonText.text = _reverseOn;
+            else _reverseInputButtonText.text = _reverseOff;
+        }
     }
 }
