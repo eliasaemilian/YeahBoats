@@ -24,7 +24,7 @@ public class UI_TutorialPopUp : MonoBehaviour
     private TextMeshProUGUI _textfield, _promptText;
     private Rect _rectTrans;
 
-    private bool _openWindow, _movePrompt;
+    private bool _openWindow, _closeWindow, _movePrompt;
     private int _tutIndexCount = 0;
 
     // Start is called before the first frame update
@@ -67,13 +67,38 @@ public class UI_TutorialPopUp : MonoBehaviour
             _tutIndexCount++;
         }
 
+        if (_closeWindow) StartCoroutine(CloseTutorialPopUp());
+        else if (_openWindow) StartCoroutine(OpenTutorialPopUp());
 
-        if (_openWindow)
+    }
+
+    /// <summary>
+    /// If Tutorial is active, listen for touches
+    /// If touch lifted is registered move to next Tutorial
+    /// </summary>
+    float _bufferTimer;
+    float _bufferTime = .8f;
+    bool _waitingForConformation;
+    Touch _touch;
+    private void LateUpdate()
+    {
+        if (!_waitingForConformation) return;
+
+        _bufferTimer += Time.deltaTime;
+        if (_bufferTimer < _bufferTime) return;
+
+        if (Input.touchCount > 0)
         {
-            StartCoroutine(OpenTutorialPopUp());
-
+            _touch = Input.GetTouch(0);
+            if (_touch.phase == TouchPhase.Ended)
+            {
+                tutSet.Instructions[_tutIndexCount].IsConfirmed = true;
+                _waitingForConformation = false;
+                _counter = _lerpTime;
+                _closeWindow = true;
+                _bufferTimer = 0f;
+            }
         }
-
     }
 
     private void OnTutorialTriggered()
@@ -101,7 +126,6 @@ public class UI_TutorialPopUp : MonoBehaviour
         _lerpRadius = Mathf.Lerp(0, _outerFinalRadius, _counter / _lerpTime);
         _rect.Height = _lerpRadius;
 
-
         yield return new WaitUntil(() => _counter >= _lerpTime);
         _openWindow = false;
 
@@ -119,6 +143,21 @@ public class UI_TutorialPopUp : MonoBehaviour
         _tapAnywherePrompt.SetActive(true);
         _promptText.gameObject.SetActive(true);
 
+    }
+
+    IEnumerator CloseTutorialPopUp()
+    {
+        _counter -= Time.deltaTime;
+        // Lerp outer Radius
+        _lerpRadius = Mathf.Lerp(0, _outerFinalRadius, _counter / _lerpTime);
+        _rect.Height = _lerpRadius;
+
+        yield return new WaitUntil(() => _counter >= _lerpTime);
+
+        _closeWindow = false;
+        for (int i = 0; i < _uiElements.Count; i++) _uiElements[i].gameObject.SetActive(false);
+        _tapAnywherePrompt.SetActive(false);
+        _promptText.gameObject.SetActive(false);
     }
 
 
