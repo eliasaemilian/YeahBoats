@@ -21,6 +21,7 @@ public class Boat_CameraHandler : MonoBehaviour
         if (_cineCam == null) Debug.Log("FUCK");
         _cineCam.Follow = transform;
         _cineCam.LookAt = transform;
+        _cineCam.m_AnimatedTarget = _anim;
     
     }
 
