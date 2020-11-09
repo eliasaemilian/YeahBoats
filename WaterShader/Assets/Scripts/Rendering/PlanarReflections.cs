@@ -201,6 +201,7 @@ namespace UnityEngine.Rendering.Universal
             cameraData.requiresColorOption = CameraOverrideOption.Off;
             cameraData.requiresDepthOption = CameraOverrideOption.Off;
             cameraData.SetRenderer(1);
+            if (cameraData.scriptableRenderer == null) cameraData.SetRenderer(0);
 
             var t = transform;
             var reflectionCamera = go.GetComponent<Camera>();
