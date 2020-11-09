@@ -30,7 +30,7 @@ public class UI_TutorialPopUp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ResetTutorial();
+      //  ResetTutorial();
 
         _rect = GetComponent<Shapes.Rectangle>();
         _outerFinalRadius = tutSet.Instructions[_tutIndexCount].PopUpSize.y;
