@@ -62,7 +62,10 @@ public class UI_TutorialPopUp : MonoBehaviour
         if (!PlayerPrefs.HasKey("Tutorial"))
         {
             OnTutorialTriggered();
-            UI_JoystickHandler.BlockJoystickMovement.Invoke();
+            if (FindObjectOfType<UI_JoystickHandler>() != null) UI_JoystickHandler.BlockJoystickMovement.Invoke();
+
+            // Disable all other UI
+
         }
 
     }
