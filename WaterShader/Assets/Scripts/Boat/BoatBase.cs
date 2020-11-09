@@ -39,7 +39,10 @@ public class BoatBase : MonoBehaviour
             WaterTappableHandler.FishingTap.AddListener(FishingSpeedup.Invoke);
         }
 
-        StartCoroutine(LateStart());
+        //StartCoroutine(LateStart());
+        _nPCSpots = GetComponentInChildren<NPCSpotsScript>();
+        InstantiateFishermen();
+
     }
 
 
@@ -63,7 +66,6 @@ public class BoatBase : MonoBehaviour
         _lM.MaxAmmountOfFishermen = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1].NPCFishermanAmmount;
         GameObject boat = Instantiate(b, transform.position, Quaternion.identity);
         boat.transform.parent = this.transform;
-        _nPCSpots = boat.gameObject.GetComponentInChildren<NPCSpotsScript>();
     }
     private void InstantiateFishermen()
     {

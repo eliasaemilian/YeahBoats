@@ -90,6 +90,7 @@ public class LevelManager : MonoBehaviour
         CatchSpeedMultiplier = 1;
         //For temporary saving
         InvokeRepeating("SaveData", 5, 5);
+
     }
 
 
