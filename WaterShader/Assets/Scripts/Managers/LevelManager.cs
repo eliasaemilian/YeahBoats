@@ -118,6 +118,10 @@ public class LevelManager : MonoBehaviour
         {
             TMPLevelSetup(true);
         }
+        if (GUI.Button(new Rect(160, 110, 150, 20), "Unlock The Boats"))
+        {
+            MaxBoatLevel = 4;
+        }
 
     }
     private void TMPLevelSetup(bool IsReset)
@@ -130,6 +134,7 @@ public class LevelManager : MonoBehaviour
         Multiplier = 1;
         _boatStorageLevel = 1;
         MaxAmmountOfFishermen = 1;
+        MaxBoatLevel = 1;
         TapCoinLevel = 1;
         TapFishLevel = 1;
         MapPieces = 0;
