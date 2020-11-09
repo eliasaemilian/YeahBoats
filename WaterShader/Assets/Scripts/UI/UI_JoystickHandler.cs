@@ -10,7 +10,10 @@ public class UI_JoystickHandler : TappableGameobject
     public static bool ValidJoystickInput { get; private set; } = false;
 
     public static UnityEvent JoystickStateChanged;
+    public static UnityEvent BlockJoystickMovement;
+    public static UnityEvent UnblockJoystickMovement;
 
+    private bool _joystickBlocked;
 
     [SerializeField] private float _lerpTime = .8f;
     [SerializeField] private float _touchSensitivity = 1f;
@@ -39,6 +42,10 @@ public class UI_JoystickHandler : TappableGameobject
         UI_InputHandler.ValidTouchEvent2D.AddListener(OnTap);
 
         JoystickStateChanged = new UnityEvent();
+        BlockJoystickMovement = new UnityEvent();
+        UnblockJoystickMovement = new UnityEvent();
+        BlockJoystickMovement.AddListener(BlockJoystick);
+        UnblockJoystickMovement.AddListener(UnblockJoystick);
 
         _center = _outerJoystick.GetComponent<MeshRenderer>().bounds.center;
         _center.z = _innerJoystick.position.z;
@@ -62,6 +69,8 @@ public class UI_JoystickHandler : TappableGameobject
     /// <param name="pos"></param>
     public override void OnTap (Touch touch, Vector3 pos)
     {
+        if (_joystickBlocked) return;
+
         base.OnTap(touch, pos);
         ValidJoystickInput = true;
 
@@ -100,6 +109,9 @@ public class UI_JoystickHandler : TappableGameobject
     public override void OnDoubleTap()
     {
         base.OnDoubleTap();
+
+        if (_joystickBlocked) return;
+
 
         _doubleTap = true;
 
@@ -179,5 +191,8 @@ public class UI_JoystickHandler : TappableGameobject
 
     }
 
+
+    private  void BlockJoystick() => _joystickBlocked = true;
+    private  void UnblockJoystick() => _joystickBlocked = false;
 
 }

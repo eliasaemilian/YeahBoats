@@ -30,6 +30,16 @@ public class UI_TutorialPopUp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // EndTutorial();
+
+        // RESET
+        PlayerPrefs.DeleteAll();
+        for (int i = 0; i < tutSet.Instructions.Count; i++)
+        {
+            tutSet.Instructions[i].IsConfirmed = false;
+        }
+
+
         _rect = GetComponent<Shapes.Rectangle>();
         _outerFinalRadius = tutSet.Instructions[_tutIndexCount].PopUpSize.y;
         _rect.Height = 0f;
@@ -54,16 +64,29 @@ public class UI_TutorialPopUp : MonoBehaviour
         gameObject.SetActive(false);
         _textfield.gameObject.SetActive(false);
 
-        //DEBUG
-        OnTutorialTriggered();
+
+        // Check for PlayerPrefs
+        if (!PlayerPrefs.HasKey("Tutorial"))
+        {
+            OnTutorialTriggered();
+            UI_JoystickHandler.BlockJoystickMovement.Invoke();
+            Debug.Log("Tut started");
+            // TODO: Disable Joystick
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (tutSet.Instructions[_tutIndexCount].IsConfirmed)
+        if (_tutIndexCount >= tutSet.Instructions.Count)
+        {
+            Debug.Log("reached end");
+        }
+        else if (tutSet.Instructions[_tutIndexCount].IsConfirmed)
         {
             // once confirmed move to next tutorial
+            Debug.Log("Tut Counter++");
             _tutIndexCount++;
         }
 
@@ -78,11 +101,11 @@ public class UI_TutorialPopUp : MonoBehaviour
     /// </summary>
     float _bufferTimer;
     float _bufferTime = .8f;
-    bool _waitingForConformation;
+    bool waitingForConfirm;
     Touch _touch;
     private void LateUpdate()
     {
-        if (!_waitingForConformation) return;
+        if (!waitingForConfirm) return;
 
         _bufferTimer += Time.deltaTime;
         if (_bufferTimer < _bufferTime) return;
@@ -93,7 +116,7 @@ public class UI_TutorialPopUp : MonoBehaviour
             if (_touch.phase == TouchPhase.Ended)
             {
                 tutSet.Instructions[_tutIndexCount].IsConfirmed = true;
-                _waitingForConformation = false;
+                waitingForConfirm = false;
                 _counter = _lerpTime;
                 _closeWindow = true;
                 _bufferTimer = 0f;
@@ -113,6 +136,7 @@ public class UI_TutorialPopUp : MonoBehaviour
 
         gameObject.SetActive(true);
         _textfield.gameObject.SetActive(true);
+
         // start arrow movement
 
     }
@@ -132,6 +156,7 @@ public class UI_TutorialPopUp : MonoBehaviour
         // enable text
         for (int i = 0; i < _uiElements.Count; i++) _uiElements[i].gameObject.SetActive(true);
         _textfield.text = tutSet.Instructions[_tutIndexCount].Instruction;
+
         // set height of textfield
         float width = tutSet.Instructions[_tutIndexCount].PopUpSize.x * 17f;
         float height = tutSet.Instructions[_tutIndexCount].PopUpSize.y * 20f;
@@ -139,9 +164,12 @@ public class UI_TutorialPopUp : MonoBehaviour
         _rectTrans.height = height;
         _rectTrans.width = width;
         _textfield.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
+
         // trigger Prompt
         _tapAnywherePrompt.SetActive(true);
         _promptText.gameObject.SetActive(true);
+
+        waitingForConfirm = true;
 
     }
 
@@ -152,17 +180,45 @@ public class UI_TutorialPopUp : MonoBehaviour
         _lerpRadius = Mathf.Lerp(0, _outerFinalRadius, _counter / _lerpTime);
         _rect.Height = _lerpRadius;
 
-        yield return new WaitUntil(() => _counter >= _lerpTime);
+        if (_counter < _lerpTime * .5f) _textfield.gameObject.SetActive(false);
+
+
+        yield return new WaitUntil(() => _counter <= 0f);
 
         _closeWindow = false;
         for (int i = 0; i < _uiElements.Count; i++) _uiElements[i].gameObject.SetActive(false);
-        _tapAnywherePrompt.SetActive(false);
-        _promptText.gameObject.SetActive(false);
+
+        SetVisibility(false);
+        ProceedTutorial();
     }
 
 
     // enum continue types (tap, double tap, anywhere)
     // listener > depending on count waits for X
 
+    private void EndTutorial()
+    {
+        Debug.Log("Ending tutorial");
 
+        UI_JoystickHandler.UnblockJoystickMovement.Invoke();
+        PlayerPrefs.SetFloat("Tutorial", 1f);
+
+        SetVisibility(false);
+        enabled = false;
+    }
+
+    private void ProceedTutorial()
+    {
+        Debug.Log("Tut count is " + _tutIndexCount + " and Count is " + tutSet.Instructions.Count);
+        if (_tutIndexCount < tutSet.Instructions.Count) OnTutorialTriggered();
+        else EndTutorial();
+    }
+
+    private void SetVisibility(bool val)
+    {
+        _tapAnywherePrompt.SetActive(val);
+        _promptText.gameObject.SetActive(val);
+        gameObject.SetActive(val);
+        _textfield.gameObject.SetActive(val);
+    }
 }
