@@ -30,16 +30,6 @@ public class UI_TutorialPopUp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // EndTutorial();
-
-        // RESET
-        PlayerPrefs.DeleteAll();
-        for (int i = 0; i < tutSet.Instructions.Count; i++)
-        {
-            tutSet.Instructions[i].IsConfirmed = false;
-        }
-
-
         _rect = GetComponent<Shapes.Rectangle>();
         _outerFinalRadius = tutSet.Instructions[_tutIndexCount].PopUpSize.y;
         _rect.Height = 0f;
@@ -70,8 +60,6 @@ public class UI_TutorialPopUp : MonoBehaviour
         {
             OnTutorialTriggered();
             UI_JoystickHandler.BlockJoystickMovement.Invoke();
-            Debug.Log("Tut started");
-            // TODO: Disable Joystick
         }
 
     }
@@ -81,12 +69,11 @@ public class UI_TutorialPopUp : MonoBehaviour
     {
         if (_tutIndexCount >= tutSet.Instructions.Count)
         {
-            Debug.Log("reached end");
+
         }
         else if (tutSet.Instructions[_tutIndexCount].IsConfirmed)
         {
             // once confirmed move to next tutorial
-            Debug.Log("Tut Counter++");
             _tutIndexCount++;
         }
 
@@ -198,8 +185,6 @@ public class UI_TutorialPopUp : MonoBehaviour
 
     private void EndTutorial()
     {
-        Debug.Log("Ending tutorial");
-
         UI_JoystickHandler.UnblockJoystickMovement.Invoke();
         PlayerPrefs.SetFloat("Tutorial", 1f);
 
@@ -209,7 +194,6 @@ public class UI_TutorialPopUp : MonoBehaviour
 
     private void ProceedTutorial()
     {
-        Debug.Log("Tut count is " + _tutIndexCount + " and Count is " + tutSet.Instructions.Count);
         if (_tutIndexCount < tutSet.Instructions.Count) OnTutorialTriggered();
         else EndTutorial();
     }
@@ -220,5 +204,18 @@ public class UI_TutorialPopUp : MonoBehaviour
         _promptText.gameObject.SetActive(val);
         gameObject.SetActive(val);
         _textfield.gameObject.SetActive(val);
+    }
+
+    private void ResetTutorial()
+    {
+        //DEBUGGING
+        // EndTutorial();
+
+        // RESET
+        PlayerPrefs.DeleteAll();
+        for (int i = 0; i < tutSet.Instructions.Count; i++)
+        {
+            tutSet.Instructions[i].IsConfirmed = false;
+        }
     }
 }
