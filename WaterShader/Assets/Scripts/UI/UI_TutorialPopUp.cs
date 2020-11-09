@@ -30,6 +30,8 @@ public class UI_TutorialPopUp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+      //  ResetTutorial();
+
         _rect = GetComponent<Shapes.Rectangle>();
         _outerFinalRadius = tutSet.Instructions[_tutIndexCount].PopUpSize.y;
         _rect.Height = 0f;
@@ -42,6 +44,7 @@ public class UI_TutorialPopUp : MonoBehaviour
         }
 
         _rectTrans = _textfield.GetComponent<RectTransform>().rect;
+        _textfield.text = "";
 
         _tapAnywherePrompt.SetActive(false);
         List<RectTransform> _promptUI = _tapAnywherePrompt.GetComponent<UI_VectorElementScaler>().PullCanvasUIElements();
@@ -172,6 +175,7 @@ public class UI_TutorialPopUp : MonoBehaviour
 
         yield return new WaitUntil(() => _counter <= 0f);
 
+        _textfield.text = "";
         _closeWindow = false;
         for (int i = 0; i < _uiElements.Count; i++) _uiElements[i].gameObject.SetActive(false);
 
@@ -212,7 +216,7 @@ public class UI_TutorialPopUp : MonoBehaviour
         // EndTutorial();
 
         // RESET
-        PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteKey("Tutorial");
         for (int i = 0; i < tutSet.Instructions.Count; i++)
         {
             tutSet.Instructions[i].IsConfirmed = false;
