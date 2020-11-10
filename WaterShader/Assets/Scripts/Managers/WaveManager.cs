@@ -7,7 +7,7 @@ using UnityEngine;
 public class WaveManager : MonoBehaviour
 {
     public static WaveManager Instance;
-    public Material WaterShader;
+    private Material WaterShader; // <- TODO GET FROM WATER PLANE
 
     public float Timer = 0f;
 
@@ -37,6 +37,9 @@ public class WaveManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        WaterShader = WaterPlane.GetComponent<MeshRenderer>().material;
+
+
         // Generate Waves from Shader for Approximation
         WaveA = new Wave(WaterShader.GetVector("_WaveA"));
         WaveB = new Wave(WaterShader.GetVector("_WaveB"));
