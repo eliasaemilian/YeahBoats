@@ -198,7 +198,7 @@ public class LevelManager : MonoBehaviour
 
     public bool CheckIfPubHasUpgrades()
     {
-        if (CheckIfICanLevelup(OwnedFishermen, BoatSkillLevelCosts.FishermanCost))
+        if (CheckIfICanLevelup(OwnedFishermen, IndependentBoatSkillLevelCosts.FishermanCost))
         {
             return true;
         }
