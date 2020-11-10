@@ -196,6 +196,41 @@ public class LevelManager : MonoBehaviour
         
     }
 
+    public bool CheckIfPubHasUpgrades()
+    {
+        if (CheckIfICanLevelup(OwnedFishermen, BoatSkillLevelCosts.FishermanCost))
+        {
+            return true;
+        }
+        else return false;
+    }
+    public bool CheckIfShackHasUpgrades()
+    {
+        if (CheckIfICanLevelup(FishingHookLevel, BoatSkillLevelCosts.FishingHookCost) || 
+            CheckIfICanLevelup(FishingRodLevel, BoatSkillLevelCosts.FishingRodCost) ||
+            CheckIfICanLevelup(TapCoinLevel, BoatSkillLevelCosts.TapCoinCost) ||
+            CheckIfICanLevelup(TapFishLevel, BoatSkillLevelCosts.TapFishCost))
+        {
+            return true;
+        }
+        else return false;
+    }
+    public bool CheckIfBoatShackHasUpgrades()
+    {
+        if (CheckIfICanLevelupBoat(MaxBoatLevel))
+        {
+            return true;
+        }
+        else return false;
+    }
+    public bool CheckIfLighthouseHasUpgrades()
+    {
+        if (MapPieces == 4)
+        {
+            return true;
+        }
+        else return false;
+    }
     public void AddMapPiece()
     {
         MapPieces++;

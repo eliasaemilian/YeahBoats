@@ -59,14 +59,22 @@ public class UI_NotifPopUpsPort : MonoBehaviour
     private void CheckForNewUpdatesAvaliable()
     {
         // for each Interactive if Update Avaliable play anim else pause anim
-
-
-        // HENLO
-
-
-        // HERE
-
-
-        // WHOOP
+        if (LevelManager.Instance.CheckIfPubHasUpgrades())
+        {
+            // this is true if pub has upgrades
+        }
+        if (LevelManager.Instance.CheckIfShackHasUpgrades())
+        {
+            // this is true if shack has upgrades
+        }
+        if (LevelManager.Instance.CheckIfBoatShackHasUpgrades())
+        {
+            // this is true if boat shack has upgrades
+        }
+        if (LevelManager.Instance.CheckIfLighthouseHasUpgrades())
+        {
+            // this is true if lighthouse has upgrades
+        }
+        //╰(*°▽°*)╯)
     }
 }
