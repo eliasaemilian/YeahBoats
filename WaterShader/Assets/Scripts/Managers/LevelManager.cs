@@ -197,8 +197,8 @@ public class LevelManager : MonoBehaviour
     }
 
     public bool CheckIfPubHasUpgrades()
-    {
-        if (CheckIfICanLevelup(OwnedFishermen, IndependentBoatSkillLevelCosts.FishermanCost))
+    {        
+        if (IndependentBoatSkillLevelCosts != null && CheckIfICanLevelup(OwnedFishermen, IndependentBoatSkillLevelCosts.FishermanCost))
         {
             return true;
         }
@@ -206,6 +206,8 @@ public class LevelManager : MonoBehaviour
     }
     public bool CheckIfShackHasUpgrades()
     {
+        if (BoatSkillLevelCosts == null) return false;
+
         if (CheckIfICanLevelup(FishingHookLevel, BoatSkillLevelCosts.FishingHookCost) || 
             CheckIfICanLevelup(FishingRodLevel, BoatSkillLevelCosts.FishingRodCost) ||
             CheckIfICanLevelup(TapCoinLevel, BoatSkillLevelCosts.TapCoinCost) ||
