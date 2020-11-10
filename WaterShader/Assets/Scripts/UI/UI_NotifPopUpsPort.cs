@@ -11,15 +11,29 @@ public class UI_NotifPopUpsPort : MonoBehaviour
     private Transform[] _interactables;
     private readonly List<Animation> _anims = new List<Animation>();
 
+    [SerializeField] private Transform _lighthousePos;
+    [SerializeField] private Transform _pubPos;
+    [SerializeField] private Transform _shackPos;
+    [SerializeField] private Transform _boatshopPos;
+
+    private Animation _lighthouseAnim, _pubAnim, _shackAnim, _boatshopAnim;
 
     void Start()
     {
-        _interactables = GetSceneInteractives();
-        if (_interactables != null)
-        {
-            PlaceNotifPopUpsOverInteractives();
-            CheckForNewUpdatesAvaliable();
-        }
+        //_interactables = GetSceneInteractives();
+        //if (_interactables != null)
+        //{
+        //    PlaceNotifPopUpsOverInteractives();
+        //    CheckForNewUpdatesAvaliable();
+        //}
+
+        PlaceNotifs();
+        CheckForNewUpdatesAvaliable();
+    }
+
+    private void GetAnimsForInteractives()
+    {
+
     }
 
     /// <summary>
@@ -53,6 +67,23 @@ public class UI_NotifPopUpsPort : MonoBehaviour
         }
     }
 
+    private void PlaceNotifs()
+    {
+        InstantiatePopUp(_lighthousePos.position, ref _lighthouseAnim);
+        InstantiatePopUp(_pubPos.position, ref _pubAnim);
+        InstantiatePopUp(_shackPos.position, ref _shackAnim);
+        InstantiatePopUp(_boatshopPos.position, ref _boatshopAnim);
+    }
+
+    private void InstantiatePopUp(Vector3 pos, ref Animation anim)
+    {
+        Vector3 screenPos = Camera.main.WorldToViewportPoint(pos);
+        screenPos.z = transform.position.z;
+        GameObject popUp = Instantiate(_popUpPrefab, transform);
+        popUp.transform.position = _uiCamera.ViewportToWorldPoint(screenPos);
+        if (popUp.GetComponentInChildren<Animation>() != null) anim = popUp.GetComponentInChildren<Animation>();
+    }
+
     /// <summary>
     /// For each Store if they have any new Updates avaliable, play notif animation
     /// </summary>
@@ -62,19 +93,31 @@ public class UI_NotifPopUpsPort : MonoBehaviour
         if (LevelManager.Instance.CheckIfPubHasUpgrades())
         {
             // this is true if pub has upgrades
+            _pubAnim.Play();
+
         }
+        else _pubAnim.Stop();
+
         if (LevelManager.Instance.CheckIfShackHasUpgrades())
         {
             // this is true if shack has upgrades
+            _shackAnim.Play();
         }
+        else _shackAnim.Stop();
+
         if (LevelManager.Instance.CheckIfBoatShackHasUpgrades())
         {
             // this is true if boat shack has upgrades
+            _boatshopAnim.Play();
         }
+        else _boatshopAnim.Stop();
+
         if (LevelManager.Instance.CheckIfLighthouseHasUpgrades())
         {
             // this is true if lighthouse has upgrades
+            _lighthouseAnim.Play();
         }
+        else _lighthouseAnim.Stop();
         //╰(*°▽°*)╯)
     }
 }
