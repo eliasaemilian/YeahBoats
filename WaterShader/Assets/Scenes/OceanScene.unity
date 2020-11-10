@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1173641079}
-  m_IndirectSpecularColor: {r: 0.10795136, g: 0.19934595, b: 0.43252587, a: 1}
+  m_IndirectSpecularColor: {r: 0.10796267, g: 0.19935629, b: 0.43253392, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6362,13 +6362,13 @@ PrefabInstance:
     - target: {fileID: 8879142552798641038, guid: 38fe21544cc016a4f8f56c496dcb60e5,
         type: 3}
       propertyPath: Music.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8879142552798641038, guid: 38fe21544cc016a4f8f56c496dcb60e5,
         type: 3}
       propertyPath: AmbientSounds.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: 7a752ca0ec4ff8747b79a3399a644570, type: 3}
+      objectReference: {fileID: 8300000, guid: 50c4d54a062c2f14bbb3bcf263261d87, type: 3}
     - target: {fileID: 8879142552798641038, guid: 38fe21544cc016a4f8f56c496dcb60e5,
         type: 3}
       propertyPath: Music.Array.data[0]
@@ -6378,7 +6378,7 @@ PrefabInstance:
         type: 3}
       propertyPath: AmbientSounds.Array.data[1]
       value: 
-      objectReference: {fileID: 8300000, guid: fa88b40a25bf5d942a4fef9a4705a981, type: 3}
+      objectReference: {fileID: 8300000, guid: 50c4d54a062c2f14bbb3bcf263261d87, type: 3}
     - target: {fileID: 8879142552798641038, guid: 38fe21544cc016a4f8f56c496dcb60e5,
         type: 3}
       propertyPath: Music.Array.data[1]
@@ -7038,7 +7038,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1173641078}
-  m_LocalRotation: {x: 0.000000007747753, y: 0.79015505, z: -0.612907, w: -0.000000007747767}
+  m_LocalRotation: {x: -0.612907, y: -0.00000000774776, z: -0.00000000774776, w: -0.79015505}
   m_LocalPosition: {x: 0, y: 3, z: 91.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
