@@ -18,11 +18,20 @@ public class Boat_CameraHandler : MonoBehaviour
         UI_JoystickHandler.JoystickStateChanged.AddListener(On_UI_InputDetect_Joystick_JoystickEventChanged);
 
         _cineCam = FindObjectOfType<CinemachineStateDrivenCamera>();
-        if (_cineCam == null) Debug.Log("FUCK");
+        if (_cineCam == null) Debug.Log("Frick D:");
         _cineCam.Follow = transform;
         _cineCam.LookAt = transform;
         _cineCam.m_AnimatedTarget = _anim;
-    
+
+
+        if (LevelManager.Instance.CurrentBoatLevel >= 3)
+        {
+            CinemachineVirtualCamera[] vCams = FindObjectsOfType<CinemachineVirtualCamera>();
+            for (int i = 0; i < vCams.Length; i++)
+            {
+                vCams[i].m_Lens.FieldOfView = 60f;
+            }
+        }
     }
 
     /// <summary>
