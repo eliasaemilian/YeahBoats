@@ -183,7 +183,6 @@ public class UI_PannelOnEnable : MonoBehaviour
 
     public void UnlockThisMapGodDammit()
     {
-        Debug.Log("Max map level: "+LM.MaxMapLevel);
         if(SceneIndex <= LM.MaxMapLevel + 1)
         {
             MapText.text = "Travel";

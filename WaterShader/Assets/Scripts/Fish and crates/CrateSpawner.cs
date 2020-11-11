@@ -65,7 +65,6 @@ public class CrateSpawner : MonoBehaviour
         crate.GetComponent<CrateScript>().CS = this;
         CratesCount++;
 
-        Debug.Log("Spawning a crate");
     }
 
     private void ClearCrate(GameObject crate)
@@ -84,21 +83,18 @@ public class CrateSpawner : MonoBehaviour
         int res = Random.Range(0, 2);
         if(res == 0)
         {
-            Debug.Log("Received a Map piece");
             LevelManager.Instance.AddMapPiece();
             MapTab.SetActive(true);
 
         }
         else
         {
-            Debug.Log("Received a multiplier");
             MultiplierTab.SetActive(true);
             _MM.AddTimeToMultiplier(2, 2);
         }
         }
         else
         {
-            Debug.Log("Received a multiplier");
             MultiplierTab.SetActive(true);
             _MM.AddTimeToMultiplier(2, 2);
         }

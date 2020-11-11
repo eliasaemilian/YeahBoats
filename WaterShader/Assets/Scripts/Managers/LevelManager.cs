@@ -118,10 +118,15 @@ public class LevelManager : MonoBehaviour
         if (GUI.Button(new Rect(160, 90, 150, 20), "ResetLevels"))
         {
             TMPLevelSetup(true);
+            UpdateLevels();
+            DM.DataContainer.Saving();
+
         }
         if (GUI.Button(new Rect(160, 110, 150, 20), "Unlock The Boats"))
         {
             MaxBoatLevel = 4;
+            UpdateLevels();
+            DM.DataContainer.Saving();
         }
 
     }
@@ -162,6 +167,7 @@ public class LevelManager : MonoBehaviour
     }
     public bool CheckIfICanLevelupBoat(int currentLevel)
     {
+        if (currentLevel == BoatLevels.Levels.Length) return false;
         if (MM.CheckMoney(BoatLevels.Levels[currentLevel].Cost))
         {
             return true;

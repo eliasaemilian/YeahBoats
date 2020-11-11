@@ -61,7 +61,6 @@ public class FishAI : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-            Debug.Log("Fish got hit");
         if (other.gameObject.tag == "Fish")
         {
             _marker = GetRandomMarker();

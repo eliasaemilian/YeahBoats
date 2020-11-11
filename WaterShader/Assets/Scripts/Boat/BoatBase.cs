@@ -14,8 +14,6 @@ public class BoatBase : MonoBehaviour
 
     [SerializeField] private NPCSpotsScript _nPCSpots = null;
     [SerializeField] private GameObject _nPCFishermanPrefab = null;
-    //[SerializeField] private LevelStorageScriptable _boatLevels = null;
-    //private LevelStorageScriptable _boatSkillLevels = null;
 
     private LevelManager _lM;
 
@@ -25,21 +23,19 @@ public class BoatBase : MonoBehaviour
 
     private void Awake()
     {
-        
         _lM = LevelManager.Instance;
-        BoatSO = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel].boatScriptable;
+        Debug.Log("BoatLevels length : "+_lM.BoatLevels.Levels.Length);
+        Debug.Log("Current Boat Level : "+_lM.CurrentBoatLevel);
+        Debug.Log("BoatLevels length : "+_lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1]);
+        BoatSO = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1].boatScriptable;
     }
     // Start is called before the first frame update
     void Start()
     {
-        
-
         if (WaterTappableHandler.FishingTap != null)
         {
             WaterTappableHandler.FishingTap.AddListener(FishingSpeedup.Invoke);
         }
-
-        //StartCoroutine(LateStart());
         _nPCSpots = GetComponentInChildren<NPCSpotsScript>();
         InstantiateFishermen();
 
@@ -103,21 +99,9 @@ public class BoatBase : MonoBehaviour
     {
         _lM.OwnedFishermen++;
     }
-
-
-
-    
     public void TapToSpeedupCatch()
     {
         FishingSpeedup.Invoke();
     }
     
-
-
-    private IEnumerator LateStart()
-    {
-        yield return new WaitForEndOfFrame();
-        InstantiateBoat();
-        InstantiateFishermen();
-    }
 }

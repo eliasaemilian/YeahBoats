@@ -9,7 +9,6 @@ public class CrateScript : TappableGameobject, IPooledObject
     public override void OnStartInitialize()
     {
         base.OnStartInitialize();
-        Debug.Log("Crate init");
 
     }
     public void OnInstantiation()
@@ -36,7 +35,6 @@ public class CrateScript : TappableGameobject, IPooledObject
     public override void OnTap(Touch touch, Vector3 pos, float dist)
     {
         base.OnTap(touch, pos, dist);
-        Debug.Log("I was tapped");
         CS.m_CrateEvent.Invoke(this.gameObject);
         //ObjectPooler.Instance.ReturnToPool("Crate", this.gameObject);
     }

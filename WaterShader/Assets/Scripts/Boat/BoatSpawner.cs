@@ -23,12 +23,10 @@ public class BoatSpawner : MonoBehaviour
 
     public void InstantiateBoat()
     {
-        Debug.Log("Current Boat Level : " + _lM.CurrentBoatLevel);
         GameObject b = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1].BoatPrefab;
         _lM.BoatSkillLevels = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1];
         _lM.MaxAmmountOfFishermen = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1].NPCFishermanAmmount;
-        GameObject boat = Instantiate(b, Spawnposition.position, Quaternion.identity,Parent.transform);
-        boat.transform.parent = this.transform;
-        //_nPCSpots = boat.gameObject.GetComponentInChildren<NPCSpotsScript>();
+        GameObject boat = Instantiate(b, Spawnposition.position, Quaternion.identity);
+        boat.transform.parent = Parent.transform;
     }
 }

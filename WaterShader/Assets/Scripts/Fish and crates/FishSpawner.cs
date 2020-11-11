@@ -65,18 +65,12 @@ public class FishSpawner : MonoBehaviour
         Markers = new List<Vector3>();
         SpawnMarkers();
         SpawnFishes();
-        //RemoveFishLoop(true);
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Debug.Log("Respawning process begins");
-        }
-
         if(FishList.Count == 0)
         {
             RemoveFishLoop(false);
@@ -99,8 +93,6 @@ public class FishSpawner : MonoBehaviour
         {
             Vector3 pos = Markers[Random.Range(0,Markers.Count)];
             GameObject prefab = _fishPrefabs[Random.Range(0, _fishPrefabs.Count)];
-            //old one
-            //FishAI fish = Instantiate(prefab, pos, Quaternion.identity).GetComponent<FishAI>();
 
             //new pooled version
             FishAI fish = ObjectPooler.Instance.SpawnFromPool("Fish", pos, Quaternion.identity).GetComponent<FishAI>();
@@ -119,9 +111,6 @@ public class FishSpawner : MonoBehaviour
         Vector3 pos = Markers[Random.Range(0, Markers.Count)];
         GameObject prefab = _fishPrefabs[Random.Range(0, _fishPrefabs.Count)];
 
-        //Old one
-        //FishAI fish = Instantiate(prefab, pos, Quaternion.identity).GetComponent<FishAI>();
-
         //New pooled version
         FishAI fish = ObjectPooler.Instance.SpawnFromPool("Fish", pos, Quaternion.identity).GetComponent<FishAI>();
 
@@ -132,7 +121,6 @@ public class FishSpawner : MonoBehaviour
         fish.DirectionChangeDelay = _directionChangeDelay;
 
         FishList.Add(fish);
-        Debug.Log("Spawned one fish");
     }
 
     private void RespawnFishes(bool state)
@@ -176,13 +164,10 @@ public class FishSpawner : MonoBehaviour
         if (state)
         {
             InvokeRepeating("RemoveFish", _initialDelay, _removeTimer);
-            Debug.Log("Fish Removal Started");
         }
         else
         {
             CancelInvoke("RemoveFish");
-            Debug.Log("Fish Removal Stopped");
-
         }
 
     }
@@ -192,12 +177,7 @@ public class FishSpawner : MonoBehaviour
         if(FishList.Count > 0)
         {
             ObjectPooler.Instance.ReturnToPool("Fish", FishList[FishList.Count - 1].gameObject);
-
-            //Destroy(FishList[FishList.Count - 1].gameObject);
-
             FishList.RemoveAt(FishList.Count - 1);
-
-        
         }
     }
 
@@ -205,7 +185,6 @@ public class FishSpawner : MonoBehaviour
     {
         if(other.gameObject.tag == "Boat")
         {
-            Debug.Log("Boat entered frishing zone");
             _isBoatHere = true;
             RemoveFishLoop(true);
             RespawnFishes(false);
@@ -215,13 +194,9 @@ public class FishSpawner : MonoBehaviour
     {
         if (other.gameObject.tag == "Boat")
         {
-            Debug.Log("Boat exit frishing zone");
             _isBoatHere = false;
             RemoveFishLoop(false);
             RespawnFishes(true);
-
-
-
         }
     }
     private void OnDrawGizmosSelected()

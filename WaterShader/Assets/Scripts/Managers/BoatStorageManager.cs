@@ -20,7 +20,6 @@ public class BoatStorageManager : MonoBehaviour
         //For testing 
 
         PlayerPrefs.SetString("sysString", System.DateTime.Now.ToBinary().ToString());
-        print("Saving this date to prefs: " + System.DateTime.Now);
 
         //GetData();
         //checkAfkTime();
@@ -31,7 +30,6 @@ public class BoatStorageManager : MonoBehaviour
 
     private void CalculateBoatStorage()
     {
-        Debug.Log("BoatStorageLevel : " + _lM.BoatStorageLevel + " CurrentBoatLevel : " + _lM.CurrentBoatLevel);
         BoatStorage = 100 * (_lM.BoatStorageLevel + 2 * _lM.CurrentBoatLevel);
     }
 
