@@ -9,6 +9,8 @@ using UnityEngine.Events;
 /// </summary>
 public class BoatBase : MonoBehaviour
 {
+    [SerializeField] private BoatScriptable debugSO;
+
     private BoatScriptable _boatScriptable = null;
     public BoatScriptable BoatSO { get { return _boatScriptable; } set { _boatScriptable = value; } }
 
@@ -25,7 +27,9 @@ public class BoatBase : MonoBehaviour
     {
         _lM = LevelManager.Instance;
         BoatSO = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1].boatScriptable;
-        Debug.Log("BoatSO is " + BoatSO);
+#if UNITY_EDITOR
+        if (BoatSO == null) BoatSO = debugSO;
+#endif
     }
     // Start is called before the first frame update
     void Start()
