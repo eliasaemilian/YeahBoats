@@ -74,9 +74,10 @@ GameObject:
   - component: {fileID: 4883072358330463547}
   - component: {fileID: 4244460986419502273}
   - component: {fileID: 34166522}
-  m_Layer: 0
+  - component: {fileID: 2083674331426397946}
+  m_Layer: 9
   m_Name: F_Lvl3_Boat
-  m_TagString: Untagged
+  m_TagString: Boat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -176,6 +177,19 @@ MonoBehaviour:
   FishingSpeedup:
     m_PersistentCalls:
       m_Calls: []
+--- !u!65 &2083674331426397946
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7010876820269769704}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8.677013, y: 10.458611, z: 27.096506}
+  m_Center: {x: 0.098423004, y: 6.699848, z: 1.9203272}
 --- !u!1 &7010876820722573186
 GameObject:
   m_ObjectHideFlags: 0
