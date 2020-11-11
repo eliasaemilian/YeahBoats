@@ -24,9 +24,6 @@ public class BoatBase : MonoBehaviour
     private void Awake()
     {
         _lM = LevelManager.Instance;
-        //Debug.Log("BoatLevels length : "+_lM.BoatLevels.Levels.Length);
-        //Debug.Log("Current Boat Level : "+_lM.CurrentBoatLevel);
-        //Debug.Log("BoatLevels length : "+_lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1]);
         BoatSO = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1].boatScriptable;
         Debug.Log("BoatSO is " + BoatSO);
     }

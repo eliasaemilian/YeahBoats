@@ -119,13 +119,20 @@ public class LevelManager : MonoBehaviour
         {
             TMPLevelSetup(true);
             UpdateLevels();
+            SaveData();
             DM.DataContainer.Saving();
 
         }
         if (GUI.Button(new Rect(160, 110, 150, 20), "Unlock The Boats"))
         {
             MaxBoatLevel = 4;
-            UpdateLevels();
+            SaveData();
+            DM.DataContainer.Saving();
+        }
+        if (GUI.Button(new Rect(160, 130, 150, 20), "Unlock The Scenes"))
+        {
+            MaxMapLevel = 4;
+            SaveData();
             DM.DataContainer.Saving();
         }
 
