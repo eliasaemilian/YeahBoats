@@ -38,7 +38,6 @@ public class Temp_ShopButtonActions : MonoBehaviour
         foreach(VisualEffect firework in _FireworkPrefabs)
         {
             firework.Stop();
-            
         }
     }
 
@@ -173,11 +172,13 @@ public class Temp_ShopButtonActions : MonoBehaviour
         else if (LM.CurrentBoatLevel != ButtonLevel)
         {
             LM.CurrentBoatLevel = ButtonLevel;
+            LM.ReloadBoatUpgrades();
             
         }
         else
         {
             LM.CurrentBoatLevel = ButtonLevel;
+            LM.ReloadBoatUpgrades();
 
         }
 

@@ -299,5 +299,10 @@ public class LevelManager : MonoBehaviour
         //DM.DataContainer.BoatLevels = BoatLevels;
     }
 
-    
+    public void ReloadBoatUpgrades()
+    {
+        _boatSkillLevelCosts = LevelCosts.LevelCost[CurrentBoatLevel - 1];
+        BoatSkillLevels = BoatLevels.Levels[CurrentBoatLevel - 1];
+        SetupLevels();
+    }
 }
