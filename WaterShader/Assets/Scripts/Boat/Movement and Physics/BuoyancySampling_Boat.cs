@@ -13,7 +13,8 @@ public class BuoyancySampling_Boat : BuoyancySampling
         base.OnInitialize();
 
         // Store Boat Info, override drag infos
-        _boatSO = GetComponentInParent<BoatBase>().BoatSO;
+        if (GetComponentInParent<BoatBase>() != null) _boatSO = GetComponentInParent<BoatBase>().BoatSO;
+        else _boatSO = LevelManager.Instance.GetCurretBoatPhysicsSO();
         waterDrag = _boatSO.waterDrag;
         waterAngularDrag = _boatSO.waterAngularDrag;
 
