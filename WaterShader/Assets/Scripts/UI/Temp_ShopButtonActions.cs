@@ -31,8 +31,10 @@ public class Temp_ShopButtonActions : MonoBehaviour
     [SerializeField] private List<UI_PannelOnEnable> _lighthousePannels = null;
     [SerializeField] private GameObject _notEnoughMoneyPannel = null;
     [SerializeField] private GameObject _fishermanFailHirePannel = null;
+    [SerializeField] private GameObject _changeBoatPannel = null;
     [SerializeField] private List<VisualEffect> _FireworkPrefabs = null;
 
+    private bool _shootFireworks = false;
     void Start()
     {
         foreach(VisualEffect firework in _FireworkPrefabs)
@@ -45,11 +47,20 @@ public class Temp_ShopButtonActions : MonoBehaviour
     {
         if(Sceneindex - 1 <= LM.MaxMapLevel)
         {
+            if(Sceneindex - 1 <= 2 && LM.HighSeaboat())
+            {
+                _changeBoatPannel.SetActive(true);
+            }
+            else
+            {
+
+
             // go to this map
             LevelManager.Instance.SaveData();
             MoneyManager.Instance.SaveData();
             Savedata.Instance.Saving();
             SceneManager.LoadScene(Sceneindex);
+            }
         }
         else
         {
@@ -58,6 +69,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
                 LM.MapPieces = 0;
                 LM.MaxMapLevel++;
                 UpdateLighthousePannels();
+                _shootFireworks = true;
             }
             else{
                 //yade yade dont do this
@@ -75,7 +87,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
             Debug.Log("I can Level Up");
             LM.FishingHookLevel = LM.Levelup(LM.FishingHookLevel, LM.BoatSkillLevelCosts.FishingHookCost);
             ResetColors();
-            ShootFireworks();
+            _shootFireworks = true;
         }
         else
         {
@@ -90,7 +102,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
         {
             LM.FishingRodLevel = LM.Levelup(LM.FishingRodLevel, LM.BoatSkillLevelCosts.FishingRodCost);
             ResetColors();
-            ShootFireworks();
+            _shootFireworks = true;
         }
         else
         {
@@ -105,7 +117,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
         {
             LM.TapCoinLevel = LM.Levelup(LM.TapCoinLevel, LM.IndependentBoatSkillLevelCosts.TapCoinCost);
             ResetColors();
-            ShootFireworks();
+            _shootFireworks = true;
         }
         else
         {
@@ -119,7 +131,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
         {
             LM.TapFishLevel = LM.Levelup(LM.TapFishLevel, LM.IndependentBoatSkillLevelCosts.TapFishCost);
             ResetColors();
-            ShootFireworks();
+            _shootFireworks = true;
         }
         else
         {
@@ -160,7 +172,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
             {
                 LM.MaxBoatLevel = LM.LevelupBoat(LM.MaxBoatLevel);
                 ResetColors();
-                ShootFireworks();
+                _shootFireworks = true;
             }
             else
             {
@@ -206,14 +218,20 @@ public class Temp_ShopButtonActions : MonoBehaviour
         }
     }
     
-    private void ShootFireworks()
+    public void ShootFireworks()
     {
+        if (_shootFireworks)
+        {
+
         foreach (VisualEffect firework in _FireworkPrefabs)
         {
             firework.Play();
             firework.playRate = 2;
 
         }
+            _shootFireworks = false;
+        }
         // And sum audio to come here
     }
+
 }

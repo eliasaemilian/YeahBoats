@@ -10,37 +10,29 @@ using UnityEngine.Events;
 public class BoatBase : MonoBehaviour
 {
     [SerializeField] private BoatScriptable debugSO;
-
-    private BoatScriptable _boatScriptable = null;
-    public BoatScriptable BoatSO { get { return _boatScriptable; } set { _boatScriptable = value; } }
-
     [SerializeField] private NPCSpotsScript _nPCSpots = null;
     [SerializeField] private GameObject _nPCFishermanPrefab = null;
 
+    private BoatScriptable _boatScriptable = null;
     private LevelManager _lM;
 
-    public List<GameObject> SpawnPoints = new List<GameObject>();
-
     public UnityEvent FishingSpeedup;
+    public BoatScriptable BoatSO { get { return _boatScriptable; } set { _boatScriptable = value; } }
 
     private void Awake()
     {
         _lM = LevelManager.Instance;
-        BoatSO = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1].boatScriptable;
-#if UNITY_EDITOR
+        BoatSO = _lM.GetCurretBoatPhysicsSO();
+
+        #if UNITY_EDITOR
         if (BoatSO == null) BoatSO = debugSO;
-#endif
+        #endif
     }
-    // Start is called before the first frame update
     void Start()
     {
-        if (WaterTappableHandler.FishingTap != null)
-        {
-            WaterTappableHandler.FishingTap.AddListener(FishingSpeedup.Invoke);
-        }
+        WaterTappableHandler.FishingTap?.AddListener(FishingSpeedup.Invoke);
         _nPCSpots = GetComponentInChildren<NPCSpotsScript>();
         InstantiateFishermen();
-
     }
 
 
@@ -56,45 +48,27 @@ public class BoatBase : MonoBehaviour
         }
     }
 
-    private void InstantiateBoat()
-    {
-        Debug.Log("Current Boat Level : " + _lM.CurrentBoatLevel);
-        GameObject b = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1].BoatPrefab;
-        _lM.BoatSkillLevels = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1];
-        _lM.MaxAmmountOfFishermen = _lM.BoatLevels.Levels[_lM.CurrentBoatLevel - 1].NPCFishermanAmmount;
-        GameObject boat = Instantiate(b, transform.position, Quaternion.identity);
-        boat.transform.parent = this.transform;
-    }
     private void InstantiateFishermen()
     {
-        if(_lM.OwnedFishermen > _lM.MaxAmmountOfFishermen)
+        int fisherManCount = Mathf.Min(_lM.OwnedFishermen, _lM.MaxAmmountOfFishermen);
+
+        for (int i = 0; i < fisherManCount; i++)
         {
-            for (int i = 0; i < _lM.MaxAmmountOfFishermen; i++)
-            {
-                AddFisherman();
-            }
+            AddFisherman(i);
+        }
+    }
+    private void AddFisherman(int spotIndex)
+    {
+        if (_nPCSpots._spots.Length >= spotIndex)
+        {
+            GameObject gO = _nPCSpots._spots[spotIndex];
+            GameObject fisherman = Instantiate(_nPCFishermanPrefab,gO.transform.position,gO.transform.rotation, gO.transform);
+            fisherman.GetComponent<NPC_Fisherman>().BB = this;
         }
         else
         {
-            for (int i = 0; i < _lM.OwnedFishermen; i++)
-            {
-                AddFisherman();
-            }
+           // Debug.LogError("Not enough fishermap spots");
         }
-    }
-    private bool AddFisherman()
-    {
-        if (SpawnPoints.Count < _lM.MaxAmmountOfFishermen)
-        {
-            GameObject gO = _nPCSpots._spots[SpawnPoints.Count];
-            SpawnPoints.Add(gO);
-
-            GameObject fisherman = Instantiate(_nPCFishermanPrefab,gO.transform.position,gO.transform.rotation, gO.transform);
-            fisherman.GetComponent<NPC_Fisherman>().BB = this;
-            
-            return true;
-        }
-        else return false;
     }
 
     private void BuyFisherman()

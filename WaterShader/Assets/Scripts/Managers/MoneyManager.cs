@@ -5,25 +5,22 @@ using UnityEngine;
 /// <summary>
 /// MoneyManager is responsible for saving and editing data related to the game currency
 /// </summary>
-public class MoneyManager : MonoBehaviour
+public class MoneyManager : Singleton<MoneyManager>
 {
-    public static MoneyManager Instance;
-    public DataManager _dM;
+    private DataManager _dM;
     public CanvasDisplay CD;
     public float Money;
 
     public int Multiplyer;
 
-    void Awake()
+    protected override void Awake()
     {
-         Instance = this;
-     
+        base.Awake();
+        _dM = GameObject.Find("DataManager").GetComponent<DataManager>();
+        
     }
-    // Start is called before the first frame update
     void Start()
     {
-        //_dM = DataManager.Instance;
-
 
         TMPSetup();
         LevelManager.Instance.MultiplierUpdate.AddListener(UpdateMultiplier);

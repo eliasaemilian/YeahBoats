@@ -8,12 +8,11 @@ using UnityEngine.Events;
 /// <summary>
 /// LevelManager keeps track of the level of the Boat, Fisherman, Rod etc...
 /// </summary>
-public class LevelManager : MonoBehaviour
+public class LevelManager : Singleton<LevelManager>
 {
-    public static LevelManager Instance;
 
-    public DataManager DM;
-    public MoneyManager MM;
+    private DataManager dM;
+    private MoneyManager mM;
     public LevelCostsScriptable LevelCosts;
 
     // Just for testing
@@ -73,13 +72,13 @@ public class LevelManager : MonoBehaviour
     public UnityEvent BoatStorageUpdate;
     public UnityEvent FishingRodUpdate;
     public UnityEvent FishingHookUpdate;
-    void Awake()
-    {
-        Instance = this;
 
-        //TMPLevelSetup(false);
+    protected override void Awake()
+    {
+        base.Awake();
+        dM = GameObject.Find("DataManager").GetComponent<DataManager>();
+        mM = GameObject.Find("MoneyManager").GetComponent<MoneyManager>();
     }
-    // Start is called before the first frame update
     void Start()
     {
         GetData();
@@ -120,20 +119,20 @@ public class LevelManager : MonoBehaviour
             TMPLevelSetup(true);
             UpdateLevels();
             SaveData();
-            DM.DataContainer.Saving();
+            dM.DataContainer.Saving();
 
         }
         if (GUI.Button(new Rect(160, 110, 150, 20), "Unlock The Boats"))
         {
             MaxBoatLevel = 4;
             SaveData();
-            DM.DataContainer.Saving();
+            dM.DataContainer.Saving();
         }
         if (GUI.Button(new Rect(160, 130, 150, 20), "Unlock The Scenes"))
         {
             MaxMapLevel = 4;
             SaveData();
-            DM.DataContainer.Saving();
+            dM.DataContainer.Saving();
         }
 
     }
@@ -154,7 +153,7 @@ public class LevelManager : MonoBehaviour
 
         if (IsReset)
         {
-            MM.ResetMoney();
+            mM.ResetMoney();
             UpdateLevels();
             OwnedFishermen = 1;
         }
@@ -165,7 +164,7 @@ public class LevelManager : MonoBehaviour
         //TODO: Add level cap
         if (LST.Count < currentLevel) return false;
 
-        if (MM.CheckMoney(LST[currentLevel]))
+        if (mM.CheckMoney(LST[currentLevel]))
         {
             return true;
         }
@@ -175,7 +174,8 @@ public class LevelManager : MonoBehaviour
     public bool CheckIfICanLevelupBoat(int currentLevel)
     {
         if (currentLevel == BoatLevels.Levels.Length) return false;
-        if (MM.CheckMoney(BoatLevels.Levels[currentLevel].Cost))
+        if (mM == null) Debug.Log("NULL");
+        if (mM.CheckMoney(BoatLevels.Levels[currentLevel].Cost))
         {
             return true;
         }
@@ -183,21 +183,21 @@ public class LevelManager : MonoBehaviour
     }
     public int Levelup(int currentLevel, List<int> LST)
     {
-        MM.DeduceMoney(LST[currentLevel]);
+        mM.DeduceMoney(LST[currentLevel]);
         
         UpdateLevels();
         //correspondingEvent.Invoke();
-        MM.UpdateMoney();
+        mM.UpdateMoney();
         return (currentLevel + 1);
 
     }
 
     public int LevelupBoat(int currentLevel)
     {
-        MM.DeduceMoney(BoatLevels.Levels[currentLevel].Cost);
+        mM.DeduceMoney(BoatLevels.Levels[currentLevel].Cost);
 
         UpdateLevels();
-        MM.UpdateMoney();
+        mM.UpdateMoney();
         return (currentLevel + 1);
     }
 
@@ -271,31 +271,31 @@ public class LevelManager : MonoBehaviour
 
     private void GetData()
     {
-        CurrentMapLevel = DM.DataContainer.CurrentMapLevel;
-        MaxMapLevel = DM.DataContainer.MaxMapLevel;
-        MapPieces = DM.DataContainer.MapPieces;
-        CurrentBoatLevel = DM.DataContainer.CurrentBoatLevel;
-        MaxBoatLevel = DM.DataContainer.MaxBoatLevel;
-        Multiplier = DM.DataContainer.Multiplier;
-        _boatStorageLevel = DM.DataContainer.BoatStorageLevel;
-        _ownedFisherman = DM.DataContainer.OwnedFishermen;
-        TapCoinLevel = DM.DataContainer.TapCoinLevel;
-        TapFishLevel = DM.DataContainer.TapFishLevel;
+        CurrentMapLevel = dM.DataContainer.CurrentMapLevel;
+        MaxMapLevel = dM.DataContainer.MaxMapLevel;
+        MapPieces = dM.DataContainer.MapPieces;
+        CurrentBoatLevel = dM.DataContainer.CurrentBoatLevel;
+        MaxBoatLevel = dM.DataContainer.MaxBoatLevel;
+        Multiplier = dM.DataContainer.Multiplier;
+        _boatStorageLevel = dM.DataContainer.BoatStorageLevel;
+        _ownedFisherman = dM.DataContainer.OwnedFishermen;
+        TapCoinLevel = dM.DataContainer.TapCoinLevel;
+        TapFishLevel = dM.DataContainer.TapFishLevel;
         //BoatLevels = DM.DataContainer.BoatLevels;
     }
 
     public void SaveData()
     {
-        DM.DataContainer.CurrentMapLevel = CurrentMapLevel;
-        DM.DataContainer.MaxMapLevel = MaxMapLevel;
-        DM.DataContainer.MapPieces = MapPieces;
-        DM.DataContainer.CurrentBoatLevel = CurrentBoatLevel;
-        DM.DataContainer.MaxBoatLevel = MaxBoatLevel;
-        DM.DataContainer.Multiplier = Multiplier;
-        DM.DataContainer.BoatStorageLevel = _boatStorageLevel;
-        DM.DataContainer.OwnedFishermen = OwnedFishermen;
-        DM.DataContainer.TapCoinLevel = TapCoinLevel;
-        DM.DataContainer.TapFishLevel = TapFishLevel;
+        dM.DataContainer.CurrentMapLevel = CurrentMapLevel;
+        dM.DataContainer.MaxMapLevel = MaxMapLevel;
+        dM.DataContainer.MapPieces = MapPieces;
+        dM.DataContainer.CurrentBoatLevel = CurrentBoatLevel;
+        dM.DataContainer.MaxBoatLevel = MaxBoatLevel;
+        dM.DataContainer.Multiplier = Multiplier;
+        dM.DataContainer.BoatStorageLevel = _boatStorageLevel;
+        dM.DataContainer.OwnedFishermen = OwnedFishermen;
+        dM.DataContainer.TapCoinLevel = TapCoinLevel;
+        dM.DataContainer.TapFishLevel = TapFishLevel;
         //DM.DataContainer.BoatLevels = BoatLevels;
     }
 
@@ -304,5 +304,14 @@ public class LevelManager : MonoBehaviour
         _boatSkillLevelCosts = LevelCosts.LevelCost[CurrentBoatLevel - 1];
         BoatSkillLevels = BoatLevels.Levels[CurrentBoatLevel - 1];
         SetupLevels();
+    }
+    public BoatScriptable GetCurretBoatPhysicsSO()
+    {
+        return BoatLevels.Levels[CurrentBoatLevel - 1].boatScriptable;
+    }
+
+    public bool HighSeaboat()
+    {
+        return CurrentBoatLevel <= 2 ? false : true;
     }
 }
