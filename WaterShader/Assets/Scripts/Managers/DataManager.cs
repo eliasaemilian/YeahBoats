@@ -5,17 +5,37 @@ using UnityEngine.Events;
 /// <summary>
 /// Saves data
 /// </summary>
-public class DataManager : MonoBehaviour
+public class DataManager : Singleton<DataManager>
 {
-    public static DataManager Instance;
     public LevelManager _lM;
 
     public Savedata DataContainer;
 
-    void Awake()
+    protected override void Awake()
     {
-        Instance = this;
+        base.Awake();
         DataContainer = GetComponent<Savedata>();
     }
-    
+}
+
+public class Singleton<T> : MonoBehaviour where T : Singleton<T>
+{
+    private static T instance;
+    [SerializeField] bool dontDestroyOnLoad;
+
+    public static T Instance { get => instance; }
+    protected virtual void Awake()
+    {
+        if (Instance == null)
+        {
+            instance = (T)this;
+            if (dontDestroyOnLoad)
+                DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Debug.LogError("Second instance of " + GetType());
+            Destroy(this);
+        }
+    }
 }

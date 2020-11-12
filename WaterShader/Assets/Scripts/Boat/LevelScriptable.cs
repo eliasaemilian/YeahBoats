@@ -18,5 +18,5 @@ public class LevelScriptable : ScriptableObject
     public int FishingHookLevel = 1;
     public int NPCFishermanAmmount = 0;
 
-    public BoatScriptable boatScriptable;
+    public BoatPhysicsSO boatScriptable;
 }

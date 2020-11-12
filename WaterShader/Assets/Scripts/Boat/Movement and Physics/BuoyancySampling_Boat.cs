@@ -5,7 +5,7 @@ using UnityEngine;
 public class BuoyancySampling_Boat : BuoyancySampling
 {
     // private Boat myBoat;
-    private BoatScriptable _boatSO;
+    private BoatPhysicsSO _boatSO;
 
 
     public override void OnInitialize()
@@ -13,7 +13,7 @@ public class BuoyancySampling_Boat : BuoyancySampling
         base.OnInitialize();
 
         // Store Boat Info, override drag infos
-        _boatSO = GetComponentInParent<BoatBase>().BoatSO;
+        _boatSO = GetComponentInParent<BoatBase>().PhysicsSO;
         waterDrag = _boatSO.waterDrag;
         waterAngularDrag = _boatSO.waterAngularDrag;
 

@@ -35,7 +35,6 @@ public class NPC_Fisherman : MonoBehaviour
     private Camera _uiCamera;
     private UI_InputHandler _inputHandler;
     
-    // Start is called before the first frame update
     void Start()
     {
         Multiplier = _lM.CatchSpeedMultiplier;
@@ -60,7 +59,6 @@ public class NPC_Fisherman : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (_animator.GetBool("FishingMode"))
@@ -72,7 +70,6 @@ public class NPC_Fisherman : MonoBehaviour
                 _timer =  60/CatchSpeed;
             }
         }
-       
     }
 
     private void CatchAFish()

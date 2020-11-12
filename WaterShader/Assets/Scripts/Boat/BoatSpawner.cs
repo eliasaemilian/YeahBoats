@@ -8,17 +8,10 @@ public class BoatSpawner : MonoBehaviour
     public Transform Spawnposition;
     public GameObject Parent;
 
-
     void Start()
     {
         _lM = LevelManager.Instance;
         InstantiateBoat();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void InstantiateBoat()

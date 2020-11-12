@@ -24,14 +24,14 @@ public class SimpleBoatInput : MonoBehaviour
     private float _rotationSpeed = 10f;
 
     private Rigidbody _rb;
-    private BoatScriptable _boatSO;
+    private BoatPhysicsSO _boatSO;
     private UI_JoystickHandler _joystickHandler;
 
     void Start()
     {
         _joystickHandler = FindObjectOfType<UI_JoystickHandler>();
         _rb = GetComponent<Rigidbody>();
-        _boatSO = GetComponent<BoatBase>().BoatSO;
+        _boatSO = GetComponent<BoatBase>().PhysicsSO;
         _speed = _boatSO.speed;
         _reversingSpeed = _boatSO.reversingSpeed;
         _rotationSpeed = _boatSO.rotationSpeed;
