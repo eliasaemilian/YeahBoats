@@ -33,6 +33,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
     [SerializeField] private GameObject _fishermanFailHirePannel = null;
     [SerializeField] private GameObject _changeBoatPannel = null;
     [SerializeField] private List<VisualEffect> _FireworkPrefabs = null;
+    [SerializeField] private UI_Clouds _clouds = null;
 
     private bool _shootFireworks = false;
     void Start()
@@ -53,13 +54,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
             }
             else
             {
-
-
-            // go to this map
-            LevelManager.Instance.SaveData();
-            MoneyManager.Instance.SaveData();
-            Savedata.Instance.Saving();
-            SceneManager.LoadScene(Sceneindex);
+                StartCoroutine("SceneChangeCoroutine", Sceneindex);
             }
         }
         else
@@ -232,6 +227,16 @@ public class Temp_ShopButtonActions : MonoBehaviour
             _shootFireworks = false;
         }
         // And sum audio to come here
+    }
+
+    private IEnumerator SceneChangeCoroutine(int Sceneindex)
+    {
+        LevelManager.Instance.SaveData();
+        MoneyManager.Instance.SaveData();
+        Savedata.Instance.Saving();
+        _clouds.CloseClouds();
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(Sceneindex);
     }
 
 }
