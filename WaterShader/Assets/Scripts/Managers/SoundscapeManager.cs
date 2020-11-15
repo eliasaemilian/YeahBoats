@@ -7,6 +7,7 @@ using UnityEngine.Events;
 
 [Serializable] public class MusicEvent : UnityEvent<int> { }
 [Serializable] public class SoundEvent : UnityEvent<int> { }
+[Serializable] public class SoundEventClip : UnityEvent<AudioClip> { }
 public class SoundscapeManager : MonoBehaviour
 {
     public List<AudioClip> Sounds;
@@ -16,6 +17,7 @@ public class SoundscapeManager : MonoBehaviour
     public static MusicEvent QueueNewMusic;
     public static MusicEvent QueueNewAmbientSounds;
     public static SoundEvent PlaySound;
+    public static SoundEventClip PlaySoundWithClip;
 
     [SerializeField] private float _fadeDuration = 5f;
 
@@ -57,10 +59,12 @@ public class SoundscapeManager : MonoBehaviour
         QueueNewMusic = new MusicEvent();
         QueueNewAmbientSounds = new MusicEvent();
         PlaySound = new SoundEvent();
+        PlaySoundWithClip = new SoundEventClip();
 
         QueueNewMusic.AddListener(OnQueueNewMusic);
         QueueNewAmbientSounds.AddListener(OnQueueNewAmbient);
         PlaySound.AddListener(OnPlaySound);
+        PlaySoundWithClip.AddListener(OnPlaySound);
 
         InitializeAudioSources();
     }
@@ -71,13 +75,13 @@ public class SoundscapeManager : MonoBehaviour
     /// </summary>
     private void InitializeAudioSources()
     {
-        if (Sounds.Count > 0)
-        {
-            _soundsPlayer = gameObject.AddComponent<AudioSource>();
-            _soundsPlayer.loop = true;
-            _soundsPlayer.playOnAwake = false;
-            _soundsPlayer.volume = 0.0f;
-        }
+        // Init Sounds Player
+        _soundsPlayer = gameObject.AddComponent<AudioSource>();
+        _soundsPlayer.loop = true;
+        _soundsPlayer.playOnAwake = false;
+        _soundsPlayer.volume = 0.0f;
+
+        // Init Music Players if needed
         if (AmbientSounds.Count > 0 || Music.Count > 0)
         {
             _ambientMusicPlayers = new AudioSource[2];
@@ -133,6 +137,22 @@ public class SoundscapeManager : MonoBehaviour
 
         // Play a new Sound
         _soundsPlayer.PlayOneShot(Sounds[index]);
+        _soundsPlayer.volume = VolumeSound;
+    }
+
+    private void OnPlaySound(AudioClip clip)
+    {
+        if (clip == null) return;
+
+        if (SettingsHandler.RequestSetting(SettingsHandler.Sound, out bool soundOnOff))
+        {
+            if (!soundOnOff) return;
+        }
+
+        // Play a new Sound
+        if (_soundsPlayer.isPlaying && _soundsPlayer.clip == clip) return;
+
+        _soundsPlayer.PlayOneShot(clip);
         _soundsPlayer.volume = VolumeSound;
     }
 

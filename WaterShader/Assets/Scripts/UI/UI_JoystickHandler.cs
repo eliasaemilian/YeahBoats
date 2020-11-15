@@ -19,6 +19,9 @@ public class UI_JoystickHandler : TappableGameobject
     [SerializeField] private float _touchSensitivity = 1f;
     [SerializeField] private float _distBetweenInnertoOuterJoystick = .5f;
 
+    [SerializeField] private AudioClip _joystickOpenSound = null;
+    [SerializeField] private AudioClip _joystickCloseSound = null;
+
     private Vector3 _center;
     private float _counter, _lerpRadius, _outerFinalRadius, _lerpInnerTransparency, _counterStart, _counterStartForClose, _innerFinalTransparency;
     private bool _snapBack, _doubleTap;
@@ -115,8 +118,16 @@ public class UI_JoystickHandler : TappableGameobject
 
         _doubleTap = true;
 
-        if (JoystickStateClosed) _counter = _counterStart;
-        else _counter = _counterStartForClose;
+        if (JoystickStateClosed)
+        {
+            _counter = _counterStart;
+            SoundscapeManager.PlaySoundWithClip.Invoke(_joystickOpenSound);
+        }
+        else
+        {
+            _counter = _counterStartForClose;
+            SoundscapeManager.PlaySoundWithClip.Invoke(_joystickCloseSound);
+        }
     }
 
     private void FixedUpdate()
