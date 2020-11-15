@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SettingsHandler : MonoBehaviour
 {
@@ -245,4 +246,15 @@ public class SettingsHandler : MonoBehaviour
             else _reverseInputButtonText.text = _reverseOff;
         }
     }
+
+    /// <summary>
+    /// Save Current Scene Index
+    /// </summary>
+    public void OnApplicationQuit() => SaveCurrentScene();
+    public void OnApplicationPause(bool pause)
+    {
+        if (pause) SaveCurrentScene();
+    }
+
+    private void SaveCurrentScene() => PlayerPrefs.SetInt("SceneIndex", SceneManager.GetActiveScene().buildIndex);
 }
