@@ -820,6 +820,7 @@ GameObject:
   - component: {fileID: 5014195482294049745}
   - component: {fileID: 5014195482294049744}
   - component: {fileID: 5014195482294049743}
+  - component: {fileID: -8760658268729067586}
   m_Layer: 5
   m_Name: Upgrade Button
   m_TagString: Untagged
@@ -997,6 +998,19 @@ MonoBehaviour:
     _usePolygonMap: 0
   wasConverted: 0
   preConvertedScale: {x: 0, y: 0, z: 0}
+--- !u!114 &-8760658268729067586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5014195482294049740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d17f931339cb54884acce7df17da63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonSound: {fileID: 8300000, guid: f3db5e51d5b67f5419b016b05517dfa3, type: 3}
 --- !u!1 &5014195482323245387
 GameObject:
   m_ObjectHideFlags: 0
@@ -1394,6 +1408,7 @@ GameObject:
   - component: {fileID: 5014195482387454854}
   - component: {fileID: 5014195482387454853}
   - component: {fileID: 5014195482387454852}
+  - component: {fileID: 7504096830647266322}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -1571,6 +1586,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7504096830647266322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5014195482387454850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d17f931339cb54884acce7df17da63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonSound: {fileID: 8300000, guid: f3db5e51d5b67f5419b016b05517dfa3, type: 3}
 --- !u!1 &5014195482394046911
 GameObject:
   m_ObjectHideFlags: 0
@@ -1584,6 +1612,7 @@ GameObject:
   - component: {fileID: 5014195482394046916}
   - component: {fileID: 5014195482394046915}
   - component: {fileID: 5014195482394046914}
+  - component: {fileID: 7935795929219454524}
   m_Layer: 5
   m_Name: Upgrade Button
   m_TagString: Untagged
@@ -1761,6 +1790,19 @@ MonoBehaviour:
     _usePolygonMap: 0
   wasConverted: 0
   preConvertedScale: {x: 0, y: 0, z: 0}
+--- !u!114 &7935795929219454524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5014195482394046911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d17f931339cb54884acce7df17da63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonSound: {fileID: 8300000, guid: f3db5e51d5b67f5419b016b05517dfa3, type: 3}
 --- !u!1 &5014195482449600728
 GameObject:
   m_ObjectHideFlags: 0
@@ -1773,6 +1815,7 @@ GameObject:
   - component: {fileID: 5014195482449600731}
   - component: {fileID: 5014195482449600730}
   - component: {fileID: 426424235}
+  - component: {fileID: -5425688197091397233}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1892,6 +1935,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &-5425688197091397233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5014195482449600728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d17f931339cb54884acce7df17da63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonSound: {fileID: 8300000, guid: f3db5e51d5b67f5419b016b05517dfa3, type: 3}
 --- !u!1 &5014195482485171096
 GameObject:
   m_ObjectHideFlags: 0
@@ -3039,6 +3095,7 @@ GameObject:
   - component: {fileID: 5014195483252295917}
   - component: {fileID: 5014195483252295916}
   - component: {fileID: 5014195483252295915}
+  - component: {fileID: 2805294539024194069}
   m_Layer: 5
   m_Name: Upgrade Button
   m_TagString: Untagged
@@ -3216,6 +3273,19 @@ MonoBehaviour:
     _usePolygonMap: 0
   wasConverted: 0
   preConvertedScale: {x: 0, y: 0, z: 0}
+--- !u!114 &2805294539024194069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5014195483252295912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d17f931339cb54884acce7df17da63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonSound: {fileID: 8300000, guid: f3db5e51d5b67f5419b016b05517dfa3, type: 3}
 --- !u!1 &5014195483257224340
 GameObject:
   m_ObjectHideFlags: 0
@@ -4747,6 +4817,7 @@ GameObject:
   - component: {fileID: 5014195483842632999}
   - component: {fileID: 5014195483842632998}
   - component: {fileID: 5014195483842632997}
+  - component: {fileID: 4431037890727353877}
   m_Layer: 5
   m_Name: Upgrade Button
   m_TagString: Untagged
@@ -4924,6 +4995,19 @@ MonoBehaviour:
     _usePolygonMap: 0
   wasConverted: 0
   preConvertedScale: {x: 0, y: 0, z: 0}
+--- !u!114 &4431037890727353877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5014195483842632994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d17f931339cb54884acce7df17da63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonSound: {fileID: 8300000, guid: f3db5e51d5b67f5419b016b05517dfa3, type: 3}
 --- !u!1 &5014195483842712255
 GameObject:
   m_ObjectHideFlags: 0

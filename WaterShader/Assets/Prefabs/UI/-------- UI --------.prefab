@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &907999900751123072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907999899769719696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80223d3d605d4464b959c8e2bdf82c9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _screenPosX: 0.5
+  _screenPosY: 0.18
+  _uiCamera: {fileID: 907999900915871560}
+  _canvasUIElements: []
 --- !u!1 &907999900346428389
 GameObject:
   m_ObjectHideFlags: 0
@@ -33,22 +49,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &907999900751123072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 907999899769719696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80223d3d605d4464b959c8e2bdf82c9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _screenPosX: 0.5
-  _screenPosY: 0.18
-  _uiCamera: {fileID: 907999900915871560}
-  _canvasUIElements: []
 --- !u!1001 &1027509391815300217
 PrefabInstance:
   m_ObjectHideFlags: 0

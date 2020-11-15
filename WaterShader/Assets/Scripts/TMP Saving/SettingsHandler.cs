@@ -94,7 +94,7 @@ public class SettingsHandler : MonoBehaviour
     public void OnChangedVolumeSliderMusic()
     {
         ChangePreference(MusicVol, _musicSlider.value);
-        _soundscapeManager.VolumeChanged();
+        if (_soundscapeManager != null) _soundscapeManager.VolumeChanged();
     }
 
     public void OnClickMusicOnOff()
@@ -102,12 +102,12 @@ public class SettingsHandler : MonoBehaviour
         if (ChangeBoolPref(Music))
         {
             _musicButtonText.text = _musicOn;
-            _soundscapeManager.ResumeMusic();
+            if (_soundscapeManager != null) _soundscapeManager.ResumeMusic();
         }
         else 
         {
             _musicButtonText.text = _musicOff;
-            _soundscapeManager.KillAllMusic();
+            if (_soundscapeManager != null) _soundscapeManager.KillAllMusic();
         }
 
         UpdateSliderVisibility(Music, _musicSlider, _musicSliderHandle);
