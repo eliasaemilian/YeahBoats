@@ -81,8 +81,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
             //TODO: Particle effect
             Debug.Log("I can Level Up");
             LM.FishingHookLevel = LM.Levelup(LM.FishingHookLevel, LM.BoatSkillLevelCosts.FishingHookCost);
-            ResetColors();
-            _shootFireworks = true;
+            ExecuteValidUpgradeReaction();
         }
         else
         {
@@ -96,8 +95,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
         if (LM.CheckIfICanLevelup(LM.FishingRodLevel,LM.BoatSkillLevelCosts.FishingRodCost))
         {
             LM.FishingRodLevel = LM.Levelup(LM.FishingRodLevel, LM.BoatSkillLevelCosts.FishingRodCost);
-            ResetColors();
-            _shootFireworks = true;
+            ExecuteValidUpgradeReaction();
         }
         else
         {
@@ -111,8 +109,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
         if (LM.CheckIfICanLevelup(LM.TapCoinLevel, LM.IndependentBoatSkillLevelCosts.TapCoinCost))
         {
             LM.TapCoinLevel = LM.Levelup(LM.TapCoinLevel, LM.IndependentBoatSkillLevelCosts.TapCoinCost);
-            ResetColors();
-            _shootFireworks = true;
+            ExecuteValidUpgradeReaction();
         }
         else
         {
@@ -125,8 +122,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
         if (LM.CheckIfICanLevelup(LM.TapFishLevel, LM.IndependentBoatSkillLevelCosts.TapFishCost))
         {
             LM.TapFishLevel = LM.Levelup(LM.TapFishLevel, LM.IndependentBoatSkillLevelCosts.TapFishCost);
-            ResetColors();
-            _shootFireworks = true;
+            ExecuteValidUpgradeReaction();
         }
         else
         {
@@ -142,8 +138,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
             {
                 //Hire succeeded
                 LM.OwnedFishermen = LM.Levelup(LM.OwnedFishermen, LM.BoatSkillLevelCosts.FishermanCost);
-                ResetColors();
-                ShootFireworks();
+                ExecuteValidUpgradeReaction();
             }
             else
             {
@@ -166,8 +161,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
             if (LM.CheckIfICanLevelupBoat(LM.MaxBoatLevel))
             {
                 LM.MaxBoatLevel = LM.LevelupBoat(LM.MaxBoatLevel);
-                ResetColors();
-                _shootFireworks = true;
+                ExecuteValidUpgradeReaction();
             }
             else
             {
@@ -189,6 +183,13 @@ public class Temp_ShopButtonActions : MonoBehaviour
 
         }
 
+    }
+
+    private void ExecuteValidUpgradeReaction()
+    {
+        ResetColors();
+        _shootFireworks = true;
+        SoundscapeManager.PlaySound.Invoke(0);
     }
    
     public void UpdateBoatPanels()
