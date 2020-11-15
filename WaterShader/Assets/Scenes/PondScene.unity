@@ -9849,7 +9849,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1173641078}
-  m_LocalRotation: {x: 0.00000006148534, y: 0.7764865, z: 0.63013387, w: -0.00000006148534}
+  m_LocalRotation: {x: 0.63013387, y: -0.00000006148533, z: -0.00000006148533, w: -0.7764865}
   m_LocalPosition: {x: 0, y: 3, z: 91.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -16971,6 +16971,10 @@ PrefabInstance:
       propertyPath: _zValueRef
       value: 
       objectReference: {fileID: 4514591574576776691}
+    - target: {fileID: 91166202, guid: 51d207a7c210ec449b7555c16010ebbc, type: 3}
+      propertyPath: _tapEffectSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 43992cfcd57018e40acf48b6967c48de, type: 3}
     - target: {fileID: 969613263369661237, guid: 51d207a7c210ec449b7555c16010ebbc,
         type: 3}
       propertyPath: m_LocalPosition.x

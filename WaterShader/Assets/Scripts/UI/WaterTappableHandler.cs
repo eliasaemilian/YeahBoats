@@ -12,6 +12,7 @@ using UnityEngine.Events;
 public class WaterTappableHandler : TappableGameobject
 {
     [SerializeField] private GameObject _tapEffectPrefab = null;
+    [SerializeField] private AudioClip _tapEffectSound = null;
 
     private Camera _uiCamera;
     private UI_JoystickHandler _joystickHandler;
@@ -49,6 +50,7 @@ public class WaterTappableHandler : TappableGameobject
 
             PopupManager.Instance.CallFishAndCoinPopup(transPos + new Vector3(0,1,0));
             FishingTap.Invoke();
+            SoundscapeManager.PlaySoundWithClip.Invoke(_tapEffectSound);
         }
 
     }

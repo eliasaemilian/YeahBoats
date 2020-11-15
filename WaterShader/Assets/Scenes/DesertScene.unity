@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1173641079}
-  m_IndirectSpecularColor: {r: 0.4231407, g: 0.05514967, b: 0.16575739, a: 1}
+  m_IndirectSpecularColor: {r: 0.4347398, g: 0.070279606, b: 0.16257335, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -24190,7 +24190,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1953715250}
-  m_LocalRotation: {x: -0.000000042987757, y: -0.18120578, z: -0.9834452, w: 0.0000000079207565}
+  m_LocalRotation: {x: 0.9834452, y: -0.0000000079207565, z: -0.00000004298776, w: -0.18120578}
   m_LocalPosition: {x: 0, y: 3, z: 91.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -29515,6 +29515,11 @@ PrefabInstance:
       propertyPath: _zValueRef
       value: 
       objectReference: {fileID: 341475399}
+    - target: {fileID: 2824867677986564511, guid: 431ea98cacbc8764190c6b5945994cf2,
+        type: 3}
+      propertyPath: _tapEffectSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 43992cfcd57018e40acf48b6967c48de, type: 3}
     - target: {fileID: 3046456516104673104, guid: 431ea98cacbc8764190c6b5945994cf2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -29882,6 +29887,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 907999899634039087}
     m_Modifications:
+    - target: {fileID: 734917436, guid: 122a26694b97f6c4fbcb505621a03800, type: 3}
+      propertyPath: _joystickOpenSound
+      value: 
+      objectReference: {fileID: 8300000, guid: fa4dae2c007aa324996b6f7fc7071fbb, type: 3}
+    - target: {fileID: 734917436, guid: 122a26694b97f6c4fbcb505621a03800, type: 3}
+      propertyPath: _joystickCloseSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 4d41c0b35710ae24696cc9aab76ff035, type: 3}
     - target: {fileID: 4554317490479933173, guid: 122a26694b97f6c4fbcb505621a03800,
         type: 3}
       propertyPath: m_Layer

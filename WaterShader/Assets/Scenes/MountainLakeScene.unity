@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1953715251}
-  m_IndirectSpecularColor: {r: 0.2907749, g: 0.64663535, b: 0.88968074, a: 1}
+  m_IndirectSpecularColor: {r: 0.29077452, g: 0.64663523, b: 0.8896806, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6435,6 +6435,10 @@ PrefabInstance:
       propertyPath: _zValueRef
       value: 
       objectReference: {fileID: 317980086}
+    - target: {fileID: 91166202, guid: 51d207a7c210ec449b7555c16010ebbc, type: 3}
+      propertyPath: _tapEffectSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 43992cfcd57018e40acf48b6967c48de, type: 3}
     - target: {fileID: 969613263369661237, guid: 51d207a7c210ec449b7555c16010ebbc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7064,6 +7068,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 907999901207136391}
     m_Modifications:
+    - target: {fileID: 734917436, guid: 122a26694b97f6c4fbcb505621a03800, type: 3}
+      propertyPath: _joystickOpenSound
+      value: 
+      objectReference: {fileID: 8300000, guid: fa4dae2c007aa324996b6f7fc7071fbb, type: 3}
+    - target: {fileID: 734917436, guid: 122a26694b97f6c4fbcb505621a03800, type: 3}
+      propertyPath: _joystickCloseSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 4d41c0b35710ae24696cc9aab76ff035, type: 3}
     - target: {fileID: 4554317490479933173, guid: 122a26694b97f6c4fbcb505621a03800,
         type: 3}
       propertyPath: m_Layer
