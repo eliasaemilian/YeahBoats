@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class UI_StartMenu : MonoBehaviour
 {
+    [SerializeField] private UI_Clouds _clouds = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +21,7 @@ public class UI_StartMenu : MonoBehaviour
 
     public void OnClickStartButton()
     {
-        SceneManager.LoadScene(GetSceneIndex());
+        StartCoroutine("SceneLoadCoroutine");
     }
 
     private int GetSceneIndex()
@@ -29,5 +31,11 @@ public class UI_StartMenu : MonoBehaviour
             return PlayerPrefs.GetInt("SceneIndex");
         }
         else return 2;
+    }
+    private IEnumerator SceneLoadCoroutine()
+    {
+        _clouds.CloseClouds();
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(GetSceneIndex());
     }
 }
