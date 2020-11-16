@@ -3,38 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CrateEvent : UnityEvent<GameObject>
-{
-
-}
+public class CrateEvent : UnityEvent<GameObject> { }
 
 public class CrateSpawner : MonoBehaviour
 {
+    public CrateEvent CrateSpawnEvent;
+
     [SerializeField] private MultiplierManager _MM = null;
 
     [SerializeField] private float _crateSpawnTime = 5f;
     [SerializeField] private int _crateMaxAmmount = 1;
 
-    public GameObject MapTab;
-    public GameObject MultiplierTab;
+    [SerializeField] private GameObject _mapFoundPopup = null;
+    [SerializeField] private GameObject _multiplierFoundPopup = null;
 
-    private int CratesCount;
-
-    public List<Transform> SpawnPositions;
-
-    public CrateEvent m_CrateEvent;
-
+    private Transform[] _spawnPositions;
 
     private float _timer;
+    private int _cratesCount;
     private int _previousSpawnPosition;
-    // Start is called before the first frame update
+
     void Start()
     {
-        m_CrateEvent = new CrateEvent();
-        m_CrateEvent.AddListener(TappedOnCrate);
-        m_CrateEvent.AddListener(ClearCrate);
-        CratesCount = 0;
+        CrateSpawnEvent = new CrateEvent();
+        CrateSpawnEvent.AddListener(TappedOnCrate);
+        CrateSpawnEvent.AddListener(ClearCrate);
+        _cratesCount = 0;
         _timer = _crateSpawnTime;
+
+        _spawnPositions = GetComponentsInChildren<Transform>();
     }
 
     // Update is called once per frame
@@ -43,10 +40,9 @@ public class CrateSpawner : MonoBehaviour
         _timer -= Time.deltaTime;
         if(_timer <= 0)
         {
-            if(CratesCount < _crateMaxAmmount)
+            if(_cratesCount < _crateMaxAmmount)
             {
                 CrateSpawn();
-
             }
             _timer = _crateSpawnTime;
         }
@@ -54,22 +50,22 @@ public class CrateSpawner : MonoBehaviour
 
     private void CrateSpawn()
     {
-        int spawnPosition = Random.Range(0, SpawnPositions.Count);
+        int spawnPosition = Random.Range(0, _spawnPositions.Length);
         while(spawnPosition == _previousSpawnPosition)
         {
-            spawnPosition = Random.Range(0, SpawnPositions.Count);
+            spawnPosition = Random.Range(0, _spawnPositions.Length);
         }
 
         _previousSpawnPosition = spawnPosition;
-        GameObject crate = ObjectPooler.Instance.SpawnFromPool("Crate", SpawnPositions[spawnPosition].position, Quaternion.identity);
+        GameObject crate = ObjectPooler.Instance.SpawnFromPool("Crate", _spawnPositions[spawnPosition].position, Quaternion.identity);
         crate.GetComponent<CrateScript>().CS = this;
-        CratesCount++;
+        _cratesCount++;
 
     }
 
     private void ClearCrate(GameObject crate)
     {
-        CratesCount--;
+        _cratesCount--;
 
         ObjectPooler.Instance.ReturnToPool("Crate", crate);
         
@@ -84,19 +80,20 @@ public class CrateSpawner : MonoBehaviour
         if(res == 0)
         {
             LevelManager.Instance.AddMapPiece();
-            MapTab.SetActive(true);
+            _mapFoundPopup.SetActive(true);
 
         }
         else
         {
-            MultiplierTab.SetActive(true);
+            _multiplierFoundPopup.SetActive(true);
             _MM.AddTimeToMultiplier(2, 2);
         }
         }
         else
         {
-            MultiplierTab.SetActive(true);
+            _multiplierFoundPopup.SetActive(true);
             _MM.AddTimeToMultiplier(2, 2);
         }
     }
+
 }

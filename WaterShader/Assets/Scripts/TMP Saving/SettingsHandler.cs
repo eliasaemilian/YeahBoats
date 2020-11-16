@@ -72,6 +72,7 @@ public class SettingsHandler : MonoBehaviour
             PlayerPrefs.SetFloat(MusicVol, 1);
             PlayerPrefs.SetFloat(Sound, 0);
             PlayerPrefs.SetFloat(SoundVol, 1);
+            PlayerPrefs.SetFloat(ReverseInput, 0);
         }
 
         _musicSlider.value = PlayerPrefs.GetFloat(MusicVol);
