@@ -16,6 +16,7 @@ public class AmbientSoundHandler : MonoBehaviour
 
     [SerializeField, Range(0f, 1f)] private float _chanceToPlayMusic = .5f;
 
+
     private int newTimeToSwitch => Random.Range(_minMaxTimeBetweenAmbient[0], _minMaxTimeBetweenAmbient[1]) * 60;
     private float _timer;
 
