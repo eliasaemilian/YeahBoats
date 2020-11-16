@@ -14,6 +14,7 @@ public class UI_TutorialPopUp : MonoBehaviour
     [SerializeField] [Range (0f, 1f)] private float screenY = .5f;
 
     [SerializeField] private GameObject _tapAnywherePrompt = null;
+    [SerializeField] private List<GameObject> _uiToDisable = null;
 
     private float _counter, _lerpRadius, _outerFinalRadius;
     private float _lerpTime = .8f;
@@ -65,7 +66,10 @@ public class UI_TutorialPopUp : MonoBehaviour
             if (FindObjectOfType<UI_JoystickHandler>() != null) UI_JoystickHandler.BlockJoystickMovement.Invoke();
 
             // Disable all other UI
-
+            for (int i = 0; i < _uiToDisable.Count; i++)
+            {
+                _uiToDisable[i].SetActive(false);
+            }
         }
 
     }
@@ -129,8 +133,6 @@ public class UI_TutorialPopUp : MonoBehaviour
 
         gameObject.SetActive(true);
         _textfield.gameObject.SetActive(true);
-
-        // start arrow movement
 
     }
 
@@ -197,6 +199,12 @@ public class UI_TutorialPopUp : MonoBehaviour
 
         SetVisibility(false);
         enabled = false;
+
+        // Enable all other UI
+        for (int i = 0; i < _uiToDisable.Count; i++)
+        {
+            _uiToDisable[i].SetActive(true);
+        }
     }
 
     private void ProceedTutorial()

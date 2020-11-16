@@ -97,7 +97,7 @@ public class UI_TapEffect : MonoBehaviour, IPooledObject
 
         _runTapEffect = false;
         ObjectPooler.Instance.ReturnToPool(PoolTag, gameObject);
-        Debug.Log("Returning to pool " + PoolTag);
+      //  Debug.Log("Returning to pool " + PoolTag);
         _tapEffectPlane.SetActive(false);
 
     }

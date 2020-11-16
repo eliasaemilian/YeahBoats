@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1953715251}
-  m_IndirectSpecularColor: {r: 0.99999905, g: 0, b: 0.99999905, a: 1}
+  m_IndirectSpecularColor: {r: 0.28584287, g: 0.4002421, b: 0.92497826, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -571,6 +571,8 @@ MonoBehaviour:
   screenX: 0.5
   screenY: 0.5
   _tapAnywherePrompt: {fileID: 549623966}
+  _uiToDisable:
+  - {fileID: 1647217390}
 --- !u!1001 &84811440
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9453,7 +9455,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 8
 --- !u!23 &1117406132
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9792,8 +9794,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.9942834, g: 0.9990466, b: 0.99924934, a: 1}
-  m_Intensity: 0.0012406647
+  m_Color: {r: 0.99817425, g: 0.98707205, b: 1, a: 1}
+  m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -9849,7 +9851,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1173641078}
-  m_LocalRotation: {x: 0.63013387, y: -0.00000006148533, z: -0.00000006148533, w: -0.7764865}
+  m_LocalRotation: {x: 0.7071068, y: -0.000000061817246, z: -0.000000061817246, w: -0.7071068}
   m_LocalPosition: {x: 0, y: 3, z: 91.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -12979,7 +12981,7 @@ GameObject:
   - component: {fileID: 1647217393}
   - component: {fileID: 1647217392}
   m_Layer: 5
-  m_Name: DebugPanel
+  m_Name: Menu Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14009,7 +14011,7 @@ PrefabInstance:
     - target: {fileID: 5021203034890507728, guid: 2bf6d4a54e27308449605ac9ba9d8885,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5021203034890507729, guid: 2bf6d4a54e27308449605ac9ba9d8885,
         type: 3}
@@ -14654,7 +14656,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1842895968
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15309,8 +15311,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.9997833, g: 0.9921677, b: 0.98142636, a: 1}
-  m_Intensity: 0.98759335
+  m_Color: {r: 0.99890846, g: 0.96055686, b: 0.90646386, a: 1}
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -15366,7 +15368,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1953715250}
-  m_LocalRotation: {x: -0.000000027544026, y: 0.7764865, z: -0.63013387, w: -0.000000033941305}
+  m_LocalRotation: {x: -0.000000030908623, y: 0.7071068, z: -0.7071068, w: -0.000000030908623}
   m_LocalPosition: {x: 0, y: 3, z: 91.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -16939,6 +16941,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3620559880602434678, guid: 5bb7571fec78b5d4eaa44701737f89cb,
         type: 3}
+    - target: {fileID: 205950898566414747, guid: 6d6e7f346ad3d674ca3f5bbdafc78cf9,
+        type: 3}
+      propertyPath: _doubleTapSensitivity
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 205950898566414741, guid: 6d6e7f346ad3d674ca3f5bbdafc78cf9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6d6e7f346ad3d674ca3f5bbdafc78cf9, type: 3}
@@ -18174,12 +18181,17 @@ PrefabInstance:
     - target: {fileID: 3346001435050125968, guid: daefd573bf75d764f809aafa9cfe6f43,
         type: 3}
       propertyPath: _timeOfDay
-      value: 0.467
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3346001435050125968, guid: daefd573bf75d764f809aafa9cfe6f43,
         type: 3}
       propertyPath: _pause
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3346001435050125968, guid: daefd573bf75d764f809aafa9cfe6f43,
+        type: 3}
+      propertyPath: _useDebugTime
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3346001435050125969, guid: daefd573bf75d764f809aafa9cfe6f43,
         type: 3}

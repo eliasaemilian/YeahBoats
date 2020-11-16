@@ -112,7 +112,7 @@ public class UI_JoystickHandler : TappableGameobject
     public override void OnDoubleTap()
     {
         base.OnDoubleTap();
-
+        Debug.Log("Joystick is double tapped");
         if (_joystickBlocked) return;
 
 

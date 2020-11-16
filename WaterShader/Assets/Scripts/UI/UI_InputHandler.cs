@@ -50,10 +50,9 @@ public class UI_InputHandler : MonoBehaviour
         for (int i = 0; i < tappablesInScene.Length; i++)
         {
             tappablesInScene[i].OnInitialize();
-            _tappableGameobjectsInScene.Add(tappablesInScene[i]);
+            if (!_tappableGameobjectsInScene.Contains(tappablesInScene[i])) _tappableGameobjectsInScene.Add(tappablesInScene[i]);
 
         }
-
 
 
         DoubleTapProcessed = new UnityEvent();
@@ -83,7 +82,6 @@ public class UI_InputHandler : MonoBehaviour
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
         return results.Count > 0;
     }
-
 
     Vector3 hitPos, rayPos2D;
     GameObject hitGO;
@@ -158,6 +156,7 @@ public class UI_InputHandler : MonoBehaviour
                     if (_tappableFocus == _tappableGameobjectsInScene[i]) RegisterTapForDoubleTap(true, _tappableGameobjectsInScene[i]);
                     else RegisterTapForDoubleTap(false, _tappableGameobjectsInScene[i]);
 
+
                 }
 
             }
@@ -187,7 +186,7 @@ public class UI_InputHandler : MonoBehaviour
         {
             // On CountDown End: DoubleTap Counters reset
             StartCoroutine(Countdown());
-
+           // Debug.Log("Valid Tap for " + tappable);
             tappable.TapCount++;
         }
         else
@@ -203,7 +202,7 @@ public class UI_InputHandler : MonoBehaviour
             tappable.OnDoubleTap();
             tappable.TapCount = 0;
 
-            StopCoroutine(Countdown());
+         //   StopCoroutine(Countdown());
 
         }
 
