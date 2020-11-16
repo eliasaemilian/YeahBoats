@@ -95,10 +95,6 @@ public class LevelManager : Singleton<LevelManager>
 
     void OnGUI()
     {
-        //if (GUILayout.Button("BoatStorage"))
-        //{
-
-        //}
         
         if (GUI.Button(new Rect(160, 50, 150, 20), "Delete Saves"))
         {
@@ -124,7 +120,7 @@ public class LevelManager : Singleton<LevelManager>
         }
         if (GUI.Button(new Rect(160, 110, 150, 20), "Unlock The Boats"))
         {
-            MaxBoatLevel = 4;
+            MaxBoatLevel = 5;
             SaveData();
             dM.DataContainer.Saving();
         }
@@ -146,6 +142,7 @@ public class LevelManager : Singleton<LevelManager>
         Multiplier = 1;
         _boatStorageLevel = 1;
         MaxAmmountOfFishermen = 1;
+        MaxMapLevel = 1;
         MaxBoatLevel = 1;
         TapCoinLevel = 1;
         TapFishLevel = 1;

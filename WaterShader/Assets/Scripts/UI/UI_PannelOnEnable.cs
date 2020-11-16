@@ -105,13 +105,19 @@ public class UI_PannelOnEnable : MonoBehaviour
 
     public void SetMapPieces()
     {
+        if(LM.MaxMapLevel == 4)
+        {
+            MapText.text = "You have unlocked every Region!";
+            return;
+        }
+
         if(LM.MapPieces != 4)
         {
-            MapText.text = LM.MapPieces + " / 4 Collected";
+            MapText.text = LM.MapPieces + " / "+(2 + 2* LM.MaxMapLevel)+" Collected";
         }
         else
         {
-            MapText.text = "4 / 4 Collected \n\r You can unlock a new Region!";
+            MapText.text = LM.MapPieces +" / "+ (2 + 2 * LM.MaxMapLevel) + " Collected \n\r You can unlock a new Region!";
         }
     }
 

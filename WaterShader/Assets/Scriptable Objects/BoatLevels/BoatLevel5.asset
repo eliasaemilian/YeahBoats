@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fdef29a25d20a7428ae40d24ce08ae6, type: 3}
+  m_Name: BoatLevel5
+  m_EditorClassIdentifier: 
+  Cost: 50000000
+  BoatPrefab: {fileID: 919132149155446097, guid: c01fbc78514ac0f4c8cb1b2fbc6c0e3a,
+    type: 3}
+  BoatStorageLevel: 1
+  NPCFishermanLevel: 1
+  FishingRodLevel: 1
+  FishingHookLevel: 1
+  NPCFishermanAmmount: 18
+  boatScriptable: {fileID: 11400000, guid: 2b934204df3b6d24a9aab4b7b762a7df, type: 2}

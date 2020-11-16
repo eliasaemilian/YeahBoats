@@ -59,7 +59,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
         }
         else
         {
-            if(LM.MapPieces == 4)
+            if(LM.MapPieces == 2 + 2*LM.MaxMapLevel)
             {
                 LM.MapPieces = 0;
                 LM.MaxMapLevel++;

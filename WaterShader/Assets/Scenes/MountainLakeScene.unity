@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1953715251}
-  m_IndirectSpecularColor: {r: 0.29077452, g: 0.64663523, b: 0.8896806, a: 1}
+  m_IndirectSpecularColor: {r: 0.29077506, g: 0.6466355, b: 0.8896806, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1950,8 +1950,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1173641078}
-  m_LocalRotation: {x: -0.12221585, y: -0.000000038041488, z: -0.000000038041488,
-    w: -0.9925036}
+  m_LocalRotation: {x: 0.000000038041488, y: 0.9925036, z: -0.12221585, w: -0.000000038041488}
   m_LocalPosition: {x: 0, y: 3, z: 91.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -6984,6 +6983,11 @@ PrefabInstance:
         type: 3}
       propertyPath: MultiplierTab
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3007962892847428001, guid: a67519463487a154ca804c1d14a8dcf3,
+        type: 3}
+      propertyPath: _crateSpawnTime
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 7188438680948112092, guid: a67519463487a154ca804c1d14a8dcf3,
         type: 3}
