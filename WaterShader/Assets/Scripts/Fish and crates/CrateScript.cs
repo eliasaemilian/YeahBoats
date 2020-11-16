@@ -35,7 +35,7 @@ public class CrateScript : TappableGameobject, IPooledObject
     public override void OnTap(Touch touch, Vector3 pos, float dist)
     {
         base.OnTap(touch, pos, dist);
-        CS.m_CrateEvent.Invoke(this.gameObject);
+        CS.CrateSpawnEvent.Invoke(this.gameObject);
         //ObjectPooler.Instance.ReturnToPool("Crate", this.gameObject);
     }
 }
