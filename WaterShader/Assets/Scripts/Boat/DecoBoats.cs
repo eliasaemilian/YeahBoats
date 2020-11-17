@@ -8,6 +8,7 @@ public class DecoBoats : MonoBehaviour
     [SerializeField] private GameObject _displayBoat2;
     [SerializeField] private GameObject _displayBoat3;
     [SerializeField] private GameObject _displayBoat4;
+    [SerializeField] private GameObject _displayBoat5;
 
     private GameObject boat = null;
     void Start()
@@ -36,6 +37,9 @@ public class DecoBoats : MonoBehaviour
                 break;
             case 4:
                 prefab = _displayBoat4;
+                break;
+            case 5:
+                prefab = _displayBoat5;
                 break;
             default:
                 prefab = _displayBoat1;

@@ -51,8 +51,8 @@ public class UI_PannelOnEnable : MonoBehaviour
                 SetDescription(LM.BoatStorageLevel);
                 break;
             case UpgradeType.Fisherman:
-                UpgradeCost.text = "Buy drink for : " + LM.BoatSkillLevelCosts.FishermanCost[LM.OwnedFishermen].ToString();
-                _upgradeCost = LM.BoatSkillLevelCosts.FishermanCost[LM.OwnedFishermen];
+                UpgradeCost.text = "Buy drink for : " + LM.IndependentBoatSkillLevelCosts.FishermanCost[LM.OwnedFishermen].ToString();
+                _upgradeCost = LM.IndependentBoatSkillLevelCosts.FishermanCost[LM.OwnedFishermen];
                 SetFishermanDescription(LM.OwnedFishermen);
                 break;
             case UpgradeType.FishingHook:
