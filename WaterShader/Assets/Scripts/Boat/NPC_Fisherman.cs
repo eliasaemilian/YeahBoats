@@ -39,7 +39,7 @@ public class NPC_Fisherman : MonoBehaviour
     void Start()
     {
         Multiplier = _lM.CatchSpeedMultiplier;
-        CatchSpeed = _catchSpeedBase * (_lM.NPCFishermanLevel) * Multiplier;
+        CatchSpeed = _catchSpeedBase * (_lM.FishingRodLevel) * Multiplier;
 
         _timer = 60/CatchSpeed;
         _timerTapMultiplier = 1.5f;
@@ -94,7 +94,7 @@ public class NPC_Fisherman : MonoBehaviour
     public void UpdateValues()
     {
         Multiplier = _lM.CatchSpeedMultiplier;
-        CatchSpeed = _catchSpeedBase * (_lM.NPCFishermanLevel) * Multiplier;
+        CatchSpeed = _catchSpeedBase * (_lM.FishingRodLevel) * Multiplier;
     }
 
     private IEnumerator NPCAnim()

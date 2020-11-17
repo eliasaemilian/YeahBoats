@@ -152,7 +152,7 @@ public class LevelManager : Singleton<LevelManager>
         {
             mM.ResetMoney();
             UpdateLevels();
-            OwnedFishermen = 1;
+            OwnedFishermen = 0;
         }
     }
 

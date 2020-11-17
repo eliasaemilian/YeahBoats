@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1531800480}
-  m_IndirectSpecularColor: {r: 0.005180868, g: 0.009321194, b: 0.09945054, a: 1}
+  m_IndirectSpecularColor: {r: 0.0052166306, g: 0.009356914, b: 0.09948563, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3579,6 +3579,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 426549746}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &446508023 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6314407835477081035, guid: 2deb6d0d63992f74b9c67e3e50f21bb5,
+    type: 3}
+  m_PrefabInstance: {fileID: 654046935}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!21 &462311051
 Material:
   serializedVersion: 6
@@ -6444,6 +6456,8 @@ MonoBehaviour:
   _displayBoat3: {fileID: 7010876820269769704, guid: 5acd6e40a3e081849bd8ea53c490b6fb,
     type: 3}
   _displayBoat4: {fileID: 7010876820269769704, guid: 372d026aa6b305d438377792b046746f,
+    type: 3}
+  _displayBoat5: {fileID: 4228073069843990514, guid: 2ef4e4d72d8d4ba4589e464c42ec80f4,
     type: 3}
 --- !u!1001 &712354181
 PrefabInstance:
@@ -9458,7 +9472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 0}
-  CurrencyCounter: {fileID: 1291202984}
+  CurrencyCounter: {fileID: 446508023}
 --- !u!114 &929283383 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8285932101125322887, guid: 806c37851535ffc4eb5254df7718a6a5,
@@ -9646,6 +9660,18 @@ Material:
 --- !u!114 &955373471 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2497598961305793897, guid: 654c2d4dbb64f6b43947d7fb3c094e48,
+    type: 3}
+  m_PrefabInstance: {fileID: 2497598962261156598}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce5462a9b95bdf4fbde54f262c751dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &967077489 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8447539123760737394, guid: 654c2d4dbb64f6b43947d7fb3c094e48,
     type: 3}
   m_PrefabInstance: {fileID: 2497598962261156598}
   m_PrefabAsset: {fileID: 0}
@@ -10124,6 +10150,7 @@ MonoBehaviour:
   - {fileID: 2077109817}
   - {fileID: 132428801}
   - {fileID: 1438854912}
+  - {fileID: 967077489}
   _lighthousePannels:
   - {fileID: 8657199405193680081}
   - {fileID: 490996937}
@@ -15922,7 +15949,7 @@ PrefabInstance:
     - target: {fileID: 3346001435050125968, guid: daefd573bf75d764f809aafa9cfe6f43,
         type: 3}
       propertyPath: _pause
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3346001435050125968, guid: daefd573bf75d764f809aafa9cfe6f43,
         type: 3}
@@ -19919,6 +19946,11 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 1688613470}
+    - target: {fileID: 2497598961606869412, guid: 654c2d4dbb64f6b43947d7fb3c094e48,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1250
+      objectReference: {fileID: 0}
     - target: {fileID: 2497598961683853532, guid: 654c2d4dbb64f6b43947d7fb3c094e48,
         type: 3}
       propertyPath: m_Material
@@ -19984,6 +20016,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
       objectReference: {fileID: 710908919}
+    - target: {fileID: 4768976293438856202, guid: 654c2d4dbb64f6b43947d7fb3c094e48,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6829366062341313408, guid: 654c2d4dbb64f6b43947d7fb3c094e48,
         type: 3}
       propertyPath: m_Material
@@ -20966,6 +21003,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1001487665}
+    - target: {fileID: 4719247434415355621, guid: 625eeac7598dbbe45ac19ca62e2f6c12,
+        type: 3}
+      propertyPath: m_text
+      value: Increases Fish value
+      objectReference: {fileID: 0}
     - target: {fileID: 4719247434496725377, guid: 625eeac7598dbbe45ac19ca62e2f6c12,
         type: 3}
       propertyPath: LM

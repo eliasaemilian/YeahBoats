@@ -132,18 +132,18 @@ public class Temp_ShopButtonActions : MonoBehaviour
     }
     public void OnClickPubHireMenButton()
     {
-        if (LM.CheckIfICanLevelup(LM.OwnedFishermen, LM.BoatSkillLevelCosts.FishermanCost))
+        if (LM.CheckIfICanLevelup(LM.OwnedFishermen, LM.IndependentBoatSkillLevelCosts.FishermanCost))
         {
             if(LM.ChanceLevelupForFisherman(25))
             {
                 //Hire succeeded
-                LM.OwnedFishermen = LM.Levelup(LM.OwnedFishermen, LM.BoatSkillLevelCosts.FishermanCost);
+                LM.OwnedFishermen = LM.Levelup(LM.OwnedFishermen, LM.IndependentBoatSkillLevelCosts.FishermanCost);
                 ExecuteValidUpgradeReaction();
             }
             else
             {
                 //Hire failed
-                LM.Levelup(LM.OwnedFishermen, LM.BoatSkillLevelCosts.FishermanCost);
+                LM.Levelup(LM.OwnedFishermen, LM.IndependentBoatSkillLevelCosts.FishermanCost);
                 ResetColors();
                 _fishermanFailHirePannel.SetActive(true);
             }
