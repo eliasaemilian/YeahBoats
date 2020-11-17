@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1173641079}
-  m_IndirectSpecularColor: {r: 0.42311686, g: 0.055124365, b: 0.16573642, a: 1}
+  m_IndirectSpecularColor: {r: 0.42314926, g: 0.05515847, b: 0.16576457, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7133,6 +7133,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
+--- !u!114 &606225468 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5021203034890507311, guid: 2bf6d4a54e27308449605ac9ba9d8885,
+    type: 3}
+  m_PrefabInstance: {fileID: 1761001327}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606225464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65f005bc4a1fcfe4a9e0dd47214d4e8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &610278028
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17477,7 +17489,7 @@ PrefabInstance:
         type: 3}
       propertyPath: CD
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 907999899857225813}
     - target: {fileID: 2258719203934792968, guid: 4a0f92fb8fe14e745a80875949e922be,
         type: 3}
       propertyPath: MM
@@ -19009,6 +19021,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnClickOpenCloseSettings
       objectReference: {fileID: 0}
+    - target: {fileID: 6314407834987213134, guid: 2deb6d0d63992f74b9c67e3e50f21bb5,
+        type: 3}
+      propertyPath: _clouds
+      value: 
+      objectReference: {fileID: 606225468}
     - target: {fileID: 6314407834987213135, guid: 2deb6d0d63992f74b9c67e3e50f21bb5,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -19169,6 +19186,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Menu Panel
       objectReference: {fileID: 0}
+    - target: {fileID: 6314407836873215948, guid: 2deb6d0d63992f74b9c67e3e50f21bb5,
+        type: 3}
+      propertyPath: _clouds
+      value: 
+      objectReference: {fileID: 606225468}
     - target: {fileID: 6314407836873215949, guid: 2deb6d0d63992f74b9c67e3e50f21bb5,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -19199,7 +19221,8 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6314407834987213134, guid: 2deb6d0d63992f74b9c67e3e50f21bb5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2deb6d0d63992f74b9c67e3e50f21bb5, type: 3}
 --- !u!224 &1548683610 stripped
 RectTransform:
@@ -20789,6 +20812,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 20, z: 119.436844}
   m_Center: {x: -0.0000063427046, y: 0, z: -48.19243}
+--- !u!114 &1668662505 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6314407835477081035, guid: 2deb6d0d63992f74b9c67e3e50f21bb5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1548683609}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1683895431
 GameObject:
   m_ObjectHideFlags: 0
@@ -23884,7 +23919,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1953715250}
-  m_LocalRotation: {x: -0.000000042987757, y: -0.18120578, z: -0.9834452, w: 0.0000000079207565}
+  m_LocalRotation: {x: 0.9834452, y: -0.0000000079207565, z: -0.00000004298776, w: -0.18120578}
   m_LocalPosition: {x: 0, y: 3, z: 91.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -26403,7 +26438,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 907999899634039086}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -224, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 590870289}
@@ -26447,7 +26482,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 0}
-  CurrencyCounter: {fileID: 0}
+  CurrencyCounter: {fileID: 1668662505}
 --- !u!114 &907999899857225814
 MonoBehaviour:
   m_ObjectHideFlags: 0

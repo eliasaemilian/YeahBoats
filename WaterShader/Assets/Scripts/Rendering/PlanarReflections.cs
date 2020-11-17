@@ -42,6 +42,19 @@ namespace UnityEngine.Rendering.Universal
         private void OnEnable()
         {
             RenderPipelineManager.beginCameraRendering += ExecutePlanarReflections;
+            //_reflectionCamera = GetComponent<Camera>();
+
+            //var cameraData = _reflectionCamera.GetComponent(typeof(UniversalAdditionalCameraData)) as UniversalAdditionalCameraData;
+
+            //cameraData.requiresColorOption = CameraOverrideOption.Off;
+            //cameraData.requiresDepthOption = CameraOverrideOption.Off;
+            //cameraData.SetRenderer(0);
+
+            //var t = transform;
+            //_reflectionCamera.transform.SetPositionAndRotation(t.position, t.rotation);
+            //_reflectionCamera.depth = -10;
+            //_reflectionCamera.enabled = false;
+            ////go.hideFlags = HideFlags.HideAndDontSave;
         }
 
         // Cleanup all the objects we possibly have created
@@ -195,6 +208,7 @@ namespace UnityEngine.Rendering.Universal
 
         private Camera CreateMirrorObjects()
         {
+            
             var go = new GameObject("Planar Reflections", typeof(Camera));
             var cameraData = go.AddComponent(typeof(UniversalAdditionalCameraData)) as UniversalAdditionalCameraData;
 
@@ -220,7 +234,7 @@ namespace UnityEngine.Rendering.Universal
                 var res = ReflectionResolution(cam, UniversalRenderPipeline.asset.renderScale);
                 const bool useHdr10 = true;
                 const RenderTextureFormat hdrFormat = useHdr10 ? RenderTextureFormat.RGB111110Float : RenderTextureFormat.DefaultHDR;
-                _reflectionTexture = RenderTexture.GetTemporary(res.x, res.y, 16,
+                _reflectionTexture = RenderTexture.GetTemporary(res.x / 2, res.y / 2, 16,
                     GraphicsFormatUtility.GetGraphicsFormat(hdrFormat, true));
             }
             _reflectionCamera.targetTexture = _reflectionTexture;
