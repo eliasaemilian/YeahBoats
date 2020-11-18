@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1531800480}
-  m_IndirectSpecularColor: {r: 0.0052166306, g: 0.009356914, b: 0.09948563, a: 1}
+  m_IndirectSpecularColor: {r: 0.005223636, g: 0.009363904, b: 0.0994925, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -20554,6 +20554,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1001487665}
+    - target: {fileID: 4115579913056007309, guid: 08489d19335349540b59837eceb4695d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4115579913056007312, guid: 08489d19335349540b59837eceb4695d,
         type: 3}
       propertyPath: LM
@@ -20674,6 +20679,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shop UI [Lighthouse]
       objectReference: {fileID: 0}
+    - target: {fileID: 4700059117434090527, guid: 08489d19335349540b59837eceb4695d,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c1765c11d8c4951498b01b92323559ea,
+        type: 3}
     - target: {fileID: 4700059117454595723, guid: 08489d19335349540b59837eceb4695d,
         type: 3}
       propertyPath: m_Material
@@ -20724,6 +20735,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1001487665}
+    - target: {fileID: 4700059117636119799, guid: 08489d19335349540b59837eceb4695d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4700059117981670850, guid: 08489d19335349540b59837eceb4695d,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -20749,6 +20765,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1001487665}
+    - target: {fileID: 4700059118793548296, guid: 08489d19335349540b59837eceb4695d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4700059118793548299, guid: 08489d19335349540b59837eceb4695d,
         type: 3}
       propertyPath: m_Material
@@ -20764,6 +20785,12 @@ PrefabInstance:
       propertyPath: MM
       value: 
       objectReference: {fileID: 512296842}
+    - target: {fileID: 4700059119156379757, guid: 08489d19335349540b59837eceb4695d,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 19f295c304e7767459f504d72326948e,
+        type: 3}
     - target: {fileID: 4700059119336383622, guid: 08489d19335349540b59837eceb4695d,
         type: 3}
       propertyPath: m_Material
@@ -20779,6 +20806,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1001487665}
+    - target: {fileID: 4700059119336383623, guid: 08489d19335349540b59837eceb4695d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4700059119336383624, guid: 08489d19335349540b59837eceb4695d,
         type: 3}
       propertyPath: LM

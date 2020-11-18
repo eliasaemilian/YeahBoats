@@ -260,11 +260,11 @@ public class Temp_ShopButtonActions : MonoBehaviour
 
                 break;
             case MapLevel.Desert:
-                SceneManager.LoadScene(3);
+                SceneManager.LoadScene(4);
 
                 break;
             case MapLevel.Mountains:
-                SceneManager.LoadScene(4);
+                SceneManager.LoadScene(3);
 
                 break;
             case MapLevel.Ocean:
