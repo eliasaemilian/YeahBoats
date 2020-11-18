@@ -5,6 +5,7 @@ using UnityEngine;
 public class CrateScript : TappableGameobject, IPooledObject
 {
     public CrateSpawner CS;
+    public AudioClip FoundCrateSound;
 
     public override void OnStartInitialize()
     {
@@ -36,6 +37,7 @@ public class CrateScript : TappableGameobject, IPooledObject
     {
         base.OnTap(touch, pos, dist);
         CS.CrateSpawnEvent.Invoke(this.gameObject);
+        SoundscapeManager.PlaySoundWithClip.Invoke(FoundCrateSound);
         //ObjectPooler.Instance.ReturnToPool("Crate", this.gameObject);
     }
 }

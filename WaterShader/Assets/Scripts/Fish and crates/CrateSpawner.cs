@@ -16,6 +16,7 @@ public class CrateSpawner : MonoBehaviour
 
     [SerializeField] private GameObject _mapFoundPopup = null;
     [SerializeField] private GameObject _multiplierFoundPopup = null;
+    [SerializeField] private AudioClip _crateFoundAudioclip = null;
 
     private Transform[] _spawnPositions;
 
@@ -68,6 +69,7 @@ public class CrateSpawner : MonoBehaviour
         _previousSpawnPosition = spawnPosition;
         GameObject crate = ObjectPooler.Instance.SpawnFromPool("Crate", _spawnPositions[spawnPosition].position, Quaternion.identity);
         crate.GetComponent<CrateScript>().CS = this;
+        crate.GetComponent<CrateScript>().FoundCrateSound = _crateFoundAudioclip;
         _cratesCount++;
 
     }

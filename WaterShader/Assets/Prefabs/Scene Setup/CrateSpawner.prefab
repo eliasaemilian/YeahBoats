@@ -43,6 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e402b7ea112c5994182e5200e4ddea01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _MM: {fileID: 0}
   _crateSpawnTime: 3
   _crateMaxAmmount: 2
-  SpawnPositions: []
+  _mapFoundPopup: {fileID: 0}
+  _multiplierFoundPopup: {fileID: 0}
+  _crateFoundAudioclip: {fileID: 8300000, guid: ce871b4e6815deb42af7a2918981ac86,
+    type: 3}

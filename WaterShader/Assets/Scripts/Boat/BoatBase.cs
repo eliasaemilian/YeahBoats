@@ -12,6 +12,7 @@ public class BoatBase : MonoBehaviour
     [SerializeField] private BoatScriptable debugSO;
     [SerializeField] private NPCSpotsScript _nPCSpots = null;
     [SerializeField] private GameObject _nPCFishermanPrefab = null;
+    [SerializeField] private AudioClip _boatBumpSound = null;
 
     private BoatScriptable _boatScriptable = null;
     private LevelManager _lM;
@@ -79,5 +80,10 @@ public class BoatBase : MonoBehaviour
     {
         FishingSpeedup.Invoke();
     }
-    
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        SoundscapeManager.PlaySoundWithClip.Invoke(_boatBumpSound);
+    }
+
 }
