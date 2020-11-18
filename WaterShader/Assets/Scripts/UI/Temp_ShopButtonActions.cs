@@ -22,6 +22,14 @@ public enum ButtonType
     MapDisplay,
     MapTravel
 }
+public enum MapLevel
+{
+    Port,
+    Pond,
+    Desert,
+    Mountains,
+    Ocean
+}
 public class Temp_ShopButtonActions : MonoBehaviour
 {
     [SerializeField] private int _sceneIndexPond = 0;
@@ -44,17 +52,17 @@ public class Temp_ShopButtonActions : MonoBehaviour
         }
     }
 
-    public void OnClickLighthouseVoyageButton(int Sceneindex)
+    public void OnClickLighthouseVoyageButton(int mapLevel)
     {
-        if(Sceneindex - 1 <= LM.MaxMapLevel)
+        if(mapLevel <= LM.MaxMapLevel)
         {
-            if(Sceneindex - 1 <= 2 && LM.HighSeaboat())
+            if(mapLevel <= 2 && LM.HighSeaboat())
             {
                 _changeBoatPannel.SetActive(true);
             }
             else
             {
-                StartCoroutine("SceneChangeCoroutine", Sceneindex);
+                StartCoroutine("SceneChangeCoroutine", mapLevel);
             }
         }
         else
@@ -132,18 +140,18 @@ public class Temp_ShopButtonActions : MonoBehaviour
     }
     public void OnClickPubHireMenButton()
     {
-        if (LM.CheckIfICanLevelup(LM.OwnedFishermen, LM.BoatSkillLevelCosts.FishermanCost))
+        if (LM.CheckIfICanLevelup(LM.OwnedFishermen, LM.IndependentBoatSkillLevelCosts.FishermanCost))
         {
             if(LM.ChanceLevelupForFisherman(25))
             {
                 //Hire succeeded
-                LM.OwnedFishermen = LM.Levelup(LM.OwnedFishermen, LM.BoatSkillLevelCosts.FishermanCost);
+                LM.OwnedFishermen = LM.Levelup(LM.OwnedFishermen, LM.IndependentBoatSkillLevelCosts.FishermanCost);
                 ExecuteValidUpgradeReaction();
             }
             else
             {
                 //Hire failed
-                LM.Levelup(LM.OwnedFishermen, LM.BoatSkillLevelCosts.FishermanCost);
+                LM.Levelup(LM.OwnedFishermen, LM.IndependentBoatSkillLevelCosts.FishermanCost);
                 ResetColors();
                 _fishermanFailHirePannel.SetActive(true);
             }
@@ -237,7 +245,34 @@ public class Temp_ShopButtonActions : MonoBehaviour
         Savedata.Instance.Saving();
         _clouds.CloseClouds();
         yield return new WaitForSeconds(1);
-        SceneManager.LoadScene(Sceneindex);
+        SceneChecker(Sceneindex);
     }
 
+    private void SceneChecker(int Sceneindex)
+    {
+        switch ((MapLevel)Sceneindex)
+        {
+            case MapLevel.Port:
+                SceneManager.LoadScene(1);
+                break;
+            case MapLevel.Pond:
+                SceneManager.LoadScene(2);
+
+                break;
+            case MapLevel.Desert:
+                SceneManager.LoadScene(4);
+
+                break;
+            case MapLevel.Mountains:
+                SceneManager.LoadScene(3);
+
+                break;
+            case MapLevel.Ocean:
+                SceneManager.LoadScene(5);
+
+                break;
+            default:
+                break;
+        }
+    }
 }
