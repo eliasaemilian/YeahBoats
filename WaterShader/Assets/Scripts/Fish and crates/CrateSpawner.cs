@@ -23,6 +23,8 @@ public class CrateSpawner : MonoBehaviour
     private int _cratesCount;
     private int _previousSpawnPosition;
 
+    private bool _diableForNoSpawnPointsInScene;
+
     void Start()
     {
         CrateSpawnEvent = new CrateEvent();
@@ -32,11 +34,18 @@ public class CrateSpawner : MonoBehaviour
         _timer = _crateSpawnTime;
 
         _spawnPositions = GetComponentsInChildren<Transform>();
+        if (_spawnPositions.Length == 0)
+        {
+            Debug.LogError("Crate Spawner has no SpawnPoints assigned as child Gameobjects");
+            _diableForNoSpawnPointsInScene = true;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (_diableForNoSpawnPointsInScene) return;
+
         _timer -= Time.deltaTime;
         if(_timer <= 0)
         {
