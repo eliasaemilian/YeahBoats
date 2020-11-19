@@ -46,24 +46,60 @@ public class UI_PannelOnEnable : MonoBehaviour
         switch (UT)
         {
             case UpgradeType.BoatStorage:
-                UpgradeCost.text = "Upgrade for : " + LM.IndependentBoatSkillLevelCosts.BoatStorageCost[LM.BoatStorageLevel].ToString();
-                _upgradeCost = LM.IndependentBoatSkillLevelCosts.BoatStorageCost[LM.BoatStorageLevel];
-                SetDescription(LM.BoatStorageLevel);
+                if(LM.BoatStorageLevel < LM.IndependentBoatSkillLevelCosts.BoatStorageCost.Count)
+                {
+                    UpgradeCost.text = "Upgrade for : " + LM.IndependentBoatSkillLevelCosts.BoatStorageCost[LM.BoatStorageLevel].ToString();
+                    _upgradeCost = LM.IndependentBoatSkillLevelCosts.BoatStorageCost[LM.BoatStorageLevel];
+                    SetDescription(LM.BoatStorageLevel);
+                }
+                else
+                {
+                    UpgradeCost.text = "Max Level";
+                    _upgradeCost = -1;
+                    SetMaxLevelDescription(LM.BoatStorageLevel);
+                }
                 break;
             case UpgradeType.Fisherman:
-                UpgradeCost.text = "Buy drink for : " + LM.IndependentBoatSkillLevelCosts.FishermanCost[LM.OwnedFishermen].ToString();
-                _upgradeCost = LM.IndependentBoatSkillLevelCosts.FishermanCost[LM.OwnedFishermen];
-                SetFishermanDescription(LM.OwnedFishermen);
+                if(LM.OwnedFishermen < LM.IndependentBoatSkillLevelCosts.FishermanCost.Count)
+                {
+                    UpgradeCost.text = "Buy drink for : " + LM.IndependentBoatSkillLevelCosts.FishermanCost[LM.OwnedFishermen].ToString();
+                    _upgradeCost = LM.IndependentBoatSkillLevelCosts.FishermanCost[LM.OwnedFishermen];
+                    SetFishermanDescription(LM.OwnedFishermen);
+                }
+                else
+                {
+                    UpgradeCost.text = "Max Level";
+                    _upgradeCost = -1;
+                    SetMaxLevelDescription(LM.OwnedFishermen);
+                }
                 break;
             case UpgradeType.FishingHook:
-                UpgradeCost.text = "Upgrade for : " + LM.BoatSkillLevelCosts.FishingHookCost[LM.FishingHookLevel].ToString();
-                _upgradeCost = LM.BoatSkillLevelCosts.FishingHookCost[LM.FishingHookLevel];
-                SetDescription(LM.FishingHookLevel);
+                if (LM.FishingHookLevel < LM.BoatSkillLevelCosts.FishingHookCost.Count)
+                {
+                    UpgradeCost.text = "Upgrade for : " + LM.BoatSkillLevelCosts.FishingHookCost[LM.FishingHookLevel].ToString();
+                    _upgradeCost = LM.BoatSkillLevelCosts.FishingHookCost[LM.FishingHookLevel];
+                    SetDescription(LM.FishingHookLevel);
+                }
+                else
+                {
+                    UpgradeCost.text = "Max Level";
+                    _upgradeCost = -1;
+                    SetMaxLevelDescription(LM.FishingHookLevel);
+                }
                 break;
             case UpgradeType.FishingRod:
-                UpgradeCost.text = "Upgrade for : " + LM.BoatSkillLevelCosts.FishingRodCost[LM.FishingRodLevel].ToString();
-                _upgradeCost = LM.BoatSkillLevelCosts.FishingRodCost[LM.FishingRodLevel];
-                SetDescription(LM.FishingRodLevel);
+                if (LM.FishingRodLevel < LM.BoatSkillLevelCosts.FishingRodCost.Count)
+                {
+                    UpgradeCost.text = "Upgrade for : " + LM.BoatSkillLevelCosts.FishingRodCost[LM.FishingRodLevel].ToString();
+                    _upgradeCost = LM.BoatSkillLevelCosts.FishingRodCost[LM.FishingRodLevel];
+                    SetDescription(LM.FishingRodLevel);
+                }
+                else
+                {
+                    UpgradeCost.text = "Max Level";
+                    _upgradeCost = -1;
+                    SetMaxLevelDescription(LM.FishingRodLevel);
+                }
                 break;
             case UpgradeType.FishingSpeed:
                 UpgradeCost.text = "Upgrade for : " + LM.BoatSkillLevelCosts.FishingSpeedCost[LM.NPCFishermanLevel].ToString();
@@ -71,14 +107,32 @@ public class UI_PannelOnEnable : MonoBehaviour
                 SetDescription(LM.NPCFishermanLevel);
                 break;
             case UpgradeType.TapCost:
-                UpgradeCost.text = "Upgrade for : " + LM.IndependentBoatSkillLevelCosts.TapCoinCost[LM.TapCoinLevel].ToString();
-                _upgradeCost = LM.IndependentBoatSkillLevelCosts.TapCoinCost[LM.TapCoinLevel];
-                SetDescription(LM.TapCoinLevel);
+                if(LM.TapCoinLevel < LM.IndependentBoatSkillLevelCosts.TapCoinCost.Count)
+                {
+                    UpgradeCost.text = "Upgrade for : " + LM.IndependentBoatSkillLevelCosts.TapCoinCost[LM.TapCoinLevel].ToString();
+                    _upgradeCost = LM.IndependentBoatSkillLevelCosts.TapCoinCost[LM.TapCoinLevel];
+                    SetDescription(LM.TapCoinLevel);
+                }
+                else
+                {
+                    UpgradeCost.text = "Max Level";
+                    _upgradeCost = -1;
+                    SetMaxLevelDescription(LM.TapCoinLevel);
+                }
                 break;
             case UpgradeType.Tapfish:
-                UpgradeCost.text = "Upgrade for : " + LM.IndependentBoatSkillLevelCosts.TapFishCost[LM.TapFishLevel].ToString();
-                _upgradeCost = LM.IndependentBoatSkillLevelCosts.TapFishCost[LM.TapFishLevel];
-                SetDescription(LM.TapFishLevel);
+                if(LM.TapFishLevel < LM.IndependentBoatSkillLevelCosts.TapFishCost.Count)
+                {
+                    UpgradeCost.text = "Upgrade for : " + LM.IndependentBoatSkillLevelCosts.TapFishCost[LM.TapFishLevel].ToString();
+                    _upgradeCost = LM.IndependentBoatSkillLevelCosts.TapFishCost[LM.TapFishLevel];
+                    SetDescription(LM.TapFishLevel);
+                }
+                else
+                {
+                    UpgradeCost.text = "Max Level";
+                    _upgradeCost = -1;
+                    SetMaxLevelDescription(LM.TapFishLevel);
+                }
                 break;
             case UpgradeType.Boat:
                 if (_boatLevel == LM.CurrentBoatLevel)
@@ -128,6 +182,11 @@ public class UI_PannelOnEnable : MonoBehaviour
 
             if (UT != UpgradeType.Boat)
             {
+                if(_upgradeCost == -1)
+                {
+                    _shape.settings.fillColor = new Color(0.5f, 0.5f, 0.5f, 1);
+                    return;
+                }
                 if (_upgradeCost < MM.Money)
                 {
                     _shape.settings.fillColor = new Color(0.9245283f, 0.2791029f, 0.2791029f, 1);
@@ -163,6 +222,11 @@ public class UI_PannelOnEnable : MonoBehaviour
     {
 
         UpgradeDescription.text = "Level " + level + " >> Level " + (level + 1);
+    }
+    private void SetMaxLevelDescription( int level)
+    {
+        UpgradeDescription.text = "Level " + level + "  Max Level Reached!";
+
     }
     private void SetFishermanDescription(int level)
     {

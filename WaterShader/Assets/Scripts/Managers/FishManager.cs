@@ -16,8 +16,6 @@ public class FishManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        
-        //_lM = LevelManager.Instance;
     }
 
     // Start is called before the first frame update
@@ -33,8 +31,6 @@ public class FishManager : MonoBehaviour
     //does all needed to get fish
     public float GetFish()
     {
-        //TODO: animation for fish etc
-        //TODO: rare fish catch
         if (CheckForRareCatch())
         {
             return _fishValue * 5;

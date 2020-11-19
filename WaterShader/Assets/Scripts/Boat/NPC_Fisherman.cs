@@ -93,7 +93,7 @@ public class NPC_Fisherman : MonoBehaviour
 
     public void UpdateValues()
     {
-        Multiplier = _lM.CatchSpeedMultiplier;
+        Multiplier = _lM.Multiplier;
         CatchSpeed = _catchSpeedBase * (_lM.FishingRodLevel) * Multiplier;
     }
 

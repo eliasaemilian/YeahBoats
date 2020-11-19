@@ -158,8 +158,7 @@ public class LevelManager : Singleton<LevelManager>
 
     public bool CheckIfICanLevelup(int currentLevel, List<int> LST)
     {
-        //TODO: Add level cap
-        if (LST.Count < currentLevel) return false;
+        if (LST.Count <= currentLevel) return false;
 
         if (mM.CheckMoney(LST[currentLevel]))
         {

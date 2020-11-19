@@ -97,13 +97,13 @@ public class CrateSpawner : MonoBehaviour
         else
         {
             _multiplierFoundPopup.SetActive(true);
-            _MM.AddTimeToMultiplier(2, 2);
+            _MM.AddTimeToMultiplier(0.4f, 2);
         }
         }
         else
         {
             _multiplierFoundPopup.SetActive(true);
-            _MM.AddTimeToMultiplier(2, 2);
+            _MM.AddTimeToMultiplier(0.4f, 2);
         }
     }
 
