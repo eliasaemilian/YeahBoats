@@ -63,6 +63,8 @@ public class BoatStorageManager : MonoBehaviour
             PlayerPrefs.SetString("sysString", System.DateTime.Now.ToBinary().ToString());
 
             print("Saving this date to prefs: " + System.DateTime.Now);
+
+            NotificationHandler.ScheduleNotification("Idle Fishing", "Your Storage is full, time to collect it!", CalculateNotificationTime());
         }
     }
 
@@ -80,5 +82,12 @@ public class BoatStorageManager : MonoBehaviour
         FishInStorage = fish;
 
 
+    }
+
+    private int CalculateNotificationTime()
+    {
+        int time = BoatStorage * 20;
+
+        return time;
     }
 }
