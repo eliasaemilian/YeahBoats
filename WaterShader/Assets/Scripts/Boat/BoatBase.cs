@@ -60,7 +60,7 @@ public class BoatBase : MonoBehaviour
     }
     private void AddFisherman(int spotIndex)
     {
-        if (_nPCSpots._spots.Length >= spotIndex)
+        if (_nPCSpots._spots.Length > spotIndex)
         {
             GameObject gO = _nPCSpots._spots[spotIndex];
             GameObject fisherman = Instantiate(_nPCFishermanPrefab,gO.transform.position,gO.transform.rotation, gO.transform);
