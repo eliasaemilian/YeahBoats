@@ -5,6 +5,7 @@ using System.IO;
 using System.Runtime.ExceptionServices;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 /// <summary>
 /// LevelManager keeps track of the level of the Boat, Fisherman, Rod etc...
 /// </summary>
@@ -14,6 +15,9 @@ public class LevelManager : Singleton<LevelManager>
     private DataManager dM;
     private MoneyManager mM;
     public LevelCostsScriptable LevelCosts;
+
+    [SerializeField] private MapLevel _mL = new MapLevel();
+
 
     // Just for testing
     public CanvasDisplay CD;
@@ -85,6 +89,7 @@ public class LevelManager : Singleton<LevelManager>
         _boatSkillLevelCosts = LevelCosts.LevelCost[CurrentBoatLevel - 1];
         _independentBoatSkillLevelCosts = LevelCosts.IndependentLevelCosts;
         BoatSkillLevels = BoatLevels.Levels[CurrentBoatLevel - 1];
+        SetCurrentMapLevel();
 
         CatchSpeedMultiplier = 1;
         //For temporary saving
@@ -309,5 +314,30 @@ public class LevelManager : Singleton<LevelManager>
     public bool HighSeaboat()
     {
         return CurrentBoatLevel <= 2 ? false : true;
+    }
+    private void SetCurrentMapLevel()
+    {
+        switch (_mL)
+        {
+            case MapLevel.Port:
+                break;
+            case MapLevel.Pond:
+                CurrentMapLevel = 1;
+                break;
+            case MapLevel.Desert:
+                CurrentMapLevel = 3;
+
+                break;
+            case MapLevel.Mountains:
+                CurrentMapLevel = 2;
+
+                break;
+            case MapLevel.Ocean:
+                CurrentMapLevel = 4;
+
+                break;
+            default:
+                break;
+        }
     }
 }

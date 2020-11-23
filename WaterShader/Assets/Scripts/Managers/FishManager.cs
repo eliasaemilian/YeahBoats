@@ -40,7 +40,7 @@ public class FishManager : MonoBehaviour
 
     private void UpdateFishValue()
     {
-        _fishValue = (_baseFishValue* _lM.CurrentBoatLevel + 2* _lM.FishingRodLevel) * Mathf.Sqrt(_lM.CurrentMapLevel * _lM.CurrentBoatLevel) * _lM.Multiplier* _lM.CurrentBoatLevel;
+        _fishValue = (_baseFishValue* _lM.CurrentBoatLevel + 2* _lM.FishingRodLevel) * Mathf.Sqrt(_lM.CurrentMapLevel * _lM.CurrentBoatLevel) * _lM.Multiplier* _lM.CurrentBoatLevel * _lM.CurrentMapLevel;
     }
 
     public bool CheckForRareCatch()
