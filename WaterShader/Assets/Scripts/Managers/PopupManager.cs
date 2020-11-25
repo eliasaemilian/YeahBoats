@@ -59,7 +59,7 @@ public class PopupManager : MonoBehaviour
 
     private int TapCost()
     {
-        return (int)(_lM.TapCoinLevel * 1.4f);
+        return (int)(_lM.TapCoinLevel * 1.4f * ((_lM.CurrentMapLevel + _lM.CurrentBoatLevel)/2));
     }
     private int CalculateCost()
     {

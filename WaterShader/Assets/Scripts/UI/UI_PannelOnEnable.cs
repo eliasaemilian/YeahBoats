@@ -19,7 +19,7 @@ public class UI_PannelOnEnable : MonoBehaviour
     public TextMeshProUGUI UpgradeDescription = null;
     [Header("only for Map Pieces")]
     public TextMeshProUGUI MapText = null;
-    public int SceneIndex = 0;
+    public int MapLevel = 0;
     private int _upgradeCost;
     void OnEnable()
     {
@@ -165,7 +165,7 @@ public class UI_PannelOnEnable : MonoBehaviour
             return;
         }
 
-        if(LM.MapPieces != 4)
+        if(LM.MapPieces != 2 + 2 * LM.MaxMapLevel)
         {
             MapText.text = LM.MapPieces + " / "+(2 + 2* LM.MaxMapLevel)+" Collected";
         }
@@ -253,12 +253,12 @@ public class UI_PannelOnEnable : MonoBehaviour
 
     public void UnlockThisMapGodDammit()
     {
-        if(SceneIndex <= LM.MaxMapLevel + 1)
+        if(MapLevel <= LM.MaxMapLevel)
         {
             MapText.text = "Travel";
 
         }
-        else if(SceneIndex == LM.MaxMapLevel + 2 && LM.MapPieces == 4)
+        else if(MapLevel == LM.MaxMapLevel + 1 && LM.MapPieces == 2 + 2 * LM.MaxMapLevel)
         {
             MapText.text = "Unlock";
         }

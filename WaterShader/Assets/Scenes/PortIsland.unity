@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1531800480}
-  m_IndirectSpecularColor: {r: 0.0051969597, g: 0.009337264, b: 0.099466324, a: 1}
+  m_IndirectSpecularColor: {r: 0.005190637, g: 0.009330939, b: 0.099460125, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4354,6 +4354,11 @@ PrefabInstance:
       propertyPath: CD
       value: 
       objectReference: {fileID: 929208479}
+    - target: {fileID: 7656333005280051168, guid: daa29692439ba3f4f992807c0f82c069,
+        type: 3}
+      propertyPath: Money
+      value: 10000000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: daa29692439ba3f4f992807c0f82c069, type: 3}
 --- !u!114 &512296842 stripped
@@ -20569,6 +20574,11 @@ PrefabInstance:
       propertyPath: MM
       value: 
       objectReference: {fileID: 512296842}
+    - target: {fileID: 4115579913056007312, guid: 08489d19335349540b59837eceb4695d,
+        type: 3}
+      propertyPath: MapLevel
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4115579913226801933, guid: 08489d19335349540b59837eceb4695d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -20679,6 +20689,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shop UI [Lighthouse]
       objectReference: {fileID: 0}
+    - target: {fileID: 4700059117351744939, guid: 08489d19335349540b59837eceb4695d,
+        type: 3}
+      propertyPath: m_text
+      value: Collect Map Pieces to unlock a new region!
+      objectReference: {fileID: 0}
     - target: {fileID: 4700059117434090527, guid: 08489d19335349540b59837eceb4695d,
         type: 3}
       propertyPath: m_Sprite
@@ -20720,6 +20735,11 @@ PrefabInstance:
       propertyPath: MM
       value: 
       objectReference: {fileID: 512296842}
+    - target: {fileID: 4700059117636119797, guid: 08489d19335349540b59837eceb4695d,
+        type: 3}
+      propertyPath: MapLevel
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4700059117636119798, guid: 08489d19335349540b59837eceb4695d,
         type: 3}
       propertyPath: m_Material
@@ -20785,6 +20805,11 @@ PrefabInstance:
       propertyPath: MM
       value: 
       objectReference: {fileID: 512296842}
+    - target: {fileID: 4700059118793548301, guid: 08489d19335349540b59837eceb4695d,
+        type: 3}
+      propertyPath: MapLevel
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4700059119156379757, guid: 08489d19335349540b59837eceb4695d,
         type: 3}
       propertyPath: m_Sprite
@@ -20821,6 +20846,11 @@ PrefabInstance:
       propertyPath: MM
       value: 
       objectReference: {fileID: 512296842}
+    - target: {fileID: 4700059119336383624, guid: 08489d19335349540b59837eceb4695d,
+        type: 3}
+      propertyPath: MapLevel
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8727461648776660662, guid: 08489d19335349540b59837eceb4695d,
         type: 3}
       propertyPath: m_Material

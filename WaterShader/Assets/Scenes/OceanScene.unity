@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1173641079}
-  m_IndirectSpecularColor: {r: 0.99999905, g: 0, b: 0.99999905, a: 1}
+  m_IndirectSpecularColor: {r: 0.10794233, g: 0.19933769, b: 0.4325194, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -360,7 +360,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 22149134}
-  m_LocalRotation: {x: 0.09255003, y: 0.7403422, z: -0.10419095, w: 0.65762615}
+  m_LocalRotation: {x: 0.092550024, y: 0.7403422, z: -0.10419094, w: 0.6576262}
   m_LocalPosition: {x: -25.890942, y: 28.9, z: -25.480238}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4415,7 +4415,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670728958}
-  m_LocalRotation: {x: 0.011268201, y: 0.12871644, z: -0.001462665, w: 0.99161637}
+  m_LocalRotation: {x: 0.011268203, y: 0.12871644, z: -0.0014626653, w: 0.99161637}
   m_LocalPosition: {x: 34.008812, y: 8.120002, z: -59.118477}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7478,7 +7478,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1173641078}
-  m_LocalRotation: {x: -0.612907, y: -0.00000000774776, z: -0.00000000774776, w: -0.79015505}
+  m_LocalRotation: {x: 0.000000007747753, y: 0.79015505, z: -0.612907, w: -0.000000007747767}
   m_LocalPosition: {x: 0, y: 3, z: 91.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -8441,7 +8441,7 @@ PrefabInstance:
     - target: {fileID: 3228737554398155732, guid: 87ab757b3592e9d4da31c33405d2cbbb,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.011268201
+      value: 0.011268203
       objectReference: {fileID: 0}
     - target: {fileID: 3228737554398155732, guid: 87ab757b3592e9d4da31c33405d2cbbb,
         type: 3}
@@ -8451,7 +8451,7 @@ PrefabInstance:
     - target: {fileID: 3228737554398155732, guid: 87ab757b3592e9d4da31c33405d2cbbb,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.001462665
+      value: -0.0014626653
       objectReference: {fileID: 0}
     - target: {fileID: 3228737554398155732, guid: 87ab757b3592e9d4da31c33405d2cbbb,
         type: 3}
@@ -13389,7 +13389,7 @@ PrefabInstance:
     - target: {fileID: 3007962892847428001, guid: a67519463487a154ca804c1d14a8dcf3,
         type: 3}
       propertyPath: _crateSpawnTime
-      value: 70
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7188438680948112092, guid: a67519463487a154ca804c1d14a8dcf3,
         type: 3}

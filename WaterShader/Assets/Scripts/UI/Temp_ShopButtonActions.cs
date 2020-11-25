@@ -158,7 +158,7 @@ public class Temp_ShopButtonActions : MonoBehaviour
 
         if (LM.CheckIfICanLevelup(LM.OwnedFishermen, LM.IndependentBoatSkillLevelCosts.FishermanCost))
         {
-            if(LM.ChanceLevelupForFisherman(25))
+            if(LM.ChanceLevelupForFisherman(50))
             {
                 //Hire succeeded
                 LM.OwnedFishermen = LM.Levelup(LM.OwnedFishermen, LM.IndependentBoatSkillLevelCosts.FishermanCost);

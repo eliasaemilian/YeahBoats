@@ -48,7 +48,7 @@ public class BoatStorageManager : MonoBehaviour
             AddFishToStorage(difference.TotalSeconds);
             _aFKPopup.SetActive(true);
             _aFKPopupText.text = "Welcome Back! The fishermen caught " + FishInStorage +
-                " fish during your absence! You earned " + FishInStorage* FishManager.Instance._fishValue + " Coins during this time!"  ;
+                " fish during your absence! You earned " + (int)(FishInStorage* FishManager.Instance._fishValue) + " Coins during this time!"  ;
             MoneyManager.Instance.AddMoney(FishInStorage * FishManager.Instance._fishValue);
             
         }
