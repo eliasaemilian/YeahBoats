@@ -231,7 +231,7 @@ public class SettingsHandler : MonoBehaviour
 
     private void UpdateVolumeText(Slider slider, TextMeshProUGUI text)
     {
-        text.text = $"Set Volume: {Mathf.RoundToInt(slider.value * 100f) }";
+        text.text = $"Set Volume: {Mathf.RoundToInt(slider.value * 100f)} %";
 
     }
 
