@@ -64,6 +64,9 @@ public class Boat_CameraHandler : MonoBehaviour
         _cineCam.LookAt = focus;
     }
 
+    /// <summary>
+    /// Collect Boat specific focus points to use for Cinemachine Cameras
+    /// </summary>
     private void InitCinemachineCameraSetup()
     {
         _cineCam = FindObjectOfType<CinemachineStateDrivenCamera>();
