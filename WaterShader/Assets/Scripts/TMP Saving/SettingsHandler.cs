@@ -14,7 +14,9 @@ public class SettingsHandler : MonoBehaviour
     [SerializeField] private Image _musicSliderHandle = null;
 
     [SerializeField] private TextMeshProUGUI _soundButtonText = null;
+    [SerializeField] private TextMeshProUGUI _soundVolumeText = null;
     [SerializeField] private TextMeshProUGUI _musicButtonText = null;
+    [SerializeField] private TextMeshProUGUI _musicVolumeText = null;
     [SerializeField] private TextMeshProUGUI _notifButtonText = null;
     [SerializeField] private TextMeshProUGUI _reverseInputButtonText = null;
 
@@ -42,7 +44,7 @@ public class SettingsHandler : MonoBehaviour
     private string _reverseOff = "Reverse Boat Input Off";
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         _soundSlider.onValueChanged.AddListener(delegate { OnChangedVolumeSliderSound(); });
         _musicSlider.onValueChanged.AddListener(delegate { OnChangedVolumeSliderMusic(); });
@@ -75,6 +77,12 @@ public class SettingsHandler : MonoBehaviour
             PlayerPrefs.SetFloat(ReverseInput, 0);
         }
 
+        UpdateAllUIFromPlayerPrefValues();
+
+    }
+
+    private void UpdateAllUIFromPlayerPrefValues()
+    {
         _musicSlider.value = PlayerPrefs.GetFloat(MusicVol);
         _soundSlider.value = PlayerPrefs.GetFloat(SoundVol);
         SetBoolToPrefValue(Music);
@@ -85,17 +93,22 @@ public class SettingsHandler : MonoBehaviour
         UpdateSliderVisibility(Music, _musicSlider, _musicSliderHandle);
         UpdateSliderVisibility(Sound, _soundSlider, _soundSliderHandle);
 
+        UpdateVolumeText(_musicSlider, _musicVolumeText);
+        UpdateVolumeText(_soundSlider, _soundVolumeText);
+
     }
 
     public void OnChangedVolumeSliderSound()
     {
         ChangePreference(SoundVol, _soundSlider.value);
+        UpdateVolumeText(_soundSlider, _soundVolumeText);
     }
 
     public void OnChangedVolumeSliderMusic()
     {
         ChangePreference(MusicVol, _musicSlider.value);
         if (_soundscapeManager != null) _soundscapeManager.VolumeChanged();
+        UpdateVolumeText(_musicSlider, _musicVolumeText);
     }
 
     public void OnClickMusicOnOff()
@@ -112,7 +125,7 @@ public class SettingsHandler : MonoBehaviour
         }
 
         UpdateSliderVisibility(Music, _musicSlider, _musicSliderHandle);
-
+        UpdateVolumeText(_musicSlider, _musicVolumeText);
     }
 
     public void OnClickSoundOnOff()
@@ -121,6 +134,7 @@ public class SettingsHandler : MonoBehaviour
         else _soundButtonText.text = _soundOff;
 
         UpdateSliderVisibility(Sound, _soundSlider, _soundSliderHandle);
+        UpdateVolumeText(_soundSlider, _soundVolumeText);
     }
 
     public void OnClickNotificationsOnOff()
@@ -215,13 +229,23 @@ public class SettingsHandler : MonoBehaviour
 
     }
 
+    private void UpdateVolumeText(Slider slider, TextMeshProUGUI text)
+    {
+        text.text = $"Set Volume: {Mathf.RoundToInt(slider.value * 100f)} %";
+
+    }
+
     public void OnClickOpenCloseSettings()
     {
         if (gameObject.activeSelf)
         {
             gameObject.SetActive(false);
         }
-        else gameObject.SetActive(true);
+        else
+        {
+            gameObject.SetActive(true);
+            UpdateAllUIFromPlayerPrefValues();
+        }
     }
 
     private void SetBoolToPrefValue(string key)

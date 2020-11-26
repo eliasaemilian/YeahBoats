@@ -62,6 +62,7 @@ public class UI_TutorialPopUp : MonoBehaviour
         // Check for PlayerPrefs
         if (!PlayerPrefs.HasKey("Tutorial"))
         {
+            ResetTutorial(); // here bc Github gets freaky with the SO sometimes
             OnTutorialTriggered();
             if (FindObjectOfType<UI_JoystickHandler>() != null) UI_JoystickHandler.BlockJoystickMovement.Invoke();
 
@@ -189,9 +190,6 @@ public class UI_TutorialPopUp : MonoBehaviour
     }
 
 
-    // enum continue types (tap, double tap, anywhere)
-    // listener > depending on count waits for X
-
     private void EndTutorial()
     {
         UI_JoystickHandler.UnblockJoystickMovement.Invoke();
@@ -223,10 +221,6 @@ public class UI_TutorialPopUp : MonoBehaviour
 
     private void ResetTutorial()
     {
-        //DEBUGGING
-        // EndTutorial();
-
-        // RESET
         PlayerPrefs.DeleteKey("Tutorial");
         for (int i = 0; i < tutSet.Instructions.Count; i++)
         {
