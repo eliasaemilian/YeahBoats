@@ -14,6 +14,8 @@ using UnityEngine.Rendering.Universal;
 
 public class UI_InputHandler : MonoBehaviour
 {
+    public Cinemachine.CinemachineVirtualCamera VCam;
+    
     public static ValidPlaneTouchEvent2D ValidTouchEvent2D; //UI Box
 
     public static ValidTouchEvent ValidDoubleTapEvent;
@@ -112,9 +114,9 @@ public class UI_InputHandler : MonoBehaviour
                         // Check for Taps on GOs with 2D Colliders
                         if (_tappableGameobjectsInScene[i].GOTapRef == hitGO)
                         {
-                            _tappableGameobjectsInScene[i].OnTap(_touch, rayPos2D); // pass all here that was passed in event
+                            _tappableGameobjectsInScene[i].OnTap(_touch, rayPos2D);
 
-                            // SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
+                            Debug.Log("2D hit on " + _tappableGameobjectsInScene[i].GOTapRef);
                             _tappableFocus = _tappableGameobjectsInScene[i];
                            
                         }
@@ -132,7 +134,8 @@ public class UI_InputHandler : MonoBehaviour
                     {
                         _tappableGameobjectsInScene[i].OnTap(_touch, hitPos, dist);
 
-                        //   SetPOI(_tappableGameobjectsInScene[i].GOTapRef.transform);
+                        Debug.Log("3D hit on " + _tappableGameobjectsInScene[i].GOTapRef);
+
                         _tappableFocus = _tappableGameobjectsInScene[i];
 
                     }
@@ -186,7 +189,7 @@ public class UI_InputHandler : MonoBehaviour
         {
             // On CountDown End: DoubleTap Counters reset
             StartCoroutine(Countdown());
-           // Debug.Log("Valid Tap for " + tappable);
+            Debug.Log("Valid Tap for " + tappable);
             tappable.TapCount++;
         }
         else
@@ -197,7 +200,7 @@ public class UI_InputHandler : MonoBehaviour
 
         if (tappable.TapCount == 2)
         {
-            //   Debug.Log($"{tappable} got doubleTapped");
+            Debug.Log($"{tappable} got doubleTapped");
 
             tappable.OnDoubleTap();
             tappable.TapCount = 0;
@@ -274,6 +277,7 @@ public class UI_InputHandler : MonoBehaviour
     {
         //transform the touch position into word space from screen space
         Ray mRay = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, zValue.position.z));
+        Debug.Log("Main Cam: " + Camera.main.gameObject.name);
         worldPosHit = Vector3.zero;
         target = null;
         distToCam = 0f;

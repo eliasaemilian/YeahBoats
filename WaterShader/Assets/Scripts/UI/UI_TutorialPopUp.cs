@@ -141,6 +141,8 @@ public class UI_TutorialPopUp : MonoBehaviour
 
     IEnumerator OpenTutorialPopUp()
     {
+        if (tutSet.Instructions[_tutIndexCount].Instruction == null) EndTutorial();
+
         _counter += Time.deltaTime;
         // Lerp outer Radius
         _lerpRadius = Mathf.Lerp(0, _outerFinalRadius, _counter / _lerpTime);
