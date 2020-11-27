@@ -20,9 +20,8 @@ public class NotificationHandler : MonoBehaviour
     {
         InitAndroid();
 
-        CheckIfOpenedThroughNotification();
+     //   CheckIfOpenedThroughNotification();
 
-        ScheduleNotification("Test", "blablablabla", .1f);
     }
 
 
@@ -50,7 +49,6 @@ public class NotificationHandler : MonoBehaviour
         if (SettingsHandler.RequestSetting(SettingsHandler.Notif, out bool notifOnOff))
         {
             if (!notifOnOff) return;
-            //TODO: ALSO CANCEL NOTIFICATIONS THAT HAVE BEEN SCHEDULED IF SETTING GETS CHANGED
         }
 
         var notification = new AndroidNotification();
@@ -62,7 +60,7 @@ public class NotificationHandler : MonoBehaviour
 
         AndroidNotificationCenter.SendNotification(notification, "channel_id");
 
-        Debug.Log("Notification scheduled");
+       // Debug.Log("Notification scheduled");
     }
 
     /// <summary>
