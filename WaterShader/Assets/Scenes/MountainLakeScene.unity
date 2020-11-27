@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1953715251}
-  m_IndirectSpecularColor: {r: 0.29076585, g: 0.64663136, b: 0.8896798, a: 1}
+  m_IndirectSpecularColor: {r: 0.29077387, g: 0.646635, b: 0.8896804, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2288,8 +2288,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1173641078}
-  m_LocalRotation: {x: -0.12221585, y: -0.000000038041488, z: -0.000000038041488,
-    w: -0.9925036}
+  m_LocalRotation: {x: 0.000000038041488, y: 0.9925036, z: -0.12221585, w: -0.000000038041488}
   m_LocalPosition: {x: 0, y: 3, z: 91.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -4506,6 +4505,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 907999900081432255}
     m_Modifications:
+    - target: {fileID: 1103471372, guid: 98dc7f9651112004783364b74fb37b23, type: 3}
+      propertyPath: _uiToDisableOnOpen.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1103471372, guid: 98dc7f9651112004783364b74fb37b23, type: 3}
+      propertyPath: _uiToDisableOnOpen.Array.data[0]
+      value: 
+      objectReference: {fileID: 7123062576584227777}
     - target: {fileID: 5014195482362088379, guid: 98dc7f9651112004783364b74fb37b23,
         type: 3}
       propertyPath: m_AnchorMin.x

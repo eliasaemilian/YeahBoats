@@ -22,6 +22,8 @@ public class SettingsHandler : MonoBehaviour
 
     [SerializeField] private Color _disabledElementColor = Color.grey;
 
+    [SerializeField] private List<GameObject> _uiToDisableOnOpen = null;
+
     public static readonly string ReverseInput = "ReverseInput";
     public static readonly string Sound = "Sound";
     public static readonly string SoundVol = "SoundVolume";
@@ -240,11 +242,24 @@ public class SettingsHandler : MonoBehaviour
         if (gameObject.activeSelf)
         {
             gameObject.SetActive(false);
+            DisableEnableObstrcutingUI(true);
         }
         else
         {
             gameObject.SetActive(true);
+            DisableEnableObstrcutingUI(false);
             UpdateAllUIFromPlayerPrefValues();
+        }
+    }
+
+    private void DisableEnableObstrcutingUI(bool status)
+    {
+        if (_uiToDisableOnOpen.Count > 0)
+        {
+            for (int i = 0; i < _uiToDisableOnOpen.Count; i++)
+            {
+                _uiToDisableOnOpen[i].SetActive(status);
+            }
         }
     }
 

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1531800480}
-  m_IndirectSpecularColor: {r: 0.0052014054, g: 0.009341703, b: 0.099470705, a: 1}
+  m_IndirectSpecularColor: {r: 0.0051980442, g: 0.009338349, b: 0.09946739, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11582,6 +11582,12 @@ Transform:
   m_Father: {fileID: 1459650517}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1286265010 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6314407834987213128, guid: 2deb6d0d63992f74b9c67e3e50f21bb5,
+    type: 3}
+  m_PrefabInstance: {fileID: 654046935}
+  m_PrefabAsset: {fileID: 0}
 --- !u!21 &1286923017
 Material:
   serializedVersion: 6
@@ -12224,6 +12230,7 @@ MonoBehaviour:
   - {fileID: 1781588849}
   _UIToSetInactive:
   - {fileID: 495156624}
+  - {fileID: 1286265010}
 --- !u!1 &1360701146
 GameObject:
   m_ObjectHideFlags: 0
@@ -12916,6 +12923,7 @@ MonoBehaviour:
   - {fileID: 1874228866}
   _UIToSetInactive:
   - {fileID: 495156624}
+  - {fileID: 1286265010}
 --- !u!21 &1433089974
 Material:
   serializedVersion: 6
@@ -13254,6 +13262,7 @@ MonoBehaviour:
   - {fileID: 8657199405704196943}
   _UIToSetInactive:
   - {fileID: 495156624}
+  - {fileID: 1286265010}
 --- !u!21 &1484027576
 Material:
   serializedVersion: 6
@@ -13709,7 +13718,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1531800479}
-  m_LocalRotation: {x: -0.35355344, y: -0.6123724, z: 0.6123724, w: -0.35355344}
+  m_LocalRotation: {x: -0.6123724, y: 0.35355344, z: -0.35355344, w: -0.6123724}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -15004,6 +15013,7 @@ MonoBehaviour:
   - {fileID: 8657199405173071257}
   _UIToSetInactive:
   - {fileID: 495156624}
+  - {fileID: 1286265010}
 --- !u!1001 &1723893355
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15954,7 +15964,7 @@ PrefabInstance:
     - target: {fileID: 3346001435050125968, guid: daefd573bf75d764f809aafa9cfe6f43,
         type: 3}
       propertyPath: _pause
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3346001435050125968, guid: daefd573bf75d764f809aafa9cfe6f43,
         type: 3}
@@ -21280,6 +21290,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1263664496}
     m_Modifications:
+    - target: {fileID: 1103471372, guid: 98dc7f9651112004783364b74fb37b23, type: 3}
+      propertyPath: _uiToDisableOnOpen.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1103471372, guid: 98dc7f9651112004783364b74fb37b23, type: 3}
+      propertyPath: _uiToDisableOnOpen.Array.data[0]
+      value: 
+      objectReference: {fileID: 495156624}
     - target: {fileID: 5014195482294049745, guid: 98dc7f9651112004783364b74fb37b23,
         type: 3}
       propertyPath: m_Material
