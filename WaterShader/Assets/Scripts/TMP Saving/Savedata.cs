@@ -59,6 +59,6 @@ public class Savedata : MonoBehaviour
     {
         //SaveSystem.SaveData(this);
         SaveSystem.SaveDataJson(this);
-        Debug.Log("Saving ...");
+      //  Debug.Log("Saving ...");
     }
 }

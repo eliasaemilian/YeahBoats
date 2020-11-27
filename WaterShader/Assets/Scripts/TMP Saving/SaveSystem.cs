@@ -32,7 +32,7 @@ public static class SaveSystem
         }
         else
         {
-            Debug.Log("Path not found, creating new one");
+         //   Debug.Log("Path not found, creating new one");
             return null;
         }
     }
@@ -56,13 +56,13 @@ public static class SaveSystem
             {
                 string json = stream.ReadToEnd();
                 GameData ps = JsonUtility.FromJson<GameData>(json);
-                Debug.Log("Data Loaded");
+           //     Debug.Log("Data Loaded");
                 return ps;
             }
         }
         else
         {
-            Debug.Log("Save file not found in " + SavePath);
+        //    Debug.Log("Save file not found in " + SavePath);
             return null;
         }
     }

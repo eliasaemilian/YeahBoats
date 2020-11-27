@@ -15,13 +15,13 @@ public class UI_ButtonPlaySound : MonoBehaviour
     public void OnButtonClick()
     {
         // _audio.Play();
-        Debug.Log("Click");
+      //  Debug.Log("Click");
         if (_soundscapeManager != null) SoundscapeManager.PlaySoundWithClip.Invoke(ButtonSound);
     }
 
     public void OnStartInit()
     {
         _soundscapeManager = FindObjectOfType<SoundscapeManager>();
-        Debug.Log("Setup Button");
+     //   Debug.Log("Setup Button");
     }
 }

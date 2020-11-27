@@ -108,7 +108,7 @@ public class NPC_Fisherman : MonoBehaviour
      // gets called to speed up fishing
     public void ReduceTimer()
     {
-        Debug.Log("Reducing timer");
+     //   Debug.Log("Reducing timer");
         _timer /= _timerTapMultiplier;
     }
 

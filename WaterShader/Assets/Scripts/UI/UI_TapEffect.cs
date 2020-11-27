@@ -52,7 +52,7 @@ public class UI_TapEffect : MonoBehaviour, IPooledObject
         if (_runTapEffect) return;
 
 
-        Debug.Log("Tapping Fish Effect");
+    //    Debug.Log("Tapping Fish Effect");
 
         // Set position of Plane to Pos
         _tapEffectPlane.SetActive(true);
@@ -123,6 +123,6 @@ public class UI_TapEffect : MonoBehaviour, IPooledObject
         if (SpawnPos == null || SpawnDistToCam == 0) return;
 
         OnTapFish_Effect(SpawnPos, SpawnDistToCam);
-        Debug.Log("Fish Tap");
+     //   Debug.Log("Fish Tap");
     }
 }
