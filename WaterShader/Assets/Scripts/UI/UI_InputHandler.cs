@@ -14,7 +14,6 @@ using UnityEngine.Rendering.Universal;
 
 public class UI_InputHandler : MonoBehaviour
 {
-    public Cinemachine.CinemachineVirtualCamera VCam;
     
     public static ValidPlaneTouchEvent2D ValidTouchEvent2D; //UI Box
 
@@ -245,6 +244,7 @@ public class UI_InputHandler : MonoBehaviour
     {
         //transform the touch position into word space from screen space
         Ray mRay = UICamera.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, zValue.position.z));
+
         rayPos = Vector3.zero;
 
         Vector3 touchPosWorld = UICamera.ScreenToWorldPoint(touch.position);

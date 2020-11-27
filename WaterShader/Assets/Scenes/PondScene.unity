@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1953715251}
-  m_IndirectSpecularColor: {r: 0.2871629, g: 0.36641067, b: 0.90861875, a: 1}
+  m_IndirectSpecularColor: {r: 0.28716356, g: 0.3664113, b: 0.90861905, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8614,7 +8614,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1173641078}
-  m_LocalRotation: {x: 0.000000061288404, y: 0.60876137, z: 0.7933534, w: -0.000000061288404}
+  m_LocalRotation: {x: 0.00000006128839, y: 0.60876137, z: 0.7933534, w: -0.00000006128839}
   m_LocalPosition: {x: 0, y: 3, z: 91.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -9656,6 +9656,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3228737554398155730, guid: 87ab757b3592e9d4da31c33405d2cbbb,
+        type: 3}
+      propertyPath: m_BlendUpdateMethod
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3228737554398155732, guid: 87ab757b3592e9d4da31c33405d2cbbb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9730,6 +9735,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_CullingMask.m_Bits
       value: 4663
+      objectReference: {fileID: 0}
+    - target: {fileID: 3228737554398155735, guid: 87ab757b3592e9d4da31c33405d2cbbb,
+        type: 3}
+      propertyPath: m_projectionMatrixMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3228737554398155735, guid: 87ab757b3592e9d4da31c33405d2cbbb,
+        type: 3}
+      propertyPath: field of view
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3228737554398155735, guid: 87ab757b3592e9d4da31c33405d2cbbb,
+        type: 3}
+      propertyPath: m_FocalLength
+      value: 32.96973
       objectReference: {fileID: 0}
     - target: {fileID: 3228737554398155737, guid: 87ab757b3592e9d4da31c33405d2cbbb,
         type: 3}
@@ -13315,7 +13335,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1953715250}
-  m_LocalRotation: {x: 0.7933534, y: 0.000000026609806, z: -0.000000034678582, w: 0.60876137}
+  m_LocalRotation: {x: -0.00000003467858, y: 0.60876137, z: -0.7933534, w: -0.000000026609804}
   m_LocalPosition: {x: 0, y: 3, z: 91.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -13898,11 +13918,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   m_CustomBlends: {fileID: 0}
-  m_ParentHash:
-  - m_Hash: 1001343987
-    m_ParentHash: 756556552
-  - m_Hash: 1440015781
-    m_ParentHash: 756556552
+  m_ParentHash: []
 --- !u!4 &2008693973
 Transform:
   m_ObjectHideFlags: 0
@@ -14758,6 +14774,11 @@ PrefabInstance:
       propertyPath: _doubleTapSensitivity
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 205950898566414747, guid: 6d6e7f346ad3d674ca3f5bbdafc78cf9,
+        type: 3}
+      propertyPath: VCam
+      value: 
+      objectReference: {fileID: 670728959}
     m_RemovedComponents:
     - {fileID: 205950898566414741, guid: 6d6e7f346ad3d674ca3f5bbdafc78cf9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6d6e7f346ad3d674ca3f5bbdafc78cf9, type: 3}
