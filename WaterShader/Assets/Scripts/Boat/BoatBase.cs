@@ -37,18 +37,6 @@ public class BoatBase : MonoBehaviour
     }
 
 
-    void OnGUI()
-    {
-        if(GUI.Button(new Rect(10, 90, 150, 20), "Add Fisherman"))
-        {
-            BuyFisherman();
-        }
-        if(GUI.Button(new Rect(10, 110, 150, 20), "Speed up Catch"))
-        {
-            TapToSpeedupCatch();
-        }
-    }
-
     private void InstantiateFishermen()
     {
         int fisherManCount = Mathf.Min(_lM.OwnedFishermen, _lM.MaxAmmountOfFishermen);

@@ -23,6 +23,6 @@ public class TapEffect_CameraHandler : MonoBehaviour
     private void OnCameraChangeEvent(int index)
     {
         _anim.SetInteger("CameraIndex", index);
-        Debug.Log("Setting Camera to " + index);
+        //Debug.Log("Setting Camera to " + index);
     }
 }

@@ -97,7 +97,7 @@ public class LevelManager : Singleton<LevelManager>
 
     }
 
-
+    /*
     void OnGUI()
     {
         
@@ -137,6 +137,7 @@ public class LevelManager : Singleton<LevelManager>
         }
 
     }
+    */
     private void TMPLevelSetup(bool IsReset)
     {
         CurrentMapLevel = 1;

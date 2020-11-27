@@ -47,7 +47,7 @@ public class UI_TapEffectCameraZoom : TappableGameobject
         if (_isLookedAt) return;
 
         base.OnTap(touch, pos, dist);
-        Debug.Log("Got Tapped, changing Camera Index to " + CameraIndex);
+        //Debug.Log("Got Tapped, changing Camera Index to " + CameraIndex);
         _camHandler.OnCameraChange.Invoke(CameraIndex);
 
         // Enable UI    
